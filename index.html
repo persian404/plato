@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PLATO | فیلم و سریال</title>
     <meta name="theme-color" content="#09090f">
-    <!-- فونت‌های وزیرمتن و فونت فضایی برای لوگو -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=Audiowide&display=swap" rel="stylesheet">
@@ -44,7 +43,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
-        /* Dark Theme (Default) */
         :root {
             --bg-main: #08080d;
             --bg-box: #111119;
@@ -56,7 +54,6 @@
             --header-bg: rgba(8, 8, 13, 0.76);
         }
 
-        /* Light Theme */
         body.light-theme {
             --bg-main: #f3f4f6;
             --bg-box: #ffffff;
@@ -69,7 +66,7 @@
         }
 
         body { 
-            background: #040407; /* پس زمینه بیرون کادر در لپ‌تاپ */
+            background: var(--bg-main); /* تغییر به بک‌گراند اصلی */
             color: var(--text-main); 
             font-family: "Vazirmatn", sans-serif; 
             overflow-x: hidden; 
@@ -77,15 +74,15 @@
         }
 
         /* =========================
-           RESPONSIVE CONTAINER (Desktop & TV)
+           RESPONSIVE CONTAINER
         ========================= */
         #app-wrapper {
-            max-width: 850px;
+            width: 100%;
+            max-width: 1600px; /* پهنای بسیار عریض برای لپ تاپ */
             margin: 0 auto;
             min-height: 100vh;
-            background: radial-gradient(circle at 85% 5%, rgba(124, 58, 237, 0.08), transparent 28%), var(--bg-main);
+            background: radial-gradient(circle at 85% 5%, rgba(124, 58, 237, 0.08), transparent 28%), transparent;
             position: relative;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
             padding-bottom: 90px;
         }
 
@@ -137,7 +134,7 @@
         .tab-menu { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; width: 100%; max-width: 600px; flex-wrap: wrap; background: var(--bg-input); padding: 8px; border-radius: 16px; border: 1px solid var(--border-color); }
         .tab-btn { background: transparent; color: var(--text-muted); padding: 12px 10px; border-radius: 12px; font-weight: bold; flex: 1; transition: 0.3s; text-align: center; font-size: 13px; }
         .tab-btn.active { background: rgba(139, 92, 246, 0.2); color: #a855f7; border: 1px solid rgba(139, 92, 246, 0.3); }
-        .tab-content { display: none; width: 100%; max-width: 600px; }
+        .tab-content { display: none; width: 100%; max-width: 600px; margin: 0 auto; }
         .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
@@ -156,21 +153,21 @@
         #loader { position: fixed; inset:0; background: rgba(0,0,0,0.8); z-index: 9999; display: none; align-items: center; justify-content: center; color: #a855f7; font-weight: bold; font-size: 18px; backdrop-filter: blur(5px); }
 
         /* =========================
-           MAIN APP (Home)
+           MAIN APP & LAYOUTS (Mobile First)
         ========================= */
         #main-app { display: none; }
-        .header { position: sticky; top: 0; z-index: 1000; height: 74px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--header-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); border-radius: 0 0 20px 20px; }
+        .header { position: sticky; top: 0; z-index: 1000; height: 74px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--header-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); }
         .logo { font-family: 'Audiowide', sans-serif; font-size: 32px; font-weight: 400; letter-spacing: 2px; color: var(--text-main); }
         .header-actions { display: flex; align-items: center; gap: 10px; }
         .profile-button { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); font-size: 17px; position: relative; }
         
-        .search-box { padding: 18px 18px 5px; }
+        .search-box { padding: 18px 20px 5px; max-width: 800px; margin: 0 auto; }
         .search-wrapper { position: relative; }
         .search-wrapper input { width: 100%; height: 52px; padding: 0 48px 0 18px; border: 1px solid var(--border-color); border-radius: 17px; outline: none; background: var(--bg-input); font-size: 14px; transition: .25s; }
         .search-wrapper input:focus { border-color: rgba(139,92,246,.55); box-shadow: 0 0 0 4px rgba(139,92,246,.1); }
         .search-icon { position: absolute; right: 17px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px; }
         
-        .hero { position: relative; width: calc(100% - 30px); margin: 15px auto 0; overflow: hidden; border-radius: 24px; background: var(--bg-box); box-shadow: 0 20px 60px rgba(0,0,0,.15); }
+        .hero { position: relative; width: calc(100% - 40px); margin: 15px auto 0; overflow: hidden; border-radius: 24px; background: var(--bg-box); box-shadow: 0 20px 60px rgba(0,0,0,.15); }
         .slides { display: flex; direction: ltr; width: 100%; transition: transform .7s cubic-bezier(.22,.61,.36,1); }
         .slide { position: relative; min-width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
         .slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.9; }
@@ -179,13 +176,12 @@
         .dot.active { width: 21px; border-radius: 10px; background: #a855f7; }
         
         .section { margin-top: 32px; }
-        .section-header { display: flex; align-items: center; justify-content: space-between; padding: 0 18px; margin-bottom: 15px; }
+        .section-header { display: flex; align-items: center; justify-content: space-between; padding: 0 20px; margin-bottom: 15px; }
         .section-title { font-size: 20px; font-weight: 700; }
         .section-title::before { content: ""; display: inline-block; width: 4px; height: 20px; margin-left: 9px; vertical-align: -3px; border-radius: 10px; background: linear-gradient(#a855f7, #22d3ee); }
         .section-more { color: var(--text-muted); font-size: 12px; }
         
-        /* Movie list optimized for Desktop & Mobile */
-        .movie-list { display: flex; gap: 13px; overflow-x: auto; padding: 3px 18px 12px; scrollbar-width: thin; }
+        .movie-list { display: flex; gap: 15px; overflow-x: auto; padding: 5px 20px 20px; scrollbar-width: thin; }
         .movie-list::-webkit-scrollbar { height: 6px; }
         .movie-list::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.4); border-radius: 10px; }
         
@@ -196,18 +192,37 @@
         .movie-card:hover .poster img { transform: scale(1.04); }
         .poster-overlay { position: absolute; inset: auto 0 0 0; height: 45%; background: linear-gradient(transparent, rgba(0,0,0,.8)); }
         .movie-name { padding-top: 9px; font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .empty-section { margin: 0 18px; height: 115px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--border-color); border-radius: 18px; color: var(--text-muted); font-size: 13px; background: var(--bg-input); }
-        
+        .empty-section { margin: 0 20px; height: 115px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--border-color); border-radius: 18px; color: var(--text-muted); font-size: 13px; background: var(--bg-input); }
+
+        /* =========================
+           DESKTOP/LAPTOP OPTIMIZATIONS
+        ========================= */
         @media (min-width: 768px) {
-            .movie-card { flex: 0 0 180px; }
-            .movie-name { font-size: 15px; }
-            .hero { border-radius: 30px; }
+            .header { padding: 0 50px; height: 85px; }
+            .logo { font-size: 38px; }
+            .search-box { padding: 30px 50px 10px; }
+            .hero { width: calc(100% - 100px); border-radius: 35px; margin-top: 30px; }
+            .slide { aspect-ratio: 21 / 8; } /* حالت کاملا سینمایی عریض */
+            .section { margin-top: 50px; }
+            .section-header { padding: 0 50px; margin-bottom: 25px; }
+            .section-title { font-size: 26px; }
+            .section-title::before { height: 24px; width: 5px; }
+            .movie-list { gap: 20px; padding: 5px 50px 30px; }
+            .movie-card { flex: 0 0 200px; } /* سایز بزرگ و حرفه‌ای پوستر در لپ‌تاپ */
+            .movie-card:hover { transform: translateY(-5px); }
+            .movie-name { font-size: 16px; margin-top: 5px; }
+            .bottom-nav { max-width: 500px; }
+        }
+        
+        @media (min-width: 1200px) {
+            .movie-card { flex: 0 0 230px; }
+            .slide { aspect-ratio: 21 / 7; }
         }
 
         /* =========================
            DOWNLOADS MANAGER
         ========================= */
-        #downloads-app { display: none; padding: 20px; padding-bottom: 90px; }
+        #downloads-app { display: none; padding: 20px; padding-bottom: 90px; max-width: 800px; margin: 0 auto; }
         .dl-item { background: var(--bg-box); border: 1px solid var(--border-color); border-radius: 16px; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; }
         .dl-header { display: flex; justify-content: space-between; align-items: center; }
         .dl-title { font-weight: bold; font-size: 14px; }
@@ -224,7 +239,7 @@
         ========================= */
         .modal { position: fixed; inset: 0; z-index: 6000; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(0,0,0,.82); backdrop-filter: blur(15px); }
         .modal.show { display: flex; }
-        .modal-box { width: 100%; max-width: 720px; overflow: hidden; border-radius: 22px; background: var(--bg-box); border: 1px solid var(--border-color); box-shadow: 0 25px 80px rgba(0,0,0,.55); display: flex; flex-direction: column; max-height: 90vh; }
+        .modal-box { width: 100%; max-width: 800px; overflow: hidden; border-radius: 22px; background: var(--bg-box); border: 1px solid var(--border-color); box-shadow: 0 25px 80px rgba(0,0,0,.55); display: flex; flex-direction: column; max-height: 90vh; }
         .video-container { width: 100%; aspect-ratio: 16 / 9; background: #000; flex-shrink: 0; }
         .video-container video { width: 100%; height: 100%; display: block; }
         .modal-content { padding: 18px; overflow-y: auto; flex-grow: 1; }
@@ -251,7 +266,6 @@
 <div id="custom-alert"></div>
 <div id="loader">کمی صبر کنید...</div>
 
-<!-- قالب اصلی که سایت را در تلویزیون و کامپیوتر وسط نگه می‌دارد -->
 <div id="app-wrapper">
 
     <!-- =========================
@@ -430,7 +444,7 @@
          DOWNLOADS MANAGER APP
     ========================= -->
     <div id="downloads-app">
-        <header class="header" style="margin:-20px -20px 20px; padding:0 20px;">
+        <header class="header" style="margin:-20px -20px 20px; padding:0 20px; max-width: none;">
             <h2 style="font-size:18px;">مدیریت دانلودها</h2>
         </header>
         <div id="dl-list-container">
@@ -749,7 +763,6 @@
                 if(count > 0) { dot.style.display = 'inline-block'; headDot.style.display = 'inline-block'; } 
                 else { dot.style.display = 'none'; headDot.style.display = 'none'; }
             } else {
-                // دریافت لوکال برای اطمینان از صحت RLS
                 const { data } = await supabaseClient.from('messages').select('*').eq('is_read', false);
                 if(data) {
                     let deletedSysMsgs = JSON.parse(localStorage.getItem('deleted_sys_msgs') || '[]');
@@ -784,7 +797,6 @@
         document.getElementById('supportModal').classList.remove('show');
     }
 
-    // باز کردن صندوق پیام کاربران + نمایش دکمه سطل آشغال
     window.openInboxModal = async function() {
         closeSidebar();
         document.getElementById('inboxModal').classList.add('show');
@@ -797,7 +809,6 @@
         if(data && data.length > 0) {
             let deletedSysMsgs = JSON.parse(localStorage.getItem('deleted_sys_msgs') || '[]');
             
-            // فیلتر کردن پیام‌های مرتبط با کاربر
             let userMsgs = data.filter(m => {
                 if(m.direction === 'system_all' && !deletedSysMsgs.includes(m.id)) return true;
                 if(m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) return true;
@@ -819,7 +830,6 @@
                             <div style="user-select:text; line-height:1.6; color:#ddd;">${msg.content}</div>
                         </div>`;
                 });
-                // خوانده شدن فقط برای پیام های ادمین به این کاربر
                 await supabaseClient.from('messages').update({ is_read: true }).eq('direction', 'admin_to_user').eq('user_id', currentUserProfile.id).eq('is_read', false);
                 checkUnreadMessages();
             } else {
@@ -831,7 +841,6 @@
         showLoader(false);
     }
 
-    // سیستم حذف پیام کاربر
     window.deleteUserMsg = async function(msgId, isSystem) {
         if(!confirm("آیا از حذف این پیام مطمئن هستید؟")) return;
         showLoader(true);
@@ -843,12 +852,10 @@
             await supabaseClient.from('messages').delete().eq('id', msgId);
         }
         showLoader(false);
-        openInboxModal(); // رفرش لیست
+        openInboxModal();
     }
 
-    // بارگذاری صندوق ادمین (حل مشکل نام کاربری با واکشی دستی)
     async function loadAdminInbox() {
-        // برای جلوگیری از ارور ارتباط کلید خارجی، یوزرها رو جدا می‌گیریم
         const { data: usersData } = await supabaseClient.from('users_data').select('id, username');
         let userMap = {};
         if(usersData) { usersData.forEach(u => userMap[u.id] = u.username); }
@@ -878,7 +885,6 @@
         } else { list.innerHTML = '<div style="color:#888; font-size:13px; text-align:center;">پیام جدیدی وجود ندارد.</div>'; }
     }
 
-    // حذف پیام از صندوق ادمین
     window.deleteAdminMsg = async function(id) {
         if(!confirm("این پیام از صندوق شما حذف شود؟")) return;
         showLoader(true);
@@ -892,7 +898,7 @@
         document.getElementById('adminReplyModal').classList.add('show');
         await supabaseClient.from('messages').update({ is_read: true }).eq('id', msgId);
         checkUnreadMessages();
-        loadAdminInbox(); // که تیک جدید برداشته بشه
+        loadAdminInbox();
     }
 
     async function sendAdminReply() {
