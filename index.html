@@ -68,7 +68,27 @@
             --header-bg: rgba(243, 244, 246, 0.85);
         }
 
-        body { background: radial-gradient(circle at 85% 5%, rgba(124, 58, 237, 0.08), transparent 28%), var(--bg-main); color: var(--text-main); font-family: "Vazirmatn", sans-serif; overflow-x: hidden; padding-bottom: 90px; transition: background 0.3s, color 0.3s; }
+        body { 
+            background: #040407; /* پس زمینه بیرون کادر در لپ‌تاپ */
+            color: var(--text-main); 
+            font-family: "Vazirmatn", sans-serif; 
+            overflow-x: hidden; 
+            transition: background 0.3s, color 0.3s; 
+        }
+
+        /* =========================
+           RESPONSIVE CONTAINER (Desktop & TV)
+        ========================= */
+        #app-wrapper {
+            max-width: 850px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: radial-gradient(circle at 85% 5%, rgba(124, 58, 237, 0.08), transparent 28%), var(--bg-main);
+            position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            padding-bottom: 90px;
+        }
+
         button, input, select, textarea { font-family: inherit; color: inherit; }
         button { border: none; cursor: pointer; outline: none; }
         a { color: inherit; text-decoration: none; }
@@ -94,7 +114,7 @@
         .switch-box span { color: #a855f7; font-weight: bold; font-size: 14px; margin-right: 5px; }
 
         /* =========================
-           SIDEBAR MENU (منوی کشویی)
+           SIDEBAR MENU
         ========================= */
         .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 4000; display: none; opacity: 0; transition: 0.3s; backdrop-filter: blur(5px); }
         .sidebar { position: fixed; top: 0; bottom: 0; left: 0; width: 280px; background: var(--bg-box); z-index: 4001; transform: translateX(-100%); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; }
@@ -136,14 +156,11 @@
         #loader { position: fixed; inset:0; background: rgba(0,0,0,0.8); z-index: 9999; display: none; align-items: center; justify-content: center; color: #a855f7; font-weight: bold; font-size: 18px; backdrop-filter: blur(5px); }
 
         /* =========================
-           MAIN APP (صفحه اصلی)
+           MAIN APP (Home)
         ========================= */
         #main-app { display: none; }
-        .header { position: sticky; top: 0; z-index: 1000; height: 74px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--header-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); }
-        
-        /* لوگو با فونت جدید فضایی (Audiowide) */
+        .header { position: sticky; top: 0; z-index: 1000; height: 74px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--header-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); border-radius: 0 0 20px 20px; }
         .logo { font-family: 'Audiowide', sans-serif; font-size: 32px; font-weight: 400; letter-spacing: 2px; color: var(--text-main); }
-        
         .header-actions { display: flex; align-items: center; gap: 10px; }
         .profile-button { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); font-size: 17px; position: relative; }
         
@@ -166,19 +183,29 @@
         .section-title { font-size: 20px; font-weight: 700; }
         .section-title::before { content: ""; display: inline-block; width: 4px; height: 20px; margin-left: 9px; vertical-align: -3px; border-radius: 10px; background: linear-gradient(#a855f7, #22d3ee); }
         .section-more { color: var(--text-muted); font-size: 12px; }
-        .movie-list { display: flex; gap: 13px; overflow-x: auto; padding: 3px 18px 12px; scrollbar-width: none; }
-        .movie-list::-webkit-scrollbar { display: none; }
+        
+        /* Movie list optimized for Desktop & Mobile */
+        .movie-list { display: flex; gap: 13px; overflow-x: auto; padding: 3px 18px 12px; scrollbar-width: thin; }
+        .movie-list::-webkit-scrollbar { height: 6px; }
+        .movie-list::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.4); border-radius: 10px; }
+        
         .movie-card { flex: 0 0 142px; cursor: pointer; user-select: none; transition: transform .25s ease; }
         .movie-card:active { transform: scale(.96); }
-        .poster { position: relative; width: 142px; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 16px; background: var(--bg-input); box-shadow: 0 8px 25px rgba(0,0,0,.15); }
+        .poster { position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 16px; background: var(--bg-input); box-shadow: 0 8px 25px rgba(0,0,0,.15); }
         .poster img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .45s ease; }
         .movie-card:hover .poster img { transform: scale(1.04); }
         .poster-overlay { position: absolute; inset: auto 0 0 0; height: 45%; background: linear-gradient(transparent, rgba(0,0,0,.8)); }
         .movie-name { padding-top: 9px; font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .empty-section { margin: 0 18px; height: 115px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--border-color); border-radius: 18px; color: var(--text-muted); font-size: 13px; background: var(--bg-input); }
         
+        @media (min-width: 768px) {
+            .movie-card { flex: 0 0 180px; }
+            .movie-name { font-size: 15px; }
+            .hero { border-radius: 30px; }
+        }
+
         /* =========================
-           DOWNLOADS MANAGER (مدیریت دانلودها)
+           DOWNLOADS MANAGER
         ========================= */
         #downloads-app { display: none; padding: 20px; padding-bottom: 90px; }
         .dl-item { background: var(--bg-box); border: 1px solid var(--border-color); border-radius: 16px; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; }
@@ -224,256 +251,261 @@
 <div id="custom-alert"></div>
 <div id="loader">کمی صبر کنید...</div>
 
-<!-- =========================
-     AUTH SCREEN
-========================= -->
-<div id="auth-screen">
-    <div class="box-container" id="login-box">
-        <h2 class="box-title">ورود به پلاتو</h2>
-        <div class="input-group">
-            <input type="text" id="log-user" class="input-field" placeholder="نام کاربری" autocapitalize="none" autocomplete="off" spellcheck="false">
+<!-- قالب اصلی که سایت را در تلویزیون و کامپیوتر وسط نگه می‌دارد -->
+<div id="app-wrapper">
+
+    <!-- =========================
+         AUTH SCREEN
+    ========================= -->
+    <div id="auth-screen">
+        <div class="box-container" id="login-box">
+            <h2 class="box-title">ورود به پلاتو</h2>
+            <div class="input-group">
+                <input type="text" id="log-user" class="input-field" placeholder="نام کاربری" autocapitalize="none" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="input-group">
+                <input type="password" id="log-pass" class="input-field" placeholder="رمز عبور" autocapitalize="none" autocomplete="off">
+            </div>
+            <label class="checkbox-container">
+                <input type="checkbox" id="show-pass" onchange="togglePassword()"> نمایش رمز عبور
+            </label>
+            <button type="button" class="btn-primary" onclick="doLogin()">ورود به حساب</button>
+            <button type="button" class="switch-box" onclick="toggleAuth('register')">حساب کاربری ندارید؟ <span>ثبت‌نام کنید</span></button>
         </div>
-        <div class="input-group">
-            <input type="password" id="log-pass" class="input-field" placeholder="رمز عبور" autocapitalize="none" autocomplete="off">
+
+        <div class="box-container" id="reg-box" style="display: none;">
+            <h2 class="box-title">ثبت‌نام در پلاتو</h2>
+            <div class="input-group"><input type="text" id="reg-user" class="input-field" placeholder="نام کاربری (انگلیسی)" autocapitalize="none" autocomplete="off" spellcheck="false"></div>
+            <div class="input-group"><input type="password" id="reg-pass" class="input-field" placeholder="رمز عبور" autocapitalize="none" autocomplete="off"></div>
+            <div class="input-group"><input type="text" id="reg-model" class="input-field" placeholder="مدل گوشی / دستگاه" autocomplete="off"></div>
+            <label class="checkbox-container"><input type="checkbox" id="show-pass" onchange="togglePassword()"> نمایش رمز عبور</label>
+            <button type="button" class="btn-primary" onclick="doRegister()">ارسال درخواست عضویت</button>
+            <button type="button" class="switch-box" onclick="toggleAuth('login')">قبلاً ثبت‌نام کردید؟ <span>وارد شوید</span></button>
         </div>
-        <label class="checkbox-container">
-            <input type="checkbox" id="show-pass" onchange="togglePassword()"> نمایش رمز عبور
-        </label>
-        <button type="button" class="btn-primary" onclick="doLogin()">ورود به حساب</button>
-        <button type="button" class="switch-box" onclick="toggleAuth('register')">حساب کاربری ندارید؟ <span>ثبت‌نام کنید</span></button>
     </div>
 
-    <div class="box-container" id="reg-box" style="display: none;">
-        <h2 class="box-title">ثبت‌نام در پلاتو</h2>
-        <div class="input-group"><input type="text" id="reg-user" class="input-field" placeholder="نام کاربری (انگلیسی)" autocapitalize="none" autocomplete="off" spellcheck="false"></div>
-        <div class="input-group"><input type="password" id="reg-pass" class="input-field" placeholder="رمز عبور" autocapitalize="none" autocomplete="off"></div>
-        <div class="input-group"><input type="text" id="reg-model" class="input-field" placeholder="مدل گوشی" autocomplete="off"></div>
-        <label class="checkbox-container"><input type="checkbox" id="show-pass" onchange="togglePassword()"> نمایش رمز عبور</label>
-        <button type="button" class="btn-primary" onclick="doRegister()">ارسال درخواست عضویت</button>
-        <button type="button" class="switch-box" onclick="toggleAuth('login')">قبلاً ثبت‌نام کردید؟ <span>وارد شوید</span></button>
-    </div>
-</div>
-
-<!-- =========================
-     SIDEBAR MENU (منوی کاربری)
-========================= -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-<div class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-        <div class="sidebar-user" id="sidebarUser">نام کاربری</div>
-        <div class="sidebar-sub">
-            <div id="sub-time-left" style="margin-bottom:5px;">در حال بررسی...</div>
-            <div class="vip-badge">★ VIP</div>
+    <!-- =========================
+         SIDEBAR MENU (منوی کاربری)
+    ========================= -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-user" id="sidebarUser">نام کاربری</div>
+            <div class="sidebar-sub">
+                <div id="sub-time-left" style="margin-bottom:5px;">در حال بررسی...</div>
+                <div class="vip-badge">★ VIP</div>
+            </div>
         </div>
-    </div>
-    <div class="sidebar-menu">
-        <button class="sidebar-btn" onclick="toggleTheme()">☀️/🌙 تغییر پوسته (روز/شب)</button>
-        <button class="sidebar-btn" onclick="openSupportModal()">💬 ارتباط با پشتیبانی</button>
-        <button class="sidebar-btn" onclick="openInboxModal()">📥 صندوق پیام‌ها <span class="notif-dot" id="inbox-notif" style="display:none;"></span></button>
-        <div id="admin-sidebar-btn-container"></div>
-        <button class="sidebar-btn" style="color:#ef4444; margin-top:auto;" onclick="doLogout()">🚪 خروج از حساب</button>
-    </div>
-</div>
-
-<!-- =========================
-     ADMIN PANEL 
-========================= -->
-<div id="admin-screen">
-    <div style="width:100%; max-width:600px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <h2 style="font-size: 18px;">👑 پنل مدیریت</h2>
-        <button class="btn-sm" style="background:var(--bg-input); border:1px solid var(--border-color);" onclick="hideAdminPanel()">بازگشت به سایت ➔</button>
-    </div>
-    
-    <div class="tab-menu">
-        <button class="tab-btn active" onclick="switchAdminTab('tab-files', this)">فایل و لینک</button>
-        <button class="tab-btn" onclick="switchAdminTab('tab-requests', this)">درخواست و اشتراک</button>
-        <button class="tab-btn" onclick="switchAdminTab('tab-users', this)">کاربران</button>
-        <button class="tab-btn" onclick="switchAdminTab('tab-messages', this)">پیام‌ها <span class="notif-dot" id="admin-msg-notif" style="display:none;"></span></button>
+        <div class="sidebar-menu">
+            <button class="sidebar-btn" onclick="toggleTheme()">☀️/🌙 تغییر پوسته (روز/شب)</button>
+            <button class="sidebar-btn" onclick="openSupportModal()">💬 ارتباط با پشتیبانی</button>
+            <button class="sidebar-btn" onclick="openInboxModal()">📥 صندوق پیام‌ها <span class="notif-dot" id="inbox-notif" style="display:none;"></span></button>
+            <div id="admin-sidebar-btn-container"></div>
+            <button class="sidebar-btn" style="color:#ef4444; margin-top:auto;" onclick="doLogout()">🚪 خروج از حساب</button>
+        </div>
     </div>
 
-    <!-- تب ۱: مدیریت فایل و لینک -->
-    <div id="tab-files" class="tab-content active admin-section">
-        <h3 id="form-movie-title">اضافه کردن محتوای جدید</h3>
-        <div class="input-group">
-            <select id="new-movie-category" class="input-field">
-                <option value="series">📺 دسته: سریال</option>
-                <option value="movie">🎬 دسته: فیلم سینمایی</option>
-            </select>
-        </div>
-        <div class="input-group"><input type="text" id="new-movie-title" class="input-field" placeholder="عنوان فیلم / سریال"></div>
-        <div class="input-group"><input type="text" id="new-movie-poster" class="input-field" placeholder="لینک عکس پوستر"></div>
-        <div class="input-group">
-            <textarea id="new-movie-url" class="input-field" style="height:120px; padding:15px; resize:vertical; line-height:1.6;" placeholder="فرمت: نام قسمت | لینک دانلود&#10;(برای هر لینک یک خط جدید ایجاد کنید)"></textarea>
-        </div>
-        <div class="input-group">
-            <input type="number" id="new-movie-timer" class="input-field" placeholder="زمان انقضای لینک به ساعت (خالی = بدون انقضا)">
-        </div>
-        <div style="display:flex; gap:10px;">
-            <button type="button" id="save-movie-btn" class="btn-primary" onclick="saveMovie()">ذخیره در سایت</button>
-            <button type="button" id="cancel-edit-btn" class="btn-primary" style="display:none; background:#444; box-shadow:none;" onclick="cancelEdit()">انصراف</button>
+    <!-- =========================
+         ADMIN PANEL 
+    ========================= -->
+    <div id="admin-screen">
+        <div style="width:100%; max-width:600px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2 style="font-size: 18px;">👑 پنل مدیریت</h2>
+            <button class="btn-sm" style="background:var(--bg-input); border:1px solid var(--border-color);" onclick="hideAdminPanel()">بازگشت به سایت ➔</button>
         </div>
         
-        <h3 style="margin-top:30px; border-top:1px solid var(--border-color); padding-top:20px;">لیست محتوای سایت</h3>
-        <div id="admin-movie-list"></div>
-    </div>
-
-    <!-- تب ۲: درخواست‌ها -->
-    <div id="tab-requests" class="tab-content">
-        <div class="admin-section">
-            <h3>درخواست‌های ورود جدید</h3>
-            <div id="pending-list"></div>
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="switchAdminTab('tab-files', this)">فایل و لینک</button>
+            <button class="tab-btn" onclick="switchAdminTab('tab-requests', this)">درخواست و اشتراک</button>
+            <button class="tab-btn" onclick="switchAdminTab('tab-users', this)">کاربران</button>
+            <button class="tab-btn" onclick="switchAdminTab('tab-messages', this)">پیام‌ها <span class="notif-dot" id="admin-msg-notif" style="display:none;"></span></button>
         </div>
-        <div class="admin-section">
-            <h3>شارژ اشتراک کاربری</h3>
-            <div class="input-group"><input type="text" id="charge-user" class="input-field" placeholder="نام کاربری مخاطب" autocapitalize="none"></div>
-            <div class="input-group"><input type="number" id="charge-days" class="input-field" placeholder="تعداد روز"></div>
-            <button type="button" class="btn-primary" onclick="chargeSub()">اعمال اشتراک جدید</button>
+
+        <!-- تب ۱: مدیریت فایل و لینک -->
+        <div id="tab-files" class="tab-content active admin-section">
+            <h3 id="form-movie-title">اضافه کردن محتوای جدید</h3>
+            <div class="input-group">
+                <select id="new-movie-category" class="input-field">
+                    <option value="series">📺 دسته: سریال</option>
+                    <option value="movie">🎬 دسته: فیلم سینمایی</option>
+                </select>
+            </div>
+            <div class="input-group"><input type="text" id="new-movie-title" class="input-field" placeholder="عنوان فیلم / سریال"></div>
+            <div class="input-group"><input type="text" id="new-movie-poster" class="input-field" placeholder="لینک عکس پوستر"></div>
+            <div class="input-group">
+                <textarea id="new-movie-url" class="input-field" style="height:120px; padding:15px; resize:vertical; line-height:1.6;" placeholder="فرمت: نام قسمت | لینک دانلود&#10;(برای هر لینک یک خط جدید ایجاد کنید)"></textarea>
+            </div>
+            <div class="input-group">
+                <input type="number" id="new-movie-timer" class="input-field" placeholder="زمان انقضای لینک به ساعت (خالی = بدون انقضا)">
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button type="button" id="save-movie-btn" class="btn-primary" onclick="saveMovie()">ذخیره در سایت</button>
+                <button type="button" id="cancel-edit-btn" class="btn-primary" style="display:none; background:#444; box-shadow:none;" onclick="cancelEdit()">انصراف</button>
+            </div>
+            
+            <h3 style="margin-top:30px; border-top:1px solid var(--border-color); padding-top:20px;">لیست محتوای سایت</h3>
+            <div id="admin-movie-list"></div>
         </div>
-    </div>
 
-    <!-- تب ۳: کاربران -->
-    <div id="tab-users" class="tab-content admin-section">
-        <h3>لیست کل کاربران</h3>
-        <button class="btn-sm btn-approve" style="width:100%; margin-bottom:15px; padding:12px;" onclick="openSystemMessageModal()">+ ارسال پیام سیستمی به همه</button>
-        <div id="all-users-list"></div>
-    </div>
-
-    <!-- تب ۴: پیام‌های پشتیبانی -->
-    <div id="tab-messages" class="tab-content admin-section">
-        <h3>صندوق پیام‌های پشتیبانی</h3>
-        <div id="admin-inbox-list"></div>
-    </div>
-</div>
-
-<!-- =========================
-     MAIN APP (Home)
-========================= -->
-<div id="main-app">
-    <header class="header">
-        <div class="logo">PLATO</div>
-        <div class="header-actions">
-            <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                <span class="notif-dot" id="header-notif" style="position:absolute; top:2px; right:2px; display:none;"></span>
-            </button>
+        <!-- تب ۲: درخواست‌ها -->
+        <div id="tab-requests" class="tab-content">
+            <div class="admin-section">
+                <h3>درخواست‌های ورود جدید</h3>
+                <div id="pending-list"></div>
+            </div>
+            <div class="admin-section">
+                <h3>شارژ اشتراک کاربری</h3>
+                <div class="input-group"><input type="text" id="charge-user" class="input-field" placeholder="نام کاربری مخاطب" autocapitalize="none"></div>
+                <div class="input-group"><input type="number" id="charge-days" class="input-field" placeholder="تعداد روز"></div>
+                <button type="button" class="btn-primary" onclick="chargeSub()">اعمال اشتراک جدید</button>
+            </div>
         </div>
-    </header>
 
-    <div class="search-box">
-        <div class="search-wrapper">
-            <span class="search-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg></span>
-            <input id="searchInput" type="search" placeholder="جستجوی نام فیلم یا سریال..." autocomplete="off">
+        <!-- تب ۳: کاربران -->
+        <div id="tab-users" class="tab-content admin-section">
+            <h3>لیست کل کاربران</h3>
+            <button class="btn-sm btn-approve" style="width:100%; margin-bottom:15px; padding:12px;" onclick="openSystemMessageModal()">+ ارسال پیام سیستمی به همه</button>
+            <div id="all-users-list"></div>
         </div>
-    </div>
 
-    <section class="hero">
-        <div class="slides" id="slides">
-            <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_000000004cc0822f9865a432af65b5ca-optimized.webp" alt="Plato Banner 1"></div>
-            <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_0000000099e481f9a07f4c9fbfd921c5-optimized.webp" alt="Plato Banner 2"></div>
-            <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_00000000d044820cb58364bc8e64f634-optimized.webp" alt="Plato Banner 3"></div>
-        </div>
-        <div class="slider-dots">
-            <button class="dot active" data-slide="0"></button>
-            <button class="dot" data-slide="1"></button>
-            <button class="dot" data-slide="2"></button>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="section-header">
-            <h2 class="section-title">سریال‌ها</h2>
-            <span class="section-more">اختصاصی</span>
-        </div>
-        <div class="movie-list" id="seriesList"></div>
-    </section>
-
-    <section class="section">
-        <div class="section-header">
-            <h2 class="section-title">فیلم‌های سینمایی</h2>
-            <span class="section-more">جدیدترین‌ها</span>
-        </div>
-        <div class="movie-list" id="moviesList"></div>
-    </section>
-</div>
-
-<!-- =========================
-     DOWNLOADS MANAGER APP
-========================= -->
-<div id="downloads-app">
-    <header class="header" style="margin:-20px -20px 20px; padding:0 20px;">
-        <h2 style="font-size:18px;">مدیریت دانلودها</h2>
-    </header>
-    <div id="dl-list-container">
-        <!-- آیتم‌های دانلود اینجا رندر میشن -->
-        <div class="empty-section">لیست دانلودهای شما خالی است.</div>
-    </div>
-</div>
-
-<!-- =========================
-     MODALS
-========================= -->
-<!-- Video Player -->
-<div class="modal" id="playerModal">
-    <div class="modal-box">
-        <div class="video-container">
-            <video id="videoPlayer" controls controlsList="nodownload" playsinline preload="metadata"></video>
-        </div>
-        <div class="modal-content">
-            <h3 class="modal-title" id="modalTitle">پخش محتوا</h3>
-            <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;">این لینک منقضی شده است و قابلیت پخش ندارد.</div>
-            <div id="modal-links-container"></div>
-            <button class="close-modal" onclick="closePlayer()">بستن پنجره</button>
+        <!-- تب ۴: پیام‌های پشتیبانی -->
+        <div id="tab-messages" class="tab-content admin-section">
+            <h3>صندوق پیام‌های پشتیبانی</h3>
+            <div id="admin-inbox-list"></div>
         </div>
     </div>
-</div>
 
-<!-- Support Modal (User) -->
-<div class="modal" id="supportModal">
-    <div class="modal-box" style="max-width: 400px; max-height: auto;">
-        <div class="modal-content">
-            <h3 class="modal-title">ارتباط با پشتیبانی</h3>
-            <textarea id="support-msg-text" class="input-field" style="height:120px; padding:15px; resize:none;" placeholder="پیام خود را برای مدیریت بنویسید..."></textarea>
-            <button class="btn-primary" onclick="sendSupportMessage()">ارسال پیام</button>
-            <button class="close-modal" onclick="document.getElementById('supportModal').classList.remove('show')">انصراف</button>
+    <!-- =========================
+         MAIN APP (Home)
+    ========================= -->
+    <div id="main-app">
+        <header class="header">
+            <div class="logo">PLATO</div>
+            <div class="header-actions">
+                <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <span class="notif-dot" id="header-notif" style="position:absolute; top:2px; right:2px; display:none;"></span>
+                </button>
+            </div>
+        </header>
+
+        <div class="search-box">
+            <div class="search-wrapper">
+                <span class="search-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg></span>
+                <input id="searchInput" type="search" placeholder="جستجوی نام فیلم یا سریال..." autocomplete="off">
+            </div>
+        </div>
+
+        <section class="hero">
+            <div class="slides" id="slides">
+                <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_000000004cc0822f9865a432af65b5ca-optimized.webp" alt="Plato Banner 1"></div>
+                <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_0000000099e481f9a07f4c9fbfd921c5-optimized.webp" alt="Plato Banner 2"></div>
+                <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_00000000d044820cb58364bc8e64f634-optimized.webp" alt="Plato Banner 3"></div>
+            </div>
+            <div class="slider-dots">
+                <button class="dot active" data-slide="0"></button>
+                <button class="dot" data-slide="1"></button>
+                <button class="dot" data-slide="2"></button>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">سریال‌ها</h2>
+                <span class="section-more">اختصاصی</span>
+            </div>
+            <div class="movie-list" id="seriesList"></div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">فیلم‌های سینمایی</h2>
+                <span class="section-more">جدیدترین‌ها</span>
+            </div>
+            <div class="movie-list" id="moviesList"></div>
+        </section>
+    </div>
+
+    <!-- =========================
+         DOWNLOADS MANAGER APP
+    ========================= -->
+    <div id="downloads-app">
+        <header class="header" style="margin:-20px -20px 20px; padding:0 20px;">
+            <h2 style="font-size:18px;">مدیریت دانلودها</h2>
+        </header>
+        <div id="dl-list-container">
+            <!-- آیتم‌های دانلود اینجا رندر میشن -->
+            <div class="empty-section">لیست دانلودهای شما خالی است.</div>
         </div>
     </div>
-</div>
 
-<!-- Inbox Modal (User) -->
-<div class="modal" id="inboxModal">
-    <div class="modal-box" style="max-width: 400px; height: 80vh;">
-        <div class="modal-content" style="display:flex; flex-direction:column;">
-            <h3 class="modal-title">صندوق پیام‌های شما</h3>
-            <div id="user-messages-list" style="flex-grow:1; overflow-y:auto;"></div>
-            <button class="close-modal" onclick="document.getElementById('inboxModal').classList.remove('show')">بستن</button>
+    <!-- =========================
+         MODALS
+    ========================= -->
+    <!-- Video Player -->
+    <div class="modal" id="playerModal">
+        <div class="modal-box">
+            <div class="video-container">
+                <video id="videoPlayer" controls controlsList="nodownload" playsinline preload="metadata"></video>
+            </div>
+            <div class="modal-content">
+                <h3 class="modal-title" id="modalTitle">پخش محتوا</h3>
+                <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;">این لینک منقضی شده است و قابلیت پخش ندارد.</div>
+                <div id="modal-links-container"></div>
+                <button class="close-modal" onclick="closePlayer()">بستن پنجره</button>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Admin Reply Modal -->
-<div class="modal" id="adminReplyModal">
-    <div class="modal-box" style="max-width: 400px;">
-        <div class="modal-content">
-            <h3 class="modal-title">پاسخ به کاربر</h3>
-            <input type="hidden" id="reply-user-id">
-            <textarea id="admin-reply-text" class="input-field" style="height:100px; padding:15px; resize:none;" placeholder="متن پاسخ..."></textarea>
-            <button class="btn-primary" onclick="sendAdminReply()">ارسال پاسخ</button>
-            <button class="close-modal" onclick="document.getElementById('adminReplyModal').classList.remove('show')">انصراف</button>
+    <!-- Support Modal (User) -->
+    <div class="modal" id="supportModal">
+        <div class="modal-box" style="max-width: 400px;">
+            <div class="modal-content">
+                <h3 class="modal-title">ارتباط با پشتیبانی</h3>
+                <textarea id="support-msg-text" class="input-field" style="height:120px; padding:15px; resize:none;" placeholder="پیام خود را برای مدیریت بنویسید..."></textarea>
+                <button class="btn-primary" onclick="sendSupportMessage()">ارسال پیام</button>
+                <button class="close-modal" onclick="document.getElementById('supportModal').classList.remove('show')">انصراف</button>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Admin System Message Modal -->
-<div class="modal" id="sysMsgModal">
-    <div class="modal-box" style="max-width: 400px;">
-        <div class="modal-content">
-            <h3 class="modal-title" style="color:#10b981;">ارسال پیام سیستمی (عمومی)</h3>
-            <textarea id="sys-msg-text" class="input-field" style="height:100px; padding:15px; resize:none;" placeholder="این پیام برای تمام کاربران نمایش داده می‌شود..."></textarea>
-            <button class="btn-primary" style="background:#10b981;" onclick="sendSystemMessage()">ارسال به همه</button>
-            <button class="close-modal" onclick="document.getElementById('sysMsgModal').classList.remove('show')">انصراف</button>
+    <!-- Inbox Modal (User) -->
+    <div class="modal" id="inboxModal">
+        <div class="modal-box" style="max-width: 400px; height: 80vh;">
+            <div class="modal-content" style="display:flex; flex-direction:column;">
+                <h3 class="modal-title">صندوق پیام‌های شما</h3>
+                <div id="user-messages-list" style="flex-grow:1; overflow-y:auto; padding-right:5px;"></div>
+                <button class="close-modal" onclick="document.getElementById('inboxModal').classList.remove('show')">بستن</button>
+            </div>
         </div>
     </div>
-</div>
+
+    <!-- Admin Reply Modal -->
+    <div class="modal" id="adminReplyModal">
+        <div class="modal-box" style="max-width: 400px;">
+            <div class="modal-content">
+                <h3 class="modal-title">پاسخ به کاربر</h3>
+                <input type="hidden" id="reply-user-id">
+                <textarea id="admin-reply-text" class="input-field" style="height:100px; padding:15px; resize:none;" placeholder="متن پاسخ..."></textarea>
+                <button class="btn-primary" onclick="sendAdminReply()">ارسال پاسخ</button>
+                <button class="close-modal" onclick="document.getElementById('adminReplyModal').classList.remove('show')">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin System Message Modal -->
+    <div class="modal" id="sysMsgModal">
+        <div class="modal-box" style="max-width: 400px;">
+            <div class="modal-content">
+                <h3 class="modal-title" style="color:#10b981;">ارسال پیام سیستمی (عمومی)</h3>
+                <textarea id="sys-msg-text" class="input-field" style="height:100px; padding:15px; resize:none;" placeholder="این پیام برای تمام کاربران نمایش داده می‌شود..."></textarea>
+                <button class="btn-primary" style="background:#10b981;" onclick="sendSystemMessage()">ارسال به همه</button>
+                <button class="close-modal" onclick="document.getElementById('sysMsgModal').classList.remove('show')">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+</div> <!-- End of App Wrapper -->
 
 <!-- =========================
      BOTTOM NAV
@@ -572,7 +604,7 @@
     }
 
     /* =========================
-       منوی کشویی و محاسبه دقیق زمان VIP
+       منوی کشویی و محاسبه دقیق زمان VIP (فقط روز)
     ========================= */
     function openSidebar() {
         document.getElementById('sidebar').classList.add('open');
@@ -590,15 +622,8 @@
                 const diff = end - now;
                 
                 if(diff > 0) {
-                    const d = Math.floor(diff / (1000 * 3600 * 24));
-                    const h = Math.floor((diff % (1000 * 3600 * 24)) / (1000 * 3600));
-                    const m = Math.floor((diff % (1000 * 3600)) / (1000 * 60));
-                    
-                    let timeStr = "اعتبار: ";
-                    if (d > 0) timeStr += d + " روز و ";
-                    timeStr += h + " ساعت و " + m + " دقیقه";
-                    
-                    subElem.textContent = timeStr;
+                    const d = Math.ceil(diff / (1000 * 3600 * 24)); // فقط روز کامل
+                    subElem.textContent = `اعتبار: ${d} روز باقی‌مانده`;
                 } else { 
                     subElem.textContent = "اشتراک منقضی شده"; 
                 }
@@ -717,18 +742,28 @@
         if(!currentUserProfile) return;
         try {
             if(currentUserProfile.role === 'admin') {
-                const { count } = await supabaseClient.from('messages').select('*', { count: 'exact', head: true }).eq('direction', 'user_to_admin').eq('is_read', false);
+                const { data } = await supabaseClient.from('messages').select('id').eq('direction', 'user_to_admin').eq('is_read', false);
+                const count = data ? data.length : 0;
                 const dot = document.getElementById('admin-msg-notif');
                 const headDot = document.getElementById('header-notif');
                 if(count > 0) { dot.style.display = 'inline-block'; headDot.style.display = 'inline-block'; } 
                 else { dot.style.display = 'none'; headDot.style.display = 'none'; }
             } else {
-                const { count } = await supabaseClient.from('messages').select('*', { count: 'exact', head: true }).or(`and(direction.eq.admin_to_user,user_id.eq.${currentUserProfile.id}),direction.eq.system_all`).eq('is_read', false);
-                const dot1 = document.getElementById('inbox-notif');
-                const dot2 = document.getElementById('sidebar-notif');
-                const headDot = document.getElementById('header-notif');
-                if(count > 0) { dot1.style.display = 'inline-block'; dot2.style.display = 'inline-block'; headDot.style.display = 'inline-block'; }
-                else { dot1.style.display = 'none'; dot2.style.display = 'none'; headDot.style.display = 'none'; }
+                // دریافت لوکال برای اطمینان از صحت RLS
+                const { data } = await supabaseClient.from('messages').select('*').eq('is_read', false);
+                if(data) {
+                    let deletedSysMsgs = JSON.parse(localStorage.getItem('deleted_sys_msgs') || '[]');
+                    let unreadCount = data.filter(m => {
+                        if(m.direction === 'system_all' && !deletedSysMsgs.includes(m.id)) return true;
+                        if(m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) return true;
+                        return false;
+                    }).length;
+
+                    const dot1 = document.getElementById('inbox-notif');
+                    const headDot = document.getElementById('header-notif');
+                    if(unreadCount > 0) { dot1.style.display = 'inline-block'; headDot.style.display = 'inline-block'; }
+                    else { dot1.style.display = 'none'; headDot.style.display = 'none'; }
+                }
             }
         } catch(e){}
     }
@@ -742,52 +777,114 @@
         const text = document.getElementById('support-msg-text').value.trim();
         if(!text) return;
         showLoader(true);
-        await supabaseClient.from('messages').insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text }]);
+        await supabaseClient.from('messages').insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text, is_read: false }]);
         showLoader(false);
         showCustomAlert('پیام شما با موفقیت برای مدیریت ارسال شد.');
         document.getElementById('support-msg-text').value = '';
         document.getElementById('supportModal').classList.remove('show');
     }
 
-    async function openInboxModal() {
+    // باز کردن صندوق پیام کاربران + نمایش دکمه سطل آشغال
+    window.openInboxModal = async function() {
         closeSidebar();
         document.getElementById('inboxModal').classList.add('show');
         showLoader(true);
-        const { data } = await supabaseClient.from('messages').select('*').or(`and(direction.eq.admin_to_user,user_id.eq.${currentUserProfile.id}),direction.eq.system_all`).order('created_at', { ascending: false });
+        
+        const { data } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: false });
         const list = document.getElementById('user-messages-list');
         list.innerHTML = '';
+
         if(data && data.length > 0) {
-            data.forEach(msg => {
-                let cl = msg.direction === 'system_all' ? 'system' : 'admin-reply';
-                let title = msg.direction === 'system_all' ? '🔔 پیام سیستم:' : '💬 پاسخ پشتیبانی:';
-                list.innerHTML += `<div class="msg-bubble ${cl}"><b>${title}</b><br><span style="user-select:text;">${msg.content}</span></div>`;
+            let deletedSysMsgs = JSON.parse(localStorage.getItem('deleted_sys_msgs') || '[]');
+            
+            // فیلتر کردن پیام‌های مرتبط با کاربر
+            let userMsgs = data.filter(m => {
+                if(m.direction === 'system_all' && !deletedSysMsgs.includes(m.id)) return true;
+                if(m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) return true;
+                return false;
             });
-            await supabaseClient.from('messages').update({ is_read: true }).or(`and(direction.eq.admin_to_user,user_id.eq.${currentUserProfile.id}),direction.eq.system_all`).eq('is_read', false);
-            checkUnreadMessages();
+
+            if(userMsgs.length > 0) {
+                userMsgs.forEach(msg => {
+                    let cl = msg.direction === 'system_all' ? 'system' : 'admin-reply';
+                    let title = msg.direction === 'system_all' ? '🔔 پیام سیستم:' : '💬 پاسخ پشتیبانی:';
+                    let isSys = msg.direction === 'system_all' ? 'true' : 'false';
+                    
+                    list.innerHTML += `
+                        <div class="msg-bubble ${cl}">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
+                                <b>${title}</b>
+                                <button style="background:none; border:none; color:#ef4444; font-size:18px; cursor:pointer;" onclick="deleteUserMsg(${msg.id}, ${isSys})" title="حذف پیام">🗑️</button>
+                            </div>
+                            <div style="user-select:text; line-height:1.6; color:#ddd;">${msg.content}</div>
+                        </div>`;
+                });
+                // خوانده شدن فقط برای پیام های ادمین به این کاربر
+                await supabaseClient.from('messages').update({ is_read: true }).eq('direction', 'admin_to_user').eq('user_id', currentUserProfile.id).eq('is_read', false);
+                checkUnreadMessages();
+            } else {
+                list.innerHTML = '<div style="color:#888; text-align:center; font-size:13px; margin-top:20px;">صندوق پیام‌های شما خالی است.</div>';
+            }
         } else {
-            list.innerHTML = '<div style="color:#888; text-align:center; font-size:13px;">پیامی دریافت نشده است.</div>';
+            list.innerHTML = '<div style="color:#888; text-align:center; font-size:13px; margin-top:20px;">صندوق پیام‌های شما خالی است.</div>';
         }
         showLoader(false);
     }
 
+    // سیستم حذف پیام کاربر
+    window.deleteUserMsg = async function(msgId, isSystem) {
+        if(!confirm("آیا از حذف این پیام مطمئن هستید؟")) return;
+        showLoader(true);
+        if(isSystem) {
+            let arr = JSON.parse(localStorage.getItem('deleted_sys_msgs') || '[]');
+            arr.push(msgId);
+            localStorage.setItem('deleted_sys_msgs', JSON.stringify(arr));
+        } else {
+            await supabaseClient.from('messages').delete().eq('id', msgId);
+        }
+        showLoader(false);
+        openInboxModal(); // رفرش لیست
+    }
+
+    // بارگذاری صندوق ادمین (حل مشکل نام کاربری با واکشی دستی)
     async function loadAdminInbox() {
-        const { data, error } = await supabaseClient.from('messages').select('*, users_data(username)').eq('direction', 'user_to_admin').order('created_at', { ascending: false });
+        // برای جلوگیری از ارور ارتباط کلید خارجی، یوزرها رو جدا می‌گیریم
+        const { data: usersData } = await supabaseClient.from('users_data').select('id, username');
+        let userMap = {};
+        if(usersData) { usersData.forEach(u => userMap[u.id] = u.username); }
+
+        const { data: msgs } = await supabaseClient.from('messages').select('*').eq('direction', 'user_to_admin').order('created_at', { ascending: false });
+        
         const list = document.getElementById('admin-inbox-list');
         list.innerHTML = '';
-        if(data && data.length > 0) {
-            data.forEach(msg => {
-                let uname = msg.users_data ? msg.users_data.username : 'کاربر نامشخص';
-                let dot = !msg.is_read ? '<span style="color:#10b981;">(جدید)</span>' : '';
+        
+        if(msgs && msgs.length > 0) {
+            msgs.forEach(msg => {
+                let uname = userMap[msg.user_id] || 'کاربر حذف شده';
+                let dot = !msg.is_read ? '<span style="color:#10b981; font-size:11px;">(پیام جدید)</span>' : '';
+                
                 list.innerHTML += `
                     <div class="req-card" style="flex-direction:column; align-items:stretch;">
-                        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                            <b style="color:#a855f7;">از: ${uname} ${dot}</b>
-                            <button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ</button>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                            <b style="color:#a855f7;">👤 از: ${uname} ${dot}</b>
+                            <div style="display:flex; gap:5px;">
+                                <button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ دادن</button>
+                                <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف 🗑</button>
+                            </div>
                         </div>
-                        <div style="background:var(--bg-box); padding:10px; border-radius:8px; user-select:text;">${msg.content}</div>
+                        <div style="background:var(--bg-box); padding:10px; border-radius:8px; user-select:text; line-height:1.6;">${msg.content}</div>
                     </div>`;
             });
         } else { list.innerHTML = '<div style="color:#888; font-size:13px; text-align:center;">پیام جدیدی وجود ندارد.</div>'; }
+    }
+
+    // حذف پیام از صندوق ادمین
+    window.deleteAdminMsg = async function(id) {
+        if(!confirm("این پیام از صندوق شما حذف شود؟")) return;
+        showLoader(true);
+        await supabaseClient.from('messages').delete().eq('id', id);
+        showLoader(false);
+        loadAdminInbox();
     }
 
     async function openAdminReply(userId, msgId) {
@@ -795,6 +892,7 @@
         document.getElementById('adminReplyModal').classList.add('show');
         await supabaseClient.from('messages').update({ is_read: true }).eq('id', msgId);
         checkUnreadMessages();
+        loadAdminInbox(); // که تیک جدید برداشته بشه
     }
 
     async function sendAdminReply() {
@@ -802,9 +900,9 @@
         const uid = document.getElementById('reply-user-id').value;
         if(!text) return;
         showLoader(true);
-        await supabaseClient.from('messages').insert([{ user_id: uid, direction: 'admin_to_user', content: text }]);
+        await supabaseClient.from('messages').insert([{ user_id: uid, direction: 'admin_to_user', content: text, is_read: false }]);
         showLoader(false);
-        showCustomAlert('پاسخ ارسال شد.');
+        showCustomAlert('پاسخ برای کاربر ارسال شد.');
         document.getElementById('admin-reply-text').value = '';
         document.getElementById('adminReplyModal').classList.remove('show');
     }
@@ -814,9 +912,9 @@
         const text = document.getElementById('sys-msg-text').value.trim();
         if(!text) return;
         showLoader(true);
-        await supabaseClient.from('messages').insert([{ direction: 'system_all', content: text }]);
+        await supabaseClient.from('messages').insert([{ direction: 'system_all', content: text, is_read: false }]);
         showLoader(false);
-        showCustomAlert('پیام به تمام کاربران ارسال شد.');
+        showCustomAlert('پیام با موفقیت به تمام کاربران ارسال شد.');
         document.getElementById('sys-msg-text').value = '';
         document.getElementById('sysMsgModal').classList.remove('show');
     }
@@ -862,7 +960,6 @@
         }
     }
 
-    // آپدیت برای زمانی که مدیر اکانت را رد میکند یا حذف میکند (پاک شدن کامل اطلاعات از دیتابیس)
     async function updateStatus(id, newStatus) {
         showLoader(true);
         if (newStatus === 'rejected') {
