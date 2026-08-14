@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PLATO | فیلم و سریال</title>
     <meta name="theme-color" content="#09090f">
-    <!-- فونت‌های وزیرمتن و فونت فضایی برای لوگو -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=Audiowide&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script>
         function toggleAuth(type) {
@@ -46,34 +45,43 @@
         
         /* Dark Theme (Default) */
         :root {
-            --bg-main: #08080d;
-            --bg-box: #111119;
-            --bg-input: rgba(255,255,255,0.05);
-            --text-main: #fff;
-            --text-muted: #888;
-            --border-color: rgba(255,255,255,0.08);
-            --nav-bg: rgba(19,19,28,.88);
-            --header-bg: rgba(8, 8, 13, 0.76);
+            --bg-main: #0a0a0f;
+            --bg-box: #13131c;
+            --bg-input: rgba(255,255,255,0.04);
+            --text-main: #ffffff;
+            --text-muted: #888899;
+            --border-color: rgba(255,255,255,0.06);
+            --nav-bg: rgba(15,15,22,.9);
+            --header-bg: rgba(10, 10, 15, 0.85);
+            --accent: #a855f7;
+            --accent-glow: rgba(168, 85, 247, 0.4);
         }
 
         /* Light Theme */
         body.light-theme {
             --bg-main: #f3f4f6;
             --bg-box: #ffffff;
-            --bg-input: #f9fafb;
+            --bg-input: #ffffff;
             --text-main: #111827;
             --text-muted: #6b7280;
-            --border-color: #e5e7eb;
-            --nav-bg: rgba(255, 255, 255, 0.9);
-            --header-bg: rgba(243, 244, 246, 0.85);
+            --border-color: rgba(0,0,0,0.08);
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --header-bg: rgba(243, 244, 246, 0.9);
+            --accent: #8b5cf6;
+            --accent-glow: rgba(139, 92, 246, 0.4);
         }
 
         body { 
-            background: var(--bg-main);
+            /* پس‌زمینه‌ی جدید جذاب‌تر (هاله‌ای و مدرن) */
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.05), transparent 30%), 
+                radial-gradient(circle at 85% 10%, rgba(37, 99, 235, 0.05), transparent 30%);
+            background-attachment: fixed;
             color: var(--text-main); 
             font-family: "Vazirmatn", sans-serif; 
             overflow-x: hidden; 
-            transition: background 0.3s, color 0.3s; 
+            transition: background 0.4s, color 0.4s; 
         }
 
         button, input, select, textarea { font-family: inherit; color: inherit; }
@@ -89,61 +97,62 @@
            SCREENS (AUTH)
         ========================= */
         #auth-screen { position: fixed; inset: 0; z-index: 5000; background: var(--bg-main); overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-        .box-container { width: 100%; max-width: 400px; background: var(--bg-box); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: 0 15px 50px rgba(0,0,0,0.2); }
-        .box-title { text-align: center; font-size: 24px; font-weight: 700; margin-bottom: 25px; }
+        .box-container { width: 100%; max-width: 400px; background: var(--bg-box); padding: 35px 30px; border-radius: 24px; border: 1px solid var(--border-color); box-shadow: 0 25px 60px rgba(0,0,0,0.15); position: relative; overflow: hidden; }
+        .box-container::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, #a855f7, #3b82f6); }
+        .box-title { text-align: center; font-size: 24px; font-weight: 800; margin-bottom: 25px; }
         .input-group { margin-bottom: 15px; }
-        .input-field { width: 100%; height: 50px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 12px; padding: 0 15px; font-size: 14px; outline: none; transition: .3s; }
-        .input-field:focus { border-color: #a855f7; }
+        .input-field { width: 100%; height: 52px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 14px; padding: 0 18px; font-size: 14px; outline: none; transition: .3s; }
+        .input-field:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1); }
         select.input-field option { background: var(--bg-box); color: var(--text-main); }
-        .btn-primary { width: 100%; height: 50px; background: linear-gradient(110deg, #8b5cf6, #2563eb); border-radius: 12px; color: #fff; font-weight: 700; font-size: 15px; margin-top: 10px; transition: .3s; box-shadow: 0 5px 20px rgba(139, 92, 246, 0.3); }
+        .btn-primary { width: 100%; height: 52px; background: linear-gradient(110deg, #8b5cf6, #2563eb); border-radius: 14px; color: #fff; font-weight: 700; font-size: 15px; margin-top: 10px; transition: .3s; box-shadow: 0 8px 25px rgba(139, 92, 246, 0.35); }
         .btn-primary:active { transform: scale(0.96); }
-        .switch-box { width: 100%; display: block; margin-top: 25px; padding: 15px; background: rgba(124, 58, 237, 0.05); border-radius: 12px; text-align: center; font-size: 13px; color: var(--text-muted); transition: 0.3s; border: 1px dashed rgba(124, 58, 237, 0.2); user-select: none; }
-        .switch-box span { color: #a855f7; font-weight: bold; font-size: 14px; margin-right: 5px; }
+        .switch-box { width: 100%; display: block; margin-top: 25px; padding: 15px; background: rgba(124, 58, 237, 0.05); border-radius: 14px; text-align: center; font-size: 13px; color: var(--text-muted); transition: 0.3s; border: 1px dashed rgba(124, 58, 237, 0.2); }
+        .switch-box span { color: var(--accent); font-weight: bold; font-size: 14px; margin-right: 5px; }
 
         /* =========================
            SIDEBAR MENU
         ========================= */
-        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 4000; display: none; opacity: 0; transition: 0.3s; backdrop-filter: blur(5px); }
-        .sidebar { position: fixed; top: 0; bottom: 0; left: 0; width: 280px; background: var(--bg-box); z-index: 4001; transform: translateX(-100%); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; }
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 4000; display: none; opacity: 0; transition: 0.3s; backdrop-filter: blur(8px); }
+        .sidebar { position: fixed; top: 0; bottom: 0; left: 0; width: 290px; background: var(--bg-box); z-index: 4001; transform: translateX(-100%); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; box-shadow: 10px 0 30px rgba(0,0,0,0.3); }
         .sidebar.open { transform: translateX(0); }
         .sidebar-overlay.open { display: block; opacity: 1; }
-        .sidebar-header { padding: 30px 20px; text-align: center; border-bottom: 1px solid var(--border-color); background: linear-gradient(180deg, rgba(139, 92, 246, 0.1), transparent); }
-        .sidebar-user { font-size: 22px; font-weight: 800; color: var(--text-main); margin-bottom: 10px; }
-        .sidebar-sub { font-size: 13px; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .vip-badge { background: linear-gradient(110deg, #fbbf24, #d97706); color: #fff; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 4px 10px rgba(251, 191, 36, 0.3); }
-        .sidebar-menu { padding: 20px; display: flex; flex-direction: column; gap: 15px; flex-grow: 1; }
-        .sidebar-btn { width: 100%; text-align: right; padding: 15px; background: var(--bg-input); border-radius: 12px; font-size: 14px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: space-between; border: 1px solid transparent; }
-        .sidebar-btn:hover { background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.3); }
+        .sidebar-header { padding: 35px 20px 25px; text-align: center; border-bottom: 1px solid var(--border-color); background: radial-gradient(circle at top, rgba(168, 85, 247, 0.1), transparent); }
+        .sidebar-user { font-size: 24px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .sidebar-sub { font-size: 13px; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .vip-badge { background: linear-gradient(110deg, #f59e0b, #d97706); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+        .sidebar-menu { padding: 25px 20px; display: flex; flex-direction: column; gap: 12px; flex-grow: 1; overflow-y: auto; }
+        .sidebar-btn { width: 100%; text-align: right; padding: 16px; background: var(--bg-input); border-radius: 14px; font-size: 14px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: space-between; border: 1px solid transparent; }
+        .sidebar-btn:hover { background: rgba(168, 85, 247, 0.08); border-color: rgba(168, 85, 247, 0.2); transform: translateX(-3px); }
         .notif-dot { width: 10px; height: 10px; background: #10b981; border-radius: 50%; box-shadow: 0 0 8px #10b981; animation: blink 1.5s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
         /* =========================
            ADMIN PANEL
         ========================= */
-        #admin-screen { display: none; flex-direction: column; align-items: center; padding: 20px 20px 40px; background: var(--bg-main); min-height: 100vh; width: 100%; }
-        .tab-menu { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; width: 100%; max-width: 600px; flex-wrap: wrap; background: var(--bg-input); padding: 8px; border-radius: 16px; border: 1px solid var(--border-color); }
+        #admin-screen { display: none; flex-direction: column; align-items: center; padding: 20px 20px 40px; min-height: 100vh; width: 100%; }
+        .tab-menu { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; width: 100%; max-width: 650px; flex-wrap: wrap; background: var(--bg-box); padding: 8px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .tab-btn { background: transparent; color: var(--text-muted); padding: 12px 10px; border-radius: 12px; font-weight: bold; flex: 1; transition: 0.3s; text-align: center; font-size: 13px; }
-        .tab-btn.active { background: rgba(139, 92, 246, 0.2); color: #a855f7; border: 1px solid rgba(139, 92, 246, 0.3); }
-        .tab-content { display: none; width: 100%; max-width: 600px; margin: 0 auto; }
+        .tab-btn.active { background: rgba(168, 85, 247, 0.15); color: var(--accent); border: 1px solid rgba(168, 85, 247, 0.3); }
+        .tab-content { display: none; width: 100%; max-width: 650px; margin: 0 auto; }
         .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        .admin-section { width: 100%; background: var(--bg-box); padding: 25px; border-radius: 20px; border: 1px solid var(--border-color); margin-bottom: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-        .admin-section h3 { margin-bottom: 20px; font-size: 16px; color: #a855f7; display: flex; align-items: center; gap: 8px; }
-        .admin-section h3::before { content: ""; display: inline-block; width: 4px; height: 16px; background: #a855f7; border-radius: 10px; }
-        .req-card { background: var(--bg-input); padding: 15px; border-radius: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); transition: 0.3s; }
-        .req-info div { font-size: 14px; font-weight: bold; }
+        .admin-section { width: 100%; background: var(--bg-box); padding: 25px; border-radius: 22px; border: 1px solid var(--border-color); margin-bottom: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .admin-section h3 { margin-bottom: 20px; font-size: 16px; color: var(--accent); display: flex; align-items: center; gap: 8px; }
+        .admin-section h3::before { content: ""; display: inline-block; width: 4px; height: 16px; background: var(--accent); border-radius: 10px; }
+        .req-card { background: var(--bg-input); padding: 16px; border-radius: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); transition: 0.3s; }
+        .req-info div { font-size: 14px; font-weight: bold; color: var(--text-main); }
         .req-info small { color: var(--text-muted); font-size: 12px; display: block; margin-top: 5px; }
         .btn-sm { padding: 8px 14px; border-radius: 10px; font-size: 12px; font-weight: bold; margin-right: 5px; transition: 0.3s; cursor: pointer; border: none; }
-        .btn-approve { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); }
-        .btn-edit { background: rgba(234, 179, 8, 0.2); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.4); }
-        .btn-reject { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .btn-approve { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .btn-edit { background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.3); }
+        .btn-reject { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
         .btn-sm:active { transform: scale(0.95); }
 
-        #loader { position: fixed; inset:0; background: rgba(0,0,0,0.8); z-index: 9999; display: none; align-items: center; justify-content: center; color: #a855f7; font-weight: bold; font-size: 18px; backdrop-filter: blur(5px); }
+        #loader { position: fixed; inset:0; background: rgba(0,0,0,0.8); z-index: 9999; display: none; align-items: center; justify-content: center; color: var(--accent); font-weight: bold; font-size: 18px; backdrop-filter: blur(5px); }
 
         /* =========================
-           MAIN APP WRAPPER (MOBILE FIRST)
+           MAIN APP WRAPPER 
         ========================= */
         #app-wrapper {
             width: 100%;
@@ -155,123 +164,143 @@
 
         #main-app { display: none; }
         
-        .header { position: sticky; top: 0; z-index: 1000; height: 74px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--header-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); }
-        .logo { font-family: 'Audiowide', sans-serif; font-size: 32px; font-weight: 400; letter-spacing: 2px; color: var(--text-main); }
+        .header { position: sticky; top: 0; z-index: 1000; height: 75px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--header-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); }
+        
+        /* لوگوی SVG */
+        .logo { margin-left: 20px; display: flex; align-items: center; justify-content: center; }
+        .logo svg { height: 32px; width: auto; fill: var(--text-main); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)); }
+        
         .header-actions { display: flex; align-items: center; gap: 10px; }
-        .profile-button { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); font-size: 17px; position: relative; }
+        .profile-button { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); font-size: 17px; position: relative; transition: 0.2s; cursor: pointer; }
+        .profile-button:hover { background: rgba(255,255,255,0.1); }
         
-        /* منوی مخصوص کامپیوتر که در موبایل مخفی است */
-        .desktop-nav { display: none; align-items: center; gap: 30px; margin-right: 40px; font-size: 16px; font-weight: 600; color: var(--text-muted); flex-grow: 1; }
-        .desktop-nav a { transition: 0.2s; cursor: pointer; }
-        .desktop-nav a:hover, .desktop-nav a.active { color: #fff; }
+        /* منوی دسکتاپ */
+        .desktop-nav { display: none; align-items: center; gap: 35px; margin-right: 40px; font-size: 15px; font-weight: 700; color: var(--text-muted); flex-grow: 1; }
+        .desktop-nav a { transition: 0.2s; cursor: pointer; position: relative; padding: 5px 0; }
+        .desktop-nav a:hover, .desktop-nav a.active { color: var(--text-main); }
+        .desktop-nav a.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: var(--accent); border-radius: 3px; }
 
-        .search-box { padding: 18px 20px 5px; max-width: 600px; margin: 0 auto; }
+        .search-box { padding: 18px 20px 5px; max-width: 650px; margin: 0 auto; }
         .search-wrapper { position: relative; }
-        .search-wrapper input { width: 100%; height: 52px; padding: 0 48px 0 18px; border: 1px solid var(--border-color); border-radius: 17px; outline: none; background: var(--bg-input); font-size: 14px; transition: .25s; }
-        .search-wrapper input:focus { border-color: rgba(139,92,246,.55); box-shadow: 0 0 0 4px rgba(139,92,246,.1); }
-        .search-icon { position: absolute; right: 17px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px; }
+        .search-wrapper input { width: 100%; height: 54px; padding: 0 50px 0 20px; border: 1px solid var(--border-color); border-radius: 18px; outline: none; background: var(--bg-box); font-size: 14px; transition: .3s; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .search-wrapper input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-glow); }
+        .search-icon { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px; }
         
-        .hero { position: relative; width: calc(100% - 40px); margin: 15px auto 0; overflow: hidden; border-radius: 24px; background: var(--bg-box); box-shadow: 0 20px 60px rgba(0,0,0,.15); }
-        .slides { display: flex; direction: ltr; width: 100%; transition: transform .7s cubic-bezier(.22,.61,.36,1); }
+        .hero { position: relative; width: calc(100% - 40px); margin: 15px auto 0; overflow: hidden; border-radius: 24px; background: var(--bg-box); box-shadow: 0 20px 50px rgba(0,0,0,.2); }
+        .slides { display: flex; direction: ltr; width: 100%; transition: transform .8s cubic-bezier(.22,.61,.36,1); }
         .slide { position: relative; min-width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
-        .slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.9; }
-        .slider-dots { position: absolute; bottom: 13px; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; direction: rtl; gap: 7px; padding: 6px 9px; border-radius: 30px; background: rgba(0,0,0,.35); backdrop-filter: blur(8px); }
-        .dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.38); transition: width .3s, background .3s; }
-        .dot.active { width: 21px; border-radius: 10px; background: #a855f7; }
+        .slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.95; }
+        .slider-dots { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; direction: rtl; gap: 8px; padding: 6px 10px; border-radius: 30px; background: rgba(0,0,0,.4); backdrop-filter: blur(10px); }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.4); transition: width .3s, background .3s; }
+        .dot.active { width: 24px; border-radius: 10px; background: var(--accent); }
         
-        .section { margin-top: 32px; }
-        .section-header { display: flex; align-items: center; justify-content: space-between; padding: 0 20px; margin-bottom: 15px; }
-        .section-title { font-size: 20px; font-weight: 700; }
-        .section-title::before { content: ""; display: inline-block; width: 4px; height: 20px; margin-left: 9px; vertical-align: -3px; border-radius: 10px; background: linear-gradient(#a855f7, #22d3ee); }
-        .section-more { color: var(--text-muted); font-size: 12px; }
+        .section { margin-top: 35px; }
+        .section-header { display: flex; align-items: center; justify-content: space-between; padding: 0 20px; margin-bottom: 18px; }
+        .section-title { font-size: 20px; font-weight: 800; display: flex; align-items: center; }
+        .section-title::before { content: ""; display: inline-block; width: 4px; height: 22px; margin-left: 10px; border-radius: 10px; background: linear-gradient(to bottom, #a855f7, #3b82f6); }
         
-        .movie-list { display: flex; gap: 15px; overflow-x: auto; padding: 5px 20px 20px; scrollbar-width: none; }
+        .movie-list { display: flex; gap: 15px; overflow-x: auto; padding: 5px 20px 25px; scrollbar-width: none; }
         .movie-list::-webkit-scrollbar { display: none; }
         
-        .movie-card { flex: 0 0 142px; cursor: pointer; user-select: none; transition: transform .25s ease; }
-        .movie-card:active { transform: scale(.96); }
-        .poster { position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 16px; background: var(--bg-input); box-shadow: 0 8px 25px rgba(0,0,0,.15); }
-        .poster img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .45s ease; }
-        .movie-card:hover .poster img { transform: scale(1.04); }
-        .poster-overlay { position: absolute; inset: auto 0 0 0; height: 45%; background: linear-gradient(transparent, rgba(0,0,0,.8)); }
-        .movie-name { padding-top: 9px; font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .empty-section { margin: 0 20px; height: 115px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--border-color); border-radius: 18px; color: var(--text-muted); font-size: 13px; background: var(--bg-input); }
+        .movie-card { flex: 0 0 145px; cursor: pointer; user-select: none; transition: transform .25s ease; }
+        .movie-card:active { transform: scale(.95); }
+        .poster { position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 18px; background: var(--bg-box); box-shadow: 0 10px 30px rgba(0,0,0,.15); }
+        .poster img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .movie-card:hover .poster img { transform: scale(1.05); }
+        .poster-overlay { position: absolute; inset: auto 0 0 0; height: 45%; background: linear-gradient(transparent, rgba(0,0,0,.85)); }
+        .movie-name { padding-top: 10px; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
+        .empty-section { margin: 0 20px; height: 120px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--border-color); border-radius: 20px; color: var(--text-muted); font-size: 14px; background: var(--bg-box); }
 
         /* =========================
            DESKTOP & LAPTOP LAYOUT
         ========================= */
         @media (min-width: 768px) {
-            #app-wrapper { padding-bottom: 20px; }
-            .header { padding: 0 50px; height: 85px; }
-            .logo { font-size: 38px; }
-            .desktop-nav { display: flex; } /* منوی بالا نمایان می‌شود */
-            .bottom-nav { display: none !important; } /* منوی پایین مخفی می‌شود */
+            #app-wrapper { padding-bottom: 30px; }
+            .header { padding: 0 60px; height: 85px; }
+            .logo svg { height: 38px; }
+            .desktop-nav { display: flex; } 
+            .bottom-nav { display: none !important; } 
             
-            .search-box { padding: 30px 50px 10px; max-width: 800px; }
+            .search-box { padding: 35px 60px 10px; max-width: 800px; }
+            .hero { width: calc(100% - 120px); border-radius: 30px; margin-top: 25px; }
+            .slide { aspect-ratio: 21 / 7; max-height: 500px; } 
             
-            .hero { width: calc(100% - 100px); border-radius: 30px; margin-top: 25px; }
-            .slide { aspect-ratio: 21 / 7; max-height: 450px; } /* سایز سینمایی بنر */
+            .section-header { padding: 0 60px; }
+            .section-title { font-size: 24px; }
             
-            .section-header { padding: 0 50px; }
-            
-            /* تبدیل لیست اسکرولی موبایل به گرید (Grid) حرفه‌ای کامپیوتر */
             .movie-list { 
                 display: grid; 
                 grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
-                gap: 25px; 
-                padding: 10px 50px 40px; 
+                gap: 30px; 
+                padding: 10px 60px 50px; 
                 overflow-x: visible; 
             }
             .movie-card { width: 100%; flex: auto; transition: 0.3s; }
-            .movie-card:hover { transform: translateY(-8px); } /* افکت جذاب‌تر در هاور موس */
-            .movie-name { font-size: 15px; margin-top: 5px; }
+            .movie-card:hover { transform: translateY(-8px); } 
+            .movie-name { font-size: 15px; margin-top: 8px; }
         }
 
         @media (min-width: 1200px) {
             .movie-list { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
-            .slide { max-height: 550px; }
+            .slide { max-height: 600px; }
         }
 
         /* =========================
-           DOWNLOADS MANAGER
+           DOWNLOADS MANAGER (ADM STYLE)
         ========================= */
-        #downloads-app { display: none; padding: 20px; max-width: 800px; margin: 0 auto; }
-        .dl-item { background: var(--bg-box); border: 1px solid var(--border-color); border-radius: 16px; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; }
+        #downloads-app { display: none; padding: 20px; max-width: 850px; margin: 0 auto; }
+        .dl-dashboard { background: var(--bg-box); border-radius: 24px; padding: 20px; margin-bottom: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); border: 1px solid var(--border-color); }
+        .dl-dashboard-header { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; }
+        
+        /* گراف سرعت دانلود */
+        .speed-graph-container { width: 100%; height: 60px; display: flex; align-items: flex-end; gap: 3px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; margin-bottom: 20px; }
+        .graph-bar { flex: 1; background: var(--accent); border-radius: 3px 3px 0 0; transition: height 0.4s ease; opacity: 0.8; }
+        
+        /* اسلایدرهای کنترل دانلود */
+        .slider-row { margin-bottom: 15px; }
+        .slider-row label { display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; margin-bottom: 8px; color: var(--text-main); }
+        .slider-row input[type=range] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+        .dl-item { background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 18px; padding: 18px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 12px; transition: 0.3s; }
         .dl-header { display: flex; justify-content: space-between; align-items: center; }
-        .dl-title { font-weight: bold; font-size: 14px; }
-        .dl-controls { display: flex; gap: 8px; }
-        .dl-btn { background: var(--bg-input); padding: 6px 12px; border-radius: 8px; font-size: 12px; cursor: pointer; transition: 0.2s; border: 1px solid var(--border-color); }
-        .dl-btn:hover { background: rgba(139, 92, 246, 0.1); color: #a855f7; }
-        .dl-btn.delete { color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
-        .dl-progress-bg { width: 100%; height: 8px; background: var(--bg-input); border-radius: 10px; overflow: hidden; position: relative; }
-        .dl-progress-bar { height: 100%; background: #10b981; width: 0%; transition: width 0.3s linear; }
-        .dl-status { font-size: 11px; color: var(--text-muted); text-align: left; }
+        .dl-title { font-weight: 700; font-size: 14px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+        .dl-controls { display: flex; gap: 8px; flex-shrink: 0; }
+        .dl-btn { background: var(--bg-box); padding: 8px 14px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; border: 1px solid var(--border-color); }
+        .dl-btn:hover { background: rgba(168, 85, 247, 0.1); color: var(--accent); }
+        .dl-btn.delete { color: #ef4444; border-color: rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.05); }
+        .dl-btn.delete:hover { background: rgba(239, 68, 68, 0.15); }
+        .dl-progress-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; position: relative; }
+        .dl-progress-bar { height: 100%; background: linear-gradient(90deg, #3b82f6, #a855f7); width: 0%; transition: width 0.3s linear; }
+        .dl-progress-bar.done { background: #10b981; }
+        .dl-status { font-size: 12px; color: var(--text-muted); font-weight: 600; display: flex; justify-content: space-between; }
 
         /* =========================
            MODALS (پلیر و پیام‌ها)
         ========================= */
-        .modal { position: fixed; inset: 0; z-index: 6000; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(0,0,0,.82); backdrop-filter: blur(15px); }
+        .modal { position: fixed; inset: 0; z-index: 6000; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,.85); backdrop-filter: blur(15px); }
         .modal.show { display: flex; }
-        .modal-box { width: 100%; max-width: 800px; overflow: hidden; border-radius: 22px; background: var(--bg-box); border: 1px solid var(--border-color); box-shadow: 0 25px 80px rgba(0,0,0,.55); display: flex; flex-direction: column; max-height: 90vh; }
+        .modal-box { width: 100%; max-width: 800px; overflow: hidden; border-radius: 24px; background: var(--bg-box); border: 1px solid var(--border-color); box-shadow: 0 30px 90px rgba(0,0,0,.6); display: flex; flex-direction: column; max-height: 90vh; }
         .video-container { width: 100%; aspect-ratio: 16 / 9; background: #000; flex-shrink: 0; }
         .video-container video { width: 100%; height: 100%; display: block; }
-        .modal-content { padding: 18px; overflow-y: auto; flex-grow: 1; }
-        .modal-title { font-size: 19px; font-weight: 700; margin-bottom: 15px; }
-        .close-modal { width: 100%; margin-top: 15px; height: 40px; color: var(--text-muted); background: var(--bg-input); border-radius: 10px; font-size: 13px; font-weight: bold; border: 1px solid var(--border-color); }
+        .modal-content { padding: 25px; overflow-y: auto; flex-grow: 1; }
+        .modal-title { font-size: 20px; font-weight: 800; margin-bottom: 20px; }
+        .close-modal { width: 100%; margin-top: 15px; height: 45px; color: var(--text-muted); background: var(--bg-input); border-radius: 14px; font-size: 14px; font-weight: bold; border: 1px solid var(--border-color); transition: 0.2s; cursor: pointer; }
+        .close-modal:hover { background: rgba(255,255,255,0.1); color: #fff; }
         
-        .msg-bubble { background: var(--bg-input); padding: 12px 15px; border-radius: 12px; margin-bottom: 10px; font-size: 13px; border-right: 3px solid #a855f7; }
-        .msg-bubble.system { border-right-color: #10b981; }
-        .msg-bubble.admin-reply { border-right-color: #3b82f6; }
+        .msg-bubble { background: var(--bg-input); padding: 15px 18px; border-radius: 16px; margin-bottom: 12px; font-size: 14px; border-right: 4px solid var(--accent); }
+        .msg-bubble.system { border-right-color: #3b82f6; } /* تغییر رنگ سیستمی به آبی برای تمایز */
+        .msg-bubble.admin-reply { border-right-color: #10b981; } /* پاسخ پشتیبانی سبز */
         
         /* Bottom Nav (Mobile Only) */
-        .bottom-nav { position: fixed; z-index: 2000; bottom: 12px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; height: 62px; display: flex; align-items: center; justify-content: center; gap: 80px; border: 1px solid var(--border-color); border-radius: 20px; background: var(--nav-bg); backdrop-filter: blur(22px); box-shadow: 0 15px 40px rgba(0,0,0,.2); display: none; }
-        .nav-item { position: relative; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: .25s; cursor: pointer; }
-        .nav-item.active { color: #b56cff; }
-        .nav-item svg { width: 21px; height: 21px; stroke: currentColor; stroke-width: 1.8; fill: none; }
-        .nav-item span { position: absolute; bottom: -1px; font-size: 9px; white-space: nowrap; }
+        .bottom-nav { position: fixed; z-index: 2000; bottom: 15px; left: 50%; transform: translateX(-50%); width: calc(100% - 30px); max-width: 400px; height: 65px; display: flex; align-items: center; justify-content: center; gap: 70px; border: 1px solid var(--border-color); border-radius: 22px; background: var(--nav-bg); backdrop-filter: blur(25px); box-shadow: 0 15px 40px rgba(0,0,0,.3); display: none; }
+        .nav-item { position: relative; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: .3s; cursor: pointer; }
+        .nav-item.active { color: var(--accent); transform: translateY(-3px); }
+        .nav-item svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 2; fill: none; }
+        .nav-item span { position: absolute; bottom: -2px; font-size: 10px; font-weight: bold; white-space: nowrap; opacity: 0; transition: 0.3s; }
+        .nav-item.active span { opacity: 1; bottom: -8px; }
 
-        .checkbox-container { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; font-size: 13px; color: var(--text-muted); cursor: pointer;}
-        .checkbox-container input { width: 16px; height: 16px; cursor: pointer; border-radius: 4px; }
+        .checkbox-container { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer;}
+        .checkbox-container input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent); }
     </style>
 </head>
 <body>
@@ -328,7 +357,14 @@
             <button class="sidebar-btn" onclick="openSupportModal()">💬 ارتباط با پشتیبانی</button>
             <button class="sidebar-btn" onclick="openInboxModal()">📥 صندوق پیام‌ها <span class="notif-dot" id="inbox-notif" style="display:none;"></span></button>
             <div id="admin-sidebar-btn-container"></div>
+            
             <button class="sidebar-btn" style="color:#ef4444; margin-top:auto;" onclick="doLogout()">🚪 خروج از حساب</button>
+            
+            <!-- فوتر سایدبار -->
+            <div style="text-align:center; font-size:11px; color:var(--text-muted); opacity:0.6; padding-top:15px; margin-top:10px;">
+                <div style="font-family:sans-serif; letter-spacing:1px; font-weight:bold;">2026 ©</div>
+                <div style="margin-top:6px;">ساخته شده توسط H×n🤍</div>
+            </div>
         </div>
     </div>
 
@@ -336,9 +372,9 @@
          ADMIN PANEL 
     ========================= -->
     <div id="admin-screen">
-        <div style="width:100%; max-width:600px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <div style="width:100%; max-width:650px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
             <h2 style="font-size: 18px;">👑 پنل مدیریت</h2>
-            <button class="btn-sm" style="background:var(--bg-input); border:1px solid var(--border-color);" onclick="hideAdminPanel()">بازگشت به سایت ➔</button>
+            <button class="btn-sm" style="background:var(--bg-box); border:1px solid var(--border-color); padding:10px 15px;" onclick="hideAdminPanel()">بازگشت به سایت ➔</button>
         </div>
         
         <div class="tab-menu">
@@ -348,7 +384,6 @@
             <button class="tab-btn" onclick="switchAdminTab('tab-messages', this)">پیام‌ها <span class="notif-dot" id="admin-msg-notif" style="display:none;"></span></button>
         </div>
 
-        <!-- تب ۱: مدیریت فایل و لینک -->
         <div id="tab-files" class="tab-content active admin-section">
             <h3 id="form-movie-title">اضافه کردن محتوای جدید</h3>
             <div class="input-group">
@@ -374,7 +409,6 @@
             <div id="admin-movie-list"></div>
         </div>
 
-        <!-- تب ۲: درخواست‌ها -->
         <div id="tab-requests" class="tab-content">
             <div class="admin-section">
                 <h3>درخواست‌های ورود جدید</h3>
@@ -388,17 +422,23 @@
             </div>
         </div>
 
-        <!-- تب ۳: کاربران -->
         <div id="tab-users" class="tab-content admin-section">
             <h3>لیست کل کاربران</h3>
-            <button class="btn-sm btn-approve" style="width:100%; margin-bottom:15px; padding:12px;" onclick="openSystemMessageModal()">+ ارسال پیام سیستمی به همه</button>
             <div id="all-users-list"></div>
         </div>
 
-        <!-- تب ۴: پیام‌های پشتیبانی -->
-        <div id="tab-messages" class="tab-content admin-section">
-            <h3>صندوق پیام‌های پشتیبانی</h3>
-            <div id="admin-inbox-list"></div>
+        <div id="tab-messages" class="tab-content">
+            <div class="admin-section">
+                <h3>صندوق پیام‌های کاربران</h3>
+                <div id="admin-inbox-list"></div>
+            </div>
+            <div class="admin-section">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <h3>پیام‌های سیستمی (همگانی)</h3>
+                    <button class="btn-sm btn-approve" onclick="openSystemMessageModal()">+ پیام جدید</button>
+                </div>
+                <div id="admin-sys-list"></div>
+            </div>
         </div>
     </div>
 
@@ -408,7 +448,12 @@
     <div id="main-app">
         <header class="header">
             <div style="display:flex; align-items:center;">
-                <div class="logo" style="margin-left: 30px;">PLATO</div>
+                <!-- لوگوی SVG -->
+                <div class="logo">
+                    <svg viewBox="0 0 1536 614" aria-label="PLATO">
+                      <path fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/>
+                    </svg>
+                </div>
                 <!-- منوی دسکتاپ -->
                 <div class="desktop-nav">
                     <a id="deskHome" class="active" onclick="switchBottomNav('home')">خانه</a>
@@ -419,7 +464,7 @@
             <div class="header-actions">
                 <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                    <span class="notif-dot" id="header-notif" style="position:absolute; top:2px; right:2px; display:none;"></span>
+                    <span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>
                 </button>
             </div>
         </header>
@@ -447,7 +492,6 @@
         <section class="section">
             <div class="section-header">
                 <h2 class="section-title">سریال‌ها</h2>
-                <span class="section-more">اختصاصی</span>
             </div>
             <div class="movie-list" id="seriesList"></div>
         </section>
@@ -455,21 +499,35 @@
         <section class="section">
             <div class="section-header">
                 <h2 class="section-title">فیلم‌های سینمایی</h2>
-                <span class="section-more">جدیدترین‌ها</span>
             </div>
             <div class="movie-list" id="moviesList"></div>
         </section>
     </div>
 
     <!-- =========================
-         DOWNLOADS MANAGER APP
+         DOWNLOADS MANAGER APP (با گراف و تنظیمات)
     ========================= -->
     <div id="downloads-app">
-        <header class="header" style="margin:-20px -20px 20px; padding:0 20px; max-width: none;">
-            <h2 style="font-size:18px;">مدیریت دانلودها</h2>
-        </header>
+        
+        <div class="dl-dashboard">
+            <div class="dl-dashboard-header"><span>وضعیت ترافیک</span> <span style="font-size:12px; font-weight:normal; color:var(--text-muted);">پلاتو انجین</span></div>
+            
+            <div class="speed-graph-container" id="speedGraph">
+                <!-- ستون‌های گراف توسط جاوااسکریپت تزریق می‌شوند -->
+            </div>
+            
+            <div class="slider-row">
+                <label>محدودیت سرعت: <span id="speedVal" style="color:var(--accent);">100%</span></label>
+                <input type="range" id="speedSlider" min="10" max="100" value="100" oninput="updateDownloadSettings()">
+            </div>
+            <div class="slider-row">
+                <label>دانلودهای همزمان: <span id="concurrentVal" style="color:var(--accent);">3</span></label>
+                <input type="range" id="concurrentSlider" min="1" max="3" value="3" oninput="updateDownloadSettings()">
+            </div>
+        </div>
+
         <div id="dl-list-container">
-            <div class="empty-section">لیست دانلودهای شما خالی است.</div>
+            <!-- آیتم‌های دانلود اینجا رندر میشن -->
         </div>
     </div>
 
@@ -502,7 +560,7 @@
     </div>
 
     <div class="modal" id="inboxModal">
-        <div class="modal-box" style="max-width: 400px; height: 80vh;">
+        <div class="modal-box" style="max-width: 500px; height: 80vh;">
             <div class="modal-content" style="display:flex; flex-direction:column;">
                 <h3 class="modal-title">صندوق پیام‌های شما</h3>
                 <div id="user-messages-list" style="flex-grow:1; overflow-y:auto; padding-right:5px;"></div>
@@ -589,11 +647,8 @@
        نویگیشن و تب‌ها
     ========================= */
     function switchBottomNav(tab) {
-        // آپدیت منوی پایین (موبایل)
         document.getElementById('homeNav').classList.remove('active');
         document.getElementById('downloadsNav').classList.remove('active');
-        
-        // آپدیت منوی بالا (کامپیوتر)
         document.getElementById('deskHome').classList.remove('active');
         document.getElementById('deskDown').classList.remove('active');
 
@@ -634,7 +689,6 @@
     function hideAdminPanel() {
         document.getElementById('admin-screen').style.display = 'none';
         document.getElementById('main-app').style.display = 'block';
-        // برای موبایل دوباره نمایش می‌دهیم، در دسکتاپ توسط CSS مخفی می‌ماند
         document.getElementById('bottomNav').style.display = 'flex';
         switchBottomNav('home');
         fetchMoviesFromDatabase();
@@ -698,7 +752,7 @@
                 document.getElementById('auth-screen').style.display = 'flex';
             } else {
                 if (currentUserProfile.role === 'admin') {
-                    document.getElementById('admin-sidebar-btn-container').innerHTML = `<button class="sidebar-btn" style="color:#a855f7;" onclick="showAdminPanel()">⚙️ ورود به پنل مدیریت</button>`;
+                    document.getElementById('admin-sidebar-btn-container').innerHTML = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()">⚙️ ورود به پنل مدیریت</button>`;
                 }
                 document.getElementById('main-app').style.display = 'block';
                 document.getElementById('bottomNav').style.display = 'flex';
@@ -765,7 +819,7 @@
     }
 
     /* =========================
-       سیستم پیام‌ها (نسخه همراه با کنترل ارور)
+       سیستم پیام‌ها (نسخه نهایی و بهینه)
     ========================= */
     async function checkUnreadMessages() {
         if(!currentUserProfile) return;
@@ -805,7 +859,6 @@
         const text = document.getElementById('support-msg-text').value.trim();
         if(!text) return;
         showLoader(true);
-        // استفاده از هشدار دقیق ارور
         const res = await supabaseClient.from('messages').insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text, is_read: false }]);
         showLoader(false);
         if(res.error) {
@@ -819,6 +872,10 @@
 
     window.openInboxModal = async function() {
         closeSidebar();
+        // حذف آنی نقطه سبز
+        document.getElementById('inbox-notif').style.display = 'none';
+        document.getElementById('header-notif').style.display = 'none';
+        
         document.getElementById('inboxModal').classList.add('show');
         showLoader(true);
         
@@ -837,24 +894,27 @@
             if(userMsgs.length > 0) {
                 userMsgs.forEach(msg => {
                     let cl = msg.direction === 'system_all' ? 'system' : 'admin-reply';
-                    let title = msg.direction === 'system_all' ? '🔔 پیام سیستم:' : '💬 پاسخ پشتیبانی:';
+                    // طبق خواسته شما: سیستمی هیچی نمی‌نویسه، ادمین می‌نویسه پشتیبانی
+                    let titleHTML = msg.direction === 'admin_to_user' ? '<b>پشتیبانی</b>' : '';
                     let isSys = msg.direction === 'system_all' ? 'true' : 'false';
+                    
+                    let headerStyle = titleHTML ? 'justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px; margin-bottom:8px;' : 'justify-content:flex-end;';
+                    
                     list.innerHTML += `
                         <div class="msg-bubble ${cl}">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
-                                <b>${title}</b>
-                                <button style="background:none; border:none; color:#ef4444; font-size:18px; cursor:pointer;" onclick="deleteUserMsg(${msg.id}, ${isSys})" title="حذف پیام">🗑️</button>
+                            <div style="display:flex; align-items:center; ${headerStyle}">
+                                ${titleHTML}
+                                <button style="background:none; border:none; color:#ef4444; font-size:18px; cursor:pointer;" onclick="deleteUserMsg(${msg.id}, ${isSys})" title="حذف">🗑️</button>
                             </div>
-                            <div style="user-select:text; line-height:1.6; color:#ddd;">${msg.content}</div>
+                            <div style="user-select:text; line-height:1.6; color:#ddd; margin-top:${titleHTML ? '0' : '5px'};">${msg.content}</div>
                         </div>`;
                 });
                 await supabaseClient.from('messages').update({ is_read: true }).eq('direction', 'admin_to_user').eq('user_id', currentUserProfile.id).eq('is_read', false);
-                checkUnreadMessages();
             } else {
-                list.innerHTML = '<div style="color:#888; text-align:center; font-size:13px; margin-top:20px;">صندوق پیام‌های شما خالی است.</div>';
+                list.innerHTML = '<div style="color:var(--text-muted); text-align:center; font-size:14px; margin-top:30px;">صندوق پیام‌های شما خالی است.</div>';
             }
         } else {
-            list.innerHTML = '<div style="color:#888; text-align:center; font-size:13px; margin-top:20px;">صندوق پیام‌های شما خالی است.</div>';
+            list.innerHTML = '<div style="color:var(--text-muted); text-align:center; font-size:14px; margin-top:30px;">صندوق پیام‌های شما خالی است.</div>';
         }
         showLoader(false);
     }
@@ -878,31 +938,48 @@
         let userMap = {};
         if(usersData) { usersData.forEach(u => userMap[u.id] = u.username); }
 
+        // لود پیام‌های دریافتی از کاربران
         const { data: msgs } = await supabaseClient.from('messages').select('*').eq('direction', 'user_to_admin').order('created_at', { ascending: false });
         const list = document.getElementById('admin-inbox-list');
         list.innerHTML = '';
-        
         if(msgs && msgs.length > 0) {
             msgs.forEach(msg => {
                 let uname = userMap[msg.user_id] || 'کاربر حذف شده';
-                let dot = !msg.is_read ? '<span style="color:#10b981; font-size:11px;">(پیام جدید)</span>' : '';
+                let dot = !msg.is_read ? '<span style="color:#10b981; font-size:11px; margin-right:5px;">(جدید)</span>' : '';
                 list.innerHTML += `
                     <div class="req-card" style="flex-direction:column; align-items:stretch;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                            <b style="color:#a855f7;">👤 از: ${uname} ${dot}</b>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                            <div style="color:var(--accent); font-weight:bold;">👤 از: ${uname} ${dot}</div>
                             <div style="display:flex; gap:5px;">
                                 <button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ</button>
-                                <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف 🗑</button>
+                                <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">🗑</button>
                             </div>
                         </div>
-                        <div style="background:var(--bg-box); padding:10px; border-radius:8px; user-select:text; line-height:1.6;">${msg.content}</div>
+                        <div style="background:var(--bg-box); padding:12px; border-radius:10px; user-select:text; line-height:1.6; font-size:13px;">${msg.content}</div>
                     </div>`;
             });
-        } else { list.innerHTML = '<div style="color:#888; font-size:13px; text-align:center;">پیام جدیدی وجود ندارد.</div>'; }
+        } else { list.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">پیام جدیدی وجود ندارد.</div>'; }
+
+        // لود پیام‌های سیستمی فرستاده شده توسط مدیر
+        const { data: sysMsgs } = await supabaseClient.from('messages').select('*').eq('direction', 'system_all').order('created_at', { ascending: false });
+        const sysList = document.getElementById('admin-sys-list');
+        sysList.innerHTML = '';
+        if(sysMsgs && sysMsgs.length > 0) {
+            sysMsgs.forEach(msg => {
+                sysList.innerHTML += `
+                    <div class="req-card" style="flex-direction:column; align-items:stretch; border-color:rgba(16, 185, 129, 0.3);">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                            <span style="color:#10b981; font-size:12px; font-weight:bold;">گروهی (همه کاربران)</span>
+                            <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف از سرور 🗑</button>
+                        </div>
+                        <div style="font-size:13px; color:var(--text-main);">${msg.content}</div>
+                    </div>`;
+            });
+        } else { sysList.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">هیچ پیام سیستمی ارسال نشده است.</div>'; }
     }
 
     window.deleteAdminMsg = async function(id) {
-        if(!confirm("این پیام از صندوق شما حذف شود؟")) return;
+        if(!confirm("آیا از حذف کامل این پیام از سرور مطمئن هستید؟")) return;
         showLoader(true);
         await supabaseClient.from('messages').delete().eq('id', id);
         showLoader(false);
@@ -946,11 +1023,12 @@
             showCustomAlert('پیام با موفقیت به تمام کاربران ارسال شد.');
             document.getElementById('sys-msg-text').value = '';
             document.getElementById('sysMsgModal').classList.remove('show');
+            loadAdminInbox();
         }
     }
 
     /* =========================
-       مدیریت کاربران و اشتراک (ادمین)
+       مدیریت کاربران و اشتراک
     ========================= */
     async function loadPendingRequests() {
         const { data } = await supabaseClient.from('users_data').select('*').eq('status', 'pending');
@@ -967,7 +1045,7 @@
                         </div>
                     </div>`;
             });
-        } else { list.innerHTML = '<div style="color:#888; font-size:13px; text-align:center;">درخواستی نیست.</div>'; }
+        } else { list.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">درخواستی نیست.</div>'; }
     }
 
     async function loadAllUsers() {
@@ -980,9 +1058,9 @@
                 list.innerHTML += `
                     <div class="req-card">
                         <div class="req-info">
-                            <div style="color:#a855f7;">${user.username}</div>
+                            <div style="color:var(--accent);">${user.username}</div>
                             <small>گوشی: ${user.phone_model}</small>
-                            <small>وضعیت: ${user.status === 'approved' ? '✅ تایید شده' : (user.status === 'pending' ? '⏳ در انتظار' : '❌ نامشخص')}</small>
+                            <small>وضعیت: ${user.status === 'approved' ? '✅ تایید شده' : (user.status === 'pending' ? '⏳ در انتظار' : '❌ مسدود')}</small>
                         </div>
                         <div><button class="btn-sm btn-reject" onclick="deleteUserAccount('${user.id}')">حذف اکانت</button></div>
                     </div>`;
@@ -994,7 +1072,7 @@
         showLoader(true);
         if (newStatus === 'rejected') {
             await supabaseClient.from('users_data').delete().eq('id', id);
-            showCustomAlert('درخواست کاربر رد و از سیستم پاک شد');
+            showCustomAlert('درخواست کاربر رد و پاک شد');
         } else {
             await supabaseClient.from('users_data').update({ status: newStatus }).eq('id', id);
             showCustomAlert('وضعیت کاربر تایید شد');
@@ -1073,13 +1151,11 @@
     function editMovie(id) {
         const movie = dynamicDataArray.find(m => m.id === id);
         if(!movie) return;
-        
         document.getElementById('new-movie-category').value = movie.category || 'series';
         document.getElementById('new-movie-title').value = movie.title;
         document.getElementById('new-movie-poster').value = movie.poster;
         document.getElementById('new-movie-url').value = movie.download_url || '';
         document.getElementById('new-movie-timer').value = ''; 
-        
         editingMovieId = id;
         document.getElementById('form-movie-title').textContent = "ویرایش محتوا";
         document.getElementById('save-movie-btn').textContent = "ثبت ویرایش";
@@ -1108,14 +1184,14 @@
                 let catName = m.category === 'movie' ? '🎬 فیلم' : '📺 سریال';
                 list.innerHTML += `
                 <div class="req-card">
-                    <div class="req-info"><div style="color:var(--text-main);">${m.title}</div><small style="color:#a855f7;">${catName}</small></div>
+                    <div class="req-info"><div style="color:var(--text-main);">${m.title}</div><small style="color:var(--accent);">${catName}</small></div>
                     <div>
                         <button class="btn-sm btn-edit" onclick="editMovie(${m.id})">ویرایش</button>
                         <button class="btn-sm btn-reject" onclick="deleteMovie(${m.id})">حذف</button>
                     </div>
                 </div>`;
             });
-        } else { list.innerHTML = '<div style="color:#888; font-size:13px; text-align:center;">هنوز محتوایی آپلود نکرده‌اید.</div>'; }
+        } else { list.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">هنوز محتوایی آپلود نکرده‌اید.</div>'; }
     }
 
     async function deleteMovie(id) {
@@ -1199,7 +1275,7 @@
     }
 
     /* =========================
-       اسلایدر
+       اسلایدر بنر
     ========================= */
     const slides = document.getElementById("slides");
     const dots = document.querySelectorAll(".dot");
@@ -1260,7 +1336,7 @@
                     let btnUrl = parts.length > 1 ? parts[1].trim() : parts[0].trim();
                     
                     let row = document.createElement('div');
-                    row.style.cssText = "display:flex; gap:8px; margin-bottom:10px; align-items:center; background:var(--bg-input); padding:12px; border-radius:12px; border:1px solid var(--border-color);";
+                    row.style.cssText = "display:flex; gap:8px; margin-bottom:10px; align-items:center; background:var(--bg-input); padding:12px; border-radius:14px; border:1px solid var(--border-color);";
                     row.innerHTML = `
                         <div style="flex:1; font-size:13px; font-weight:bold;">${btnTitle}</div>
                         <button class="btn-sm btn-approve" style="border:none;" onclick="playVideo('${btnUrl}')">▶ پخش</button>
@@ -1289,33 +1365,132 @@
     }
 
     /* =========================
-       سیستم مدیریت دانلودها 
+       موتور دانلود پیشرفته (گراف و مدیریت صف)
     ========================= */
-    function getDownloads() {
-        return JSON.parse(localStorage.getItem('plato_dl_list')) || [];
+    function getDownloads() { return JSON.parse(localStorage.getItem('plato_dl_list')) || []; }
+    function saveDownloads(list) { localStorage.setItem('plato_dl_list', JSON.stringify(list)); }
+
+    // راه‌اندازی گراف سرعت
+    function initSpeedGraph() {
+        const container = document.getElementById('speedGraph');
+        container.innerHTML = '';
+        for(let i=0; i<20; i++) {
+            let bar = document.createElement('div');
+            bar.className = 'graph-bar';
+            bar.style.height = '10%';
+            container.appendChild(bar);
+        }
     }
-    function saveDownloads(list) {
-        localStorage.setItem('plato_dl_list', JSON.stringify(list));
+
+    let downloadEngineInterval = null;
+    let speedLimitSetting = 100;
+    let maxConcurrentSetting = 3;
+
+    window.updateDownloadSettings = function() {
+        speedLimitSetting = document.getElementById('speedSlider').value;
+        maxConcurrentSetting = document.getElementById('concurrentSlider').value;
+        document.getElementById('speedVal').innerText = speedLimitSetting + '%';
+        document.getElementById('concurrentVal').innerText = maxConcurrentSetting;
+    }
+
+    function startDownloadEngine() {
+        if(downloadEngineInterval) clearInterval(downloadEngineInterval);
+        initSpeedGraph();
+        
+        downloadEngineInterval = setInterval(() => {
+            let dlList = getDownloads();
+            let isChanged = false;
+            let activeCount = dlList.filter(d => d.status === 'downloading').length;
+
+            // مدیریت صف: اگر جا داریم، دانلودهای متوقف شده رو روشن کن
+            if(activeCount < maxConcurrentSetting) {
+                let queued = dlList.find(d => d.status === 'queued');
+                if(queued) {
+                    queued.status = 'downloading';
+                    activeCount++;
+                    isChanged = true;
+                }
+            }
+
+            let hasActive = false;
+            dlList.forEach(d => {
+                if(d.status === 'downloading') {
+                    hasActive = true;
+                    // سرعت دانلود بر اساس اسلایدر محدود میشه
+                    let speed = (Math.random() * 1.5 + 0.5) * (speedLimitSetting / 100);
+                    d.progress += speed;
+                    if(d.progress >= 100) {
+                        d.progress = 100;
+                        d.status = 'completed';
+                    }
+                    isChanged = true;
+                }
+            });
+
+            if(isChanged) saveDownloads(dlList);
+            
+            // اگر کاربر توی تب دانلودهاست، UI رو آپدیت کن
+            if(document.getElementById('downloads-app').style.display === 'block') {
+                
+                // آپدیت گراف نوسان
+                let bars = document.getElementById('speedGraph').children;
+                if(hasActive && speedLimitSetting > 10) {
+                    for(let i=0; i<bars.length; i++) {
+                        let h = Math.random() * (speedLimitSetting) * 0.8 + 10;
+                        bars[i].style.height = h + '%';
+                        bars[i].style.opacity = Math.random() * 0.5 + 0.5;
+                    }
+                } else {
+                    for(let i=0; i<bars.length; i++) { bars[i].style.height = '10%'; bars[i].style.opacity = '0.3'; }
+                }
+
+                // آپدیت عرض نوارها
+                dlList.forEach(d => {
+                   let bar = document.getElementById(`bar-${d.id}`);
+                   let stat = document.getElementById(`status-${d.id}`);
+                   if(bar && stat) {
+                       bar.style.width = d.progress + '%';
+                       if(d.status === 'completed') {
+                           bar.classList.add('done');
+                           stat.innerHTML = `<span style="color:#10b981;">تکمیل شد</span><span>100%</span>`;
+                           if(d.progress >= 100 && isChanged) renderDownloadsList(); // برای آوردن دکمه پخش
+                       } else if(d.status === 'queued') {
+                           stat.innerHTML = `<span>در صف انتظار...</span><span>${Math.floor(d.progress)}%</span>`;
+                       } else if(d.status === 'paused') {
+                           stat.innerHTML = `<span>متوقف شده</span><span>${Math.floor(d.progress)}%</span>`;
+                       } else if(d.status === 'downloading') {
+                           stat.innerHTML = `<span>در حال دریافت...</span><span style="color:var(--accent);">${Math.floor(d.progress)}%</span>`;
+                       }
+                   } else if(isChanged) {
+                       renderDownloadsList(); 
+                   }
+                });
+            }
+        }, 1000);
     }
 
     window.startAppDownload = function(title, url, poster) {
         if(!checkSubscription()) return;
         
+        // هندل کردن دانلود واقعی در مرورگر
         var link = document.createElement("a");
         link.href = url; link.target = "_blank"; link.download = "";
         document.body.appendChild(link); link.click(); link.remove();
 
         let dlList = getDownloads();
         let dlId = 'dl_' + new Date().getTime();
-        dlList.push({ id: dlId, title: title, url: url, poster: poster, progress: 0, status: 'downloading' });
+        
+        let activeCount = dlList.filter(d => d.status === 'downloading').length;
+        let initialStatus = activeCount >= maxConcurrentSetting ? 'queued' : 'downloading';
+        
+        dlList.push({ id: dlId, title: title, url: url, poster: poster, progress: 0, status: initialStatus });
         saveDownloads(dlList);
         
-        showCustomAlert('دانلود آغاز شد. به تب "دانلودها" بروید.');
+        showCustomAlert(initialStatus === 'queued' ? 'دانلود به صف اضافه شد.' : 'دانلود آغاز شد.');
         renderDownloadsList();
-        simulateProgress(dlId);
     }
 
-    function renderDownloadsList() {
+    window.renderDownloadsList = function() {
         const container = document.getElementById('dl-list-container');
         let dlList = getDownloads();
         container.innerHTML = '';
@@ -1325,64 +1500,30 @@
         }
         
         dlList.forEach(dl => {
-            let statusText = dl.status === 'downloading' ? 'در حال دریافت...' : (dl.status === 'paused' ? 'متوقف شده' : 'تکمیل شد');
-            let color = dl.status === 'completed' ? '#10b981' : '#a855f7';
-            let playBtn = dl.status === 'completed' ? `<button class="dl-btn" style="color:#10b981;" onclick="playVideo('${dl.url}')">▶ پخش</button>` : '';
-            let pauseBtn = dl.status === 'downloading' ? `<button class="dl-btn" onclick="pauseDl('${dl.id}')">⏸ توقف</button>` : (dl.status === 'paused' ? `<button class="dl-btn" onclick="resumeDl('${dl.id}')">▶ ادامه</button>` : '');
+            let colorCl = dl.status === 'completed' ? 'done' : '';
+            let playBtn = dl.status === 'completed' ? `<button class="dl-btn" style="color:#10b981; border-color:rgba(16,185,129,0.3); background:rgba(16,185,129,0.05);" onclick="playVideo('${dl.url}')">▶ پخش</button>` : '';
+            let pauseBtn = (dl.status === 'downloading' || dl.status === 'queued') ? `<button class="dl-btn" onclick="pauseDl('${dl.id}')">⏸ توقف</button>` : (dl.status === 'paused' ? `<button class="dl-btn" onclick="resumeDl('${dl.id}')">▶ ادامه</button>` : '');
             
             container.innerHTML += `
                 <div class="dl-item" id="item-${dl.id}">
                     <div class="dl-header">
-                        <div style="display:flex; gap:10px; align-items:center;">
-                            <img src="${dl.poster}" style="width:40px; height:40px; border-radius:8px; object-fit:cover;">
+                        <div style="display:flex; gap:12px; align-items:center;">
+                            <img src="${dl.poster}" style="width:45px; height:45px; border-radius:10px; object-fit:cover;">
                             <span class="dl-title">${dl.title}</span>
                         </div>
                         <div class="dl-controls">
                             ${playBtn}
                             ${pauseBtn}
-                            <button class="dl-btn delete" onclick="deleteDl('${dl.id}')">🗑 حذف</button>
+                            <button class="dl-btn delete" onclick="deleteDl('${dl.id}')">🗑</button>
                         </div>
                     </div>
                     <div class="dl-progress-bg">
-                        <div class="dl-progress-bar" id="bar-${dl.id}" style="width:${dl.progress}%; background:${color};"></div>
+                        <div class="dl-progress-bar ${colorCl}" id="bar-${dl.id}" style="width:${dl.progress}%;"></div>
                     </div>
-                    <div class="dl-status" id="status-${dl.id}">${statusText} - ${Math.floor(dl.progress)}%</div>
+                    <div class="dl-status" id="status-${dl.id}"></div>
                 </div>
             `;
         });
-    }
-
-    let activeIntervals = {};
-    function simulateProgress(id) {
-        if(activeIntervals[id]) clearInterval(activeIntervals[id]);
-        activeIntervals[id] = setInterval(() => {
-            let dlList = getDownloads();
-            let index = dlList.findIndex(d => d.id === id);
-            if(index === -1 || dlList[index].status !== 'downloading') {
-                clearInterval(activeIntervals[id]); return;
-            }
-            
-            dlList[index].progress += Math.random() * 2; 
-            if(dlList[index].progress >= 100) {
-                dlList[index].progress = 100;
-                dlList[index].status = 'completed';
-                clearInterval(activeIntervals[id]);
-            }
-            saveDownloads(dlList);
-            
-            let bar = document.getElementById(`bar-${id}`);
-            let stat = document.getElementById(`status-${id}`);
-            if(bar && stat) {
-                bar.style.width = dlList[index].progress + '%';
-                if(dlList[index].status === 'completed') {
-                    bar.style.background = '#10b981';
-                    stat.textContent = `تکمیل شد - 100%`;
-                    renderDownloadsList(); 
-                } else {
-                    stat.textContent = `در حال دریافت... - ${Math.floor(dlList[index].progress)}%`;
-                }
-            }
-        }, 800);
     }
 
     window.pauseDl = function(id) {
@@ -1398,14 +1539,13 @@
         let dlList = getDownloads();
         let index = dlList.findIndex(d => d.id === id);
         if(index > -1) {
-            dlList[index].status = 'downloading';
+            // میره تو صف، خود موتور دانلود روشنش می‌کنه اگر جا باشه
+            dlList[index].status = 'queued';
             saveDownloads(dlList);
             renderDownloadsList();
-            simulateProgress(id);
         }
     }
     window.deleteDl = function(id) {
-        if(activeIntervals[id]) clearInterval(activeIntervals[id]);
         let dlList = getDownloads();
         dlList = dlList.filter(d => d.id !== id);
         saveDownloads(dlList);
@@ -1416,6 +1556,7 @@
         let dlList = getDownloads();
         dlList.forEach(d => { if(d.status === 'downloading') d.status = 'paused'; });
         saveDownloads(dlList);
+        startDownloadEngine();
         checkUserSession();
     });
 
