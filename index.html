@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PLATO | فیلم و سریال</title>
     <meta name="theme-color" content="#09090f">
+    <!-- فونت‌های وزیرمتن و فونت فضایی برای لوگو -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=Audiowide&display=swap" rel="stylesheet">
@@ -43,6 +44,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
+        /* Dark Theme (Default) */
         :root {
             --bg-main: #08080d;
             --bg-box: #111119;
@@ -54,6 +56,7 @@
             --header-bg: rgba(8, 8, 13, 0.76);
         }
 
+        /* Light Theme */
         body.light-theme {
             --bg-main: #f3f4f6;
             --bg-box: #ffffff;
@@ -66,24 +69,11 @@
         }
 
         body { 
-            background: var(--bg-main); /* تغییر به بک‌گراند اصلی */
+            background: var(--bg-main);
             color: var(--text-main); 
             font-family: "Vazirmatn", sans-serif; 
             overflow-x: hidden; 
             transition: background 0.3s, color 0.3s; 
-        }
-
-        /* =========================
-           RESPONSIVE CONTAINER
-        ========================= */
-        #app-wrapper {
-            width: 100%;
-            max-width: 1600px; /* پهنای بسیار عریض برای لپ تاپ */
-            margin: 0 auto;
-            min-height: 100vh;
-            background: radial-gradient(circle at 85% 5%, rgba(124, 58, 237, 0.08), transparent 28%), transparent;
-            position: relative;
-            padding-bottom: 90px;
         }
 
         button, input, select, textarea { font-family: inherit; color: inherit; }
@@ -153,15 +143,29 @@
         #loader { position: fixed; inset:0; background: rgba(0,0,0,0.8); z-index: 9999; display: none; align-items: center; justify-content: center; color: #a855f7; font-weight: bold; font-size: 18px; backdrop-filter: blur(5px); }
 
         /* =========================
-           MAIN APP & LAYOUTS (Mobile First)
+           MAIN APP WRAPPER (MOBILE FIRST)
         ========================= */
+        #app-wrapper {
+            width: 100%;
+            max-width: 1500px;
+            margin: 0 auto;
+            position: relative;
+            padding-bottom: 90px;
+        }
+
         #main-app { display: none; }
+        
         .header { position: sticky; top: 0; z-index: 1000; height: 74px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--header-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); }
         .logo { font-family: 'Audiowide', sans-serif; font-size: 32px; font-weight: 400; letter-spacing: 2px; color: var(--text-main); }
         .header-actions { display: flex; align-items: center; gap: 10px; }
         .profile-button { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); font-size: 17px; position: relative; }
         
-        .search-box { padding: 18px 20px 5px; max-width: 800px; margin: 0 auto; }
+        /* منوی مخصوص کامپیوتر که در موبایل مخفی است */
+        .desktop-nav { display: none; align-items: center; gap: 30px; margin-right: 40px; font-size: 16px; font-weight: 600; color: var(--text-muted); flex-grow: 1; }
+        .desktop-nav a { transition: 0.2s; cursor: pointer; }
+        .desktop-nav a:hover, .desktop-nav a.active { color: #fff; }
+
+        .search-box { padding: 18px 20px 5px; max-width: 600px; margin: 0 auto; }
         .search-wrapper { position: relative; }
         .search-wrapper input { width: 100%; height: 52px; padding: 0 48px 0 18px; border: 1px solid var(--border-color); border-radius: 17px; outline: none; background: var(--bg-input); font-size: 14px; transition: .25s; }
         .search-wrapper input:focus { border-color: rgba(139,92,246,.55); box-shadow: 0 0 0 4px rgba(139,92,246,.1); }
@@ -181,9 +185,8 @@
         .section-title::before { content: ""; display: inline-block; width: 4px; height: 20px; margin-left: 9px; vertical-align: -3px; border-radius: 10px; background: linear-gradient(#a855f7, #22d3ee); }
         .section-more { color: var(--text-muted); font-size: 12px; }
         
-        .movie-list { display: flex; gap: 15px; overflow-x: auto; padding: 5px 20px 20px; scrollbar-width: thin; }
-        .movie-list::-webkit-scrollbar { height: 6px; }
-        .movie-list::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.4); border-radius: 10px; }
+        .movie-list { display: flex; gap: 15px; overflow-x: auto; padding: 5px 20px 20px; scrollbar-width: none; }
+        .movie-list::-webkit-scrollbar { display: none; }
         
         .movie-card { flex: 0 0 142px; cursor: pointer; user-select: none; transition: transform .25s ease; }
         .movie-card:active { transform: scale(.96); }
@@ -195,34 +198,44 @@
         .empty-section { margin: 0 20px; height: 115px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--border-color); border-radius: 18px; color: var(--text-muted); font-size: 13px; background: var(--bg-input); }
 
         /* =========================
-           DESKTOP/LAPTOP OPTIMIZATIONS
+           DESKTOP & LAPTOP LAYOUT
         ========================= */
         @media (min-width: 768px) {
+            #app-wrapper { padding-bottom: 20px; }
             .header { padding: 0 50px; height: 85px; }
             .logo { font-size: 38px; }
-            .search-box { padding: 30px 50px 10px; }
-            .hero { width: calc(100% - 100px); border-radius: 35px; margin-top: 30px; }
-            .slide { aspect-ratio: 21 / 8; } /* حالت کاملا سینمایی عریض */
-            .section { margin-top: 50px; }
-            .section-header { padding: 0 50px; margin-bottom: 25px; }
-            .section-title { font-size: 26px; }
-            .section-title::before { height: 24px; width: 5px; }
-            .movie-list { gap: 20px; padding: 5px 50px 30px; }
-            .movie-card { flex: 0 0 200px; } /* سایز بزرگ و حرفه‌ای پوستر در لپ‌تاپ */
-            .movie-card:hover { transform: translateY(-5px); }
-            .movie-name { font-size: 16px; margin-top: 5px; }
-            .bottom-nav { max-width: 500px; }
+            .desktop-nav { display: flex; } /* منوی بالا نمایان می‌شود */
+            .bottom-nav { display: none !important; } /* منوی پایین مخفی می‌شود */
+            
+            .search-box { padding: 30px 50px 10px; max-width: 800px; }
+            
+            .hero { width: calc(100% - 100px); border-radius: 30px; margin-top: 25px; }
+            .slide { aspect-ratio: 21 / 7; max-height: 450px; } /* سایز سینمایی بنر */
+            
+            .section-header { padding: 0 50px; }
+            
+            /* تبدیل لیست اسکرولی موبایل به گرید (Grid) حرفه‌ای کامپیوتر */
+            .movie-list { 
+                display: grid; 
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+                gap: 25px; 
+                padding: 10px 50px 40px; 
+                overflow-x: visible; 
+            }
+            .movie-card { width: 100%; flex: auto; transition: 0.3s; }
+            .movie-card:hover { transform: translateY(-8px); } /* افکت جذاب‌تر در هاور موس */
+            .movie-name { font-size: 15px; margin-top: 5px; }
         }
-        
+
         @media (min-width: 1200px) {
-            .movie-card { flex: 0 0 230px; }
-            .slide { aspect-ratio: 21 / 7; }
+            .movie-list { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+            .slide { max-height: 550px; }
         }
 
         /* =========================
            DOWNLOADS MANAGER
         ========================= */
-        #downloads-app { display: none; padding: 20px; padding-bottom: 90px; max-width: 800px; margin: 0 auto; }
+        #downloads-app { display: none; padding: 20px; max-width: 800px; margin: 0 auto; }
         .dl-item { background: var(--bg-box); border: 1px solid var(--border-color); border-radius: 16px; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; }
         .dl-header { display: flex; justify-content: space-between; align-items: center; }
         .dl-title { font-weight: bold; font-size: 14px; }
@@ -250,7 +263,7 @@
         .msg-bubble.system { border-right-color: #10b981; }
         .msg-bubble.admin-reply { border-right-color: #3b82f6; }
         
-        /* Bottom Nav */
+        /* Bottom Nav (Mobile Only) */
         .bottom-nav { position: fixed; z-index: 2000; bottom: 12px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; height: 62px; display: flex; align-items: center; justify-content: center; gap: 80px; border: 1px solid var(--border-color); border-radius: 20px; background: var(--nav-bg); backdrop-filter: blur(22px); box-shadow: 0 15px 40px rgba(0,0,0,.2); display: none; }
         .nav-item { position: relative; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: .25s; cursor: pointer; }
         .nav-item.active { color: #b56cff; }
@@ -394,7 +407,15 @@
     ========================= -->
     <div id="main-app">
         <header class="header">
-            <div class="logo">PLATO</div>
+            <div style="display:flex; align-items:center;">
+                <div class="logo" style="margin-left: 30px;">PLATO</div>
+                <!-- منوی دسکتاپ -->
+                <div class="desktop-nav">
+                    <a id="deskHome" class="active" onclick="switchBottomNav('home')">خانه</a>
+                    <a id="deskDown" onclick="switchBottomNav('downloads')">دانلودها</a>
+                </div>
+            </div>
+            
             <div class="header-actions">
                 <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -448,7 +469,6 @@
             <h2 style="font-size:18px;">مدیریت دانلودها</h2>
         </header>
         <div id="dl-list-container">
-            <!-- آیتم‌های دانلود اینجا رندر میشن -->
             <div class="empty-section">لیست دانلودهای شما خالی است.</div>
         </div>
     </div>
@@ -456,7 +476,6 @@
     <!-- =========================
          MODALS
     ========================= -->
-    <!-- Video Player -->
     <div class="modal" id="playerModal">
         <div class="modal-box">
             <div class="video-container">
@@ -471,7 +490,6 @@
         </div>
     </div>
 
-    <!-- Support Modal (User) -->
     <div class="modal" id="supportModal">
         <div class="modal-box" style="max-width: 400px;">
             <div class="modal-content">
@@ -483,7 +501,6 @@
         </div>
     </div>
 
-    <!-- Inbox Modal (User) -->
     <div class="modal" id="inboxModal">
         <div class="modal-box" style="max-width: 400px; height: 80vh;">
             <div class="modal-content" style="display:flex; flex-direction:column;">
@@ -494,7 +511,6 @@
         </div>
     </div>
 
-    <!-- Admin Reply Modal -->
     <div class="modal" id="adminReplyModal">
         <div class="modal-box" style="max-width: 400px;">
             <div class="modal-content">
@@ -507,7 +523,6 @@
         </div>
     </div>
 
-    <!-- Admin System Message Modal -->
     <div class="modal" id="sysMsgModal">
         <div class="modal-box" style="max-width: 400px;">
             <div class="modal-content">
@@ -522,7 +537,7 @@
 </div> <!-- End of App Wrapper -->
 
 <!-- =========================
-     BOTTOM NAV
+     BOTTOM NAV (موبایل)
 ========================= -->
 <nav class="bottom-nav" id="bottomNav">
     <div class="nav-item active" id="homeNav" onclick="switchBottomNav('home')">
@@ -560,7 +575,7 @@
         const alertBox = document.getElementById('custom-alert');
         alertBox.textContent = msg;
         alertBox.style.display = 'block';
-        setTimeout(() => alertBox.style.display = 'none', 3500);
+        setTimeout(() => alertBox.style.display = 'none', 4000);
     }
 
     function toggleTheme() {
@@ -574,14 +589,22 @@
        نویگیشن و تب‌ها
     ========================= */
     function switchBottomNav(tab) {
+        // آپدیت منوی پایین (موبایل)
         document.getElementById('homeNav').classList.remove('active');
         document.getElementById('downloadsNav').classList.remove('active');
+        
+        // آپدیت منوی بالا (کامپیوتر)
+        document.getElementById('deskHome').classList.remove('active');
+        document.getElementById('deskDown').classList.remove('active');
+
         if(tab === 'home') {
             document.getElementById('homeNav').classList.add('active');
+            document.getElementById('deskHome').classList.add('active');
             document.getElementById('downloads-app').style.display = 'none';
             document.getElementById('main-app').style.display = 'block';
         } else {
             document.getElementById('downloadsNav').classList.add('active');
+            document.getElementById('deskDown').classList.add('active');
             document.getElementById('main-app').style.display = 'none';
             document.getElementById('downloads-app').style.display = 'block';
             renderDownloadsList();
@@ -611,19 +634,15 @@
     function hideAdminPanel() {
         document.getElementById('admin-screen').style.display = 'none';
         document.getElementById('main-app').style.display = 'block';
+        // برای موبایل دوباره نمایش می‌دهیم، در دسکتاپ توسط CSS مخفی می‌ماند
         document.getElementById('bottomNav').style.display = 'flex';
-        document.getElementById('homeNav').classList.add('active');
-        document.getElementById('downloadsNav').classList.remove('active');
+        switchBottomNav('home');
         fetchMoviesFromDatabase();
     }
 
-    /* =========================
-       منوی کشویی و محاسبه دقیق زمان VIP (فقط روز)
-    ========================= */
     function openSidebar() {
         document.getElementById('sidebar').classList.add('open');
         document.getElementById('sidebarOverlay').classList.add('open');
-        
         document.getElementById('sidebarUser').textContent = currentUserProfile.username;
         const subElem = document.getElementById('sub-time-left');
         
@@ -634,19 +653,15 @@
                 const now = new Date().getTime();
                 const end = new Date(currentUserProfile.sub_end_date).getTime();
                 const diff = end - now;
-                
                 if(diff > 0) {
-                    const d = Math.ceil(diff / (1000 * 3600 * 24)); // فقط روز کامل
+                    const d = Math.ceil(diff / (1000 * 3600 * 24));
                     subElem.textContent = `اعتبار: ${d} روز باقی‌مانده`;
                 } else { 
                     subElem.textContent = "اشتراک منقضی شده"; 
                 }
-            } else { 
-                subElem.textContent = "بدون اشتراک فعال"; 
-            }
+            } else { subElem.textContent = "بدون اشتراک فعال"; }
         }
     }
-    
     function closeSidebar() {
         document.getElementById('sidebar').classList.remove('open');
         document.getElementById('sidebarOverlay').classList.remove('open');
@@ -750,7 +765,7 @@
     }
 
     /* =========================
-       سیستم پیام‌ها (پشتیبانی و سیستمی)
+       سیستم پیام‌ها (نسخه همراه با کنترل ارور)
     ========================= */
     async function checkUnreadMessages() {
         if(!currentUserProfile) return;
@@ -790,11 +805,16 @@
         const text = document.getElementById('support-msg-text').value.trim();
         if(!text) return;
         showLoader(true);
-        await supabaseClient.from('messages').insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text, is_read: false }]);
+        // استفاده از هشدار دقیق ارور
+        const res = await supabaseClient.from('messages').insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text, is_read: false }]);
         showLoader(false);
-        showCustomAlert('پیام شما با موفقیت برای مدیریت ارسال شد.');
-        document.getElementById('support-msg-text').value = '';
-        document.getElementById('supportModal').classList.remove('show');
+        if(res.error) {
+            showCustomAlert('خطا در ارتباط با دیتابیس: ' + res.error.message);
+        } else {
+            showCustomAlert('پیام شما با موفقیت برای مدیریت ارسال شد.');
+            document.getElementById('support-msg-text').value = '';
+            document.getElementById('supportModal').classList.remove('show');
+        }
     }
 
     window.openInboxModal = async function() {
@@ -808,7 +828,6 @@
 
         if(data && data.length > 0) {
             let deletedSysMsgs = JSON.parse(localStorage.getItem('deleted_sys_msgs') || '[]');
-            
             let userMsgs = data.filter(m => {
                 if(m.direction === 'system_all' && !deletedSysMsgs.includes(m.id)) return true;
                 if(m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) return true;
@@ -820,7 +839,6 @@
                     let cl = msg.direction === 'system_all' ? 'system' : 'admin-reply';
                     let title = msg.direction === 'system_all' ? '🔔 پیام سیستم:' : '💬 پاسخ پشتیبانی:';
                     let isSys = msg.direction === 'system_all' ? 'true' : 'false';
-                    
                     list.innerHTML += `
                         <div class="msg-bubble ${cl}">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px;">
@@ -861,7 +879,6 @@
         if(usersData) { usersData.forEach(u => userMap[u.id] = u.username); }
 
         const { data: msgs } = await supabaseClient.from('messages').select('*').eq('direction', 'user_to_admin').order('created_at', { ascending: false });
-        
         const list = document.getElementById('admin-inbox-list');
         list.innerHTML = '';
         
@@ -869,13 +886,12 @@
             msgs.forEach(msg => {
                 let uname = userMap[msg.user_id] || 'کاربر حذف شده';
                 let dot = !msg.is_read ? '<span style="color:#10b981; font-size:11px;">(پیام جدید)</span>' : '';
-                
                 list.innerHTML += `
                     <div class="req-card" style="flex-direction:column; align-items:stretch;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                             <b style="color:#a855f7;">👤 از: ${uname} ${dot}</b>
                             <div style="display:flex; gap:5px;">
-                                <button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ دادن</button>
+                                <button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ</button>
                                 <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف 🗑</button>
                             </div>
                         </div>
@@ -906,11 +922,15 @@
         const uid = document.getElementById('reply-user-id').value;
         if(!text) return;
         showLoader(true);
-        await supabaseClient.from('messages').insert([{ user_id: uid, direction: 'admin_to_user', content: text, is_read: false }]);
+        const res = await supabaseClient.from('messages').insert([{ user_id: uid, direction: 'admin_to_user', content: text, is_read: false }]);
         showLoader(false);
-        showCustomAlert('پاسخ برای کاربر ارسال شد.');
-        document.getElementById('admin-reply-text').value = '';
-        document.getElementById('adminReplyModal').classList.remove('show');
+        if(res.error) {
+            showCustomAlert('خطا در ارتباط با دیتابیس: ' + res.error.message);
+        } else {
+            showCustomAlert('پاسخ برای کاربر ارسال شد.');
+            document.getElementById('admin-reply-text').value = '';
+            document.getElementById('adminReplyModal').classList.remove('show');
+        }
     }
 
     function openSystemMessageModal() { document.getElementById('sysMsgModal').classList.add('show'); }
@@ -918,15 +938,19 @@
         const text = document.getElementById('sys-msg-text').value.trim();
         if(!text) return;
         showLoader(true);
-        await supabaseClient.from('messages').insert([{ direction: 'system_all', content: text, is_read: false }]);
+        const res = await supabaseClient.from('messages').insert([{ direction: 'system_all', content: text, is_read: false }]);
         showLoader(false);
-        showCustomAlert('پیام با موفقیت به تمام کاربران ارسال شد.');
-        document.getElementById('sys-msg-text').value = '';
-        document.getElementById('sysMsgModal').classList.remove('show');
+        if(res.error) {
+            showCustomAlert('خطا در دیتابیس: ' + res.error.message);
+        } else {
+            showCustomAlert('پیام با موفقیت به تمام کاربران ارسال شد.');
+            document.getElementById('sys-msg-text').value = '';
+            document.getElementById('sysMsgModal').classList.remove('show');
+        }
     }
 
     /* =========================
-       مدیریت کاربران و اشتراک (ادمین) + حذف کامل کاربر 
+       مدیریت کاربران و اشتراک (ادمین)
     ========================= */
     async function loadPendingRequests() {
         const { data } = await supabaseClient.from('users_data').select('*').eq('status', 'pending');
@@ -1004,7 +1028,7 @@
     }
 
     /* =========================
-       مدیریت دیتابیس فیلم، ویرایش و تایمر
+       مدیریت دیتابیس فیلم
     ========================= */
     async function saveMovie() {
         var category = document.getElementById('new-movie-category').value;
@@ -1265,7 +1289,7 @@
     }
 
     /* =========================
-       سیستم مدیریت دانلودها (شبیه‌ساز حرفه‌ای پیشرفت)
+       سیستم مدیریت دانلودها 
     ========================= */
     function getDownloads() {
         return JSON.parse(localStorage.getItem('plato_dl_list')) || [];
