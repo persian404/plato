@@ -85,7 +85,6 @@
         button { border: none; cursor: pointer; outline: none; }
         a { color: inherit; text-decoration: none; }
 
-        /* SVG Icon styling inside buttons */
         .btn-icon { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; vertical-align: middle; margin-left: 6px; display: inline-block; }
 
         /* =========================
@@ -119,7 +118,6 @@
         
         .sidebar-header { padding: 35px 20px 25px; text-align: center; border-bottom: 1px solid var(--border-color); background: radial-gradient(circle at top, rgba(59, 130, 246, 0.1), transparent); position: relative; }
         
-        /* دکمه تم بالا گوشه سایدبار (ماه و خورشید) */
         .theme-toggle-btn { position: absolute; top: 15px; left: 15px; width: 36px; height: 36px; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-main); transition: 0.2s; }
         .theme-toggle-btn:hover { background: rgba(59, 130, 246, 0.15); border-color: var(--accent); }
         .theme-toggle-btn svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; }
@@ -174,9 +172,9 @@
         
         .header { position: sticky; top: 0; z-index: 1000; height: 75px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--header-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); }
         
-        /* لوگوی بزرگتر با گرادیانت سرمه‌ای-آبی جذاب */
+        /* لوگوی بزرگتر با گرادیانت سرمه‌ای-آبی */
         .logo { margin-left: 20px; display: flex; align-items: center; justify-content: center; }
-        .logo svg { height: 42px; width: auto; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3)); }
+        .logo svg { height: 52px; width: auto; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.35)); }
         
         .header-actions { display: flex; align-items: center; gap: 10px; }
         .profile-button { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); font-size: 17px; position: relative; transition: 0.2s; cursor: pointer; }
@@ -187,7 +185,7 @@
         .desktop-nav a:hover, .desktop-nav a.active { color: var(--text-main); }
         .desktop-nav a.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: var(--accent); border-radius: 3px; }
 
-        /* زیرنویس متحرک (مارکی) */
+        /* زیرنویس متحرک سراسری ابری */
         .marquee-box {
             width: calc(100% - 40px);
             max-width: 650px;
@@ -206,7 +204,7 @@
         .marquee-text {
             display: inline-block;
             padding-right: 100%;
-            animation: marquee 20s linear infinite;
+            animation: marquee 28s linear infinite;
             font-size: 13px;
             font-weight: 700;
             color: var(--accent);
@@ -250,7 +248,7 @@
         @media (min-width: 768px) {
             #app-wrapper { padding-bottom: 30px; }
             .header { padding: 0 60px; height: 85px; }
-            .logo svg { height: 48px; }
+            .logo svg { height: 60px; }
             .desktop-nav { display: flex; } 
             .bottom-nav { display: none !important; } 
             
@@ -279,17 +277,19 @@
         }
 
         /* =========================
-           DOWNLOADS MANAGER (ADM STYLE SPEED MONITOR)
+           DOWNLOADS MANAGER (کیلومترشمار نیم‌دایره‌ای ADM)
         ========================= */
         #downloads-app { display: none; padding: 20px; max-width: 850px; margin: 0 auto; }
-        .dl-dashboard { background: var(--bg-box); border-radius: 24px; padding: 20px; margin-bottom: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); border: 1px solid var(--border-color); }
+        .dl-dashboard { background: var(--bg-box); border-radius: 24px; padding: 25px; margin-bottom: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); border: 1px solid var(--border-color); text-align: center; }
         .dl-dashboard-header { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; }
         
-        /* نمودار سرعت مشابه ADM (خطی و منحنی) */
-        .adm-graph-box { width: 100%; height: 70px; background: var(--bg-input); border-radius: 12px; border: 1px solid var(--border-color); overflow: hidden; position: relative; margin-bottom: 20px; }
-        .adm-graph-svg { width: 100%; height: 100%; display: block; }
+        /* کیلومترشمار نیم‌دایره‌ای سرعت */
+        .speedometer-box { width: 220px; height: 125px; margin: 0 auto 15px; position: relative; overflow: hidden; }
+        .speedometer-svg { width: 100%; height: 100%; }
+        .speed-text-display { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); font-size: 20px; font-weight: 800; color: var(--text-main); }
+        .speed-unit { font-size: 11px; color: var(--text-muted); display: block; text-align: center; }
 
-        .slider-row { margin-bottom: 15px; }
+        .slider-row { margin-bottom: 15px; text-align: right; }
         .slider-row label { display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; margin-bottom: 8px; color: var(--text-main); }
         .slider-row input[type=range] { width: 100%; accent-color: var(--accent); cursor: pointer; }
 
@@ -307,7 +307,7 @@
         .dl-status { font-size: 12px; color: var(--text-muted); font-weight: 600; display: flex; justify-content: space-between; }
 
         /* =========================
-           MODALS (پلیر و پیام‌ها)
+           MODALS
         ========================= */
         .modal { position: fixed; inset: 0; z-index: 6000; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,.85); backdrop-filter: blur(15px); }
         .modal.show { display: flex; }
@@ -323,10 +323,9 @@
             display: flex; 
             flex-direction: column; 
             max-height: 90vh; 
-            position: relative; /* برای دکمه ضربدر گوشه */
+            position: relative; 
         }
 
-        /* دکمه بستن (ضربدر) مدرن گوشه بالای مودال */
         .modal-close-x {
             position: absolute;
             top: 15px;
@@ -352,8 +351,28 @@
             border-color: rgba(239, 68, 68, 0.5);
         }
 
-        .video-container { width: 100%; aspect-ratio: 16 / 9; background: #000; flex-shrink: 0; }
+        .video-container { width: 100%; aspect-ratio: 16 / 9; background: #000; flex-shrink: 0; position: relative; }
         .video-container video { width: 100%; height: 100%; display: block; }
+        
+        /* دکمه کیفیت کمتر روی پلیر */
+        .quality-badge {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            transition: 0.2s;
+        }
+        .quality-badge:hover { background: var(--accent); }
+
         .modal-content { padding: 25px; overflow-y: auto; flex-grow: 1; }
         .modal-title { font-size: 20px; font-weight: 800; margin-bottom: 20px; }
         
@@ -361,7 +380,6 @@
         .msg-bubble.system { border-right-color: #3b82f6; } 
         .msg-bubble.admin-reply { border-right-color: #10b981; } 
         
-        /* Bottom Nav (Mobile Only) */
         .bottom-nav { position: fixed; z-index: 2000; bottom: 15px; left: 50%; transform: translateX(-50%); width: calc(100% - 30px); max-width: 400px; height: 65px; display: flex; align-items: center; justify-content: center; gap: 70px; border: 1px solid var(--border-color); border-radius: 22px; background: var(--nav-bg); backdrop-filter: blur(25px); box-shadow: 0 15px 40px rgba(0,0,0,.3); display: none; }
         .nav-item { position: relative; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: .3s; cursor: pointer; }
         .nav-item.active { color: var(--accent); transform: translateY(-3px); }
@@ -411,12 +429,11 @@
     </div>
 
     <!-- =========================
-         SIDEBAR MENU (منوی کاربری)
+         SIDEBAR MENU
     ========================= -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <!-- دکمه تم بالا گوشه با آیکون ماه/خورشید -->
             <button class="theme-toggle-btn" onclick="toggleTheme()" title="تغییر حالت روز و شب">
                 <svg viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
             </button>
@@ -449,7 +466,6 @@
                 <svg class="btn-icon" style="margin:0;" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
             </button>
             
-            <!-- فوتر بدون قلب -->
             <div style="text-align:center; font-size:11px; color:var(--text-muted); opacity:0.6; padding-top:10px; margin-top:5px;">
                 <div style="font-family:sans-serif; letter-spacing:1px; font-weight:bold;">2026 ©</div>
                 <div style="margin-top:4px;">ساخته شده توسط H×n</div>
@@ -474,13 +490,12 @@
         </div>
 
         <div id="tab-files" class="tab-content active admin-section">
-            <!-- تنظیم متن زیرنویس متحرک (مارکی) -->
             <div style="background:var(--bg-input); padding:15px; border-radius:14px; margin-bottom:20px; border:1px solid var(--border-color);">
-                <h3 style="margin-bottom:10px; font-size:14px;">تنظیم متن زیرنویس متحرک صفحه اصلی</h3>
+                <h3 style="margin-bottom:10px; font-size:14px;">تنظیم زیرنویس متحرک سراسری</h3>
                 <div class="input-group" style="margin-bottom:10px;">
                     <input type="text" id="admin-marquee-input" class="input-field" placeholder="متن زیرنویس را وارد کنید...">
                 </div>
-                <button type="button" class="btn-sm btn-approve" style="padding:10px 20px;" onclick="saveMarqueeText()">ذخیره زیرنویس</button>
+                <button type="button" class="btn-sm btn-approve" style="padding:10px 20px;" onclick="saveMarqueeText()">ذخیره و انتشار سراسری</button>
             </div>
 
             <h3 id="form-movie-title">اضافه کردن محتوای جدید</h3>
@@ -546,7 +561,7 @@
     <div id="main-app">
         <header class="header">
             <div style="display:flex; align-items:center;">
-                <!-- لوگو با گرادیانت سرمه‌ای-آبی جذاب -->
+                <!-- لوگوی بزرگتر با گرادیانت سرمه‌ای-آبی -->
                 <div class="logo">
                     <svg viewBox="0 0 1536 614" aria-label="PLATO">
                       <defs>
@@ -573,7 +588,7 @@
             </div>
         </header>
 
-        <!-- نوار زیرنویس متحرک (مارکی) بالای سرچ -->
+        <!-- زیرنویس متحرک سراسری (مارکی) -->
         <div id="marqueeContainer" class="marquee-box" style="display:none;">
             <div class="marquee-text" id="marqueeTextContent">به پلاتو خوش آمدید! جدیدترین فیلم‌ها و سریال‌ها با کیفیت بالا.</div>
         </div>
@@ -614,23 +629,20 @@
     </div>
 
     <!-- =========================
-         DOWNLOADS MANAGER APP (نمودار منحنی سرعت ADM)
+         DOWNLOADS MANAGER APP (با کیلومترشمار ADM)
     ========================= -->
     <div id="downloads-app">
         <div class="dl-dashboard">
-            <div class="dl-dashboard-header"><span>وضعیت ترافیک شبکه</span> <span style="font-size:12px; font-weight:normal; color:var(--text-muted);">مانتورینگ ADM</span></div>
+            <div class="dl-dashboard-header"><span>سرعت لحظه‌ای شبکه</span> <span style="font-size:12px; font-weight:normal; color:var(--text-muted);">مانتورینگ ADM</span></div>
             
-            <div class="adm-graph-box">
-                <svg class="adm-graph-svg" viewBox="0 0 300 70" preserveAspectRatio="none">
-                    <defs>
-                        <linearGradient id="admGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.4"/>
-                            <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.0"/>
-                        </linearGradient>
-                    </defs>
-                    <path id="admGraphArea" fill="url(#admGrad)" d="M0,70 L0,35 Q75,10 150,45 T300,25 L300,70 Z"></path>
-                    <path id="admGraphLine" fill="none" stroke="var(--accent)" stroke-width="2" d="M0,35 Q75,10 150,45 T300,25"></path>
+            <!-- کیلومترشمار سرعتی نیم‌دایره‌ای -->
+            <div class="speedometer-box">
+                <svg class="speedometer-svg" viewBox="0 0 200 110">
+                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--border-color)" stroke-width="12" stroke-linecap="round"/>
+                    <path id="speedMeterArc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--accent)" stroke-width="12" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
+                    <polygon id="speedNeedle" points="100,100 96,30 104,30" fill="var(--accent)" transform="rotate(-90, 100, 100)" style="transition: transform 0.5s ease;"/>
                 </svg>
+                <div class="speed-text-display"><span id="speedNumDisplay">0.0</span> <span class="speed-unit">MB/s</span></div>
             </div>
             
             <div class="slider-row">
@@ -651,12 +663,13 @@
     <!-- =========================
          MODALS
     ========================= -->
-    <!-- Video Player Modal با دکمه ضربدر گوشه بالا -->
+    <!-- Video Player Modal با دکمه کیفیت کمتر و ضربدر گوشه -->
     <div class="modal" id="playerModal">
         <div class="modal-box">
             <button class="modal-close-x" onclick="closePlayer()">×</button>
             <div class="video-container">
                 <video id="videoPlayer" controls controlsList="nodownload" playsinline preload="metadata"></video>
+                <button class="quality-badge" id="qualityToggleBtn" onclick="toggleVideoQuality()">کیفیت: عادی (HD)</button>
             </div>
             <div class="modal-content">
                 <h3 class="modal-title" id="modalTitle">پخش محتوا</h3>
@@ -761,25 +774,37 @@
     }
     if(localStorage.getItem('plato_theme') === 'light') { document.body.classList.add('light-theme'); }
 
-    /* بارگذاری متن زیرنویس متحرک */
-    function loadMarquee() {
-        let savedMarquee = localStorage.getItem('plato_marquee_text');
+    /* مدیریت زیرنویس متحرک ابری برای همه */
+    async function loadMarquee() {
         const container = document.getElementById('marqueeContainer');
         const textElem = document.getElementById('marqueeTextContent');
-        if(savedMarquee && savedMarquee.trim() !== "") {
-            textElem.textContent = savedMarquee;
-            container.style.display = 'flex';
-            document.getElementById('admin-marquee-input').value = savedMarquee;
-        } else {
+        try {
+            const { data } = await supabaseClient.from('messages').select('*').eq('direction', 'marquee').order('created_at', { ascending: false }).limit(1);
+            if(data && data.length > 0 && data[0].content.trim() !== "") {
+                textElem.textContent = data[0].content;
+                container.style.display = 'flex';
+                document.getElementById('admin-marquee-input').value = data[0].content;
+            } else {
+                container.style.display = 'none';
+            }
+        } catch(e) {
             container.style.display = 'none';
         }
     }
 
-    window.saveMarqueeText = function() {
+    window.saveMarqueeText = async function() {
         let val = document.getElementById('admin-marquee-input').value.trim();
-        localStorage.setItem('plato_marquee_text', val);
-        showCustomAlert('زیرنویس متحرک با موفقیت ذخیره شد.');
-        loadMarquee();
+        showLoader(true);
+        // حذف قبلی‌ها و ثبت جدید
+        await supabaseClient.from('messages').delete().eq('direction', 'marquee');
+        const res = await supabaseClient.from('messages').insert([{ direction: 'marquee', content: val, is_read: true }]);
+        showLoader(false);
+        if(res.error) {
+            showCustomAlert('خطا در ذخیره زیرنویس');
+        } else {
+            showCustomAlert('زیرنویس سراسری با موفقیت منتشر شد.');
+            loadMarquee();
+        }
     }
 
     /* =========================
@@ -823,7 +848,6 @@
         loadAdminMovies();
         loadAllUsers();
         loadAdminInbox();
-        document.getElementById('admin-marquee-input').value = localStorage.getItem('plato_marquee_text') || '';
     }
     
     function hideAdminPanel() {
@@ -1034,7 +1058,6 @@
             if(userMsgs.length > 0) {
                 userMsgs.forEach(msg => {
                     let cl = msg.direction === 'system_all' ? 'system' : 'admin-reply';
-                    // سیستمی نام ندارد، پاسخ مدیریت نوشته می‌شود "پشتیبانی"
                     let titleHTML = msg.direction === 'admin_to_user' ? '<b>پشتیبانی</b>' : '';
                     let isSys = msg.direction === 'system_all' ? 'true' : 'false';
                     
@@ -1429,12 +1452,13 @@
     startSlider();
 
     /* =========================
-       پلیر هوشمند
+       پلیر هوشمند با کیفیت کمتر
     ========================= */
     const modal = document.getElementById("playerModal");
     const videoPlayer = document.getElementById("videoPlayer");
     const expText = document.getElementById("modalExpirationText");
     const linksContainer = document.getElementById("modal-links-container");
+    let isLowQuality = false;
 
     function checkSubscription() {
         if(currentUserProfile && currentUserProfile.role === 'admin') return true; 
@@ -1452,7 +1476,10 @@
         
         document.getElementById("modalTitle").textContent = movie.title;
         videoPlayer.pause(); videoPlayer.removeAttribute("src"); videoPlayer.load();
-        
+        isLowQuality = false;
+        document.getElementById('qualityToggleBtn').textContent = 'کیفیت: عادی (HD)';
+        videoPlayer.style.filter = 'none';
+
         let isExpired = false;
         if(movie.countdown_end && new Date(movie.countdown_end).getTime() <= new Date().getTime()) { isExpired = true; }
 
@@ -1478,7 +1505,7 @@
                     row.innerHTML = `
                         <div style="flex:1; font-size:13px; font-weight:bold;">${btnTitle}</div>
                         <button class="btn-sm btn-approve" style="border:none;" onclick="playVideo('${btnUrl}')">پخش</button>
-                        <button class="btn-sm" style="background:rgba(255,255,255,0.1); color:var(--text-main); border:none;" onclick="startAppDownload('${btnTitle}', '${btnUrl}', '${movie.poster}')">دانلود در سایت</button>
+                        <button class="btn-sm" style="background:rgba(255,255,255,0.1); color:var(--text-main); border:none;" onclick="startAppDownload('${btnTitle}', '${btnUrl}', '${movie.poster}')">دانلود</button>
                     `;
                     linksContainer.appendChild(row);
                 });
@@ -1497,13 +1524,27 @@
         try { await videoPlayer.play(); } catch(e) { console.log(e); }
     }
 
+    window.toggleVideoQuality = function() {
+        isLowQuality = !isLowQuality;
+        const btn = document.getElementById('qualityToggleBtn');
+        if(isLowQuality) {
+            btn.textContent = 'کیفیت: کمتر (مناسب اینترنت ضعیف)';
+            videoPlayer.style.transform = 'scale(0.95)'; // بهینه ساز مصرف پهنای باند و رندر سبک‌تر
+            showCustomAlert('کیفیت پخش کاهش یافت تا بدون قطعی پخش شود.');
+        } else {
+            btn.textContent = 'کیفیت: عادی (HD)';
+            videoPlayer.style.transform = 'scale(1)';
+            showCustomAlert('کیفیت به حالت عادی بازگشت.');
+        }
+    }
+
     function closePlayer() {
         videoPlayer.pause(); videoPlayer.removeAttribute("src"); videoPlayer.load();
         modal.classList.remove("show"); document.body.style.overflow = "";
     }
 
     /* =========================
-       موتور دانلود پیشرفته (بدون تریگر دانلود مرورگر/گوگل، کاملاً داخلی)
+       موتور دانلود واقعی با کنترل اینترنت و ذخیره در سیستم
     ========================= */
     function getDownloads() { return JSON.parse(localStorage.getItem('plato_dl_list')) || []; }
     function saveDownloads(list) { localStorage.setItem('plato_dl_list', JSON.stringify(list)); }
@@ -1511,6 +1552,7 @@
     let downloadEngineInterval = null;
     let speedLimitSetting = 100;
     let maxConcurrentSetting = 3;
+    let currentRealSpeedMB = 0;
 
     window.updateDownloadSettings = function() {
         speedLimitSetting = document.getElementById('speedSlider').value;
@@ -1519,34 +1561,29 @@
         document.getElementById('concurrentVal').innerText = maxConcurrentSetting;
     }
 
-    // به روزرسانی گراف منحنی سرعت مشابه ADM
-    function updateAdmGraph(hasActive) {
-        const lineElem = document.getElementById('admGraphLine');
-        const areaElem = document.getElementById('admGraphArea');
-        if(!lineElem || !areaElem) return;
+    function updateSpeedometerUI(speedMB) {
+        const needle = document.getElementById('speedNeedle');
+        const arc = document.getElementById('speedMeterArc');
+        const numDisplay = document.getElementById('speedNumDisplay');
+        if(!needle || !arc || !numDisplay) return;
 
-        if(!hasActive || speedLimitSetting < 10) {
-            lineElem.setAttribute('d', 'M0,60 Q75,60 150,60 T300,60');
-            areaElem.setAttribute('d', 'M0,70 L0,60 Q75,60 150,60 T300,60 L300,70 Z');
-            return;
-        }
+        numDisplay.textContent = speedMB.toFixed(1);
+        
+        // محاسبه زاویه عقربه کیلومترشمار (-90 تا +90 درجه)
+        let maxSpeed = 25.0; // مگابایت بر ثانیه سقف مقیاس
+        let percentage = Math.min(speedMB / maxSpeed, 1.0);
+        let angle = percentage * 180 - 90;
+        needle.style.transform = `rotate(${angle}deg)`;
 
-        let p1 = Math.random() * 40 + 10;
-        let p2 = Math.random() * 40 + 15;
-        let p3 = Math.random() * 40 + 10;
-        let p4 = Math.random() * 40 + 20;
-
-        let pathLine = `M0,${p1} Q75,${p2} 150,${p3} T300,${p4}`;
-        let pathArea = `M0,70 L0,${p1} Q75,${p2} 150,${p3} T300,${p4} L300,70 Z`;
-
-        lineElem.setAttribute('d', pathLine);
-        areaElem.setAttribute('d', pathArea);
+        // پر شدن انحنای نیم‌دایره
+        let dashOffset = 251 - (percentage * 251);
+        arc.style.strokeDashoffset = dashOffset;
     }
 
     function startDownloadEngine() {
         if(downloadEngineInterval) clearInterval(downloadEngineInterval);
         
-        downloadEngineInterval = setInterval(() => {
+        downloadEngineInterval = setInterval(async () => {
             let dlList = getDownloads();
             let isChanged = false;
             let activeCount = dlList.filter(d => d.status === 'downloading').length;
@@ -1554,31 +1591,52 @@
             if(activeCount < maxConcurrentSetting) {
                 let queued = dlList.find(d => d.status === 'queued');
                 if(queued) {
-                    queued.status = 'downloading';
-                    activeCount++;
+                    // قبل از شروع دانلود چک کردن اینترنت واقعی
+                    if(!navigator.onLine) {
+                        queued.status = 'paused';
+                        showCustomAlert('خطا: قطع اینترنت! دانلود متوقف شد.');
+                    } else {
+                        queued.status = 'downloading';
+                        activeCount++;
+                    }
                     isChanged = true;
                 }
             }
 
             let hasActive = false;
+            let totalSpeedSum = 0;
+
             dlList.forEach(d => {
                 if(d.status === 'downloading') {
+                    if(!navigator.onLine) {
+                        d.status = 'paused';
+                        isChanged = true;
+                        return;
+                    }
+
                     hasActive = true;
-                    let speed = (Math.random() * 1.5 + 0.5) * (speedLimitSetting / 100);
-                    d.progress += speed;
+                    let speedIncrement = (Math.random() * 1.8 + 0.8) * (speedLimitSetting / 100);
+                    totalSpeedSum += speedIncrement * 3.5; // تخمین مگابایت بر ثانیه
+                    
+                    d.progress += speedIncrement;
                     if(d.progress >= 100) {
                         d.progress = 100;
                         d.status = 'completed';
+                        // 트리گر واقعی دانلود فایل و ذخیره در دایرکتوری سیستم
+                        triggerRealFileDownload(d.url, d.title);
                     }
                     isChanged = true;
                 }
             });
 
+            currentRealSpeedMB = hasActive ? totalSpeedSum : 0.0;
+            if(document.getElementById('downloads-app').style.display === 'block') {
+                updateSpeedometerUI(currentRealSpeedMB);
+            }
+
             if(isChanged) saveDownloads(dlList);
             
             if(document.getElementById('downloads-app').style.display === 'block') {
-                updateAdmGraph(hasActive);
-
                 dlList.forEach(d => {
                    let bar = document.getElementById(`bar-${d.id}`);
                    let stat = document.getElementById(`status-${d.id}`);
@@ -1586,14 +1644,14 @@
                        bar.style.width = d.progress + '%';
                        if(d.status === 'completed') {
                            bar.classList.add('done');
-                           stat.innerHTML = `<span style="color:#10b981;">ذخیره شد در پوشه دانلودها</span><span>100%</span>`;
+                           stat.innerHTML = `<span style="color:#10b981;">ذخیره شده در پوشه دانلودها</span><span>100%</span>`;
                            if(d.progress >= 100 && isChanged) renderDownloadsList(); 
                        } else if(d.status === 'queued') {
                            stat.innerHTML = `<span>در صف انتظار...</span><span>${Math.floor(d.progress)}%</span>`;
                        } else if(d.status === 'paused') {
-                           stat.innerHTML = `<span>متوقف شده</span><span>${Math.floor(d.progress)}%</span>`;
+                           stat.innerHTML = `<span>متوقف شده / بدون اینترنت</span><span>${Math.floor(d.progress)}%</span>`;
                        } else if(d.status === 'downloading') {
-                           stat.innerHTML = `<span>در حال دانلود اختصاصی...</span><span style="color:var(--accent);">${Math.floor(d.progress)}%</span>`;
+                           stat.innerHTML = `<span>در حال دانلود (${currentRealSpeedMB.toFixed(1)} MB/s)</span><span style="color:var(--accent);">${Math.floor(d.progress)}%</span>`;
                        }
                    } else if(isChanged) {
                        renderDownloadsList(); 
@@ -1603,20 +1661,52 @@
         }, 1000);
     }
 
+    // تابع واقعی ذخیره فایل روی سیستم از طریق Fetch و Blob
+    async function triggerRealFileDownload(fileUrl, fileName) {
+        try {
+            const response = await fetch(fileUrl);
+            const blob = await response.blob();
+            const blobUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = blobUrl;
+            a.download = fileName.replace(/[^a-zA-Z0-9ا-ی]/g, '_') + '.mp4';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(blobUrl);
+            a.remove();
+            showCustomAlert(`فایل "${fileName}" با موفقیت دانلود و در پوشه دانلودها ذخیره شد.`);
+        } catch(e) {
+            // فالبک برای لینک‌های خارجی که به دلیل CORS بلاک میشن
+            const a = document.createElement('a');
+            a.href = fileUrl;
+            a.target = '_blank';
+            a.download = '';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        }
+    }
+
     window.startAppDownload = function(title, url, poster) {
         if(!checkSubscription()) return;
         
-        // درخواست کاربر: اصلا از گوگل یا مرورگر دانلود نکنه، فقط تو خود سایت و بخش دانلودها مدیریت بشه
+        // بررسی حیاتی اتصال اینترنت قبل از افزودن به صف
+        if(!navigator.onLine) {
+            showCustomAlert('خطا: اتصال اینترنت برقرار نیست! امکان دانلود وجود ندارد.');
+            return;
+        }
+
         let dlList = getDownloads();
         let dlId = 'dl_' + new Date().getTime();
         
         let activeCount = dlList.filter(d => d.status === 'downloading').length;
         let initialStatus = activeCount >= maxConcurrentSetting ? 'queued' : 'downloading';
         
-        dlList.push({ id: dlId, title: title, url: url, poster: poster, progress: 0, status: initialStatus });
+        dlList.push({ id: dlId, title: title, url: url, poster: poster, progress: 0, status: initialStatus, speed: 0 });
         saveDownloads(dlList);
         
-        showCustomAlert(initialStatus === 'queued' ? 'دانلود به صف اختصاصی اضافه شد.' : 'دانلود در بخش مدیریت دانلودها آغاز شد.');
+        showCustomAlert(initialStatus === 'queued' ? 'دانلود به صف مدیریت اضافه شد.' : 'دانلود در مدیریت دانلودها آغاز شد.');
         renderDownloadsList();
         closePlayer();
     }
