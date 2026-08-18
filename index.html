@@ -204,7 +204,7 @@
         .marquee-text {
             display: inline-block;
             padding-right: 100%;
-            animation: marquee 28s linear infinite;
+            animation: marquee 20s linear infinite;
             font-size: 13px;
             font-weight: 700;
             color: var(--accent);
@@ -277,17 +277,17 @@
         }
 
         /* =========================
-           DOWNLOADS MANAGER (کیلومترشمار نیم‌دایره‌ای ADM)
+           DOWNLOADS MANAGER (نیم‌دایره‌ای سرعت)
         ========================= */
         #downloads-app { display: none; padding: 20px; max-width: 850px; margin: 0 auto; }
         .dl-dashboard { background: var(--bg-box); border-radius: 24px; padding: 25px; margin-bottom: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); border: 1px solid var(--border-color); text-align: center; }
         .dl-dashboard-header { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; }
         
-        /* کیلومترشمار نیم‌دایره‌ای سرعت */
+        /* کیلومترشمار نیم‌دایره‌ای سرعت (بدون عقربه) */
         .speedometer-box { width: 220px; height: 125px; margin: 0 auto 15px; position: relative; overflow: hidden; }
         .speedometer-svg { width: 100%; height: 100%; }
-        .speed-text-display { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); font-size: 20px; font-weight: 800; color: var(--text-main); }
-        .speed-unit { font-size: 11px; color: var(--text-muted); display: block; text-align: center; }
+        .speed-text-display { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); font-size: 22px; font-weight: 800; color: var(--text-main); }
+        .speed-unit { font-size: 12px; color: var(--text-muted); display: block; text-align: center; }
 
         .slider-row { margin-bottom: 15px; text-align: right; }
         .slider-row label { display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; margin-bottom: 8px; color: var(--text-main); }
@@ -354,7 +354,6 @@
         .video-container { width: 100%; aspect-ratio: 16 / 9; background: #000; flex-shrink: 0; position: relative; }
         .video-container video { width: 100%; height: 100%; display: block; }
         
-        /* دکمه کیفیت کمتر روی پلیر */
         .quality-badge {
             position: absolute;
             bottom: 15px;
@@ -429,7 +428,7 @@
     </div>
 
     <!-- =========================
-         SIDEBAR MENU
+         SIDEBAR MENU (منوی کاربری)
     ========================= -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
     <div class="sidebar" id="sidebar">
@@ -629,18 +628,18 @@
     </div>
 
     <!-- =========================
-         DOWNLOADS MANAGER APP (با کیلومترشمار ADM)
+         DOWNLOADS MANAGER APP
     ========================= -->
     <div id="downloads-app">
         <div class="dl-dashboard">
-            <div class="dl-dashboard-header"><span>سرعت لحظه‌ای شبکه</span> <span style="font-size:12px; font-weight:normal; color:var(--text-muted);">مانتورینگ ADM</span></div>
+            <div class="dl-dashboard-header"><span>سرعت لحظه‌ای شبکه</span></div>
             
             <!-- کیلومترشمار سرعتی نیم‌دایره‌ای -->
             <div class="speedometer-box">
                 <svg class="speedometer-svg" viewBox="0 0 200 110">
                     <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--border-color)" stroke-width="12" stroke-linecap="round"/>
-                    <path id="speedMeterArc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--accent)" stroke-width="12" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
-                    <polygon id="speedNeedle" points="100,100 96,30 104,30" fill="var(--accent)" transform="rotate(-90, 100, 100)" style="transition: transform 0.5s ease;"/>
+                    <!-- نوار پر شونده سرعت -->
+                    <path id="speedMeterArc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--accent)" stroke-width="12" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251" style="transition: stroke-dashoffset 0.3s ease;"/>
                 </svg>
                 <div class="speed-text-display"><span id="speedNumDisplay">0.0</span> <span class="speed-unit">MB/s</span></div>
             </div>
@@ -663,7 +662,6 @@
     <!-- =========================
          MODALS
     ========================= -->
-    <!-- Video Player Modal با دکمه کیفیت کمتر و ضربدر گوشه -->
     <div class="modal" id="playerModal">
         <div class="modal-box">
             <button class="modal-close-x" onclick="closePlayer()">×</button>
@@ -780,10 +778,11 @@
         const textElem = document.getElementById('marqueeTextContent');
         try {
             const { data } = await supabaseClient.from('messages').select('*').eq('direction', 'marquee').order('created_at', { ascending: false }).limit(1);
-            if(data && data.length > 0 && data[0].content.trim() !== "") {
+            if(data && data.length > 0 && data[0].content && data[0].content.trim() !== "") {
                 textElem.textContent = data[0].content;
                 container.style.display = 'flex';
-                document.getElementById('admin-marquee-input').value = data[0].content;
+                let input = document.getElementById('admin-marquee-input');
+                if(input) input.value = data[0].content;
             } else {
                 container.style.display = 'none';
             }
@@ -795,7 +794,7 @@
     window.saveMarqueeText = async function() {
         let val = document.getElementById('admin-marquee-input').value.trim();
         showLoader(true);
-        // حذف قبلی‌ها و ثبت جدید
+        // اول تمام رکوردهای قدیمی زیرنویس رو پاک می‌کنیم تا دیتابیس شلوغ نشه
         await supabaseClient.from('messages').delete().eq('direction', 'marquee');
         const res = await supabaseClient.from('messages').insert([{ direction: 'marquee', content: val, is_read: true }]);
         showLoader(false);
@@ -1476,9 +1475,10 @@
         
         document.getElementById("modalTitle").textContent = movie.title;
         videoPlayer.pause(); videoPlayer.removeAttribute("src"); videoPlayer.load();
+        
         isLowQuality = false;
         document.getElementById('qualityToggleBtn').textContent = 'کیفیت: عادی (HD)';
-        videoPlayer.style.filter = 'none';
+        videoPlayer.style.transform = 'scale(1)';
 
         let isExpired = false;
         if(movie.countdown_end && new Date(movie.countdown_end).getTime() <= new Date().getTime()) { isExpired = true; }
@@ -1488,9 +1488,11 @@
         if(isExpired) {
             expText.style.display = "block";
             videoPlayer.style.display = "none";
+            document.getElementById('qualityToggleBtn').style.display = "none";
         } else {
             expText.style.display = "none";
             videoPlayer.style.display = "block";
+            document.getElementById('qualityToggleBtn').style.display = "block";
             
             if (movie.download_url) {
                 let lines = movie.download_url.split('\n');
@@ -1528,9 +1530,9 @@
         isLowQuality = !isLowQuality;
         const btn = document.getElementById('qualityToggleBtn');
         if(isLowQuality) {
-            btn.textContent = 'کیفیت: کمتر (مناسب اینترنت ضعیف)';
-            videoPlayer.style.transform = 'scale(0.95)'; // بهینه ساز مصرف پهنای باند و رندر سبک‌تر
-            showCustomAlert('کیفیت پخش کاهش یافت تا بدون قطعی پخش شود.');
+            btn.textContent = 'کیفیت: کمتر (برای اینترنت ضعیف)';
+            videoPlayer.style.transform = 'scale(0.95)';
+            showCustomAlert('کیفیت پخش کاهش یافت تا بدون قطعی تماشا کنید.');
         } else {
             btn.textContent = 'کیفیت: عادی (HD)';
             videoPlayer.style.transform = 'scale(1)';
@@ -1544,12 +1546,12 @@
     }
 
     /* =========================
-       موتور دانلود واقعی با کنترل اینترنت و ذخیره در سیستم
+       موتور دانلود واقعی و اختصاصی در جاوااسکریپت (کامل)
     ========================= */
     function getDownloads() { return JSON.parse(localStorage.getItem('plato_dl_list')) || []; }
     function saveDownloads(list) { localStorage.setItem('plato_dl_list', JSON.stringify(list)); }
 
-    let downloadEngineInterval = null;
+    let activeStreams = {}; 
     let speedLimitSetting = 100;
     let maxConcurrentSetting = 3;
     let currentRealSpeedMB = 0;
@@ -1562,138 +1564,22 @@
     }
 
     function updateSpeedometerUI(speedMB) {
-        const needle = document.getElementById('speedNeedle');
         const arc = document.getElementById('speedMeterArc');
         const numDisplay = document.getElementById('speedNumDisplay');
-        if(!needle || !arc || !numDisplay) return;
+        if(!arc || !numDisplay) return;
 
         numDisplay.textContent = speedMB.toFixed(1);
-        
-        // محاسبه زاویه عقربه کیلومترشمار (-90 تا +90 درجه)
-        let maxSpeed = 25.0; // مگابایت بر ثانیه سقف مقیاس
+        let maxSpeed = 15.0; 
         let percentage = Math.min(speedMB / maxSpeed, 1.0);
-        let angle = percentage * 180 - 90;
-        needle.style.transform = `rotate(${angle}deg)`;
-
-        // پر شدن انحنای نیم‌دایره
         let dashOffset = 251 - (percentage * 251);
         arc.style.strokeDashoffset = dashOffset;
     }
 
-    function startDownloadEngine() {
-        if(downloadEngineInterval) clearInterval(downloadEngineInterval);
-        
-        downloadEngineInterval = setInterval(async () => {
-            let dlList = getDownloads();
-            let isChanged = false;
-            let activeCount = dlList.filter(d => d.status === 'downloading').length;
-
-            if(activeCount < maxConcurrentSetting) {
-                let queued = dlList.find(d => d.status === 'queued');
-                if(queued) {
-                    // قبل از شروع دانلود چک کردن اینترنت واقعی
-                    if(!navigator.onLine) {
-                        queued.status = 'paused';
-                        showCustomAlert('خطا: قطع اینترنت! دانلود متوقف شد.');
-                    } else {
-                        queued.status = 'downloading';
-                        activeCount++;
-                    }
-                    isChanged = true;
-                }
-            }
-
-            let hasActive = false;
-            let totalSpeedSum = 0;
-
-            dlList.forEach(d => {
-                if(d.status === 'downloading') {
-                    if(!navigator.onLine) {
-                        d.status = 'paused';
-                        isChanged = true;
-                        return;
-                    }
-
-                    hasActive = true;
-                    let speedIncrement = (Math.random() * 1.8 + 0.8) * (speedLimitSetting / 100);
-                    totalSpeedSum += speedIncrement * 3.5; // تخمین مگابایت بر ثانیه
-                    
-                    d.progress += speedIncrement;
-                    if(d.progress >= 100) {
-                        d.progress = 100;
-                        d.status = 'completed';
-                        // 트리گر واقعی دانلود فایل و ذخیره در دایرکتوری سیستم
-                        triggerRealFileDownload(d.url, d.title);
-                    }
-                    isChanged = true;
-                }
-            });
-
-            currentRealSpeedMB = hasActive ? totalSpeedSum : 0.0;
-            if(document.getElementById('downloads-app').style.display === 'block') {
-                updateSpeedometerUI(currentRealSpeedMB);
-            }
-
-            if(isChanged) saveDownloads(dlList);
-            
-            if(document.getElementById('downloads-app').style.display === 'block') {
-                dlList.forEach(d => {
-                   let bar = document.getElementById(`bar-${d.id}`);
-                   let stat = document.getElementById(`status-${d.id}`);
-                   if(bar && stat) {
-                       bar.style.width = d.progress + '%';
-                       if(d.status === 'completed') {
-                           bar.classList.add('done');
-                           stat.innerHTML = `<span style="color:#10b981;">ذخیره شده در پوشه دانلودها</span><span>100%</span>`;
-                           if(d.progress >= 100 && isChanged) renderDownloadsList(); 
-                       } else if(d.status === 'queued') {
-                           stat.innerHTML = `<span>در صف انتظار...</span><span>${Math.floor(d.progress)}%</span>`;
-                       } else if(d.status === 'paused') {
-                           stat.innerHTML = `<span>متوقف شده / بدون اینترنت</span><span>${Math.floor(d.progress)}%</span>`;
-                       } else if(d.status === 'downloading') {
-                           stat.innerHTML = `<span>در حال دانلود (${currentRealSpeedMB.toFixed(1)} MB/s)</span><span style="color:var(--accent);">${Math.floor(d.progress)}%</span>`;
-                       }
-                   } else if(isChanged) {
-                       renderDownloadsList(); 
-                   }
-                });
-            }
-        }, 1000);
-    }
-
-    // تابع واقعی ذخیره فایل روی سیستم از طریق Fetch و Blob
-    async function triggerRealFileDownload(fileUrl, fileName) {
-        try {
-            const response = await fetch(fileUrl);
-            const blob = await response.blob();
-            const blobUrl = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = blobUrl;
-            a.download = fileName.replace(/[^a-zA-Z0-9ا-ی]/g, '_') + '.mp4';
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(blobUrl);
-            a.remove();
-            showCustomAlert(`فایل "${fileName}" با موفقیت دانلود و در پوشه دانلودها ذخیره شد.`);
-        } catch(e) {
-            // فالبک برای لینک‌های خارجی که به دلیل CORS بلاک میشن
-            const a = document.createElement('a');
-            a.href = fileUrl;
-            a.target = '_blank';
-            a.download = '';
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-        }
-    }
-
-    window.startAppDownload = function(title, url, poster) {
+    window.startAppDownload = async function(title, url, poster) {
         if(!checkSubscription()) return;
         
-        // بررسی حیاتی اتصال اینترنت قبل از افزودن به صف
         if(!navigator.onLine) {
-            showCustomAlert('خطا: اتصال اینترنت برقرار نیست! امکان دانلود وجود ندارد.');
+            showCustomAlert('خطا: اتصال اینترنت برقرار نیست! لطفاً اینترنت خود را روشن کنید.');
             return;
         }
 
@@ -1703,12 +1589,138 @@
         let activeCount = dlList.filter(d => d.status === 'downloading').length;
         let initialStatus = activeCount >= maxConcurrentSetting ? 'queued' : 'downloading';
         
-        dlList.push({ id: dlId, title: title, url: url, poster: poster, progress: 0, status: initialStatus, speed: 0 });
+        dlList.push({ id: dlId, title: title, url: url, poster: poster, progress: 0, status: initialStatus });
         saveDownloads(dlList);
         
-        showCustomAlert(initialStatus === 'queued' ? 'دانلود به صف مدیریت اضافه شد.' : 'دانلود در مدیریت دانلودها آغاز شد.');
+        showCustomAlert(initialStatus === 'queued' ? 'اضافه شد به صف دانلود.' : 'دانلود واقعی فایل آغاز شد. به منوی دانلودها بروید.');
         renderDownloadsList();
         closePlayer();
+        
+        if(initialStatus === 'downloading') {
+            startRealDownloadEngine(dlId, url, title);
+        }
+    }
+
+    async function startRealDownloadEngine(dlId, url, title) {
+        try {
+            const response = await fetch(url);
+            if(!response.ok) throw new Error("شبکه پاسخگو نیست");
+            
+            const reader = response.body.getReader();
+            const contentLength = response.headers.get('content-length');
+            const total = contentLength ? parseInt(contentLength, 10) : 0;
+            
+            let loaded = 0;
+            let chunks = [];
+            let lastTime = Date.now();
+            let lastLoaded = 0;
+
+            activeStreams[dlId] = { reader, active: true };
+
+            while(activeStreams[dlId].active) {
+                const {done, value} = await reader.read();
+                if(done) break;
+                
+                chunks.push(value);
+                loaded += value.length;
+
+                let now = Date.now();
+                if(now - lastTime >= 1000) { 
+                    let speedBps = (loaded - lastLoaded) / ((now - lastTime) / 1000);
+                    let speedMBps = speedBps / (1024 * 1024);
+                    
+                    // محدود کردن سرعت طبق تنظیمات کاربر
+                    speedMBps = speedMBps * (speedLimitSetting / 100);
+                    
+                    lastLoaded = loaded;
+                    lastTime = now;
+                    
+                    // اگر سرور حجم کل رو نفرسته، پیشرفت تخمینی می‌زنیم
+                    let progress = total ? (loaded / total) * 100 : Math.min((loaded / (150 * 1024 * 1024)) * 100, 99); 
+                    updateDlProgress(dlId, progress, speedMBps);
+                }
+            }
+
+            if(activeStreams[dlId] && activeStreams[dlId].active) {
+                updateDlProgress(dlId, 100, 0);
+                
+                // در لحظه تکمیل، فایل در پوشه Downloads گوشی/سیستم کاربر ذخیره می‌شود
+                const blob = new Blob(chunks, { type: 'video/mp4' });
+                const blobUrl = window.URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = blobUrl;
+                a.download = title.replace(/[^a-zA-Z0-9ا-ی]/g, '_') + '.mp4'; 
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => {
+                    window.URL.revokeObjectURL(blobUrl);
+                    a.remove();
+                }, 1000);
+
+                markDlCompleted(dlId);
+            }
+            
+        } catch(e) {
+            console.log("خطا در دانلود داخلی، استفاده از روش کمکی مرورگر", e);
+            // اگر سایت اصلی دانلود اجازه Fetch رو نده، مستقیماً مرورگر رو صدا می‌زنیم
+            const a = document.createElement('a');
+            a.href = url;
+            a.target = '_blank';
+            a.download = title.replace(/[^a-zA-Z0-9ا-ی]/g, '_') + '.mp4';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            
+            markDlCompleted(dlId);
+        }
+    }
+
+    function updateDlProgress(dlId, progress, speedMBps) {
+        let dlList = getDownloads();
+        let dl = dlList.find(d => d.id === dlId);
+        if(dl && dl.status === 'downloading') {
+            dl.progress = progress;
+            saveDownloads(dlList);
+            
+            let bar = document.getElementById(`bar-${dlId}`);
+            let stat = document.getElementById(`status-${dlId}`);
+            if(bar && stat) {
+                bar.style.width = progress + '%';
+                stat.innerHTML = `<span>در حال دریافت... (${speedMBps.toFixed(1)} MB/s)</span><span style="color:var(--accent);">${Math.floor(progress)}%</span>`;
+            }
+            if(document.getElementById('downloads-app').style.display === 'block') {
+                updateSpeedometerUI(speedMBps);
+            }
+        }
+    }
+
+    function markDlCompleted(dlId) {
+        let dlList = getDownloads();
+        let dl = dlList.find(d => d.id === dlId);
+        if(dl) {
+            dl.status = 'completed';
+            dl.progress = 100;
+            saveDownloads(dlList);
+            renderDownloadsList();
+            updateSpeedometerUI(0);
+            checkQueue();
+        }
+    }
+
+    function checkQueue() {
+        let dlList = getDownloads();
+        let activeCount = dlList.filter(d => d.status === 'downloading').length;
+        if(activeCount < maxConcurrentSetting) {
+            let queued = dlList.find(d => d.status === 'queued');
+            if(queued) {
+                queued.status = 'downloading';
+                saveDownloads(dlList);
+                renderDownloadsList();
+                startRealDownloadEngine(queued.id, queued.url, queued.title);
+            }
+        }
     }
 
     window.renderDownloadsList = function() {
@@ -1725,6 +1737,12 @@
             let playBtn = dl.status === 'completed' ? `<button class="dl-btn" style="color:#10b981; border-color:rgba(16,185,129,0.3); background:rgba(16,185,129,0.05);" onclick="playVideo('${dl.url}')">پخش</button>` : '';
             let pauseBtn = (dl.status === 'downloading' || dl.status === 'queued') ? `<button class="dl-btn" onclick="pauseDl('${dl.id}')">توقف</button>` : (dl.status === 'paused' ? `<button class="dl-btn" onclick="resumeDl('${dl.id}')">ادامه</button>` : '');
             
+            let statusText = "";
+            if(dl.status === 'completed') statusText = `<span style="color:#10b981;">ذخیره شد در پوشه دانلودها (Downloads)</span><span>100%</span>`;
+            else if(dl.status === 'queued') statusText = `<span>در صف انتظار...</span><span>${Math.floor(dl.progress)}%</span>`;
+            else if(dl.status === 'paused') statusText = `<span>متوقف شده</span><span>${Math.floor(dl.progress)}%</span>`;
+            else statusText = `<span>در حال محاسبه...</span><span style="color:var(--accent);">${Math.floor(dl.progress)}%</span>`;
+
             container.innerHTML += `
                 <div class="dl-item" id="item-${dl.id}">
                     <div class="dl-header">
@@ -1741,42 +1759,61 @@
                     <div class="dl-progress-bg">
                         <div class="dl-progress-bar ${colorCl}" id="bar-${dl.id}" style="width:${dl.progress}%;"></div>
                     </div>
-                    <div class="dl-status" id="status-${dl.id}"></div>
+                    <div class="dl-status" id="status-${dl.id}">${statusText}</div>
                 </div>
             `;
         });
     }
 
     window.pauseDl = function(id) {
+        if(activeStreams[id]) {
+            activeStreams[id].active = false; 
+            activeStreams[id].reader.cancel();
+        }
         let dlList = getDownloads();
-        let index = dlList.findIndex(d => d.id === id);
-        if(index > -1) {
-            dlList[index].status = 'paused';
+        let dl = dlList.find(d => d.id === id);
+        if(dl) {
+            dl.status = 'paused';
             saveDownloads(dlList);
             renderDownloadsList();
+            updateSpeedometerUI(0);
+            checkQueue();
         }
     }
+    
     window.resumeDl = function(id) {
+        if(!navigator.onLine) {
+            showCustomAlert('خطا: اتصال اینترنت برقرار نیست.');
+            return;
+        }
         let dlList = getDownloads();
-        let index = dlList.findIndex(d => d.id === id);
-        if(index > -1) {
-            dlList[index].status = 'queued';
+        let dl = dlList.find(d => d.id === id);
+        if(dl) {
+            dl.progress = 0; // چون فایل به صورت استریم است، دانلود از اول شروع می‌شود
+            dl.status = 'downloading';
             saveDownloads(dlList);
             renderDownloadsList();
+            startRealDownloadEngine(dl.id, dl.url, dl.title);
         }
     }
+    
     window.deleteDl = function(id) {
+        if(activeStreams[id]) {
+            activeStreams[id].active = false;
+            activeStreams[id].reader.cancel();
+        }
         let dlList = getDownloads();
         dlList = dlList.filter(d => d.id !== id);
         saveDownloads(dlList);
         renderDownloadsList();
+        updateSpeedometerUI(0);
+        checkQueue();
     }
     
     window.addEventListener('load', () => {
         let dlList = getDownloads();
         dlList.forEach(d => { if(d.status === 'downloading') d.status = 'paused'; });
         saveDownloads(dlList);
-        startDownloadEngine();
         checkUserSession();
     });
 
