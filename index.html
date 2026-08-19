@@ -17,7 +17,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
-        /* حالت عادی (تم سرمه‌ای و آبی پلاتو) */
         :root {
             --bg-main: #060b19;
             --bg-box: #0b132b;
@@ -31,7 +30,6 @@
             --accent-glow: rgba(59, 130, 246, 0.5);
         }
 
-        /* حالت شب (مشکی خالص) */
         body.dark-theme {
             --bg-main: #000000;
             --bg-box: #0a0a0a;
@@ -147,7 +145,6 @@
         
         .header { position: sticky; top: 0; z-index: 1000; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--header-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); }
         
-        /* لوگوی بزرگتر پلاتو */
         .logo { margin-left: 20px; display: flex; align-items: center; justify-content: center; }
         .logo svg { height: 55px; width: auto; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5)); }
         
@@ -155,7 +152,6 @@
         .profile-button { width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); font-size: 17px; position: relative; transition: 0.2s; cursor: pointer; }
         .profile-button:hover { background: rgba(255,255,255,0.1); }
         
-        /* زیرنویس متحرک سراسری (مارکی) */
         .marquee-box { width: calc(100% - 40px); max-width: 700px; margin: 15px auto 0; background: var(--bg-box); border: 1px solid var(--border-color); border-radius: 14px; overflow: hidden; white-space: nowrap; position: relative; height: 42px; display: flex; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .marquee-text { display: inline-block; padding-right: 100%; animation: marquee 25s linear infinite; font-size: 13px; font-weight: 700; color: var(--accent); }
         @keyframes marquee { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
@@ -209,10 +205,6 @@
         .speed-text-display { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); font-size: 22px; font-weight: 800; color: var(--text-main); text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         .speed-unit { font-size: 12px; color: var(--text-muted); display: block; text-align: center; font-weight: normal; }
 
-        .slider-row { margin-bottom: 15px; text-align: right; }
-        .slider-row label { display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; margin-bottom: 8px; color: var(--text-main); }
-        .slider-row input[type=range] { width: 100%; accent-color: var(--accent); cursor: pointer; }
-
         .dl-item { background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 18px; padding: 18px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 12px; transition: 0.3s; }
         .dl-header { display: flex; justify-content: space-between; align-items: center; }
         .dl-title { font-weight: 700; font-size: 14px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
@@ -227,7 +219,7 @@
         .dl-status { font-size: 12px; color: var(--text-muted); font-weight: 600; display: flex; justify-content: space-between; }
 
         /* =========================
-           MODALS (پلیر و پیام‌ها)
+           MODALS
         ========================= */
         .video-container { width: 100%; aspect-ratio: 16 / 9; background: #000; flex-shrink: 0; position: relative; }
         .video-container video { width: 100%; height: 100%; display: block; }
@@ -245,7 +237,6 @@
         .nav-item svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2; fill: none; }
         .nav-item span { position: absolute; bottom: -2px; font-size: 10px; font-weight: bold; white-space: nowrap; opacity: 0; transition: 0.3s; }
         .nav-item.active span { opacity: 1; bottom: -8px; }
-        
     </style>
 </head>
 <body>
@@ -255,9 +246,7 @@
 
 <div id="app-wrapper">
 
-    <!-- =========================
-         AUTH SCREEN
-    ========================= -->
+    <!-- AUTH SCREEN -->
     <div id="auth-screen">
         <div class="box-container" id="login-box">
             <h2 class="box-title">ورود به پلاتو</h2>
@@ -268,7 +257,7 @@
                 <input type="password" id="log-pass" class="input-field" placeholder="رمز عبور" autocapitalize="none" autocomplete="off">
             </div>
             <label class="checkbox-container">
-                <input type="checkbox" id="show-pass" onchange="togglePassword()"> نمایش رمز عبور
+                <input type="checkbox" onchange="togglePassword()"> نمایش رمز عبور
             </label>
             <button type="button" class="btn-primary" onclick="doLogin()">ورود به حساب</button>
             <button type="button" class="switch-box" onclick="toggleAuth('register')">حساب کاربری ندارید؟ <span>ثبت‌نام کنید</span></button>
@@ -286,16 +275,14 @@
                 <input type="text" id="reg-model" class="input-field" placeholder="مدل گوشی / دستگاه" autocomplete="off">
             </div>
             <label class="checkbox-container">
-                <input type="checkbox" id="show-pass" onchange="togglePassword()"> نمایش رمز عبور
+                <input type="checkbox" onchange="togglePassword()"> نمایش رمز عبور
             </label>
             <button type="button" class="btn-primary" onclick="doRegister()">ارسال درخواست عضویت</button>
             <button type="button" class="switch-box" onclick="toggleAuth('login')">قبلاً ثبت‌نام کردید؟ <span>وارد شوید</span></button>
         </div>
     </div>
 
-    <!-- =========================
-         MODALS (RULES & OTHERS)
-    ========================= -->
+    <!-- RULES MODAL -->
     <div class="modal" id="termsModal">
         <div class="modal-box" style="max-width: 450px;">
             <button class="modal-close-x" onclick="document.getElementById('termsModal').classList.remove('show')">×</button>
@@ -316,9 +303,7 @@
         </div>
     </div>
 
-    <!-- =========================
-         SIDEBAR MENU
-    ========================= -->
+    <!-- SIDEBAR -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -361,9 +346,7 @@
         </div>
     </div>
 
-    <!-- =========================
-         ADMIN PANEL 
-    ========================= -->
+    <!-- ADMIN PANEL -->
     <div id="admin-screen">
         <div style="width:100%; max-width:650px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
             <h2 style="font-size: 18px;">پنل مدیریت</h2>
@@ -454,13 +437,10 @@
         </div>
     </div>
 
-    <!-- =========================
-         MAIN APP (Home)
-    ========================= -->
+    <!-- MAIN APP -->
     <div id="main-app">
         <header class="header">
             <div style="display:flex; align-items:center;">
-                <!-- لوگوی بزرگتر با گرادیانت سرمه‌ای-آبی -->
                 <div class="logo">
                     <svg viewBox="0 0 1536 614" aria-label="PLATO">
                       <defs>
@@ -483,7 +463,6 @@
             </div>
         </header>
 
-        <!-- زیرنویس متحرک سراسری (مارکی) -->
         <div id="marqueeContainer" class="marquee-box" style="display:none;">
             <div class="marquee-text" id="marqueeTextContent"></div>
         </div>
@@ -525,14 +504,11 @@
         </section>
     </div>
 
-    <!-- =========================
-         DOWNLOADS MANAGER APP
-    ========================= -->
+    <!-- DOWNLOADS MANAGER APP -->
     <div id="downloads-app">
         <div class="dl-dashboard">
             <div class="dl-dashboard-header"><span>سرعت لحظه‌ای شبکه</span></div>
             
-            <!-- کیلومترشمار سرعتی نیم‌دایره‌ای (بدون عقربه) -->
             <div class="speedometer-box">
                 <svg class="speedometer-svg" viewBox="0 0 200 110">
                     <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--border-color)" stroke-width="12" stroke-linecap="round"/>
@@ -545,10 +521,7 @@
         <div id="dl-list-container"></div>
     </div>
 
-    <!-- =========================
-         MODALS
-    ========================= -->
-    <!-- Player Modal -->
+    <!-- MODALS -->
     <div class="modal" id="playerModal">
         <div class="modal-box">
             <button class="modal-close-x" onclick="closePlayer()">×</button>
@@ -608,11 +581,9 @@
         </div>
     </div>
 
-</div> <!-- End of App Wrapper -->
+</div>
 
-<!-- =========================
-     BOTTOM NAV (موبایل)
-========================= -->
+<!-- BOTTOM NAV -->
 <nav class="bottom-nav" id="bottomNav">
     <div class="nav-item active" id="homeNav" onclick="switchBottomNav('home')">
         <svg viewBox="0 0 24 24"><path d="M3.5 10.8 12 4l8.5 6.8"></path><path d="M5.5 9.8V20h13V9.8"></path></svg>
@@ -624,10 +595,8 @@
     </div>
 </nav>
 
-<!-- کتابخانه سوپابیس -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- کدهای جاوااسکریپت -->
 <script>
     const SUPABASE_URL = 'https://ywwvibchhwsljsobywyz.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl3d3ZpYmNoaHdzbGpzb2J5d3l6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYyNDU3NzAsImV4cCI6MjEwMTgyMTc3MH0.o7COXGNv_3PXFNJSEGYPnbtvD71bIMXZeILgstHHH60';
@@ -642,14 +611,42 @@
     let editingMovieId = null;
     let checkMsgInterval = null;
 
-    /* متغیرهای موقت برای ثبت‌نام */
     let tempRegUser = '';
     let tempRegPass = '';
     let tempRegModel = '';
 
     /* =========================
-       توابع عمومی و تم
+       توابع کمکی و سیستمی
     ========================= */
+    function toEnglishDigits(str) {
+        if (!str) return '';
+        return str.toString()
+            .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+            .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+    }
+
+    function showLoader(show) {
+        const loader = document.getElementById('loader');
+        if (loader) loader.style.display = show ? 'flex' : 'none';
+    }
+
+    function toggleAuth(type) {
+        if (type === 'register') {
+            document.getElementById('login-box').style.display = 'none';
+            document.getElementById('reg-box').style.display = 'block';
+        } else {
+            document.getElementById('reg-box').style.display = 'none';
+            document.getElementById('login-box').style.display = 'block';
+        }
+    }
+
+    function togglePassword() {
+        const logPass = document.getElementById('log-pass');
+        const regPass = document.getElementById('reg-pass');
+        if (logPass) logPass.type = logPass.type === 'password' ? 'text' : 'password';
+        if (regPass) regPass.type = regPass.type === 'password' ? 'text' : 'password';
+    }
+
     function safeGetStorage(key) {
         try { return JSON.parse(localStorage.getItem(key)); } catch(e) { return null; }
     }
@@ -677,7 +674,6 @@
         }
     } catch(e){}
 
-    /* مدیریت زیرنویس متحرک ابری برای همه */
     async function loadMarquee() {
         const container = document.getElementById('marqueeContainer');
         const textElem = document.getElementById('marqueeTextContent');
@@ -714,9 +710,6 @@
         }
     }
 
-    /* =========================
-       نویگیشن و تب‌ها
-    ========================= */
     function switchBottomNav(tab) {
         document.getElementById('homeNav').classList.remove('active');
         document.getElementById('downloadsNav').classList.remove('active');
@@ -791,19 +784,12 @@
         document.getElementById('sidebarOverlay').classList.remove('open');
     }
 
-    /* =========================
-       سیستم احراز هویت قوی
-    ========================= */
     async function checkUserSession() {
-        if (!supabaseClient) {
-            console.warn("ارتباط با سرور مسدود است.");
-            return;
-        }
+        if (!supabaseClient) return;
         try {
             showLoader(true);
             const { data, error } = await supabaseClient.auth.getSession();
-            if (error) { throw error; }
-            if (!data.session) { 
+            if (error || !data.session) { 
                 showLoader(false); 
                 document.getElementById('auth-screen').style.display = 'flex';
                 return; 
@@ -818,7 +804,6 @@
             }
 
             currentUserProfile = profileRes.data;
-            document.getElementById('auth-screen').style.display = 'none';
             
             if (currentUserProfile.status === 'pending') {
                 showCustomAlert('اکانت شما هنوز توسط مدیریت تایید نشده است.');
@@ -829,6 +814,7 @@
                 await supabaseClient.auth.signOut();
                 document.getElementById('auth-screen').style.display = 'flex';
             } else {
+                document.getElementById('auth-screen').style.display = 'none';
                 if (currentUserProfile.role === 'admin') {
                     document.getElementById('admin-sidebar-btn-container').innerHTML = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()"><span>پنل مدیریت</span><svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>`;
                 }
@@ -838,7 +824,7 @@
                 loadMarquee();
                 
                 checkUnreadMessages();
-                checkMsgInterval = setInterval(checkUnreadMessages, 30000);
+                if(!checkMsgInterval) checkMsgInterval = setInterval(checkUnreadMessages, 30000);
             }
         } catch (err) { 
             document.getElementById('auth-screen').style.display = 'flex'; 
@@ -848,7 +834,7 @@
 
     function doRegister() {
         if (!supabaseClient) {
-            showCustomAlert('ارتباط با سرور برقرار نیست. لطفاً اینترنت/فیلترشکن را بررسی کنید.');
+            showCustomAlert('ارتباط با سرور برقرار نیست.');
             return;
         }
         tempRegUser = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase();
@@ -908,7 +894,7 @@
 
     async function doLogin() {
         if (!supabaseClient) {
-            showCustomAlert('ارتباط با سرور برقرار نیست. لطفاً اینترنت/فیلترشکن را بررسی کنید.');
+            showCustomAlert('ارتباط با سرور برقرار نیست.');
             return;
         }
         var user = toEnglishDigits(document.getElementById('log-user').value).trim().toLowerCase();
@@ -941,9 +927,6 @@
         window.location.reload();
     }
 
-    /* =========================
-       سیستم پیام‌ها
-    ========================= */
     async function checkUnreadMessages() {
         if(!currentUserProfile || !supabaseClient) return;
         try {
@@ -1001,7 +984,6 @@
         closeSidebar();
         document.getElementById('inbox-notif').style.display = 'none';
         document.getElementById('header-notif').style.display = 'none';
-        
         document.getElementById('inboxModal').classList.add('show');
         showLoader(true);
         
@@ -1023,7 +1005,6 @@
                         let cl = msg.direction === 'system_all' ? 'system' : 'admin-reply';
                         let titleHTML = msg.direction === 'admin_to_user' ? '<b>پشتیبانی</b>' : '';
                         let isSys = msg.direction === 'system_all' ? 'true' : 'false';
-                        
                         let headerStyle = titleHTML ? 'justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px; margin-bottom:8px;' : 'justify-content:flex-end;';
                         
                         list.innerHTML += `
@@ -1169,9 +1150,6 @@
         }
     }
 
-    /* =========================
-       مدیریت کاربران و اشتراک
-    ========================= */
     async function loadPendingRequests() {
         try {
             const { data } = await supabaseClient.from('users_data').select('*').eq('status', 'pending');
@@ -1201,7 +1179,6 @@
             const onlineDisplay = document.getElementById('onlineUsersCount');
             list.innerHTML = '';
             if(data && data.length > 0) {
-                // شبیه‌سازی هوشمند نفرات آنلاین برای ادمین
                 let activeCount = Math.max(1, Math.floor(data.length * (Math.random() * 0.3 + 0.1))); 
                 if(onlineDisplay) onlineDisplay.textContent = activeCount;
                 
@@ -1264,9 +1241,6 @@
         showLoader(false);
     }
 
-    /* =========================
-       مدیریت دیتابیس فیلم
-    ========================= */
     async function saveMovie() {
         var category = document.getElementById('new-movie-category').value;
         var title = document.getElementById('new-movie-title').value.trim();
@@ -1397,7 +1371,7 @@
         const container = document.getElementById(containerId);
         container.innerHTML = "";
         if (list.length === 0) {
-            container.innerHTML = `<div class="empty-section">هنوز موردی اضافه نشده است</div>`;
+            container.innerHTML = `<div style="color:var(--text-muted); padding:10px 20px; font-size:13px;">هنوز موردی اضافه نشده است</div>`;
             return;
         }
         list.forEach(function(item) {
@@ -1449,9 +1423,6 @@
         if(!check()) { const interval = setInterval(() => { if(check()) clearInterval(interval); }, 1000); }
     }
 
-    /* =========================
-       اسلایدر بنر
-    ========================= */
     const slides = document.getElementById("slides");
     const dots = document.querySelectorAll(".dot");
     let currentSlide = 0; let sliderTimer;
@@ -1465,9 +1436,6 @@
     dots.forEach(function(dot) { dot.addEventListener("click", function() { goToSlide(Number(dot.dataset.slide)); startSlider(); }); });
     startSlider();
 
-    /* =========================
-       پلیر هوشمند با کیفیت کمتر
-    ========================= */
     const modal = document.getElementById("playerModal");
     const videoPlayer = document.getElementById("videoPlayer");
     const expText = document.getElementById("modalExpirationText");
@@ -1560,22 +1528,10 @@
         modal.classList.remove("show"); document.body.style.overflow = "";
     }
 
-    /* =========================
-       سیستم دانلود هوشمند (ارسال ایمن به دانلود منیجر گوشی و شبیه‌سازی UI)
-    ========================= */
     function getDownloads() { return safeGetStorage('plato_dl_list') || []; }
     function saveDownloads(list) { safeSetStorage('plato_dl_list', list); }
 
     let downloadEngineInterval = null;
-    let speedLimitSetting = 100;
-    let maxConcurrentSetting = 3;
-
-    window.updateDownloadSettings = function() {
-        speedLimitSetting = document.getElementById('speedSlider').value;
-        maxConcurrentSetting = document.getElementById('concurrentSlider').value;
-        document.getElementById('speedVal').innerText = speedLimitSetting + '%';
-        document.getElementById('concurrentVal').innerText = maxConcurrentSetting;
-    }
 
     function updateSpeedometerUI(speedMB) {
         const arc = document.getElementById('speedMeterArc');
@@ -1593,11 +1549,10 @@
         if(!checkSubscription()) return;
         
         if(!navigator.onLine) {
-            showCustomAlert('خطا: اتصال اینترنت برقرار نیست! لطفاً بررسی کنید.');
+            showCustomAlert('خطا: اتصال اینترنت برقرار نیست!');
             return;
         }
 
-        // دستور مستقیم به مرورگر گوشی برای ذخیره امن در گالری/پوشه بدون کرش کردن رم
         const a = document.createElement('a');
         a.href = url;
         a.target = '_blank';
@@ -1606,13 +1561,12 @@
         a.click();
         a.remove();
 
-        // افزودن به لیست UI داخلی سایت برای زیبایی و مدیریت
         let dlList = getDownloads();
         let dlId = 'dl_' + new Date().getTime();
         dlList.push({ id: dlId, title: title, url: url, poster: poster, progress: 0, status: 'downloading' });
         saveDownloads(dlList);
         
-        showCustomAlert('دانلود آغاز شد. فایل در مدیریت دانلود گوشی ذخیره می‌شود.');
+        showCustomAlert('دانلود آغاز شد.');
         renderDownloadsList();
         closePlayer();
         startSimulatedEngine();
@@ -1630,8 +1584,7 @@
             dlList.forEach(d => {
                 if(d.status === 'downloading') {
                     hasActive = true;
-                    // سرعت شبیه‌سازی شده منطقی
-                    let speedIncrement = (Math.random() * 2 + 1) * (speedLimitSetting / 100);
+                    let speedIncrement = Math.random() * 2 + 1;
                     totalSpeed += speedIncrement * 2.5; 
                     
                     d.progress += speedIncrement;
@@ -1661,7 +1614,7 @@
         let dlList = getDownloads();
         container.innerHTML = '';
         if(dlList.length === 0) {
-            container.innerHTML = '<div class="empty-section">لیست دانلودهای شما خالی است.</div>';
+            container.innerHTML = '<div style="color:var(--text-muted); text-align:center; padding:30px;">لیست دانلودهای شما خالی است.</div>';
             return;
         }
         
@@ -1671,7 +1624,7 @@
             let pauseBtn = (dl.status === 'downloading' || dl.status === 'queued') ? `<button class="dl-btn" onclick="pauseDl('${dl.id}')">توقف</button>` : (dl.status === 'paused' ? `<button class="dl-btn" onclick="resumeDl('${dl.id}')">ادامه</button>` : '');
             
             let statusText = "";
-            if(dl.status === 'completed') statusText = `<span style="color:#10b981;">ذخیره شده در گالری/دانلودها</span><span>100%</span>`;
+            if(dl.status === 'completed') statusText = `<span style="color:#10b981;">ذخیره شده در دستگاه</span><span>100%</span>`;
             else if(dl.status === 'paused') statusText = `<span>متوقف شده</span><span>${Math.floor(dl.progress)}%</span>`;
             else statusText = `<span>در حال دانلود...</span><span style="color:var(--accent);">${Math.floor(dl.progress)}%</span>`;
 
@@ -1734,7 +1687,6 @@
         startSimulatedEngine();
         checkUserSession();
     });
-
 </script>
 </body>
 </html>
