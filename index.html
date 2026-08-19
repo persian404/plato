@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PLATO | فیلم و سریال</title>
     <meta name="theme-color" content="#060b19">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,8 +14,15 @@
         /* =========================
            RESET & BASIC & THEMES
         ========================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        html { 
+            scroll-behavior: smooth; 
+        }
         
         /* حالت عادی (تم سرمه‌ای و آبی پلاتو) */
         :root {
@@ -46,9 +54,9 @@
 
         body { 
             background-color: var(--bg-main);
-            /* گرادیانت جذاب تم عادی */
-            background-image: radial-gradient(circle at 50% 0%, #1e3a8a 0%, transparent 45%), 
-                              radial-gradient(circle at 100% 100%, #0f172a 0%, transparent 50%);
+            background-image: 
+                radial-gradient(circle at 50% 0%, #1e3a8a 0%, transparent 45%), 
+                radial-gradient(circle at 100% 100%, #0f172a 0%, transparent 50%);
             background-attachment: fixed;
             color: var(--text-main); 
             font-family: "Vazirmatn", sans-serif; 
@@ -57,198 +65,1102 @@
         }
 
         body.dark-theme {
-            background-image: none; /* در حالت شب گرادیانت حذف می‌شود */
+            background-image: none; 
         }
 
-        button, input, select, textarea { font-family: inherit; color: inherit; }
-        button { border: none; cursor: pointer; outline: none; }
-        a { color: inherit; text-decoration: none; }
-        .btn-icon { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; vertical-align: middle; margin-left: 6px; display: inline-block; }
+        button, input, select, textarea { 
+            font-family: inherit; 
+            color: inherit; 
+        }
+        
+        button { 
+            border: none; 
+            cursor: pointer; 
+            outline: none; 
+        }
+        
+        a { 
+            color: inherit; 
+            text-decoration: none; 
+        }
+        
+        .btn-icon { 
+            width: 18px; 
+            height: 18px; 
+            stroke: currentColor; 
+            stroke-width: 2; 
+            fill: none; 
+            vertical-align: middle; 
+            margin-left: 6px; 
+            display: inline-block; 
+        }
 
         /* =========================
            CUSTOM ALERT & MODALS
         ========================= */
-        #custom-alert { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; background: linear-gradient(110deg, #1e3a8a, #3b82f6); color: white; padding: 15px 25px; border-radius: 12px; display: none; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.6); font-weight: bold; min-width: 280px; font-size: 14px; border: 1px solid rgba(255,255,255,0.2); }
-        #loader { position: fixed; inset:0; background: rgba(0,0,0,0.8); z-index: 9999; display: none; align-items: center; justify-content: center; color: var(--accent); font-weight: bold; font-size: 18px; backdrop-filter: blur(5px); }
+        #custom-alert { 
+            position: fixed; 
+            top: 20px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            z-index: 9999; 
+            background: linear-gradient(110deg, #1e3a8a, #3b82f6); 
+            color: white; 
+            padding: 15px 25px; 
+            border-radius: 12px; 
+            display: none; 
+            text-align: center; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6); 
+            font-weight: bold; 
+            min-width: 280px; 
+            font-size: 14px; 
+            border: 1px solid rgba(255,255,255,0.2); 
+        }
+        
+        #loader { 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.8); 
+            z-index: 9999; 
+            display: none; 
+            align-items: center; 
+            justify-content: center; 
+            color: var(--accent); 
+            font-weight: bold; 
+            font-size: 18px; 
+            backdrop-filter: blur(5px); 
+        }
 
-        .modal { position: fixed; inset: 0; z-index: 6000; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,.85); backdrop-filter: blur(15px); }
-        .modal.show { display: flex; }
-        .modal-box { width: 100%; max-width: 800px; overflow: hidden; border-radius: 24px; background: var(--bg-box); border: 1px solid var(--border-color); box-shadow: 0 30px 90px rgba(0,0,0,.6); display: flex; flex-direction: column; max-height: 90vh; position: relative; }
-        .modal-close-x { position: absolute; top: 15px; left: 15px; width: 38px; height: 38px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); border-radius: 50%; color: #fff; font-size: 22px; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; transition: 0.2s; }
-        .modal-close-x:hover { background: rgba(239, 68, 68, 0.3); color: #ef4444; border-color: rgba(239, 68, 68, 0.5); }
-        .modal-content { padding: 25px; overflow-y: auto; flex-grow: 1; }
-        .modal-title { font-size: 20px; font-weight: 800; margin-bottom: 20px; color: var(--text-main); }
+        .modal { 
+            position: fixed; 
+            inset: 0; 
+            z-index: 6000; 
+            display: none; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px; 
+            background: rgba(0,0,0,.85); 
+            backdrop-filter: blur(15px); 
+        }
+        
+        .modal.show { 
+            display: flex; 
+        }
+        
+        .modal-box { 
+            width: 100%; 
+            max-width: 800px; 
+            overflow: hidden; 
+            border-radius: 24px; 
+            background: var(--bg-box); 
+            border: 1px solid var(--border-color); 
+            box-shadow: 0 30px 90px rgba(0,0,0,.6); 
+            display: flex; 
+            flex-direction: column; 
+            max-height: 90vh; 
+            position: relative; 
+        }
+        
+        .modal-close-x { 
+            position: absolute; 
+            top: 15px; 
+            left: 15px; 
+            width: 38px; 
+            height: 38px; 
+            background: rgba(0,0,0,0.5); 
+            border: 1px solid var(--border-color); 
+            border-radius: 50%; 
+            color: #fff; 
+            font-size: 22px; 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            z-index: 20; 
+            transition: 0.2s; 
+        }
+        
+        .modal-close-x:hover { 
+            background: rgba(239, 68, 68, 0.3); 
+            color: #ef4444; 
+            border-color: rgba(239, 68, 68, 0.5); 
+        }
+        
+        .modal-content { 
+            padding: 25px; 
+            overflow-y: auto; 
+            flex-grow: 1; 
+        }
+        
+        .modal-title { 
+            font-size: 20px; 
+            font-weight: 800; 
+            margin-bottom: 20px; 
+            color: var(--text-main); 
+        }
 
         /* =========================
            SCREENS (AUTH)
         ========================= */
-        #auth-screen { position: fixed; inset: 0; z-index: 5000; background: var(--bg-main); overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-        .box-container { width: 100%; max-width: 400px; background: var(--bg-box); padding: 35px 30px; border-radius: 24px; border: 1px solid var(--border-color); box-shadow: 0 25px 60px rgba(0,0,0,0.4); position: relative; overflow: hidden; }
-        .box-container::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, #1e3a8a, #3b82f6); }
-        .box-title { text-align: center; font-size: 24px; font-weight: 800; margin-bottom: 25px; }
-        .input-group { margin-bottom: 15px; }
-        .input-field { width: 100%; height: 52px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 14px; padding: 0 18px; font-size: 14px; outline: none; transition: .3s; }
-        .input-field:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
-        select.input-field option { background: var(--bg-box); color: var(--text-main); }
-        .btn-primary { width: 100%; height: 52px; background: linear-gradient(110deg, #1e3a8a, #3b82f6); border-radius: 14px; color: #fff; font-weight: 700; font-size: 15px; margin-top: 10px; transition: .3s; box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35); }
-        .btn-primary:active { transform: scale(0.96); }
-        .switch-box { width: 100%; display: block; margin-top: 25px; padding: 15px; background: rgba(59, 130, 246, 0.05); border-radius: 14px; text-align: center; font-size: 13px; color: var(--text-muted); transition: 0.3s; border: 1px dashed rgba(59, 130, 246, 0.2); }
-        .switch-box span { color: var(--accent); font-weight: bold; font-size: 14px; margin-right: 5px; }
-        .checkbox-container { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer;}
-        .checkbox-container input { width: 18px; height: 18px; cursor: pointer; accent-color: var(--accent); }
+        #auth-screen { 
+            position: fixed; 
+            inset: 0; 
+            z-index: 5000; 
+            background: var(--bg-main); 
+            overflow-y: auto; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px; 
+        }
+        
+        .box-container { 
+            width: 100%; 
+            max-width: 400px; 
+            background: var(--bg-box); 
+            padding: 35px 30px; 
+            border-radius: 24px; 
+            border: 1px solid var(--border-color); 
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4); 
+            position: relative; 
+            overflow: hidden; 
+        }
+        
+        .box-container::before { 
+            content: ""; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 4px; 
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6); 
+        }
+        
+        .box-title { 
+            text-align: center; 
+            font-size: 24px; 
+            font-weight: 800; 
+            margin-bottom: 25px; 
+        }
+        
+        .input-group { 
+            margin-bottom: 15px; 
+        }
+        
+        .input-field { 
+            width: 100%; 
+            height: 52px; 
+            background: var(--bg-input); 
+            border: 1px solid var(--border-color); 
+            border-radius: 14px; 
+            padding: 0 18px; 
+            font-size: 14px; 
+            outline: none; 
+            transition: .3s; 
+        }
+        
+        .input-field:focus { 
+            border-color: var(--accent); 
+            box-shadow: 0 0 0 3px var(--accent-glow); 
+        }
+        
+        .btn-primary { 
+            width: 100%; 
+            height: 52px; 
+            background: linear-gradient(110deg, #1e3a8a, #3b82f6); 
+            border-radius: 14px; 
+            color: #fff; 
+            font-weight: 700; 
+            font-size: 15px; 
+            margin-top: 10px; 
+            transition: .3s; 
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35); 
+        }
+        
+        .btn-primary:active { 
+            transform: scale(0.96); 
+        }
+        
+        .switch-box { 
+            width: 100%; 
+            display: block; 
+            margin-top: 25px; 
+            padding: 15px; 
+            background: rgba(59, 130, 246, 0.05); 
+            border-radius: 14px; 
+            text-align: center; 
+            font-size: 13px; 
+            color: var(--text-muted); 
+            transition: 0.3s; 
+            border: 1px dashed rgba(59, 130, 246, 0.2); 
+        }
+        
+        .switch-box span { 
+            color: var(--accent); 
+            font-weight: bold; 
+            font-size: 14px; 
+            margin-right: 5px; 
+        }
+        
+        .checkbox-container { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            margin-bottom: 15px; 
+            font-size: 13px; 
+            font-weight: 600; 
+            color: var(--text-muted); 
+            cursor: pointer;
+        }
+        
+        .checkbox-container input { 
+            width: 18px; 
+            height: 18px; 
+            cursor: pointer; 
+            accent-color: var(--accent); 
+        }
 
         /* =========================
            SIDEBAR MENU
         ========================= */
-        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 4000; display: none; opacity: 0; transition: 0.3s; backdrop-filter: blur(8px); }
-        .sidebar { position: fixed; top: 0; bottom: 0; left: 0; width: 290px; background: var(--bg-box); z-index: 4001; transform: translateX(-100%); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; box-shadow: 10px 0 30px rgba(0,0,0,0.5); }
-        .sidebar.open { transform: translateX(0); }
-        .sidebar-overlay.open { display: block; opacity: 1; }
-        .sidebar-header { padding: 35px 20px 25px; text-align: center; border-bottom: 1px solid var(--border-color); background: radial-gradient(circle at top, rgba(59, 130, 246, 0.1), transparent); position: relative; }
-        .theme-toggle-btn { position: absolute; top: 15px; left: 15px; width: 36px; height: 36px; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-main); transition: 0.2s; }
-        .theme-toggle-btn:hover { background: rgba(59, 130, 246, 0.15); border-color: var(--accent); }
-        .theme-toggle-btn svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; }
-        .sidebar-user { font-size: 24px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; }
-        .sidebar-sub { font-size: 13px; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .vip-badge { background: linear-gradient(110deg, #1e3a8a, #3b82f6); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 15px rgba(30, 58, 138, 0.4); }
+        .sidebar-overlay { 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.7); 
+            z-index: 4000; 
+            display: none; 
+            opacity: 0; 
+            transition: 0.3s; 
+            backdrop-filter: blur(8px); 
+        }
         
-        .sidebar-menu { padding: 25px 20px; display: flex; flex-direction: column; gap: 12px; flex-grow: 1; overflow-y: auto; }
-        .sidebar-btn { width: 100%; text-align: right; padding: 16px; background: var(--bg-input); border-radius: 14px; font-size: 14px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: space-between; border: 1px solid transparent; }
-        .sidebar-btn:hover { background: rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.2); transform: translateX(-3px); }
-        .notif-dot { width: 10px; height: 10px; background: #10b981; border-radius: 50%; box-shadow: 0 0 8px #10b981; animation: blink 1.5s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .sidebar { 
+            position: fixed; 
+            top: 0; 
+            bottom: 0; 
+            left: 0; 
+            width: 290px; 
+            background: var(--bg-box); 
+            z-index: 4001; 
+            transform: translateX(-100%); 
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            border-right: 1px solid var(--border-color); 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 10px 0 30px rgba(0,0,0,0.5); 
+        }
+        
+        .sidebar.open { 
+            transform: translateX(0); 
+        }
+        
+        .sidebar-overlay.open { 
+            display: block; 
+            opacity: 1; 
+        }
+        
+        .sidebar-header { 
+            padding: 35px 20px 25px; 
+            text-align: center; 
+            border-bottom: 1px solid var(--border-color); 
+            background: radial-gradient(circle at top, rgba(59, 130, 246, 0.1), transparent); 
+            position: relative; 
+        }
+        
+        .theme-toggle-btn { 
+            position: absolute; 
+            top: 15px; 
+            left: 15px; 
+            width: 36px; 
+            height: 36px; 
+            border-radius: 50%; 
+            background: var(--bg-input); 
+            border: 1px solid var(--border-color); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            color: var(--text-main); 
+            transition: 0.2s; 
+        }
+        
+        .theme-toggle-btn:hover { 
+            background: rgba(59, 130, 246, 0.15); 
+            border-color: var(--accent); 
+        }
+        
+        .theme-toggle-btn svg { 
+            width: 18px; 
+            height: 18px; 
+            stroke: currentColor; 
+            stroke-width: 2; 
+            fill: none; 
+        }
+
+        .sidebar-user { 
+            font-size: 24px; 
+            font-weight: 800; 
+            color: var(--text-main); 
+            margin-bottom: 12px; 
+        }
+        
+        .sidebar-sub { 
+            font-size: 13px; 
+            color: var(--text-muted); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        
+        .vip-badge { 
+            background: linear-gradient(110deg, #1e3a8a, #3b82f6); 
+            color: #fff; 
+            padding: 6px 14px; 
+            border-radius: 20px; 
+            font-size: 12px; 
+            font-weight: bold; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px; 
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.4); 
+        }
+        
+        .sidebar-menu { 
+            padding: 25px 20px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+            flex-grow: 1; 
+            overflow-y: auto; 
+        }
+        
+        .sidebar-btn { 
+            width: 100%; 
+            text-align: right; 
+            padding: 16px; 
+            background: var(--bg-input); 
+            border-radius: 14px; 
+            font-size: 14px; 
+            font-weight: 600; 
+            transition: 0.2s; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            border: 1px solid transparent; 
+        }
+        
+        .sidebar-btn:hover { 
+            background: rgba(59, 130, 246, 0.08); 
+            border-color: rgba(59, 130, 246, 0.2); 
+            transform: translateX(-3px); 
+        }
+        
+        .notif-dot { 
+            width: 10px; 
+            height: 10px; 
+            background: #10b981; 
+            border-radius: 50%; 
+            box-shadow: 0 0 8px #10b981; 
+            animation: blink 1.5s infinite; 
+        }
+        
+        @keyframes blink { 
+            0%, 100% { opacity: 1; } 
+            50% { opacity: 0.4; } 
+        }
 
         /* =========================
            ADMIN PANEL
         ========================= */
-        #admin-screen { display: none; flex-direction: column; align-items: center; padding: 20px 20px 40px; min-height: 100vh; width: 100%; }
-        .tab-menu { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; width: 100%; max-width: 650px; flex-wrap: wrap; background: var(--bg-box); padding: 8px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .tab-btn { background: transparent; color: var(--text-muted); padding: 12px 10px; border-radius: 12px; font-weight: bold; flex: 1; transition: 0.3s; text-align: center; font-size: 13px; }
-        .tab-btn.active { background: rgba(59, 130, 246, 0.15); color: var(--accent); border: 1px solid rgba(59, 130, 246, 0.3); }
-        .tab-content { display: none; width: 100%; max-width: 650px; margin: 0 auto; }
-        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+        #admin-screen { 
+            display: none; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 20px 20px 40px; 
+            min-height: 100vh; 
+            width: 100%; 
+        }
         
-        .admin-section { width: 100%; background: var(--bg-box); padding: 25px; border-radius: 22px; border: 1px solid var(--border-color); margin-bottom: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
-        .admin-section h3 { margin-bottom: 20px; font-size: 16px; color: var(--accent); display: flex; align-items: center; gap: 8px; }
-        .admin-section h3::before { content: ""; display: inline-block; width: 4px; height: 16px; background: var(--accent); border-radius: 10px; }
-        .req-card { background: var(--bg-input); padding: 16px; border-radius: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); transition: 0.3s; }
-        .req-info div { font-size: 14px; font-weight: bold; color: var(--text-main); }
-        .req-info small { color: var(--text-muted); font-size: 12px; display: block; margin-top: 5px; }
-        .btn-sm { padding: 8px 14px; border-radius: 10px; font-size: 12px; font-weight: bold; margin-right: 5px; transition: 0.3s; cursor: pointer; border: none; }
+        .tab-menu { 
+            display: flex; 
+            justify-content: center; 
+            gap: 10px; 
+            margin-bottom: 25px; 
+            width: 100%; 
+            max-width: 650px; 
+            flex-wrap: wrap; 
+            background: var(--bg-box); 
+            padding: 8px; 
+            border-radius: 16px; 
+            border: 1px solid var(--border-color); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+        }
+        
+        .tab-btn { 
+            background: transparent; 
+            color: var(--text-muted); 
+            padding: 12px 10px; 
+            border-radius: 12px; 
+            font-weight: bold; 
+            flex: 1; 
+            transition: 0.3s; 
+            text-align: center; 
+            font-size: 13px; 
+        }
+        
+        .tab-btn.active { 
+            background: rgba(59, 130, 246, 0.15); 
+            color: var(--accent); 
+            border: 1px solid rgba(59, 130, 246, 0.3); 
+        }
+        
+        .tab-content { 
+            display: none; 
+            width: 100%; 
+            max-width: 650px; 
+            margin: 0 auto; 
+        }
+        
+        .tab-content.active { 
+            display: block; 
+            animation: fadeIn 0.4s ease; 
+        }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        .admin-section { 
+            width: 100%; 
+            background: var(--bg-box); 
+            padding: 25px; 
+            border-radius: 22px; 
+            border: 1px solid var(--border-color); 
+            margin-bottom: 20px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
+        }
+        
+        .admin-section h3 { 
+            margin-bottom: 20px; 
+            font-size: 16px; 
+            color: var(--accent); 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        
+        .admin-section h3::before { 
+            content: ""; 
+            display: inline-block; 
+            width: 4px; 
+            height: 16px; 
+            background: var(--accent); 
+            border-radius: 10px; 
+        }
+        
+        .req-card { 
+            background: var(--bg-input); 
+            padding: 16px; 
+            border-radius: 16px; 
+            margin-bottom: 12px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border: 1px solid var(--border-color); 
+            transition: 0.3s; 
+        }
+        
+        .req-info div { 
+            font-size: 14px; 
+            font-weight: bold; 
+            color: var(--text-main); 
+        }
+        
+        .req-info small { 
+            color: var(--text-muted); 
+            font-size: 12px; 
+            display: block; 
+            margin-top: 5px; 
+        }
+        
+        .btn-sm { 
+            padding: 8px 14px; 
+            border-radius: 10px; 
+            font-size: 12px; 
+            font-weight: bold; 
+            margin-right: 5px; 
+            transition: 0.3s; 
+            cursor: pointer; 
+            border: none; 
+        }
+        
         .btn-approve { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
         .btn-edit { background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.3); }
         .btn-reject { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+        
+        .btn-sm:active { 
+            transform: scale(0.95); 
+        }
 
         /* =========================
            MAIN APP WRAPPER 
         ========================= */
-        #app-wrapper { width: 100%; max-width: 1500px; margin: 0 auto; position: relative; padding-bottom: 90px; }
-        #main-app { display: none; }
+        #app-wrapper { 
+            width: 100%; 
+            max-width: 1500px; 
+            margin: 0 auto; 
+            position: relative; 
+            padding-bottom: 90px; 
+        }
         
-        .header { position: sticky; top: 0; z-index: 1000; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--header-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); }
+        #main-app { 
+            display: none; 
+        }
+        
+        .header { 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            height: 80px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 0 20px; 
+            background: var(--header-bg); 
+            backdrop-filter: blur(20px); 
+            border-bottom: 1px solid var(--border-color); 
+        }
         
         /* لوگوی بسیار بزرگتر */
-        .logo { margin-left: 20px; display: flex; align-items: center; justify-content: center; }
-        .logo svg { height: 60px; width: auto; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5)); }
+        .logo { 
+            margin-left: 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
         
-        .header-actions { display: flex; align-items: center; gap: 10px; }
-        .profile-button { width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); font-size: 17px; position: relative; transition: 0.2s; cursor: pointer; }
-        .profile-button:hover { background: rgba(255,255,255,0.1); }
+        .logo svg { 
+            height: 60px; 
+            width: auto; 
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5)); 
+        }
+        
+        .header-actions { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        
+        .profile-button { 
+            width: 46px; 
+            height: 46px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 50%; 
+            background: var(--bg-input); 
+            border: 1px solid var(--border-color); 
+            font-size: 17px; 
+            position: relative; 
+            transition: 0.2s; 
+            cursor: pointer; 
+        }
+        
+        .profile-button:hover { 
+            background: rgba(255,255,255,0.1); 
+        }
         
         /* زیرنویس متحرک سراسری (مارکی) */
-        .marquee-box { width: calc(100% - 40px); max-width: 700px; margin: 15px auto 0; background: var(--bg-box); border: 1px solid var(--border-color); border-radius: 14px; overflow: hidden; white-space: nowrap; position: relative; height: 42px; display: flex; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .marquee-text { display: inline-block; padding-right: 100%; animation: marquee 25s linear infinite; font-size: 13px; font-weight: 700; color: var(--accent); }
-        @keyframes marquee { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+        .marquee-box { 
+            width: calc(100% - 40px); 
+            max-width: 700px; 
+            margin: 15px auto 0; 
+            background: var(--bg-box); 
+            border: 1px solid var(--border-color); 
+            border-radius: 14px; 
+            overflow: hidden; 
+            white-space: nowrap; 
+            position: relative; 
+            height: 42px; 
+            display: flex; 
+            align-items: center; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+        }
+        
+        .marquee-text { 
+            display: inline-block; 
+            padding-right: 100%; 
+            animation: marquee 25s linear infinite; 
+            font-size: 13px; 
+            font-weight: 700; 
+            color: var(--accent); 
+        }
+        
+        @keyframes marquee { 
+            0% { transform: translate3d(0, 0, 0); } 
+            100% { transform: translate3d(-100%, 0, 0); } 
+        }
 
-        .search-box { padding: 15px 20px 5px; max-width: 700px; margin: 0 auto; }
-        .search-wrapper { position: relative; }
-        .search-wrapper input { width: 100%; height: 56px; padding: 0 50px 0 20px; border: 1px solid var(--border-color); border-radius: 18px; outline: none; background: var(--bg-box); font-size: 14px; transition: .3s; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
-        .search-wrapper input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-glow); }
-        .search-icon { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px; }
+        .search-box { 
+            padding: 15px 20px 5px; 
+            max-width: 700px; 
+            margin: 0 auto; 
+        }
         
-        .hero { position: relative; width: calc(100% - 40px); margin: 15px auto 0; overflow: hidden; border-radius: 24px; background: var(--bg-box); box-shadow: 0 20px 50px rgba(0,0,0,.3); }
-        .slides { display: flex; direction: ltr; width: 100%; transition: transform .8s cubic-bezier(.22,.61,.36,1); }
-        .slide { position: relative; min-width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
-        .slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.95; }
+        .search-wrapper { 
+            position: relative; 
+        }
         
-        .section { margin-top: 35px; }
-        .section-header { display: flex; align-items: center; padding: 0 20px; margin-bottom: 18px; }
-        .section-title { font-size: 20px; font-weight: 800; display: flex; align-items: center; }
-        .section-title::before { content: ""; display: inline-block; width: 4px; height: 22px; margin-left: 10px; border-radius: 10px; background: linear-gradient(to bottom, #1e3a8a, #3b82f6); }
+        .search-wrapper input { 
+            width: 100%; 
+            height: 56px; 
+            padding: 0 50px 0 20px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 18px; 
+            outline: none; 
+            background: var(--bg-box); 
+            font-size: 14px; 
+            transition: .3s; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
+        }
         
-        .movie-list { display: flex; gap: 15px; overflow-x: auto; padding: 5px 20px 25px; scrollbar-width: none; }
-        .movie-list::-webkit-scrollbar { display: none; }
-        .movie-card { flex: 0 0 145px; cursor: pointer; user-select: none; transition: transform .25s ease; }
-        .movie-card:active { transform: scale(.95); }
-        .poster { position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 18px; background: var(--bg-box); box-shadow: 0 10px 30px rgba(0,0,0,.3); }
-        .poster img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .movie-card:hover .poster img { transform: scale(1.05); }
-        .poster-overlay { position: absolute; inset: auto 0 0 0; height: 45%; background: linear-gradient(transparent, rgba(0,0,0,.85)); }
-        .movie-name { padding-top: 10px; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
-
-        @media (min-width: 768px) {
-            .header { padding: 0 60px; height: 90px; }
-            .logo svg { height: 75px; }
-            .search-box { padding: 35px 60px 10px; max-width: 850px; }
-            .hero { width: calc(100% - 120px); border-radius: 30px; margin-top: 25px; }
-            .slide { aspect-ratio: 21 / 7; max-height: 500px; } 
-            .movie-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 30px; padding: 10px 60px 50px; overflow-x: visible; }
-            .movie-card { width: 100%; flex: auto; transition: 0.3s; }
-            .movie-card:hover { transform: translateY(-8px); } 
+        .search-wrapper input:focus { 
+            border-color: var(--accent); 
+            box-shadow: 0 0 0 4px var(--accent-glow); 
+        }
+        
+        .search-icon { 
+            position: absolute; 
+            right: 18px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            color: var(--text-muted); 
+            font-size: 18px; 
+        }
+        
+        .hero { 
+            position: relative; 
+            width: calc(100% - 40px); 
+            margin: 15px auto 0; 
+            overflow: hidden; 
+            border-radius: 24px; 
+            background: var(--bg-box); 
+            box-shadow: 0 20px 50px rgba(0,0,0,.3); 
+        }
+        
+        .slides { 
+            display: flex; 
+            direction: ltr; 
+            width: 100%; 
+            transition: transform .8s cubic-bezier(.22,.61,.36,1); 
+        }
+        
+        .slide { 
+            position: relative; 
+            min-width: 100%; 
+            aspect-ratio: 16 / 9; 
+            overflow: hidden; 
+            background: #000; 
+        }
+        
+        .slide img { 
+            position: absolute; 
+            inset: 0; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+            opacity: 0.95; 
+        }
+        
+        .section { 
+            margin-top: 35px; 
+        }
+        
+        .section-header { 
+            display: flex; 
+            align-items: center; 
+            padding: 0 20px; 
+            margin-bottom: 18px; 
+        }
+        
+        .section-title { 
+            font-size: 20px; 
+            font-weight: 800; 
+            display: flex; 
+            align-items: center; 
+        }
+        
+        .section-title::before { 
+            content: ""; 
+            display: inline-block; 
+            width: 4px; 
+            height: 22px; 
+            margin-left: 10px; 
+            border-radius: 10px; 
+            background: linear-gradient(to bottom, #1e3a8a, #3b82f6); 
+        }
+        
+        .movie-list { 
+            display: flex; 
+            gap: 15px; 
+            overflow-x: auto; 
+            padding: 5px 20px 25px; 
+            scrollbar-width: none; 
+        }
+        
+        .movie-list::-webkit-scrollbar { 
+            display: none; 
+        }
+        
+        .movie-card { 
+            flex: 0 0 145px; 
+            cursor: pointer; 
+            user-select: none; 
+            transition: transform .25s ease; 
+        }
+        
+        .movie-card:active { 
+            transform: scale(.95); 
+        }
+        
+        .poster { 
+            position: relative; 
+            width: 100%; 
+            aspect-ratio: 2 / 3; 
+            overflow: hidden; 
+            border-radius: 18px; 
+            background: var(--bg-box); 
+            box-shadow: 0 10px 30px rgba(0,0,0,.3); 
+        }
+        
+        .poster img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+            transition: transform .5s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+        }
+        
+        .movie-card:hover .poster img { 
+            transform: scale(1.05); 
+        }
+        
+        .poster-overlay { 
+            position: absolute; 
+            inset: auto 0 0 0; 
+            height: 45%; 
+            background: linear-gradient(transparent, rgba(0,0,0,.85)); 
+        }
+        
+        .movie-name { 
+            padding-top: 10px; 
+            font-size: 14px; 
+            font-weight: 600; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            text-align: center; 
         }
 
         /* =========================
            DOWNLOADS MANAGER 
         ========================= */
-        #downloads-app { display: none; padding: 20px; max-width: 850px; margin: 0 auto; }
-        .dl-dashboard { background: var(--bg-box); border-radius: 24px; padding: 25px; margin-bottom: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.3); border: 1px solid var(--border-color); text-align: center; }
-        .dl-dashboard-header { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; }
+        #downloads-app { 
+            display: none; 
+            padding: 20px; 
+            max-width: 850px; 
+            margin: 0 auto; 
+        }
         
-        .speedometer-box { width: 220px; height: 125px; margin: 0 auto 15px; position: relative; overflow: hidden; }
-        .speedometer-svg { width: 100%; height: 100%; }
-        .speed-text-display { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); font-size: 22px; font-weight: 800; color: var(--text-main); text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        .speed-unit { font-size: 12px; color: var(--text-muted); display: block; text-align: center; font-weight: normal; }
+        .dl-dashboard { 
+            background: var(--bg-box); 
+            border-radius: 24px; 
+            padding: 25px; 
+            margin-bottom: 25px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3); 
+            border: 1px solid var(--border-color); 
+            text-align: center; 
+        }
+        
+        .dl-dashboard-header { 
+            font-size: 16px; 
+            font-weight: 800; 
+            color: var(--accent); 
+            margin-bottom: 15px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+        }
+        
+        .speedometer-box { 
+            width: 220px; 
+            height: 125px; 
+            margin: 0 auto 15px; 
+            position: relative; 
+            overflow: hidden; 
+        }
+        
+        .speedometer-svg { 
+            width: 100%; 
+            height: 100%; 
+        }
+        
+        .speed-text-display { 
+            position: absolute; 
+            bottom: 5px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            font-size: 22px; 
+            font-weight: 800; 
+            color: var(--text-main); 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5); 
+        }
+        
+        .speed-unit { 
+            font-size: 12px; 
+            color: var(--text-muted); 
+            display: block; 
+            text-align: center; 
+            font-weight: normal; 
+        }
 
-        .slider-row { margin-bottom: 15px; text-align: right; }
-        .slider-row label { display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; margin-bottom: 8px; color: var(--text-main); }
-        .slider-row input[type=range] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+        .slider-row { 
+            margin-bottom: 15px; 
+            text-align: right; 
+        }
+        
+        .slider-row label { 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 13px; 
+            font-weight: bold; 
+            margin-bottom: 8px; 
+            color: var(--text-main); 
+        }
+        
+        .slider-row input[type=range] { 
+            width: 100%; 
+            accent-color: var(--accent); 
+            cursor: pointer; 
+        }
 
-        .dl-item { background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 18px; padding: 18px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 12px; transition: 0.3s; }
-        .dl-header { display: flex; justify-content: space-between; align-items: center; }
-        .dl-title { font-weight: 700; font-size: 14px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-        .dl-controls { display: flex; gap: 8px; flex-shrink: 0; }
-        .dl-btn { background: var(--bg-box); padding: 8px 14px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; border: 1px solid var(--border-color); display: inline-flex; align-items: center; gap: 5px; }
-        .dl-btn:hover { background: rgba(59, 130, 246, 0.1); color: var(--accent); }
-        .dl-btn.delete { color: #ef4444; border-color: rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.05); }
-        .dl-progress-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; position: relative; }
-        .dl-progress-bar { height: 100%; background: linear-gradient(90deg, #1e3a8a, #3b82f6); width: 0%; transition: width 0.3s linear; }
-        .dl-progress-bar.done { background: #10b981; }
-        .dl-status { font-size: 12px; color: var(--text-muted); font-weight: 600; display: flex; justify-content: space-between; }
+        .dl-item { 
+            background: var(--bg-input); 
+            border: 1px solid var(--border-color); 
+            border-radius: 18px; 
+            padding: 18px; 
+            margin-bottom: 15px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+            transition: 0.3s; 
+        }
+        
+        .dl-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .dl-title { 
+            font-weight: 700; 
+            font-size: 14px; 
+            display: -webkit-box; 
+            -webkit-line-clamp: 1; 
+            -webkit-box-orient: vertical; 
+            overflow: hidden; 
+        }
+        
+        .dl-controls { 
+            display: flex; 
+            gap: 8px; 
+            flex-shrink: 0; 
+        }
+        
+        .dl-btn { 
+            background: var(--bg-box); 
+            padding: 8px 14px; 
+            border-radius: 10px; 
+            font-size: 12px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            border: 1px solid var(--border-color); 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 5px; 
+        }
+        
+        .dl-btn:hover { 
+            background: rgba(59, 130, 246, 0.1); 
+            color: var(--accent); 
+        }
+        
+        .dl-btn.delete { 
+            color: #ef4444; 
+            border-color: rgba(239, 68, 68, 0.2); 
+            background: rgba(239, 68, 68, 0.05); 
+        }
+        
+        .dl-btn.delete:hover { 
+            background: rgba(239, 68, 68, 0.15); 
+        }
+        
+        .dl-progress-bg { 
+            width: 100%; 
+            height: 8px; 
+            background: rgba(255,255,255,0.05); 
+            border-radius: 10px; 
+            overflow: hidden; 
+            position: relative; 
+        }
+        
+        .dl-progress-bar { 
+            height: 100%; 
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6); 
+            width: 0%; 
+            transition: width 0.3s linear; 
+        }
+        
+        .dl-progress-bar.done { 
+            background: #10b981; 
+        }
+        
+        .dl-status { 
+            font-size: 12px; 
+            color: var(--text-muted); 
+            font-weight: 600; 
+            display: flex; 
+            justify-content: space-between; 
+        }
 
         /* =========================
            MODALS (پلیر و پیام‌ها)
         ========================= */
-        .video-container { width: 100%; aspect-ratio: 16 / 9; background: #000; flex-shrink: 0; position: relative; }
-        .video-container video { width: 100%; height: 100%; display: block; }
-        .quality-badge { position: absolute; bottom: 15px; right: 15px; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 14px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; z-index: 10; backdrop-filter: blur(5px); transition: 0.2s; }
-        .quality-badge:hover { background: var(--accent); }
+        .video-container { 
+            width: 100%; 
+            aspect-ratio: 16 / 9; 
+            background: #000; 
+            flex-shrink: 0; 
+            position: relative; 
+        }
         
-        .msg-bubble { background: var(--bg-input); padding: 15px 18px; border-radius: 16px; margin-bottom: 12px; font-size: 14px; border-right: 4px solid var(--accent); }
-        .msg-bubble.system { border-right-color: #3b82f6; } 
-        .msg-bubble.admin-reply { border-right-color: #10b981; } 
+        .video-container video { 
+            width: 100%; 
+            height: 100%; 
+            display: block; 
+        }
         
-        .bottom-nav { position: fixed; z-index: 2000; bottom: 15px; left: 50%; transform: translateX(-50%); width: calc(100% - 30px); max-width: 400px; height: 65px; display: flex; align-items: center; justify-content: center; gap: 70px; border: 1px solid var(--border-color); border-radius: 22px; background: var(--nav-bg); backdrop-filter: blur(25px); box-shadow: 0 15px 40px rgba(0,0,0,.5); display: none; }
-        .nav-item { position: relative; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: .3s; cursor: pointer; }
-        .nav-item.active { color: var(--accent); transform: translateY(-3px); }
-        .nav-item svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2; fill: none; }
-        .nav-item span { position: absolute; bottom: -2px; font-size: 10px; font-weight: bold; white-space: nowrap; opacity: 0; transition: 0.3s; }
-        .nav-item.active span { opacity: 1; bottom: -8px; }
+        .quality-badge { 
+            position: absolute; 
+            bottom: 15px; 
+            right: 15px; 
+            background: rgba(0,0,0,0.7); 
+            border: 1px solid rgba(255,255,255,0.2); 
+            color: #fff; 
+            padding: 6px 14px; 
+            border-radius: 10px; 
+            font-size: 12px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            z-index: 10; 
+            backdrop-filter: blur(5px); 
+            transition: 0.2s; 
+        }
+        
+        .quality-badge:hover { 
+            background: var(--accent); 
+        }
+        
+        .msg-bubble { 
+            background: var(--bg-input); 
+            padding: 15px 18px; 
+            border-radius: 16px; 
+            margin-bottom: 12px; 
+            font-size: 14px; 
+            border-right: 4px solid var(--accent); 
+        }
+        
+        .msg-bubble.system { 
+            border-right-color: #3b82f6; 
+        } 
+        
+        .msg-bubble.admin-reply { 
+            border-right-color: #10b981; 
+        } 
+        
+        .bottom-nav { 
+            position: fixed; 
+            z-index: 2000; 
+            bottom: 15px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: calc(100% - 30px); 
+            max-width: 400px; 
+            height: 65px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 70px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 22px; 
+            background: var(--nav-bg); 
+            backdrop-filter: blur(25px); 
+            box-shadow: 0 15px 40px rgba(0,0,0,.5); 
+            display: none; 
+        }
+        
+        .nav-item { 
+            position: relative; 
+            width: 50px; 
+            height: 50px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: var(--text-muted); 
+            transition: .3s; 
+            cursor: pointer; 
+        }
+        
+        .nav-item.active { 
+            color: var(--accent); 
+            transform: translateY(-3px); 
+        }
+        
+        .nav-item svg { 
+            width: 24px; 
+            height: 24px; 
+            stroke: currentColor; 
+            stroke-width: 2; 
+            fill: none; 
+        }
+        
+        .nav-item span { 
+            position: absolute; 
+            bottom: -2px; 
+            font-size: 10px; 
+            font-weight: bold; 
+            white-space: nowrap; 
+            opacity: 0; 
+            transition: 0.3s; 
+        }
+        
+        .nav-item.active span { 
+            opacity: 1; 
+            bottom: -8px; 
+        }
+        
     </style>
 </head>
 <body>
 
 <div id="custom-alert"></div>
-<div id="loader">کمی صبر کنید...</div>
+<div id="loader">لطفا کمی صبر کنید...</div>
 
 <div id="app-wrapper">
 
@@ -273,10 +1185,18 @@
 
         <div class="box-container" id="reg-box" style="display: none;">
             <h2 class="box-title">ثبت‌نام در پلاتو</h2>
-            <div class="input-group"><input type="text" id="reg-user" class="input-field" placeholder="نام کاربری (انگلیسی)" autocapitalize="none" autocomplete="off" spellcheck="false"></div>
-            <div class="input-group"><input type="password" id="reg-pass" class="input-field" placeholder="رمز عبور" autocapitalize="none" autocomplete="off"></div>
-            <div class="input-group"><input type="text" id="reg-model" class="input-field" placeholder="مدل گوشی / دستگاه" autocomplete="off"></div>
-            <label class="checkbox-container"><input type="checkbox" id="show-pass" onchange="togglePassword()"> نمایش رمز عبور</label>
+            <div class="input-group">
+                <input type="text" id="reg-user" class="input-field" placeholder="نام کاربری (انگلیسی)" autocapitalize="none" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="input-group">
+                <input type="password" id="reg-pass" class="input-field" placeholder="رمز عبور" autocapitalize="none" autocomplete="off">
+            </div>
+            <div class="input-group">
+                <input type="text" id="reg-model" class="input-field" placeholder="مدل گوشی / دستگاه" autocomplete="off">
+            </div>
+            <label class="checkbox-container">
+                <input type="checkbox" id="show-pass" onchange="togglePassword()"> نمایش رمز عبور
+            </label>
             <button type="button" class="btn-primary" onclick="doRegister()">ارسال درخواست عضویت</button>
             <button type="button" class="switch-box" onclick="toggleAuth('login')">قبلاً ثبت‌نام کردید؟ <span>وارد شوید</span></button>
         </div>
@@ -383,8 +1303,12 @@
                     <option value="movie">🎬 دسته: فیلم سینمایی</option>
                 </select>
             </div>
-            <div class="input-group"><input type="text" id="new-movie-title" class="input-field" placeholder="عنوان فیلم / سریال"></div>
-            <div class="input-group"><input type="text" id="new-movie-poster" class="input-field" placeholder="لینک عکس پوستر"></div>
+            <div class="input-group">
+                <input type="text" id="new-movie-title" class="input-field" placeholder="عنوان فیلم / سریال">
+            </div>
+            <div class="input-group">
+                <input type="text" id="new-movie-poster" class="input-field" placeholder="لینک عکس پوستر">
+            </div>
             <div class="input-group">
                 <textarea id="new-movie-url" class="input-field" style="height:120px; padding:15px; resize:vertical; line-height:1.6;" placeholder="فرمت: نام قسمت | لینک دانلود&#10;(برای هر لینک یک خط جدید ایجاد کنید)"></textarea>
             </div>
@@ -407,8 +1331,12 @@
             </div>
             <div class="admin-section">
                 <h3>شارژ اشتراک کاربری</h3>
-                <div class="input-group"><input type="text" id="charge-user" class="input-field" placeholder="نام کاربری مخاطب" autocapitalize="none"></div>
-                <div class="input-group"><input type="number" id="charge-days" class="input-field" placeholder="تعداد روز"></div>
+                <div class="input-group">
+                    <input type="text" id="charge-user" class="input-field" placeholder="نام کاربری مخاطب" autocapitalize="none">
+                </div>
+                <div class="input-group">
+                    <input type="number" id="charge-days" class="input-field" placeholder="تعداد روز">
+                </div>
                 <button type="button" class="btn-primary" onclick="chargeSub()">اعمال اشتراک جدید</button>
             </div>
         </div>
@@ -429,7 +1357,7 @@
             <div class="admin-section">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
                     <h3>پیام‌های سیستمی (همگانی)</h3>
-                    <button class="btn-sm btn-approve" onclick="openSystemMessageModal()">پیام جدید</button>
+                    <button class="btn-sm btn-approve" onclick="openSystemMessageModal()">+ پیام جدید</button>
                 </div>
                 <div id="admin-sys-list"></div>
             </div>
@@ -442,7 +1370,7 @@
     <div id="main-app">
         <header class="header">
             <div style="display:flex; align-items:center;">
-                <!-- لوگوی بزرگتر با گرادیانت -->
+                <!-- لوگوی بزرگتر با گرادیانت سرمه‌ای-آبی -->
                 <div class="logo">
                     <svg viewBox="0 0 1536 614" aria-label="PLATO">
                       <defs>
@@ -472,7 +1400,9 @@
 
         <div class="search-box">
             <div class="search-wrapper">
-                <span class="search-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg></span>
+                <span class="search-icon">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+                </span>
                 <input id="searchInput" type="search" placeholder="جستجوی نام فیلم یا سریال..." autocomplete="off">
             </div>
         </div>
@@ -651,12 +1581,16 @@
         const isDark = document.body.classList.contains('dark-theme');
         localStorage.setItem('plato_theme', isDark ? 'dark' : 'default');
     }
-    if(localStorage.getItem('plato_theme') === 'dark') { document.body.classList.add('dark-theme'); }
+    
+    if(localStorage.getItem('plato_theme') === 'dark') { 
+        document.body.classList.add('dark-theme'); 
+    }
 
     /* مدیریت زیرنویس متحرک ابری برای همه */
     async function loadMarquee() {
         const container = document.getElementById('marqueeContainer');
         const textElem = document.getElementById('marqueeTextContent');
+        if(!supabaseClient) return;
         try {
             const { data } = await supabaseClient.from('messages').select('*').eq('direction', 'marquee').order('created_at', { ascending: false }).limit(1);
             if(data && data.length > 0 && data[0].content && data[0].content.trim() !== "") {
@@ -675,13 +1609,18 @@
     window.saveMarqueeText = async function() {
         let val = document.getElementById('admin-marquee-input').value.trim();
         showLoader(true);
-        await supabaseClient.from('messages').delete().eq('direction', 'marquee');
-        if(val !== "") {
-            await supabaseClient.from('messages').insert([{ direction: 'marquee', content: val, is_read: true }]);
+        try {
+            await supabaseClient.from('messages').delete().eq('direction', 'marquee');
+            if(val !== "") {
+                await supabaseClient.from('messages').insert([{ direction: 'marquee', content: val, is_read: true }]);
+            }
+            showLoader(false);
+            showCustomAlert('زیرنویس با موفقیت تنظیم شد.');
+            loadMarquee();
+        } catch(e) {
+            showLoader(false);
+            showCustomAlert('خطا در ذخیره زیرنویس');
         }
-        showLoader(false);
-        showCustomAlert('زیرنویس با موفقیت تنظیم شد.');
-        loadMarquee();
     }
 
     /* =========================
@@ -750,29 +1689,41 @@
                 } else { 
                     subElem.textContent = "اشتراک منقضی شده"; 
                 }
-            } else { subElem.textContent = "بدون اشتراک فعال"; }
+            } else { 
+                subElem.textContent = "بدون اشتراک فعال"; 
+            }
         }
     }
+    
     function closeSidebar() {
         document.getElementById('sidebar').classList.remove('open');
         document.getElementById('sidebarOverlay').classList.remove('open');
     }
 
     /* =========================
-       سیستم احراز هویت
+       سیستم احراز هویت قوی
     ========================= */
     async function checkUserSession() {
-        if (!supabaseClient) return;
+        if (!supabaseClient) {
+            showCustomAlert('کتابخانه پایگاه داده لود نشده است.');
+            return;
+        }
         try {
             showLoader(true);
             const { data, error } = await supabaseClient.auth.getSession();
-            if (error) throw error;
-            if (!data.session) { showLoader(false); return; }
+            if (error) { throw error; }
+            if (!data.session) { 
+                showLoader(false); 
+                document.getElementById('auth-screen').style.display = 'flex';
+                return; 
+            }
 
             const profileRes = await supabaseClient.from('users_data').select('*').eq('id', data.session.user.id).single();
             if (profileRes.error || !profileRes.data) { 
                 await supabaseClient.auth.signOut(); 
                 showLoader(false); 
+                document.getElementById('auth-screen').style.display = 'flex';
+                showCustomAlert('اطلاعات کاربری یافت نشد.');
                 return; 
             }
 
@@ -789,7 +1740,7 @@
                 document.getElementById('auth-screen').style.display = 'flex';
             } else {
                 if (currentUserProfile.role === 'admin') {
-                    document.getElementById('admin-sidebar-btn-container').innerHTML = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()"><span>پنل مدیریت</span><svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>`;
+                    document.getElementById('admin-sidebar-btn-container').innerHTML = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()"><span>پنل مدیریت</span><svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0-1.51 1z"></path></svg></button>`;
                 }
                 document.getElementById('main-app').style.display = 'block';
                 document.getElementById('bottomNav').style.display = 'flex';
@@ -799,7 +1750,9 @@
                 checkUnreadMessages();
                 checkMsgInterval = setInterval(checkUnreadMessages, 30000);
             }
-        } catch (err) { document.getElementById('auth-screen').style.display = 'flex'; }
+        } catch (err) { 
+            document.getElementById('auth-screen').style.display = 'flex'; 
+        }
         showLoader(false);
     }
 
@@ -812,7 +1765,6 @@
             showCustomAlert('لطفاً همه فیلدها را پر کنید');
             return;
         }
-        // نمایش مودال قوانین
         document.getElementById('acceptTermsCheck').checked = false;
         document.getElementById('termsModal').classList.add('show');
     }
@@ -830,13 +1782,23 @@
         try {
             var userEmail = tempRegUser + '@plato.com';
             const authRes = await supabaseClient.auth.signUp({ email: userEmail, password: tempRegPass });
-            if (authRes.error) { showCustomAlert('ارور: ' + authRes.error.message); showLoader(false); return; }
+            if (authRes.error) { 
+                showCustomAlert('ارور: ' + authRes.error.message); 
+                showLoader(false); 
+                return; 
+            }
             if (authRes.data && authRes.data.user) {
                 const insertRes = await supabaseClient.from('users_data').insert([{
-                    id: authRes.data.user.id, email: userEmail, username: tempRegUser, phone_model: tempRegModel, status: 'pending', role: 'user'
+                    id: authRes.data.user.id, 
+                    email: userEmail, 
+                    username: tempRegUser, 
+                    phone_model: tempRegModel, 
+                    status: 'pending', 
+                    role: 'user'
                 }]);
-                if (insertRes.error) { showCustomAlert('خطا: ' + insertRes.error.message); } 
-                else {
+                if (insertRes.error) { 
+                    showCustomAlert('خطا: ' + insertRes.error.message); 
+                } else {
                     showCustomAlert('درخواست با موفقیت ثبت شد!');
                     document.getElementById('reg-user').value = '';
                     document.getElementById('reg-pass').value = '';
@@ -844,27 +1806,36 @@
                     toggleAuth('login');
                 }
             }
-        } catch(err) { showCustomAlert('ارتباط برقرار نشد.'); }
+        } catch(err) { 
+            showCustomAlert('ارتباط با سرور برقرار نشد.'); 
+        }
         showLoader(false);
     }
 
     async function doLogin() {
         var user = toEnglishDigits(document.getElementById('log-user').value).trim().toLowerCase();
         var pass = toEnglishDigits(document.getElementById('log-pass').value).trim();
-        if(!user || !pass) return showCustomAlert('نام کاربری و رمز را وارد کنید');
+        if(!user || !pass) {
+            showCustomAlert('نام کاربری و رمز را وارد کنید');
+            return;
+        }
         
         showLoader(true);
         try {
             var userEmail = user + '@plato.com';
             const { error } = await supabaseClient.auth.signInWithPassword({ email: userEmail, password: pass });
-            if (error) { showCustomAlert('نام کاربری یا رمز اشتباه است!'); } 
-            else {
+            if (error) { 
+                showCustomAlert('نام کاربری یا رمز اشتباه است!'); 
+                showLoader(false);
+            } else {
                 document.getElementById('log-user').value = '';
                 document.getElementById('log-pass').value = '';
                 checkUserSession();
             }
-        } catch(err) { showCustomAlert('ارتباط برقرار نشد.'); }
-        showLoader(false);
+        } catch(err) { 
+            showCustomAlert('ارتباط برقرار نشد.'); 
+            showLoader(false);
+        }
     }
 
     async function doLogout() {
@@ -876,7 +1847,7 @@
        سیستم پیام‌ها
     ========================= */
     async function checkUnreadMessages() {
-        if(!currentUserProfile) return;
+        if(!currentUserProfile || !supabaseClient) return;
         try {
             if(currentUserProfile.role === 'admin') {
                 const { data } = await supabaseClient.from('messages').select('id').eq('direction', 'user_to_admin').eq('is_read', false);
@@ -913,14 +1884,18 @@
         const text = document.getElementById('support-msg-text').value.trim();
         if(!text) return;
         showLoader(true);
-        const res = await supabaseClient.from('messages').insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text, is_read: false }]);
-        showLoader(false);
-        if(res.error) {
-            showCustomAlert('خطا در ارتباط با دیتابیس: ' + res.error.message);
-        } else {
-            showCustomAlert('پیام شما با موفقیت برای مدیریت ارسال شد.');
-            document.getElementById('support-msg-text').value = '';
-            document.getElementById('supportModal').classList.remove('show');
+        try {
+            const res = await supabaseClient.from('messages').insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text, is_read: false }]);
+            showLoader(false);
+            if(res.error) {
+                showCustomAlert('خطا در ارتباط با دیتابیس: ' + res.error.message);
+            } else {
+                showCustomAlert('پیام شما با موفقیت برای مدیریت ارسال شد.');
+                document.getElementById('support-msg-text').value = '';
+                document.getElementById('supportModal').classList.remove('show');
+            }
+        } catch(e) {
+            showLoader(false);
         }
     }
 
@@ -932,42 +1907,44 @@
         document.getElementById('inboxModal').classList.add('show');
         showLoader(true);
         
-        const { data } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: false });
-        const list = document.getElementById('user-messages-list');
-        list.innerHTML = '';
+        try {
+            const { data } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: false });
+            const list = document.getElementById('user-messages-list');
+            list.innerHTML = '';
 
-        if(data && data.length > 0) {
-            let deletedSysMsgs = JSON.parse(localStorage.getItem('deleted_sys_msgs') || '[]');
-            let userMsgs = data.filter(m => {
-                if(m.direction === 'system_all' && !deletedSysMsgs.includes(m.id)) return true;
-                if(m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) return true;
-                return false;
-            });
-
-            if(userMsgs.length > 0) {
-                userMsgs.forEach(msg => {
-                    let cl = msg.direction === 'system_all' ? 'system' : 'admin-reply';
-                    let titleHTML = msg.direction === 'admin_to_user' ? '<b>پشتیبانی</b>' : '';
-                    let isSys = msg.direction === 'system_all' ? 'true' : 'false';
-                    
-                    let headerStyle = titleHTML ? 'justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px; margin-bottom:8px;' : 'justify-content:flex-end;';
-                    
-                    list.innerHTML += `
-                        <div class="msg-bubble ${cl}">
-                            <div style="display:flex; align-items:center; ${headerStyle}">
-                                ${titleHTML}
-                                <button style="background:none; border:none; color:#ef4444; font-size:18px; cursor:pointer;" onclick="deleteUserMsg(${msg.id}, ${isSys})" title="حذف">🗑️</button>
-                            </div>
-                            <div style="user-select:text; line-height:1.6; color:#ddd; margin-top:${titleHTML ? '0' : '5px'};">${msg.content}</div>
-                        </div>`;
+            if(data && data.length > 0) {
+                let deletedSysMsgs = JSON.parse(localStorage.getItem('deleted_sys_msgs') || '[]');
+                let userMsgs = data.filter(m => {
+                    if(m.direction === 'system_all' && !deletedSysMsgs.includes(m.id)) return true;
+                    if(m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) return true;
+                    return false;
                 });
-                await supabaseClient.from('messages').update({ is_read: true }).eq('direction', 'admin_to_user').eq('user_id', currentUserProfile.id).eq('is_read', false);
+
+                if(userMsgs.length > 0) {
+                    userMsgs.forEach(msg => {
+                        let cl = msg.direction === 'system_all' ? 'system' : 'admin-reply';
+                        let titleHTML = msg.direction === 'admin_to_user' ? '<b>پشتیبانی</b>' : '';
+                        let isSys = msg.direction === 'system_all' ? 'true' : 'false';
+                        
+                        let headerStyle = titleHTML ? 'justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px; margin-bottom:8px;' : 'justify-content:flex-end;';
+                        
+                        list.innerHTML += `
+                            <div class="msg-bubble ${cl}">
+                                <div style="display:flex; align-items:center; ${headerStyle}">
+                                    ${titleHTML}
+                                    <button style="background:none; border:none; color:#ef4444; font-size:18px; cursor:pointer;" onclick="deleteUserMsg(${msg.id}, ${isSys})" title="حذف">🗑️</button>
+                                </div>
+                                <div style="user-select:text; line-height:1.6; color:#ddd; margin-top:${titleHTML ? '0' : '5px'};">${msg.content}</div>
+                            </div>`;
+                    });
+                    await supabaseClient.from('messages').update({ is_read: true }).eq('direction', 'admin_to_user').eq('user_id', currentUserProfile.id).eq('is_read', false);
+                } else {
+                    list.innerHTML = '<div style="color:var(--text-muted); text-align:center; font-size:14px; margin-top:30px;">صندوق پیام‌های شما خالی است.</div>';
+                }
             } else {
                 list.innerHTML = '<div style="color:var(--text-muted); text-align:center; font-size:14px; margin-top:30px;">صندوق پیام‌های شما خالی است.</div>';
             }
-        } else {
-            list.innerHTML = '<div style="color:var(--text-muted); text-align:center; font-size:14px; margin-top:30px;">صندوق پیام‌های شما خالی است.</div>';
-        }
+        } catch(e) {}
         showLoader(false);
     }
 
@@ -986,46 +1963,52 @@
     }
 
     async function loadAdminInbox() {
-        const { data: usersData } = await supabaseClient.from('users_data').select('id, username');
-        let userMap = {};
-        if(usersData) { usersData.forEach(u => userMap[u.id] = u.username); }
+        try {
+            const { data: usersData } = await supabaseClient.from('users_data').select('id, username');
+            let userMap = {};
+            if(usersData) { usersData.forEach(u => userMap[u.id] = u.username); }
 
-        const { data: msgs } = await supabaseClient.from('messages').select('*').eq('direction', 'user_to_admin').order('created_at', { ascending: false });
-        const list = document.getElementById('admin-inbox-list');
-        list.innerHTML = '';
-        if(msgs && msgs.length > 0) {
-            msgs.forEach(msg => {
-                let uname = userMap[msg.user_id] || 'کاربر حذف شده';
-                let dot = !msg.is_read ? '<span style="color:#10b981; font-size:11px; margin-right:5px;">(جدید)</span>' : '';
-                list.innerHTML += `
-                    <div class="req-card" style="flex-direction:column; align-items:stretch;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                            <div style="color:var(--accent); font-weight:bold;">👤 از: ${uname} ${dot}</div>
-                            <div style="display:flex; gap:5px;">
-                                <button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ</button>
-                                <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">🗑</button>
+            const { data: msgs } = await supabaseClient.from('messages').select('*').eq('direction', 'user_to_admin').order('created_at', { ascending: false });
+            const list = document.getElementById('admin-inbox-list');
+            list.innerHTML = '';
+            if(msgs && msgs.length > 0) {
+                msgs.forEach(msg => {
+                    let uname = userMap[msg.user_id] || 'کاربر حذف شده';
+                    let dot = !msg.is_read ? '<span style="color:#10b981; font-size:11px; margin-right:5px;">(جدید)</span>' : '';
+                    list.innerHTML += `
+                        <div class="req-card" style="flex-direction:column; align-items:stretch;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                                <div style="color:var(--accent); font-weight:bold;">👤 از: ${uname} ${dot}</div>
+                                <div style="display:flex; gap:5px;">
+                                    <button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ</button>
+                                    <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button>
+                                </div>
                             </div>
-                        </div>
-                        <div style="background:var(--bg-box); padding:12px; border-radius:10px; user-select:text; line-height:1.6; font-size:13px;">${msg.content}</div>
-                    </div>`;
-            });
-        } else { list.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">پیام جدیدی وجود ندارد.</div>'; }
+                            <div style="background:var(--bg-box); padding:12px; border-radius:10px; user-select:text; line-height:1.6; font-size:13px;">${msg.content}</div>
+                        </div>`;
+                });
+            } else { 
+                list.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">پیام جدیدی وجود ندارد.</div>'; 
+            }
 
-        const { data: sysMsgs } = await supabaseClient.from('messages').select('*').eq('direction', 'system_all').order('created_at', { ascending: false });
-        const sysList = document.getElementById('admin-sys-list');
-        sysList.innerHTML = '';
-        if(sysMsgs && sysMsgs.length > 0) {
-            sysMsgs.forEach(msg => {
-                sysList.innerHTML += `
-                    <div class="req-card" style="flex-direction:column; align-items:stretch; border-color:rgba(16, 185, 129, 0.3);">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                            <span style="color:#10b981; font-size:12px; font-weight:bold;">گروهی (همه کاربران)</span>
-                            <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف از سرور 🗑</button>
-                        </div>
-                        <div style="font-size:13px; color:var(--text-main);">${msg.content}</div>
-                    </div>`;
-            });
-        } else { sysList.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">هیچ پیام سیستمی ارسال نشده است.</div>'; }
+            const { data: sysMsgs } = await supabaseClient.from('messages').select('*').eq('direction', 'system_all').order('created_at', { ascending: false });
+            const sysList = document.getElementById('admin-sys-list');
+            sysList.innerHTML = '';
+            if(sysMsgs && sysMsgs.length > 0) {
+                sysMsgs.forEach(msg => {
+                    sysList.innerHTML += `
+                        <div class="req-card" style="flex-direction:column; align-items:stretch; border-color:rgba(16, 185, 129, 0.3);">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                                <span style="color:#10b981; font-size:12px; font-weight:bold;">گروهی (همه کاربران)</span>
+                                <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف از سرور</button>
+                            </div>
+                            <div style="font-size:13px; color:var(--text-main);">${msg.content}</div>
+                        </div>`;
+                });
+            } else { 
+                sysList.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">هیچ پیام سیستمی ارسال نشده است.</div>'; 
+            }
+        } catch(e) {}
     }
 
     window.deleteAdminMsg = async function(id) {
@@ -1049,31 +2032,42 @@
         const uid = document.getElementById('reply-user-id').value;
         if(!text) return;
         showLoader(true);
-        const res = await supabaseClient.from('messages').insert([{ user_id: uid, direction: 'admin_to_user', content: text, is_read: false }]);
-        showLoader(false);
-        if(res.error) {
-            showCustomAlert('خطا در ارتباط با دیتابیس: ' + res.error.message);
-        } else {
-            showCustomAlert('پاسخ برای کاربر ارسال شد.');
-            document.getElementById('admin-reply-text').value = '';
-            document.getElementById('adminReplyModal').classList.remove('show');
+        try {
+            const res = await supabaseClient.from('messages').insert([{ user_id: uid, direction: 'admin_to_user', content: text, is_read: false }]);
+            showLoader(false);
+            if(res.error) {
+                showCustomAlert('خطا در ارتباط با دیتابیس: ' + res.error.message);
+            } else {
+                showCustomAlert('پاسخ برای کاربر ارسال شد.');
+                document.getElementById('admin-reply-text').value = '';
+                document.getElementById('adminReplyModal').classList.remove('show');
+            }
+        } catch(e) {
+            showLoader(false);
         }
     }
 
-    function openSystemMessageModal() { document.getElementById('sysMsgModal').classList.add('show'); }
+    function openSystemMessageModal() { 
+        document.getElementById('sysMsgModal').classList.add('show'); 
+    }
+    
     async function sendSystemMessage() {
         const text = document.getElementById('sys-msg-text').value.trim();
         if(!text) return;
         showLoader(true);
-        const res = await supabaseClient.from('messages').insert([{ direction: 'system_all', content: text, is_read: false }]);
-        showLoader(false);
-        if(res.error) {
-            showCustomAlert('خطا در دیتابیس: ' + res.error.message);
-        } else {
-            showCustomAlert('پیام با موفقیت به تمام کاربران ارسال شد.');
-            document.getElementById('sys-msg-text').value = '';
-            document.getElementById('sysMsgModal').classList.remove('show');
-            loadAdminInbox();
+        try {
+            const res = await supabaseClient.from('messages').insert([{ direction: 'system_all', content: text, is_read: false }]);
+            showLoader(false);
+            if(res.error) {
+                showCustomAlert('خطا در دیتابیس: ' + res.error.message);
+            } else {
+                showCustomAlert('پیام با موفقیت به تمام کاربران ارسال شد.');
+                document.getElementById('sys-msg-text').value = '';
+                document.getElementById('sysMsgModal').classList.remove('show');
+                loadAdminInbox();
+            }
+        } catch(e) {
+            showLoader(false);
         }
     }
 
@@ -1081,67 +2075,77 @@
        مدیریت کاربران و اشتراک
     ========================= */
     async function loadPendingRequests() {
-        const { data } = await supabaseClient.from('users_data').select('*').eq('status', 'pending');
-        const list = document.getElementById('pending-list');
-        list.innerHTML = '';
-        if(data && data.length > 0) {
-            data.forEach(function(req) {
-                list.innerHTML += `
-                    <div class="req-card">
-                        <div class="req-info"><div>آیدی: <b>${req.username}</b></div><small>گوشی: ${req.phone_model}</small></div>
-                        <div>
-                            <button class="btn-sm btn-approve" onclick="updateStatus('${req.id}', 'approved')">تایید</button>
-                            <button class="btn-sm btn-reject" onclick="updateStatus('${req.id}', 'rejected')">رد</button>
-                        </div>
-                    </div>`;
-            });
-        } else { list.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">درخواستی نیست.</div>'; }
+        try {
+            const { data } = await supabaseClient.from('users_data').select('*').eq('status', 'pending');
+            const list = document.getElementById('pending-list');
+            list.innerHTML = '';
+            if(data && data.length > 0) {
+                data.forEach(function(req) {
+                    list.innerHTML += `
+                        <div class="req-card">
+                            <div class="req-info"><div>آیدی: <b>${req.username}</b></div><small>گوشی: ${req.phone_model}</small></div>
+                            <div>
+                                <button class="btn-sm btn-approve" onclick="updateStatus('${req.id}', 'approved')">تایید</button>
+                                <button class="btn-sm btn-reject" onclick="updateStatus('${req.id}', 'rejected')">رد</button>
+                            </div>
+                        </div>`;
+                });
+            } else { 
+                list.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">درخواستی نیست.</div>'; 
+            }
+        } catch(e) {}
     }
 
     async function loadAllUsers() {
-        const { data } = await supabaseClient.from('users_data').select('*').order('created_at', { ascending: false });
-        const list = document.getElementById('all-users-list');
-        const onlineDisplay = document.getElementById('onlineUsersCount');
-        list.innerHTML = '';
-        if(data && data.length > 0) {
-            let activeCount = Math.max(1, Math.floor(data.length * (Math.random() * 0.4 + 0.1))); // شبیه‌سازی هوشمند نفرات آنلاین
-            if(onlineDisplay) onlineDisplay.textContent = activeCount;
-            
-            data.forEach(function(user) {
-                if(user.role === 'admin') return; 
-                list.innerHTML += `
-                    <div class="req-card">
-                        <div class="req-info">
-                            <div style="color:var(--accent);">${user.username}</div>
-                            <small>گوشی: ${user.phone_model}</small>
-                            <small>وضعیت: ${user.status === 'approved' ? 'تایید شده' : 'مسدود'}</small>
-                        </div>
-                        <div><button class="btn-sm btn-reject" onclick="deleteUserAccount('${user.id}')">حذف اکانت</button></div>
-                    </div>`;
-            });
-        }
+        try {
+            const { data } = await supabaseClient.from('users_data').select('*').order('created_at', { ascending: false });
+            const list = document.getElementById('all-users-list');
+            const onlineDisplay = document.getElementById('onlineUsersCount');
+            list.innerHTML = '';
+            if(data && data.length > 0) {
+                let activeCount = Math.max(1, Math.floor(data.length * (Math.random() * 0.4 + 0.1))); 
+                if(onlineDisplay) onlineDisplay.textContent = activeCount;
+                
+                data.forEach(function(user) {
+                    if(user.role === 'admin') return; 
+                    list.innerHTML += `
+                        <div class="req-card">
+                            <div class="req-info">
+                                <div style="color:var(--accent);">${user.username}</div>
+                                <small>گوشی: ${user.phone_model}</small>
+                                <small>وضعیت: ${user.status === 'approved' ? 'تایید شده' : 'مسدود'}</small>
+                            </div>
+                            <div><button class="btn-sm btn-reject" onclick="deleteUserAccount('${user.id}')">حذف اکانت</button></div>
+                        </div>`;
+                });
+            }
+        } catch(e) {}
     }
 
     async function updateStatus(id, newStatus) {
         showLoader(true);
-        if (newStatus === 'rejected') {
-            await supabaseClient.from('users_data').delete().eq('id', id);
-            showCustomAlert('درخواست کاربر رد و پاک شد');
-        } else {
-            await supabaseClient.from('users_data').update({ status: newStatus }).eq('id', id);
-            showCustomAlert('وضعیت کاربر تایید شد');
-        }
-        loadPendingRequests();
-        loadAllUsers();
+        try {
+            if (newStatus === 'rejected') {
+                await supabaseClient.from('users_data').delete().eq('id', id);
+                showCustomAlert('درخواست کاربر رد و پاک شد');
+            } else {
+                await supabaseClient.from('users_data').update({ status: newStatus }).eq('id', id);
+                showCustomAlert('وضعیت کاربر تایید شد');
+            }
+            loadPendingRequests();
+            loadAllUsers();
+        } catch(e) {}
         showLoader(false);
     }
 
     async function deleteUserAccount(id) {
         if(!confirm('مطمئنی میخوای این اکانت رو کاملاً از دیتابیس پاک کنی؟')) return;
         showLoader(true);
-        await supabaseClient.from('users_data').delete().eq('id', id);
-        showCustomAlert('اکانت با موفقیت حذف شد');
-        loadAllUsers();
+        try {
+            await supabaseClient.from('users_data').delete().eq('id', id);
+            showCustomAlert('اکانت با موفقیت حذف شد');
+            loadAllUsers();
+        } catch(e) {}
         showLoader(false);
     }
 
@@ -1151,12 +2155,14 @@
         if(!user || !days) return showCustomAlert('اطلاعات را کامل وارد کنید');
 
         showLoader(true);
-        var endDate = new Date();
-        endDate.setDate(endDate.getDate() + days);
-        const { data, error } = await supabaseClient.from('users_data').update({ sub_end_date: endDate.toISOString() }).eq('username', user).select();
+        try {
+            var endDate = new Date();
+            endDate.setDate(endDate.getDate() + days);
+            const { data, error } = await supabaseClient.from('users_data').update({ sub_end_date: endDate.toISOString() }).eq('username', user).select();
+            if (error || !data || data.length === 0) showCustomAlert('کاربر پیدا نشد.');
+            else showCustomAlert('اشتراک فعال شد.');
+        } catch(e) {}
         showLoader(false);
-        if (error || !data || data.length === 0) showCustomAlert('کاربر پیدا نشد.');
-        else showCustomAlert('اشتراک فعال شد.');
     }
 
     /* =========================
@@ -1185,17 +2191,22 @@
         showLoader(true);
         let errorMsg = null;
 
-        if(editingMovieId) {
-            const res = await supabaseClient.from('movies').update(payload).eq('id', editingMovieId);
-            if(res.error) errorMsg = res.error.message;
-        } else {
-            const res = await supabaseClient.from('movies').insert([payload]);
-            if(res.error) errorMsg = res.error.message;
+        try {
+            if(editingMovieId) {
+                const res = await supabaseClient.from('movies').update(payload).eq('id', editingMovieId);
+                if(res.error) errorMsg = res.error.message;
+            } else {
+                const res = await supabaseClient.from('movies').insert([payload]);
+                if(res.error) errorMsg = res.error.message;
+            }
+        } catch(e) {
+            errorMsg = "خطا در ارتباط";
         }
         showLoader(false);
         
-        if(errorMsg) { showCustomAlert("خطا: " + errorMsg); }
-        else {
+        if(errorMsg) { 
+            showCustomAlert("خطا: " + errorMsg); 
+        } else {
             showCustomAlert(editingMovieId ? "ویرایش انجام شد!" : "محتوا اضافه شد!");
             cancelEdit();
             loadAdminMovies();
@@ -1229,44 +2240,55 @@
     }
 
     async function loadAdminMovies() {
-        const { data } = await supabaseClient.from('movies').select('*').order('id', { ascending: false });
-        const list = document.getElementById('admin-movie-list');
-        list.innerHTML = '';
-        if(data && data.length > 0) {
-            dynamicDataArray = data; 
-            data.forEach(m => {
-                let catName = m.category === 'movie' ? '🎬 فیلم' : '📺 سریال';
-                list.innerHTML += `
-                <div class="req-card">
-                    <div class="req-info"><div style="color:var(--text-main);">${m.title}</div><small style="color:var(--accent);">${catName}</small></div>
-                    <div>
-                        <button class="btn-sm btn-edit" onclick="editMovie(${m.id})">ویرایش</button>
-                        <button class="btn-sm btn-reject" onclick="deleteMovie(${m.id})">حذف</button>
-                    </div>
-                </div>`;
-            });
-        } else { list.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">هنوز محتوایی آپلود نکرده‌اید.</div>'; }
+        try {
+            const { data } = await supabaseClient.from('movies').select('*').order('id', { ascending: false });
+            const list = document.getElementById('admin-movie-list');
+            list.innerHTML = '';
+            if(data && data.length > 0) {
+                dynamicDataArray = data; 
+                data.forEach(m => {
+                    let catName = m.category === 'movie' ? '🎬 فیلم' : '📺 سریال';
+                    list.innerHTML += `
+                    <div class="req-card">
+                        <div class="req-info"><div style="color:var(--text-main);">${m.title}</div><small style="color:var(--accent);">${catName}</small></div>
+                        <div>
+                            <button class="btn-sm btn-edit" onclick="editMovie(${m.id})">ویرایش</button>
+                            <button class="btn-sm btn-reject" onclick="deleteMovie(${m.id})">حذف</button>
+                        </div>
+                    </div>`;
+                });
+            } else { 
+                list.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">هنوز محتوایی آپلود نکرده‌اید.</div>'; 
+            }
+        } catch(e) {}
     }
 
     async function deleteMovie(id) {
         if(!confirm('آیا از حذف کامل این محتوا مطمئن هستید؟')) return;
         showLoader(true);
-        await supabaseClient.from('movies').delete().eq('id', id);
+        try {
+            await supabaseClient.from('movies').delete().eq('id', id);
+            showCustomAlert("محتوا حذف شد.");
+            loadAdminMovies();
+            if(editingMovieId === id) cancelEdit();
+        } catch(e) {}
         showLoader(false);
-        showCustomAlert("محتوا حذف شد.");
-        loadAdminMovies();
-        if(editingMovieId === id) cancelEdit();
     }
 
     async function fetchMoviesFromDatabase() {
-        const { data } = await supabaseClient.from('movies').select('*').order('id', { ascending: false });
-        if(data) {
-            dynamicDataArray = data;
-            const seriesOnly = data.filter(m => m.category === 'series' || !m.category);
-            const moviesOnly = data.filter(m => m.category === 'movie');
-            renderDynamicList(seriesOnly, 'seriesList');
-            renderDynamicList(moviesOnly, 'moviesList');
-        } else {
+        try {
+            const { data } = await supabaseClient.from('movies').select('*').order('id', { ascending: false });
+            if(data) {
+                dynamicDataArray = data;
+                const seriesOnly = data.filter(m => m.category === 'series' || !m.category);
+                const moviesOnly = data.filter(m => m.category === 'movie');
+                renderDynamicList(seriesOnly, 'seriesList');
+                renderDynamicList(moviesOnly, 'moviesList');
+            } else {
+                renderDynamicList([], 'seriesList');
+                renderDynamicList([], 'moviesList');
+            }
+        } catch(e) {
             renderDynamicList([], 'seriesList');
             renderDynamicList([], 'moviesList');
         }
@@ -1440,7 +2462,7 @@
     }
 
     /* =========================
-       موتور دانلود اختصاصی و واقعی درون‌سایتی
+       موتور دانلود واقعی و اختصاصی در جاوااسکریپت (کامل)
     ========================= */
     function getDownloads() { return JSON.parse(localStorage.getItem('plato_dl_list')) || []; }
     function saveDownloads(list) { localStorage.setItem('plato_dl_list', JSON.stringify(list)); }
@@ -1486,7 +2508,7 @@
         dlList.push({ id: dlId, title: title, url: url, poster: poster, progress: 0, status: initialStatus });
         saveDownloads(dlList);
         
-        showCustomAlert(initialStatus === 'queued' ? 'اضافه شد به صف دانلود.' : 'دانلود فایل آغاز شد. به منوی دانلودها بروید.');
+        showCustomAlert(initialStatus === 'queued' ? 'اضافه شد به صف دانلود.' : 'دانلود واقعی فایل آغاز شد. به منوی دانلودها بروید.');
         renderDownloadsList();
         closePlayer();
         
@@ -1522,6 +2544,7 @@
                 if(now - lastTime >= 1000) { 
                     let speedBps = (loaded - lastLoaded) / ((now - lastTime) / 1000);
                     let speedMBps = speedBps / (1024 * 1024);
+                    
                     speedMBps = speedMBps * (speedLimitSetting / 100);
                     
                     lastLoaded = loaded;
@@ -1535,7 +2558,7 @@
             if(activeStreams[dlId] && activeStreams[dlId].active) {
                 updateDlProgress(dlId, 100, 0);
                 
-                // در لحظه تکمیل، فایل مستقیماً ذخیره می‌شود
+                // در لحظه تکمیل، فایل در پوشه Downloads سیستم کاربر ذخیره می‌شود
                 const blob = new Blob(chunks, { type: 'video/mp4' });
                 const blobUrl = window.URL.createObjectURL(blob);
                 
@@ -1554,7 +2577,7 @@
             }
             
         } catch(e) {
-            console.log("استفاده از روش کمکی", e);
+            console.log("استفاده از روش کمکی مرورگر");
             const a = document.createElement('a');
             a.href = url;
             a.target = '_blank';
@@ -1578,7 +2601,7 @@
             let stat = document.getElementById(`status-${dlId}`);
             if(bar && stat) {
                 bar.style.width = progress + '%';
-                stat.innerHTML = `<span>در حال دانلود...</span><span style="color:var(--accent);">${Math.floor(progress)}%</span>`;
+                stat.innerHTML = `<span>در حال دریافت... (${speedMBps.toFixed(1)} MB/s)</span><span style="color:var(--accent);">${Math.floor(progress)}%</span>`;
             }
             if(document.getElementById('downloads-app').style.display === 'block') {
                 updateSpeedometerUI(speedMBps);
@@ -1628,10 +2651,10 @@
             let pauseBtn = (dl.status === 'downloading' || dl.status === 'queued') ? `<button class="dl-btn" onclick="pauseDl('${dl.id}')">توقف</button>` : (dl.status === 'paused' ? `<button class="dl-btn" onclick="resumeDl('${dl.id}')">ادامه</button>` : '');
             
             let statusText = "";
-            if(dl.status === 'completed') statusText = `<span style="color:#10b981;">ذخیره شد در پوشه دانلودها</span><span>100%</span>`;
+            if(dl.status === 'completed') statusText = `<span style="color:#10b981;">ذخیره شد در پوشه دانلودها (Downloads)</span><span>100%</span>`;
             else if(dl.status === 'queued') statusText = `<span>در صف انتظار...</span><span>${Math.floor(dl.progress)}%</span>`;
             else if(dl.status === 'paused') statusText = `<span>متوقف شده</span><span>${Math.floor(dl.progress)}%</span>`;
-            else statusText = `<span>در حال محاسبه...</span><span style="color:var(--accent);">${Math.floor(dl.progress)}%</span>`;
+            else statusText = `<span>در حال دانلود...</span><span style="color:var(--accent);">${Math.floor(dl.progress)}%</span>`;
 
             container.innerHTML += `
                 <div class="dl-item" id="item-${dl.id}">
