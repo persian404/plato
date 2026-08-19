@@ -170,7 +170,7 @@
         .header-actions { display: flex; align-items: center; gap: 10px; }
         .profile-button { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); cursor: pointer; }
         
-        /* زیرنویس متحرک استاندارد و بدون باگ */
+        /* کدهای اصلاح شده زیرنویس بدون باگ انیمیشن CSS */
         .marquee-box { 
             width: calc(100% - 40px); 
             max-width: 750px; 
@@ -182,26 +182,15 @@
             height: 40px; 
             display: flex; 
             align-items: center; 
-            padding: 0 10px;
-        }
-        .marquee-text-wrapper {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
+            padding: 0; /* فاصله اضافی حذف شد تا مارکی آزادانه حرکت کند */
         }
         .marquee-text { 
-            display: inline-block; 
-            padding-right: 100%; 
-            animation: marquee 20s linear infinite; 
-            font-size: 13px; 
+            font-size: 13.5px; 
             font-weight: 700; 
-            color: var(--accent); 
+            color: var(--accent);
+            border: none;
+            outline: none;
         }
-        @keyframes marquee { 
-            0% { transform: translateX(0); } 
-            100% { transform: translateX(-100%); } 
-        }
-        .marquee-box:hover .marquee-text { animation-play-state: paused; }
 
         .search-box { padding: 14px 20px 4px; max-width: 750px; margin: 0 auto; }
         .search-wrapper { position: relative; }
@@ -209,7 +198,6 @@
         .search-wrapper input:focus { border-color: var(--accent); }
         .search-icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
         
-        /* بنر و اسلایدر بدون هاله */
         .hero { position: relative; width: calc(100% - 40px); margin: 14px auto 0; overflow: hidden; border-radius: 20px; background: #000; }
         .slides { display: flex; direction: ltr; width: 100%; transition: transform .6s cubic-bezier(.22,.61,.36,1); }
         .slide { position: relative; min-width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
@@ -509,11 +497,10 @@
             </div>
         </header>
 
-        <!-- زیرنویس متحرک سراسری -->
+        <!-- زیرنویس متحرک سراسری (تضمینی با مارکی) -->
         <div id="marqueeContainer" class="marquee-box" style="display:none;">
-            <div class="marquee-text-wrapper">
-                <div class="marquee-text" id="marqueeTextContent"></div>
-            </div>
+            <!-- تگ مارکی جایگزین انیمیشن شد -->
+            <marquee id="marqueeTextContent" direction="right" scrollamount="5" class="marquee-text"></marquee>
         </div>
 
         <div class="search-box">
@@ -525,7 +512,6 @@
             </div>
         </div>
 
-        <!-- اسلایدر با نقاط ناوبری -->
         <section class="hero">
             <div class="slides" id="slides">
                 <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_000000004cc0822f9865a432af65b5ca-optimized.webp" alt="Plato Banner 1"></div>
@@ -699,14 +685,13 @@
     } catch(e){}
 
     /* =========================
-       سیستم زیرنویس سراسری پایدار
+       سیستم زیرنویس سراسری
     ========================= */
     async function loadMarquee() {
         const container = document.getElementById('marqueeContainer');
         const textElem = document.getElementById('marqueeTextContent');
         const input = document.getElementById('admin-marquee-input');
 
-        // بررسی حافظه محلی به عنوان کش سریع
         let cachedMarquee = localStorage.getItem('plato_marquee_text') || '';
         if(cachedMarquee.trim() !== '') {
             textElem.textContent = cachedMarquee;
@@ -733,7 +718,6 @@
         let val = document.getElementById('admin-marquee-input').value.trim();
         showLoader(true);
         
-        // ذخیره فوری محلی
         if(val !== "") {
             localStorage.setItem('plato_marquee_text', val);
         } else {
