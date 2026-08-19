@@ -8,24 +8,23 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
         /* =========================
-           RESET & BASIC & THEMES
+           RESET & ANIMATED BACKGROUND
         ========================= */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
         :root {
             --bg-main: #060b19;
-            --bg-box: #0b132b;
+            --bg-box: rgba(11, 19, 43, 0.85);
             --bg-input: rgba(255,255,255,0.06);
             --text-main: #ffffff;
             --text-muted: #94a3b8;
-            --border-color: rgba(255,255,255,0.08);
-            --nav-bg: rgba(11, 19, 43, 0.92);
-            --header-bg: rgba(6, 11, 25, 0.85);
+            --border-color: rgba(255,255,255,0.09);
+            --header-bg: rgba(6, 11, 25, 0.82);
             --accent: #3b82f6;
             --accent-glow: rgba(59, 130, 246, 0.5);
         }
@@ -37,23 +36,32 @@
             --text-main: #ffffff;
             --text-muted: #6b7280;
             --border-color: rgba(255,255,255,0.05);
-            --nav-bg: rgba(5, 5, 5, 0.95);
             --header-bg: rgba(0, 0, 0, 0.9);
             --accent: #2563eb;
             --accent-glow: rgba(37, 99, 235, 0.3);
         }
 
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         body { 
-            background: linear-gradient(135deg, #040814 0%, #0c1b42 50%, #1e3a8a 100%);
+            background: linear-gradient(-45deg, #020617, #0b132b, #172554, #1e3a8a, #090d16);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             background-attachment: fixed;
             color: var(--text-main); 
             font-family: "Vazirmatn", sans-serif; 
             overflow-x: hidden; 
-            transition: background 0.4s, color 0.4s; 
+            transition: color 0.4s; 
+            min-height: 100vh;
         }
 
         body.dark-theme {
-            background: #000000; 
+            background: #000000;
+            animation: none;
         }
 
         button, input, select, textarea { font-family: inherit; color: inherit; }
@@ -62,74 +70,94 @@
         .btn-icon { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; vertical-align: middle; margin-left: 6px; display: inline-block; }
 
         /* =========================
-           CUSTOM ALERT & MODALS
+           CUSTOM ALERT & LOADER & MODALS
         ========================= */
-        #custom-alert { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; background: linear-gradient(110deg, #1e3a8a, #3b82f6); color: white; padding: 15px 25px; border-radius: 12px; display: none; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.6); font-weight: bold; min-width: 280px; font-size: 14px; border: 1px solid rgba(255,255,255,0.2); }
-        #loader { position: fixed; inset:0; background: rgba(0,0,0,0.8); z-index: 9999; display: none; align-items: center; justify-content: center; color: var(--accent); font-weight: bold; font-size: 18px; backdrop-filter: blur(5px); }
+        #custom-alert { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; background: linear-gradient(110deg, #1e3a8a, #3b82f6); color: white; padding: 14px 24px; border-radius: 14px; display: none; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.6); font-weight: bold; min-width: 280px; font-size: 14px; border: 1px solid rgba(255,255,255,0.25); backdrop-filter: blur(10px); }
+        #loader { position: fixed; inset:0; background: rgba(0,0,0,0.85); z-index: 9999; display: none; align-items: center; justify-content: center; color: var(--accent); font-weight: bold; font-size: 17px; backdrop-filter: blur(8px); }
 
         .modal { position: fixed; inset: 0; z-index: 6000; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,.85); backdrop-filter: blur(15px); }
         .modal.show { display: flex; }
-        .modal-box { width: 100%; max-width: 800px; overflow: hidden; border-radius: 24px; background: var(--bg-box); border: 1px solid var(--border-color); box-shadow: 0 30px 90px rgba(0,0,0,.6); display: flex; flex-direction: column; max-height: 90vh; position: relative; }
+        .modal-box { width: 100%; max-width: 800px; overflow: hidden; border-radius: 24px; background: #080e21; border: 1px solid var(--border-color); box-shadow: 0 30px 90px rgba(0,0,0,.7); display: flex; flex-direction: column; max-height: 90vh; position: relative; }
         .modal-close-x { position: absolute; top: 15px; left: 15px; width: 38px; height: 38px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); border-radius: 50%; color: #fff; font-size: 22px; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; transition: 0.2s; }
         .modal-close-x:hover { background: rgba(239, 68, 68, 0.3); color: #ef4444; border-color: rgba(239, 68, 68, 0.5); }
         .modal-content { padding: 25px; overflow-y: auto; flex-grow: 1; }
-        .modal-title { font-size: 20px; font-weight: 800; margin-bottom: 20px; color: var(--text-main); }
+        .modal-title { font-size: 19px; font-weight: 800; margin-bottom: 20px; color: var(--text-main); }
 
         /* =========================
-           SCREENS (AUTH)
+           AUTH SCREENS (REVAMPED GLASS)
         ========================= */
-        #auth-screen { position: fixed; inset: 0; z-index: 5000; background: var(--bg-main); overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-        .box-container { width: 100%; max-width: 400px; background: var(--bg-box); padding: 35px 30px; border-radius: 24px; border: 1px solid var(--border-color); box-shadow: 0 25px 60px rgba(0,0,0,0.4); position: relative; overflow: hidden; }
-        .box-container::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, #1e3a8a, #3b82f6); }
-        .box-title { text-align: center; font-size: 24px; font-weight: 800; margin-bottom: 25px; }
-        .input-group { margin-bottom: 15px; }
-        .input-field { width: 100%; height: 52px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 14px; padding: 0 18px; font-size: 14px; outline: none; transition: .3s; }
-        .input-field:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
-        .btn-primary { width: 100%; height: 52px; background: linear-gradient(110deg, #1e3a8a, #3b82f6); border-radius: 14px; color: #fff; font-weight: 700; font-size: 15px; margin-top: 10px; transition: .3s; box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35); }
-        .btn-primary:active { transform: scale(0.96); }
-        .switch-box { width: 100%; display: block; margin-top: 25px; padding: 15px; background: rgba(59, 130, 246, 0.05); border-radius: 14px; text-align: center; font-size: 13px; color: var(--text-muted); transition: 0.3s; border: 1px dashed rgba(59, 130, 246, 0.2); }
-        .switch-box span { color: var(--accent); font-weight: bold; font-size: 14px; margin-right: 5px; }
-        .checkbox-container { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer;}
+        #auth-screen { position: fixed; inset: 0; z-index: 5000; background: radial-gradient(circle at center, rgba(30, 58, 138, 0.3) 0%, rgba(2, 6, 23, 0.95) 100%); overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(10px); }
+        
+        .box-container { 
+            width: 100%; 
+            max-width: 420px; 
+            background: rgba(11, 19, 43, 0.75); 
+            backdrop-filter: blur(25px);
+            padding: 40px 32px 35px; 
+            border-radius: 28px; 
+            border: 1px solid rgba(59, 130, 246, 0.25); 
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 35px rgba(59, 130, 246, 0.15); 
+            position: relative; 
+            overflow: hidden; 
+        }
+        .box-container::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, #1e3a8a, #3b82f6, #93c5fd); }
+        
+        .auth-logo { width: 140px; margin: 0 auto 6px; display: flex; justify-content: center; align-items: center; }
+        .auth-logo svg { width: 100%; height: auto; filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.4)); }
+        
+        .welcome-text { text-align: center; font-size: 13px; font-weight: 900; letter-spacing: 4px; color: #60a5fa; margin-bottom: 25px; text-transform: uppercase; text-shadow: 0 0 10px rgba(96, 165, 250, 0.5); }
+        
+        .input-group { margin-bottom: 16px; }
+        .input-field { width: 100%; height: 52px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 0 18px; font-size: 14px; outline: none; transition: .3s; }
+        .input-field:focus { border-color: var(--accent); background: rgba(255,255,255,0.08); box-shadow: 0 0 0 4px var(--accent-glow); }
+        
+        .btn-primary { width: 100%; height: 52px; background: linear-gradient(110deg, #1d4ed8, #3b82f6); border-radius: 15px; color: #fff; font-weight: 700; font-size: 15px; margin-top: 10px; transition: .3s; box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35); }
+        .btn-primary:hover { filter: brightness(1.1); }
+        .btn-primary:active { transform: scale(0.97); }
+        
+        .switch-box { width: 100%; display: block; margin-top: 22px; padding: 14px; background: rgba(59, 130, 246, 0.06); border-radius: 14px; text-align: center; font-size: 13px; color: var(--text-muted); transition: 0.3s; border: 1px dashed rgba(59, 130, 246, 0.25); }
+        .switch-box span { color: #60a5fa; font-weight: bold; font-size: 14px; margin-right: 5px; }
+        .checkbox-container { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer;}
         .checkbox-container input { width: 18px; height: 18px; cursor: pointer; accent-color: var(--accent); }
 
         /* =========================
            SIDEBAR MENU
         ========================= */
-        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 4000; display: none; opacity: 0; transition: 0.3s; backdrop-filter: blur(8px); }
-        .sidebar { position: fixed; top: 0; bottom: 0; left: 0; width: 290px; background: var(--bg-box); z-index: 4001; transform: translateX(-100%); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; box-shadow: 10px 0 30px rgba(0,0,0,0.5); }
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 4000; display: none; opacity: 0; transition: 0.3s; backdrop-filter: blur(8px); }
+        .sidebar { position: fixed; top: 0; bottom: 0; left: 0; width: 290px; background: #080e21; z-index: 4001; transform: translateX(-100%); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; box-shadow: 10px 0 30px rgba(0,0,0,0.5); }
         .sidebar.open { transform: translateX(0); }
         .sidebar-overlay.open { display: block; opacity: 1; }
-        .sidebar-header { padding: 35px 20px 25px; text-align: center; border-bottom: 1px solid var(--border-color); background: radial-gradient(circle at top, rgba(59, 130, 246, 0.1), transparent); position: relative; }
+        .sidebar-header { padding: 35px 20px 25px; text-align: center; border-bottom: 1px solid var(--border-color); background: radial-gradient(circle at top, rgba(59, 130, 246, 0.15), transparent); position: relative; }
         
         .theme-toggle-btn { position: absolute; top: 15px; left: 15px; width: 36px; height: 36px; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-main); transition: 0.2s; }
         .theme-toggle-btn:hover { background: rgba(59, 130, 246, 0.15); border-color: var(--accent); }
         .theme-toggle-btn svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; }
 
-        .sidebar-user { font-size: 24px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; }
+        .sidebar-user { font-size: 22px; font-weight: 800; color: var(--text-main); margin-bottom: 10px; }
         .sidebar-sub { font-size: 13px; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .vip-badge { background: linear-gradient(110deg, #1e3a8a, #3b82f6); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 15px rgba(30, 58, 138, 0.4); }
+        .vip-badge { background: linear-gradient(110deg, #1e3a8a, #3b82f6); color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 15px rgba(30, 58, 138, 0.4); }
         
         .sidebar-menu { padding: 25px 20px; display: flex; flex-direction: column; gap: 12px; flex-grow: 1; overflow-y: auto; }
-        .sidebar-btn { width: 100%; text-align: right; padding: 16px; background: var(--bg-input); border-radius: 14px; font-size: 14px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: space-between; border: 1px solid transparent; }
-        .sidebar-btn:hover { background: rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.2); transform: translateX(-3px); }
-        .notif-dot { width: 10px; height: 10px; background: #10b981; border-radius: 50%; box-shadow: 0 0 8px #10b981; animation: blink 1.5s infinite; }
+        .sidebar-btn { width: 100%; text-align: right; padding: 15px; background: rgba(255,255,255,0.04); border-radius: 14px; font-size: 14px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: space-between; border: 1px solid transparent; }
+        .sidebar-btn:hover { background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.25); transform: translateX(-3px); }
+        .notif-dot { width: 9px; height: 9px; background: #10b981; border-radius: 50%; box-shadow: 0 0 8px #10b981; animation: blink 1.5s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
         /* =========================
            ADMIN PANEL
         ========================= */
         #admin-screen { display: none; flex-direction: column; align-items: center; padding: 20px 20px 40px; min-height: 100vh; width: 100%; }
-        .tab-menu { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; width: 100%; max-width: 650px; flex-wrap: wrap; background: var(--bg-box); padding: 8px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .tab-menu { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; width: 100%; max-width: 650px; flex-wrap: wrap; background: rgba(11, 19, 43, 0.9); padding: 8px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .tab-btn { background: transparent; color: var(--text-muted); padding: 12px 10px; border-radius: 12px; font-weight: bold; flex: 1; transition: 0.3s; text-align: center; font-size: 13px; }
         .tab-btn.active { background: rgba(59, 130, 246, 0.15); color: var(--accent); border: 1px solid rgba(59, 130, 246, 0.3); }
         .tab-content { display: none; width: 100%; max-width: 650px; margin: 0 auto; }
         .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        .admin-section { width: 100%; background: var(--bg-box); padding: 25px; border-radius: 22px; border: 1px solid var(--border-color); margin-bottom: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
-        .admin-section h3 { margin-bottom: 20px; font-size: 16px; color: var(--accent); display: flex; align-items: center; gap: 8px; }
+        .admin-section { width: 100%; background: rgba(11, 19, 43, 0.85); backdrop-filter: blur(15px); padding: 25px; border-radius: 22px; border: 1px solid var(--border-color); margin-bottom: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
+        .admin-section h3 { margin-bottom: 20px; font-size: 16px; color: #60a5fa; display: flex; align-items: center; gap: 8px; }
         .admin-section h3::before { content: ""; display: inline-block; width: 4px; height: 16px; background: var(--accent); border-radius: 10px; }
-        .req-card { background: var(--bg-input); padding: 16px; border-radius: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); transition: 0.3s; }
+        .req-card { background: rgba(255,255,255,0.04); padding: 16px; border-radius: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); transition: 0.3s; }
         .req-info div { font-size: 14px; font-weight: bold; color: var(--text-main); }
         .req-info small { color: var(--text-muted); font-size: 12px; display: block; margin-top: 5px; }
         .btn-sm { padding: 8px 14px; border-radius: 10px; font-size: 12px; font-weight: bold; margin-right: 5px; transition: 0.3s; cursor: pointer; border: none; }
@@ -138,105 +166,122 @@
         .btn-reject { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
 
         /* =========================
-           MAIN APP WRAPPER 
+           MAIN APP
         ========================= */
-        #app-wrapper { width: 100%; max-width: 1500px; margin: 0 auto; position: relative; padding-bottom: 90px; }
+        #app-wrapper { width: 100%; max-width: 1500px; margin: 0 auto; position: relative; padding-bottom: 40px; }
         #main-app { display: none; }
         
         .header { position: sticky; top: 0; z-index: 1000; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--header-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); }
         
         .logo { margin-left: 20px; display: flex; align-items: center; justify-content: center; }
-        .logo svg { height: 55px; width: auto; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5)); }
+        .logo svg { height: 50px; width: auto; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5)); }
         
         .header-actions { display: flex; align-items: center; gap: 10px; }
-        .profile-button { width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); font-size: 17px; position: relative; transition: 0.2s; cursor: pointer; }
-        .profile-button:hover { background: rgba(255,255,255,0.1); }
+        .profile-button { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); font-size: 17px; position: relative; transition: 0.2s; cursor: pointer; }
+        .profile-button:hover { background: rgba(255,255,255,0.12); }
         
-        .marquee-box { width: calc(100% - 40px); max-width: 700px; margin: 15px auto 0; background: var(--bg-box); border: 1px solid var(--border-color); border-radius: 14px; overflow: hidden; white-space: nowrap; position: relative; height: 42px; display: flex; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .marquee-text { display: inline-block; padding-right: 100%; animation: marquee 25s linear infinite; font-size: 13px; font-weight: 700; color: var(--accent); }
-        @keyframes marquee { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+        /* زیرنویس متحرک پایدار و تمیز */
+        .marquee-box { 
+            width: calc(100% - 40px); 
+            max-width: 750px; 
+            margin: 15px auto 0; 
+            background: rgba(11, 19, 43, 0.7); 
+            border: 1px solid rgba(59, 130, 246, 0.25); 
+            border-radius: 14px; 
+            overflow: hidden; 
+            position: relative; 
+            height: 44px; 
+            display: flex; 
+            align-items: center; 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25); 
+            backdrop-filter: blur(10px);
+        }
+        .marquee-text-wrapper {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee-text { 
+            display: inline-block; 
+            padding-right: 100%; 
+            animation: marqueeAnim 22s linear infinite; 
+            font-size: 13px; 
+            font-weight: 700; 
+            color: #60a5fa; 
+        }
+        @keyframes marqueeAnim { 
+            0% { transform: translateX(0); } 
+            100% { transform: translateX(-100%); } 
+        }
+        .marquee-box:hover .marquee-text { animation-play-state: paused; }
 
-        .search-box { padding: 15px 20px 5px; max-width: 700px; margin: 0 auto; }
+        .search-box { padding: 15px 20px 5px; max-width: 750px; margin: 0 auto; }
         .search-wrapper { position: relative; }
-        .search-wrapper input { width: 100%; height: 56px; padding: 0 50px 0 20px; border: 1px solid var(--border-color); border-radius: 18px; outline: none; background: var(--bg-box); font-size: 14px; transition: .3s; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .search-wrapper input { width: 100%; height: 54px; padding: 0 50px 0 20px; border: 1px solid var(--border-color); border-radius: 18px; outline: none; background: rgba(11, 19, 43, 0.75); backdrop-filter: blur(10px); font-size: 14px; transition: .3s; }
         .search-wrapper input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-glow); }
         .search-icon { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px; }
         
-        .hero { position: relative; width: calc(100% - 40px); margin: 15px auto 0; overflow: hidden; border-radius: 24px; background: var(--bg-box); box-shadow: 0 20px 50px rgba(0,0,0,.3); }
-        .slides { display: flex; direction: ltr; width: 100%; transition: transform .8s cubic-bezier(.22,.61,.36,1); }
+        /* اسلایدر بدون هاله اضافی با نقاط ناوبری */
+        .hero { position: relative; width: calc(100% - 40px); margin: 15px auto 0; overflow: hidden; border-radius: 24px; background: #000; }
+        .slides { display: flex; direction: ltr; width: 100%; transition: transform .7s cubic-bezier(.22,.61,.36,1); }
         .slide { position: relative; min-width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
-        .slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.95; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
         
+        .slider-dots { 
+            position: absolute; 
+            bottom: 12px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            display: flex; 
+            gap: 8px; 
+            z-index: 10; 
+            padding: 6px 12px; 
+            background: rgba(0,0,0,0.45); 
+            backdrop-filter: blur(8px); 
+            border-radius: 20px; 
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; transition: 0.3s; }
+        .dot.active { width: 22px; border-radius: 10px; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+
         .section { margin-top: 35px; }
         .section-header { display: flex; align-items: center; padding: 0 20px; margin-bottom: 18px; }
-        .section-title { font-size: 20px; font-weight: 800; display: flex; align-items: center; }
-        .section-title::before { content: ""; display: inline-block; width: 4px; height: 22px; margin-left: 10px; border-radius: 10px; background: linear-gradient(to bottom, #1e3a8a, #3b82f6); }
+        .section-title { font-size: 19px; font-weight: 800; display: flex; align-items: center; }
+        .section-title::before { content: ""; display: inline-block; width: 4px; height: 20px; margin-left: 10px; border-radius: 10px; background: linear-gradient(to bottom, #1e3a8a, #3b82f6); }
         
         .movie-list { display: flex; gap: 15px; overflow-x: auto; padding: 5px 20px 25px; scrollbar-width: none; }
         .movie-list::-webkit-scrollbar { display: none; }
         .movie-card { flex: 0 0 145px; cursor: pointer; user-select: none; transition: transform .25s ease; }
         .movie-card:active { transform: scale(.95); }
-        .poster { position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 18px; background: var(--bg-box); box-shadow: 0 10px 30px rgba(0,0,0,.3); }
-        .poster img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .poster { position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 18px; background: #080e21; box-shadow: 0 10px 25px rgba(0,0,0,.4); }
+        .poster img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
         .movie-card:hover .poster img { transform: scale(1.05); }
-        .poster-overlay { position: absolute; inset: auto 0 0 0; height: 45%; background: linear-gradient(transparent, rgba(0,0,0,.85)); }
+        .poster-overlay { position: absolute; inset: auto 0 0 0; height: 40%; background: linear-gradient(transparent, rgba(0,0,0,.85)); }
         .movie-name { padding-top: 10px; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
 
         @media (min-width: 768px) {
             .header { padding: 0 60px; height: 90px; }
-            .logo svg { height: 75px; }
-            .search-box { padding: 35px 60px 10px; max-width: 850px; }
-            .hero { width: calc(100% - 120px); border-radius: 30px; margin-top: 25px; }
-            .slide { aspect-ratio: 21 / 7; max-height: 500px; } 
+            .logo svg { height: 65px; }
+            .search-box { padding: 30px 60px 10px; max-width: 850px; }
+            .hero { width: calc(100% - 120px); border-radius: 28px; margin-top: 25px; }
+            .slide { aspect-ratio: 21 / 7; max-height: 480px; } 
             .movie-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 30px; padding: 10px 60px 50px; overflow-x: visible; }
             .movie-card { width: 100%; flex: auto; transition: 0.3s; }
             .movie-card:hover { transform: translateY(-8px); } 
         }
 
         /* =========================
-           DOWNLOADS MANAGER 
-        ========================= */
-        #downloads-app { display: none; padding: 20px; max-width: 850px; margin: 0 auto; }
-        .dl-dashboard { background: var(--bg-box); border-radius: 24px; padding: 25px; margin-bottom: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.3); border: 1px solid var(--border-color); text-align: center; }
-        .dl-dashboard-header { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; }
-        
-        .speedometer-box { width: 220px; height: 125px; margin: 0 auto 15px; position: relative; overflow: hidden; }
-        .speedometer-svg { width: 100%; height: 100%; }
-        .speed-text-display { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); font-size: 22px; font-weight: 800; color: var(--text-main); text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        .speed-unit { font-size: 12px; color: var(--text-muted); display: block; text-align: center; font-weight: normal; }
-
-        .dl-item { background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 18px; padding: 18px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 12px; transition: 0.3s; }
-        .dl-header { display: flex; justify-content: space-between; align-items: center; }
-        .dl-title { font-weight: 700; font-size: 14px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-        .dl-controls { display: flex; gap: 8px; flex-shrink: 0; }
-        .dl-btn { background: var(--bg-box); padding: 8px 14px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; border: 1px solid var(--border-color); display: inline-flex; align-items: center; gap: 5px; }
-        .dl-btn:hover { background: rgba(59, 130, 246, 0.1); color: var(--accent); }
-        .dl-btn.delete { color: #ef4444; border-color: rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.05); }
-        .dl-btn.delete:hover { background: rgba(239, 68, 68, 0.15); }
-        .dl-progress-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; position: relative; }
-        .dl-progress-bar { height: 100%; background: linear-gradient(90deg, #1e3a8a, #3b82f6); width: 0%; transition: width 0.3s linear; }
-        .dl-progress-bar.done { background: #10b981; }
-        .dl-status { font-size: 12px; color: var(--text-muted); font-weight: 600; display: flex; justify-content: space-between; }
-
-        /* =========================
-           MODALS
+           MODALS (PLAYER & MSG)
         ========================= */
         .video-container { width: 100%; aspect-ratio: 16 / 9; background: #000; flex-shrink: 0; position: relative; }
         .video-container video { width: 100%; height: 100%; display: block; }
         
-        .quality-badge { position: absolute; bottom: 15px; right: 15px; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 14px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; z-index: 10; backdrop-filter: blur(5px); transition: 0.2s; }
+        .quality-badge { position: absolute; bottom: 15px; right: 15px; background: rgba(0,0,0,0.75); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 14px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; z-index: 10; backdrop-filter: blur(5px); transition: 0.2s; }
         .quality-badge:hover { background: var(--accent); }
         
-        .msg-bubble { background: var(--bg-input); padding: 15px 18px; border-radius: 16px; margin-bottom: 12px; font-size: 14px; border-right: 4px solid var(--accent); }
+        .msg-bubble { background: rgba(255,255,255,0.04); padding: 15px 18px; border-radius: 16px; margin-bottom: 12px; font-size: 14px; border-right: 4px solid var(--accent); }
         .msg-bubble.system { border-right-color: #3b82f6; } 
         .msg-bubble.admin-reply { border-right-color: #10b981; } 
-        
-        .bottom-nav { position: fixed; z-index: 2000; bottom: 15px; left: 50%; transform: translateX(-50%); width: calc(100% - 30px); max-width: 400px; height: 65px; display: flex; align-items: center; justify-content: center; gap: 70px; border: 1px solid var(--border-color); border-radius: 22px; background: var(--nav-bg); backdrop-filter: blur(25px); box-shadow: 0 15px 40px rgba(0,0,0,.5); display: none; }
-        .nav-item { position: relative; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: .3s; cursor: pointer; }
-        .nav-item.active { color: var(--accent); transform: translateY(-3px); }
-        .nav-item svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2; fill: none; }
-        .nav-item span { position: absolute; bottom: -2px; font-size: 10px; font-weight: bold; white-space: nowrap; opacity: 0; transition: 0.3s; }
-        .nav-item.active span { opacity: 1; bottom: -8px; }
     </style>
 </head>
 <body>
@@ -246,10 +291,25 @@
 
 <div id="app-wrapper">
 
-    <!-- AUTH SCREEN -->
+    <!-- =========================
+         AUTH SCREEN
+    ========================= -->
     <div id="auth-screen">
         <div class="box-container" id="login-box">
-            <h2 class="box-title">ورود به پلاتو</h2>
+            <div class="auth-logo">
+                <svg viewBox="0 0 1536 614" aria-label="PLATO">
+                  <defs>
+                    <linearGradient id="platoGradAuth" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#1e3a8a" />
+                      <stop offset="50%" stop-color="#3b82f6" />
+                      <stop offset="100%" stop-color="#93c5fd" />
+                    </linearGradient>
+                  </defs>
+                  <path fill="url(#platoGradAuth)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/>
+                </svg>
+            </div>
+            <div class="welcome-text">WELCOME</div>
+
             <div class="input-group">
                 <input type="text" id="log-user" class="input-field" placeholder="نام کاربری" autocapitalize="none" autocomplete="off" spellcheck="false">
             </div>
@@ -264,7 +324,13 @@
         </div>
 
         <div class="box-container" id="reg-box" style="display: none;">
-            <h2 class="box-title">ثبت‌نام در پلاتو</h2>
+            <div class="auth-logo">
+                <svg viewBox="0 0 1536 614" aria-label="PLATO">
+                  <path fill="url(#platoGradAuth)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/>
+                </svg>
+            </div>
+            <div class="welcome-text">CREATE ACCOUNT</div>
+
             <div class="input-group">
                 <input type="text" id="reg-user" class="input-field" placeholder="نام کاربری (انگلیسی)" autocapitalize="none" autocomplete="off" spellcheck="false">
             </div>
@@ -282,9 +348,11 @@
         </div>
     </div>
 
-    <!-- RULES MODAL -->
+    <!-- =========================
+         TERMS MODAL
+    ========================= -->
     <div class="modal" id="termsModal">
-        <div class="modal-box" style="max-width: 450px;">
+        <div class="modal-box" style="max-width: 460px;">
             <button class="modal-close-x" onclick="document.getElementById('termsModal').classList.remove('show')">×</button>
             <div class="modal-content">
                 <h3 class="modal-title" style="text-align:center;">قوانین و مقررات پلاتو</h3>
@@ -292,10 +360,10 @@
                     <li style="margin-bottom:8px;">حتماً رمزی که برای اکانت می‌گذارید یادتان باشد، چون رمز اکانت به هیچ عنوان قابل بازیابی نیست.</li>
                     <li style="margin-bottom:8px;">حتماً اسمتان ترکیبی از حروف انگلیسی و حداقل چند عدد رندوم باشد. اسم‌های تکراری تایید نمی‌شوند.</li>
                     <li style="margin-bottom:8px;">لینک‌های فیلم‌ها و سریال‌ها ممکن است به دلایلی از کار افتاده یا منقضی شوند. در صورت نیاز به دانلود، اسم محتوا را به پشتیبانی ارسال کنید تا در اسرع وقت رسیدگی شود.</li>
-                    <li style="margin-bottom:8px; color: #ef4444; font-weight: bold;">سایت پلاتو فقط با اینترنت بین‌الملل کار می‌کند و با محدود شدن نت (ملی شدن) ممکن است از کار بیفتد.</li>
+                    <li style="margin-bottom:8px;">سایت پلاتو فقط با اینترنت بین‌الملل کار می‌کند و با محدود شدن نت (ملی شدن) ممکن است بارگزاری نشود.</li>
                     <li style="margin-bottom:8px; font-weight:bold; color:var(--text-main);">فقط ثبت‌نام کسانی که جهت خرید اشتراک با پشتیبانی هماهنگ باشند تایید خواهد شد!</li>
                 </ul>
-                <label class="checkbox-container" style="margin-top: 25px; padding:10px; background:var(--bg-input); border-radius:10px;">
+                <label class="checkbox-container" style="margin-top: 25px; padding:12px; background:rgba(255,255,255,0.04); border-radius:12px; border:1px solid var(--border-color);">
                     <input type="checkbox" id="acceptTermsCheck"> پذیرفتن شرایط و قوانین فوق
                 </label>
                 <button class="btn-primary" onclick="finalizeRegistration()">تایید و ارسال ثبت‌نام</button>
@@ -303,7 +371,9 @@
         </div>
     </div>
 
-    <!-- SIDEBAR -->
+    <!-- =========================
+         SIDEBAR MENU
+    ========================= -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -346,7 +416,9 @@
         </div>
     </div>
 
-    <!-- ADMIN PANEL -->
+    <!-- =========================
+         ADMIN PANEL
+    ========================= -->
     <div id="admin-screen">
         <div style="width:100%; max-width:650px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
             <h2 style="font-size: 18px;">پنل مدیریت</h2>
@@ -361,7 +433,7 @@
         </div>
 
         <div id="tab-files" class="tab-content active admin-section">
-            <div style="background:var(--bg-input); padding:15px; border-radius:14px; margin-bottom:20px; border:1px solid var(--border-color);">
+            <div style="background:rgba(255,255,255,0.04); padding:15px; border-radius:14px; margin-bottom:20px; border:1px solid var(--border-color);">
                 <h3 style="margin-bottom:10px; font-size:14px;">تنظیم زیرنویس متحرک سراسری</h3>
                 <div class="input-group" style="margin-bottom:10px;">
                     <input type="text" id="admin-marquee-input" class="input-field" placeholder="متن زیرنویس را وارد کنید...">
@@ -437,7 +509,9 @@
         </div>
     </div>
 
-    <!-- MAIN APP -->
+    <!-- =========================
+         MAIN APP (Home)
+    ========================= -->
     <div id="main-app">
         <header class="header">
             <div style="display:flex; align-items:center;">
@@ -463,8 +537,11 @@
             </div>
         </header>
 
+        <!-- زیرنویس متحرک سراسری -->
         <div id="marqueeContainer" class="marquee-box" style="display:none;">
-            <div class="marquee-text" id="marqueeTextContent"></div>
+            <div class="marquee-text-wrapper">
+                <div class="marquee-text" id="marqueeTextContent"></div>
+            </div>
         </div>
 
         <div class="search-box">
@@ -476,6 +553,7 @@
             </div>
         </div>
 
+        <!-- اسلایدر با نقاط صفحه -->
         <section class="hero">
             <div class="slides" id="slides">
                 <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_000000004cc0822f9865a432af65b5ca-optimized.webp" alt="Plato Banner 1"></div>
@@ -504,24 +582,9 @@
         </section>
     </div>
 
-    <!-- DOWNLOADS MANAGER APP -->
-    <div id="downloads-app">
-        <div class="dl-dashboard">
-            <div class="dl-dashboard-header"><span>سرعت لحظه‌ای شبکه</span></div>
-            
-            <div class="speedometer-box">
-                <svg class="speedometer-svg" viewBox="0 0 200 110">
-                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--border-color)" stroke-width="12" stroke-linecap="round"/>
-                    <path id="speedMeterArc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--accent)" stroke-width="12" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251" style="transition: stroke-dashoffset 0.3s ease;"/>
-                </svg>
-                <div class="speed-text-display"><span id="speedNumDisplay">0.0</span> <span class="speed-unit">MB/s</span></div>
-            </div>
-        </div>
-
-        <div id="dl-list-container"></div>
-    </div>
-
-    <!-- MODALS -->
+    <!-- =========================
+         MODALS
+    ========================= -->
     <div class="modal" id="playerModal">
         <div class="modal-box">
             <button class="modal-close-x" onclick="closePlayer()">×</button>
@@ -583,18 +646,7 @@
 
 </div>
 
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav" id="bottomNav">
-    <div class="nav-item active" id="homeNav" onclick="switchBottomNav('home')">
-        <svg viewBox="0 0 24 24"><path d="M3.5 10.8 12 4l8.5 6.8"></path><path d="M5.5 9.8V20h13V9.8"></path></svg>
-        <span>خانه</span>
-    </div>
-    <div class="nav-item" id="downloadsNav" onclick="switchBottomNav('downloads')">
-        <svg viewBox="0 0 24 24"><path d="M12 3v11"></path><path d="m7.5 10 4.5 4.5 4.5-4.5"></path><path d="M5 19.5h14"></path></svg>
-        <span>دانلودها</span>
-    </div>
-</nav>
-
+<!-- کتابخانه سوپابیس -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
@@ -674,6 +726,9 @@
         }
     } catch(e){}
 
+    /* =========================
+       زیرنویس متحرک پایدار
+    ========================= */
     async function loadMarquee() {
         const container = document.getElementById('marqueeContainer');
         const textElem = document.getElementById('marqueeTextContent');
@@ -710,22 +765,9 @@
         }
     }
 
-    function switchBottomNav(tab) {
-        document.getElementById('homeNav').classList.remove('active');
-        document.getElementById('downloadsNav').classList.remove('active');
-
-        if(tab === 'home') {
-            document.getElementById('homeNav').classList.add('active');
-            document.getElementById('downloads-app').style.display = 'none';
-            document.getElementById('main-app').style.display = 'block';
-        } else {
-            document.getElementById('downloadsNav').classList.add('active');
-            document.getElementById('main-app').style.display = 'none';
-            document.getElementById('downloads-app').style.display = 'block';
-            renderDownloadsList();
-        }
-    }
-
+    /* =========================
+       نویگیشن ادمین
+    ========================= */
     function switchAdminTab(tabId, btnElement) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -736,8 +778,6 @@
 
     function showAdminPanel() {
         document.getElementById('main-app').style.display = 'none';
-        document.getElementById('bottomNav').style.display = 'none';
-        document.getElementById('downloads-app').style.display = 'none';
         closeSidebar();
         document.getElementById('admin-screen').style.display = 'flex';
         loadPendingRequests();
@@ -749,8 +789,6 @@
     function hideAdminPanel() {
         document.getElementById('admin-screen').style.display = 'none';
         document.getElementById('main-app').style.display = 'block';
-        document.getElementById('bottomNav').style.display = 'flex';
-        switchBottomNav('home');
         fetchMoviesFromDatabase();
     }
 
@@ -784,6 +822,9 @@
         document.getElementById('sidebarOverlay').classList.remove('open');
     }
 
+    /* =========================
+       احراز هویت و سشن
+    ========================= */
     async function checkUserSession() {
         if (!supabaseClient) return;
         try {
@@ -819,7 +860,6 @@
                     document.getElementById('admin-sidebar-btn-container').innerHTML = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()"><span>پنل مدیریت</span><svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>`;
                 }
                 document.getElementById('main-app').style.display = 'block';
-                document.getElementById('bottomNav').style.display = 'flex';
                 fetchMoviesFromDatabase(); 
                 loadMarquee();
                 
@@ -927,6 +967,9 @@
         window.location.reload();
     }
 
+    /* =========================
+       سیستم پیام‌ها
+    ========================= */
     async function checkUnreadMessages() {
         if(!currentUserProfile || !supabaseClient) return;
         try {
@@ -1150,6 +1193,9 @@
         }
     }
 
+    /* =========================
+       مدیریت کاربران و اشتراک
+    ========================= */
     async function loadPendingRequests() {
         try {
             const { data } = await supabaseClient.from('users_data').select('*').eq('status', 'pending');
@@ -1241,6 +1287,9 @@
         showLoader(false);
     }
 
+    /* =========================
+       مدیریت دیتابیس فیلم و سریال
+    ========================= */
     async function saveMovie() {
         var category = document.getElementById('new-movie-category').value;
         var title = document.getElementById('new-movie-title').value.trim();
@@ -1423,19 +1472,41 @@
         if(!check()) { const interval = setInterval(() => { if(check()) clearInterval(interval); }, 1000); }
     }
 
+    /* =========================
+       اسلایدر بنر و نقاط
+    ========================= */
     const slides = document.getElementById("slides");
     const dots = document.querySelectorAll(".dot");
-    let currentSlide = 0; let sliderTimer;
+    let currentSlide = 0; 
+    let sliderTimer;
+
     function goToSlide(index) {
         currentSlide = index;
         slides.style.transform = `translateX(-${index * 100}%)`;
         dots.forEach(function(dot, i) { dot.classList.toggle("active", i === index); });
     }
-    function nextSlide() { goToSlide((currentSlide + 1) % 3); }
-    function startSlider() { clearInterval(sliderTimer); sliderTimer = setInterval(nextSlide, 4000); }
-    dots.forEach(function(dot) { dot.addEventListener("click", function() { goToSlide(Number(dot.dataset.slide)); startSlider(); }); });
+    
+    function nextSlide() { 
+        currentSlide = (currentSlide + 1) % dots.length;
+        goToSlide(currentSlide); 
+    }
+    
+    function startSlider() { 
+        clearInterval(sliderTimer); 
+        sliderTimer = setInterval(nextSlide, 4000); 
+    }
+
+    dots.forEach(function(dot) { 
+        dot.addEventListener("click", function() { 
+            goToSlide(Number(dot.dataset.slide)); 
+            startSlider(); 
+        }); 
+    });
     startSlider();
 
+    /* =========================
+       پلیر و دانلود مستقیم
+    ========================= */
     const modal = document.getElementById("playerModal");
     const videoPlayer = document.getElementById("videoPlayer");
     const expText = document.getElementById("modalExpirationText");
@@ -1486,11 +1557,11 @@
                     let btnUrl = parts.length > 1 ? parts[1].trim() : parts[0].trim();
                     
                     let row = document.createElement('div');
-                    row.style.cssText = "display:flex; gap:8px; margin-bottom:10px; align-items:center; background:var(--bg-input); padding:12px; border-radius:14px; border:1px solid var(--border-color);";
+                    row.style.cssText = "display:flex; gap:8px; margin-bottom:10px; align-items:center; background:rgba(255,255,255,0.05); padding:12px; border-radius:14px; border:1px solid var(--border-color);";
                     row.innerHTML = `
                         <div style="flex:1; font-size:13px; font-weight:bold;">${btnTitle}</div>
                         <button class="btn-sm btn-approve" style="border:none;" onclick="playVideo('${btnUrl}')">پخش</button>
-                        <button class="btn-sm" style="background:rgba(255,255,255,0.1); color:var(--text-main); border:none;" onclick="startAppDownload('${btnTitle}', '${btnUrl}', '${movie.poster}')">دانلود</button>
+                        <button class="btn-sm" style="background:rgba(255,255,255,0.1); color:var(--text-main); border:none;" onclick="directDownload('${btnTitle}', '${btnUrl}')">دانلود</button>
                     `;
                     linksContainer.appendChild(row);
                 });
@@ -1523,168 +1594,27 @@
         }
     }
 
+    /* دانلود کامپکت و مستقیم */
+    window.directDownload = function(title, url) {
+        if(!checkSubscription()) return;
+        if(!url) return showCustomAlert('لینک دانلود نامعتبر است.');
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        a.download = (title || 'movie').replace(/[^a-zA-Z0-9ا-ی]/g, '_') + '.mp4';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        showCustomAlert('دانلود آغاز شد...');
+    }
+
     function closePlayer() {
         videoPlayer.pause(); videoPlayer.removeAttribute("src"); videoPlayer.load();
         modal.classList.remove("show"); document.body.style.overflow = "";
     }
 
-    function getDownloads() { return safeGetStorage('plato_dl_list') || []; }
-    function saveDownloads(list) { safeSetStorage('plato_dl_list', list); }
-
-    let downloadEngineInterval = null;
-
-    function updateSpeedometerUI(speedMB) {
-        const arc = document.getElementById('speedMeterArc');
-        const numDisplay = document.getElementById('speedNumDisplay');
-        if(!arc || !numDisplay) return;
-
-        numDisplay.textContent = speedMB.toFixed(1);
-        let maxSpeed = 15.0; 
-        let percentage = Math.min(speedMB / maxSpeed, 1.0);
-        let dashOffset = 251 - (percentage * 251);
-        arc.style.strokeDashoffset = dashOffset;
-    }
-
-    window.startAppDownload = function(title, url, poster) {
-        if(!checkSubscription()) return;
-        
-        if(!navigator.onLine) {
-            showCustomAlert('خطا: اتصال اینترنت برقرار نیست!');
-            return;
-        }
-
-        const a = document.createElement('a');
-        a.href = url;
-        a.target = '_blank';
-        a.download = title.replace(/[^a-zA-Z0-9ا-ی]/g, '_') + '.mp4'; 
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-
-        let dlList = getDownloads();
-        let dlId = 'dl_' + new Date().getTime();
-        dlList.push({ id: dlId, title: title, url: url, poster: poster, progress: 0, status: 'downloading' });
-        saveDownloads(dlList);
-        
-        showCustomAlert('دانلود آغاز شد.');
-        renderDownloadsList();
-        closePlayer();
-        startSimulatedEngine();
-    }
-
-    function startSimulatedEngine() {
-        if(downloadEngineInterval) clearInterval(downloadEngineInterval);
-        
-        downloadEngineInterval = setInterval(() => {
-            let dlList = getDownloads();
-            let isChanged = false;
-            let hasActive = false;
-            let totalSpeed = 0;
-
-            dlList.forEach(d => {
-                if(d.status === 'downloading') {
-                    hasActive = true;
-                    let speedIncrement = Math.random() * 2 + 1;
-                    totalSpeed += speedIncrement * 2.5; 
-                    
-                    d.progress += speedIncrement;
-                    if(d.progress >= 100) {
-                        d.progress = 100;
-                        d.status = 'completed';
-                    }
-                    isChanged = true;
-                }
-            });
-
-            if(document.getElementById('downloads-app').style.display === 'block') {
-                updateSpeedometerUI(hasActive ? totalSpeed : 0);
-            }
-
-            if(isChanged) {
-                saveDownloads(dlList);
-                if(document.getElementById('downloads-app').style.display === 'block') {
-                    renderDownloadsList();
-                }
-            }
-        }, 1000);
-    }
-
-    window.renderDownloadsList = function() {
-        const container = document.getElementById('dl-list-container');
-        let dlList = getDownloads();
-        container.innerHTML = '';
-        if(dlList.length === 0) {
-            container.innerHTML = '<div style="color:var(--text-muted); text-align:center; padding:30px;">لیست دانلودهای شما خالی است.</div>';
-            return;
-        }
-        
-        dlList.forEach(dl => {
-            let colorCl = dl.status === 'completed' ? 'done' : '';
-            let playBtn = dl.status === 'completed' ? `<button class="dl-btn" style="color:#10b981; border-color:rgba(16,185,129,0.3); background:rgba(16,185,129,0.05);" onclick="playVideo('${dl.url}')">پخش</button>` : '';
-            let pauseBtn = (dl.status === 'downloading' || dl.status === 'queued') ? `<button class="dl-btn" onclick="pauseDl('${dl.id}')">توقف</button>` : (dl.status === 'paused' ? `<button class="dl-btn" onclick="resumeDl('${dl.id}')">ادامه</button>` : '');
-            
-            let statusText = "";
-            if(dl.status === 'completed') statusText = `<span style="color:#10b981;">ذخیره شده در دستگاه</span><span>100%</span>`;
-            else if(dl.status === 'paused') statusText = `<span>متوقف شده</span><span>${Math.floor(dl.progress)}%</span>`;
-            else statusText = `<span>در حال دانلود...</span><span style="color:var(--accent);">${Math.floor(dl.progress)}%</span>`;
-
-            container.innerHTML += `
-                <div class="dl-item" id="item-${dl.id}">
-                    <div class="dl-header">
-                        <div style="display:flex; gap:12px; align-items:center;">
-                            <img src="${dl.poster}" style="width:45px; height:45px; border-radius:10px; object-fit:cover;">
-                            <span class="dl-title">${dl.title}</span>
-                        </div>
-                        <div class="dl-controls">
-                            ${playBtn}
-                            ${pauseBtn}
-                            <button class="dl-btn delete" onclick="deleteDl('${dl.id}')">حذف</button>
-                        </div>
-                    </div>
-                    <div class="dl-progress-bg">
-                        <div class="dl-progress-bar ${colorCl}" id="bar-${dl.id}" style="width:${dl.progress}%;"></div>
-                    </div>
-                    <div class="dl-status" id="status-${dl.id}">${statusText}</div>
-                </div>
-            `;
-        });
-    }
-
-    window.pauseDl = function(id) {
-        let dlList = getDownloads();
-        let dl = dlList.find(d => d.id === id);
-        if(dl) {
-            dl.status = 'paused';
-            saveDownloads(dlList);
-            renderDownloadsList();
-            updateSpeedometerUI(0);
-        }
-    }
-    
-    window.resumeDl = function(id) {
-        let dlList = getDownloads();
-        let dl = dlList.find(d => d.id === id);
-        if(dl) {
-            dl.status = 'downloading';
-            saveDownloads(dlList);
-            renderDownloadsList();
-            startSimulatedEngine();
-        }
-    }
-    
-    window.deleteDl = function(id) {
-        let dlList = getDownloads();
-        dlList = dlList.filter(d => d.id !== id);
-        saveDownloads(dlList);
-        renderDownloadsList();
-        updateSpeedometerUI(0);
-    }
-    
     window.addEventListener('load', () => {
-        let dlList = getDownloads();
-        dlList.forEach(d => { if(d.status === 'downloading') d.status = 'paused'; });
-        saveDownloads(dlList);
-        startSimulatedEngine();
         checkUserSession();
     });
 </script>
