@@ -157,7 +157,7 @@
         .btn-reject { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
 
         /* =========================
-           MAIN APP
+           MAIN APP & LED MARQUEE
         ========================= */
         #app-wrapper { width: 100%; max-width: 1400px; margin: 0 auto; position: relative; padding-bottom: 40px; }
         #main-app { display: none; }
@@ -170,26 +170,54 @@
         .header-actions { display: flex; align-items: center; gap: 10px; }
         .profile-button { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); cursor: pointer; }
         
-        /* کدهای اصلاح شده زیرنویس بدون باگ انیمیشن CSS */
+        /* تابلوی تبلیغاتی LED خفن و بدون باگ */
         .marquee-box { 
             width: calc(100% - 40px); 
             max-width: 750px; 
-            margin: 14px auto 0; 
-            background: var(--bg-box); 
-            border: 1px solid var(--border-color); 
-            border-radius: 12px; 
+            margin: 15px auto 0; 
+            background: #050505; /* پس‌زمینه تاریک تابلو */
+            border: 2px solid #1a1a1a; /* قاب دور تابلو */
+            border-radius: 10px; 
             overflow: hidden; 
-            height: 40px; 
+            height: 46px; 
             display: flex; 
             align-items: center; 
-            padding: 0; /* فاصله اضافی حذف شد تا مارکی آزادانه حرکت کند */
+            box-shadow: inset 0 0 15px #000, 0 0 10px rgba(0, 238, 255, 0.2); 
+            
+            /* ایجاد پترن لامپ‌های خاموش ریز LED */
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 4px 4px;
+            
+            /* ترفند قطعی برای جلوگیری از باگ مرورگر در راست‌چین */
+            direction: ltr; 
+            position: relative;
+        }
+        .marquee-text-wrapper {
+            width: 100%;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
         }
         .marquee-text { 
-            font-size: 13.5px; 
-            font-weight: 700; 
-            color: var(--accent);
-            border: none;
-            outline: none;
+            display: inline-block; 
+            /* این پدینگ باعث میشه متن کامل بره بیرون، وقتی تموم شد چند ثانیه مکث کنه بعد بیاد */
+            padding-left: 100%; 
+            animation: led-scroll 18s linear infinite; 
+            font-size: 15px; 
+            font-family: 'Courier New', Courier, monospace, "Vazirmatn"; /* فونت استایل دیجیتالی/تابلویی */
+            font-weight: 900; 
+            color: #00eeff; /* رنگ لامپ نئونی فیروزه‌ای */
+            text-shadow: 0 0 5px #00eeff, 0 0 10px #00eeff, 0 0 20px #00eeff; /* درخشش خیره‌کننده LED */
+            direction: rtl; /* متن فارسی بدون مشکل و بهم ریختگی نشون داده بشه */
+            letter-spacing: 1px;
+        }
+        @keyframes led-scroll { 
+            0% { transform: translate3d(0, 0, 0); } 
+            100% { transform: translate3d(-100%, 0, 0); } 
+        }
+        /* اگه کاربر دستشو نگه داره رو تابلو، متن وایمیسه که بتونه بخونه */
+        .marquee-box:active .marquee-text, .marquee-box:hover .marquee-text { 
+            animation-play-state: paused; 
         }
 
         .search-box { padding: 14px 20px 4px; max-width: 750px; margin: 0 auto; }
@@ -497,10 +525,11 @@
             </div>
         </header>
 
-        <!-- زیرنویس متحرک سراسری (تضمینی با مارکی) -->
+        <!-- تابلوی متحرک LED -->
         <div id="marqueeContainer" class="marquee-box" style="display:none;">
-            <!-- تگ مارکی جایگزین انیمیشن شد -->
-            <marquee id="marqueeTextContent" direction="right" scrollamount="5" class="marquee-text"></marquee>
+            <div class="marquee-text-wrapper">
+                <div class="marquee-text" id="marqueeTextContent"></div>
+            </div>
         </div>
 
         <div class="search-box">
