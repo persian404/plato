@@ -916,7 +916,7 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
             z-index: 2000; 
             padding: 0 5px;
-            display: none; /* تا زمان لاگین مخفی است */
+            display: none;
         }
 
         .nav-item {
@@ -1158,9 +1158,15 @@
                     <option value="program">🎙️ دسته: برنامه‌ها</option>
                 </select>
             </div>
-            <div class="input-group"><input type="text" id="new-movie-title" class="input-field" placeholder="عنوان"></div>
-            <div class="input-group"><input type="text" id="new-movie-poster" class="input-field" placeholder="لینک عکس پوستر"></div>
-            <div class="input-group"><textarea id="new-movie-url" class="input-field" style="height:100px; padding:15px; resize:vertical; line-height:1.6;" placeholder="فرمت: نام قسمت | لینک"></textarea></div>
+            <div class="input-group">
+                <input type="text" id="new-movie-title" class="input-field" placeholder="عنوان">
+            </div>
+            <div class="input-group">
+                <input type="text" id="new-movie-poster" class="input-field" placeholder="لینک عکس پوستر">
+            </div>
+            <div class="input-group">
+                <textarea id="new-movie-url" class="input-field" style="height:100px; padding:15px; resize:vertical; line-height:1.6;" placeholder="فرمت: نام قسمت | لینک"></textarea>
+            </div>
             <div style="display:flex; gap:10px;">
                 <button type="button" id="save-movie-btn" class="btn-primary" onclick="saveMovie()">ذخیره</button>
                 <button type="button" id="cancel-edit-btn" class="btn-primary" style="display:none; background:#444;" onclick="cancelEdit()">انصراف</button>
@@ -1173,8 +1179,12 @@
         <div id="tab-users" class="tab-content admin-section">
             <div style="background:var(--bg-input); padding:15px; border-radius:14px; margin-bottom:20px; border:1px solid var(--border-color);">
                 <h3 style="margin-bottom:10px; font-size:14px;">مدیریت اشتراک کاربران</h3>
-                <div class="input-group"><input type="text" id="charge-user" class="input-field" placeholder="نام کاربری مخاطب" autocapitalize="none"></div>
-                <div class="input-group"><input type="number" id="charge-days" class="input-field" placeholder="تعداد روز (0 = لغو اشتراک)"></div>
+                <div class="input-group">
+                    <input type="text" id="charge-user" class="input-field" placeholder="نام کاربری مخاطب" autocapitalize="none">
+                </div>
+                <div class="input-group">
+                    <input type="number" id="charge-days" class="input-field" placeholder="تعداد روز (0 = لغو اشتراک)">
+                </div>
                 <button type="button" class="btn-primary" onclick="chargeSub()">اعمال اشتراک</button>
             </div>
         
@@ -1217,7 +1227,7 @@
             </div>
             
             <div class="header-actions">
-                <button class="profile-button" onclick="openSidebar()" aria-label="منو">
+                <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                     <span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>
                 </button>
@@ -1232,7 +1242,9 @@
 
         <div class="search-box">
             <div class="search-wrapper">
-                <span class="search-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg></span>
+                <span class="search-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+                </span>
                 <input id="searchInput" type="search" placeholder="جستجوی فیلم، سریال..." autocomplete="off">
             </div>
         </div>
@@ -1253,15 +1265,23 @@
             </section>
 
             <section class="section">
-                <div class="section-header"><h2 class="section-title">برنامه‌ها</h2></div>
+                <div class="section-header">
+                    <h2 class="section-title">برنامه‌ها</h2>
+                </div>
                 <div class="movie-list" id="programsList"></div>
             </section>
+
             <section class="section">
-                <div class="section-header"><h2 class="section-title">سریال‌ها</h2></div>
+                <div class="section-header">
+                    <h2 class="section-title">سریال‌ها</h2>
+                </div>
                 <div class="movie-list" id="seriesList"></div>
             </section>
+
             <section class="section">
-                <div class="section-header"><h2 class="section-title">فیلم‌های سینمایی</h2></div>
+                <div class="section-header">
+                    <h2 class="section-title">فیلم‌های سینمایی</h2>
+                </div>
                 <div class="movie-list" id="moviesList"></div>
             </section>
         </div>
@@ -1299,14 +1319,18 @@
                 
                 <!-- باکس هوشمند ادامه تماشا -->
                 <div id="resumePrompt" class="resume-box" style="display:none;">
-                    <div class="resume-title">شما قبلاً تا دقیقه‌ی <b id="resumeTimeTxt" style="color:var(--accent);"></b> این محتوا را دیده‌اید. مایلید از کجا پخش شود؟</div>
+                    <div class="resume-title">
+                        شما قبلاً تا دقیقه‌ی <b id="resumeTimeTxt" style="color:var(--accent);"></b> این محتوا را دیده‌اید. مایلید از کجا پخش شود؟
+                    </div>
                     <div class="resume-actions">
                         <button class="btn-sm btn-approve" style="padding:10px 20px; font-size:14px;" onclick="confirmResume(true)">ادامه تماشا</button>
                         <button class="btn-sm" style="background:rgba(255,255,255,0.1); color:var(--text-main); padding:10px 20px; font-size:14px;" onclick="confirmResume(false)">از اول</button>
                     </div>
                 </div>
 
-                <div id="modalExpirationText" style="color:#ef4444; font-size:13px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:10px; border-radius:10px; text-align:center;">لینک منقضی شده است.</div>
+                <div id="modalExpirationText" style="color:#ef4444; font-size:13px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:10px; border-radius:10px; text-align:center;">
+                    لینک منقضی شده است.
+                </div>
                 <div id="modal-links-container"></div>
             </div>
         </div>
@@ -1317,7 +1341,7 @@
         <div class="modal-box" style="max-width: 400px; position:relative;">
             <button class="modal-close-x" onclick="document.getElementById('supportModal').classList.remove('show')">×</button>
             <div class="modal-content">
-                <h3 class="modal-title">پشتیبانی</h3>
+                <h3 class="modal-title">ارتباط با پشتیبانی</h3>
                 <textarea id="support-msg-text" class="input-field" style="height:110px; padding:12px; resize:none;" placeholder="پیام خود را بنویسید..."></textarea>
                 <button class="btn-primary" onclick="sendSupportMessage()">ارسال پیام</button>
             </div>
@@ -1333,6 +1357,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1342,6 +1367,7 @@
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl3d3ZpYmNoaHdzbGpzb2J5d3l6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYyNDU3NzAsImV4cCI6MjEwMTgyMTc3MH0.o7COXGNv_3PXFNJSEGYPnbtvD71bIMXZeILgstHHH60';
     
     var supabaseClient = null;
+    
     if (window.supabase) {
         supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     }
@@ -1362,17 +1388,19 @@
 
     function showLoader(show) { 
         const loader = document.getElementById('loader'); 
-        if(loader) loader.style.display = show ? 'flex' : 'none'; 
+        if (loader) loader.style.display = show ? 'flex' : 'none'; 
     }
 
     function showCustomAlert(msg) { 
         const alertBox = document.getElementById('custom-alert'); 
         alertBox.textContent = msg; 
         alertBox.style.display = 'block'; 
-        setTimeout(function() { alertBox.style.display = 'none'; }, 3500); 
+        setTimeout(function() { 
+            alertBox.style.display = 'none'; 
+        }, 3500); 
     }
 
-    function toggleAuth(type) { 
+    window.toggleAuth = function(type) { 
         if (type === 'register') {
             document.getElementById('login-box').style.display = 'none';
             document.getElementById('reg-box').style.display = 'block';
@@ -1382,20 +1410,20 @@
         }
     }
 
-    function togglePassword() { 
+    window.togglePassword = function() { 
         const logPass = document.getElementById('log-pass');
         const regPass = document.getElementById('reg-pass');
         if (logPass) logPass.type = logPass.type === 'password' ? 'text' : 'password';
         if (regPass) regPass.type = regPass.type === 'password' ? 'text' : 'password';
     }
 
-    function toggleTheme() { 
+    window.toggleTheme = function() { 
         document.body.classList.toggle('light-theme'); 
         localStorage.setItem('plato_theme', document.body.classList.contains('light-theme') ? 'light' : 'dark'); 
     }
     
     try { 
-        if(localStorage.getItem('plato_theme') === 'light') {
+        if (localStorage.getItem('plato_theme') === 'light') {
             document.body.classList.add('light-theme'); 
         }
     } catch(e) {}
@@ -1403,12 +1431,16 @@
     /* =========================
        سیستم تب‌های پایین (خانه / علاقه‌مندی)
     ========================= */
-    function switchMainTab(tab) {
-        document.querySelectorAll('.nav-item').forEach(function(el) { el.classList.remove('active'); });
+    window.switchMainTab = function(tab) {
+        document.querySelectorAll('.nav-item').forEach(function(el) { 
+            el.classList.remove('active'); 
+        });
+        
         document.getElementById(tab + 'Nav').classList.add('active');
         document.getElementById('home-view').style.display = tab === 'home' ? 'block' : 'none';
         document.getElementById('fav-view').style.display = tab === 'fav' ? 'block' : 'none';
-        if(tab === 'fav') {
+        
+        if (tab === 'fav') {
             renderFavorites();
         }
     }
@@ -1427,10 +1459,11 @@
 
     window.toggleFavorite = function(id, e) {
         e.stopPropagation(); 
-        if(!currentUserProfile) return;
+        if (!currentUserProfile) return;
         
         let favs = getFavs();
-        if(favs.includes(id)) { 
+        
+        if (favs.includes(id)) { 
             favs = favs.filter(function(x) { return x !== id; }); 
             showCustomAlert('از علاقه‌مندی‌ها حذف شد'); 
         } else { 
@@ -1441,45 +1474,55 @@
         localStorage.setItem('plato_favs_' + currentUserProfile.id, JSON.stringify(favs));
         
         document.querySelectorAll(`.fav-btn[data-id='${id}']`).forEach(function(btn) {
-            if(favs.includes(id)) {
+            if (favs.includes(id)) {
                 btn.classList.add('is-fav'); 
             } else {
                 btn.classList.remove('is-fav');
             }
         });
         
-        if(document.getElementById('fav-view').style.display === 'block') {
+        if (document.getElementById('fav-view').style.display === 'block') {
             renderFavorites();
         }
     }
     
     function renderFavorites() {
         let favs = getFavs();
-        let favMovies = dynamicDataArray.filter(function(m) { return favs.includes(m.id); });
+        let favMovies = dynamicDataArray.filter(function(m) { 
+            return favs.includes(m.id); 
+        });
+        
         renderList(favMovies, 'favoritesList', true);
-        if(favMovies.length === 0) {
+        
+        if (favMovies.length === 0) {
             document.getElementById('favoritesList').innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center; width:100%; margin-top:30px;">لیست علاقه‌مندی‌های شما خالی است.</div>';
         }
     }
 
     /* =========================
-       تابلو LED زنده با کش و بدون باگ سرور
+       تابلو LED زنده
     ========================= */
     async function loadMarquee() {
-        if(!supabaseClient) return;
+        if (!supabaseClient) return;
+        
         const container = document.getElementById('marqueeContainer');
         const textElem = document.getElementById('marqueeTextContent');
         const input = document.getElementById('admin-marquee-input');
         
         let cached = localStorage.getItem('plato_marquee_text') || '';
-        if(cached && textElem.textContent !== cached) { 
+        if (cached && textElem.textContent !== cached) { 
             textElem.textContent = cached; 
             container.style.display = 'flex'; 
         }
 
         try {
             const { data, error } = await supabaseClient.from('messages').select('content').eq('direction', 'marquee').order('created_at', { ascending: false }).limit(1);
-            if(!error && data && data.length > 0 && data[0].content.trim() !== "") {
+            
+            if (error) {
+                return; // در صورت خطا (مثل بسته بودن دسترسی) کادر مخفی نمی‌شود
+            }
+
+            if (data && data.length > 0 && data[0].content.trim() !== "") {
                 if (textElem.textContent !== data[0].content) {
                     textElem.textContent = data[0].content;
                     textElem.style.animation = 'none'; 
@@ -1488,8 +1531,8 @@
                     localStorage.setItem('plato_marquee_text', data[0].content);
                 }
                 container.style.display = 'flex';
-                if(input && input.value === '') input.value = data[0].content;
-            } else if (!error) { 
+                if (input && input.value === '') input.value = data[0].content;
+            } else { 
                 container.style.display = 'none'; 
                 localStorage.removeItem('plato_marquee_text'); 
             }
@@ -1499,10 +1542,11 @@
     window.saveMarqueeText = async function() {
         let val = document.getElementById('admin-marquee-input').value.trim();
         showLoader(true);
+        
         try {
-            if(supabaseClient) {
+            if (supabaseClient) {
                 await supabaseClient.from('messages').delete().eq('direction', 'marquee');
-                if(val !== "") {
+                if (val !== "") {
                     await supabaseClient.from('messages').insert([{ direction: 'marquee', content: val, is_read: true }]);
                 }
             }
@@ -1515,89 +1559,138 @@
     }
 
     /* =========================
-       احراز هویت قوی و مدیریت سشن
+       احراز هویت قوی (بدون باگ میندازه بیرون)
     ========================= */
     async function checkUserSession() {
         if (!supabaseClient) return;
         showLoader(true);
-        try {
-            const { data, error } = await supabaseClient.auth.getSession();
-            if (error || !data.session) throw new Error('No session');
-
-            const profileRes = await supabaseClient.from('users_data').select('*').eq('id', data.session.user.id).single();
-            if (profileRes.error || !profileRes.data) throw new Error('No profile');
-            currentUserProfile = profileRes.data;
-
-            if (currentUserProfile.status === 'pending') { 
-                showCustomAlert('اکانت شما هنوز تایید نشده.'); 
-                throw new Error(); 
-            }
-            if (currentUserProfile.status === 'rejected') { 
-                showCustomAlert('اکانت مسدود است.'); 
-                throw new Error(); 
-            }
-            
-            document.getElementById('auth-screen').style.display = 'none';
-            document.getElementById('bottomNav').style.display = 'flex';
-            document.getElementById('main-app').style.display = 'block';
-
-            if (currentUserProfile.role === 'admin') {
-                document.getElementById('admin-sidebar-btn-container').innerHTML = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()"><span>پنل مدیریت</span><svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>`;
-            }
-            fetchMoviesFromDatabase(); 
-            loadMarquee(); 
-            checkUnreadMessages();
-            
-            if(!checkMsgInterval) {
-                checkMsgInterval = setInterval(function() { 
-                    checkUnreadMessages(); 
-                    loadMarquee(); 
-                }, 60000); 
-            }
-            
-        } catch (err) { 
-            if(supabaseClient) await supabaseClient.auth.signOut();
-            document.getElementById('auth-screen').style.display = 'flex'; 
+        
+        const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
+        
+        if (sessionError || !sessionData.session) {
+            document.getElementById('auth-screen').style.display = 'flex';
+            showLoader(false);
+            return;
         }
+
+        const profileRes = await supabaseClient.from('users_data').select('*').eq('id', sessionData.session.user.id).single();
+        
+        if (profileRes.error || !profileRes.data) {
+            showCustomAlert('خطا در دریافت اطلاعات کاربری. در صورت تکرار به پشتیبانی پیام دهید.');
+            await supabaseClient.auth.signOut();
+            document.getElementById('auth-screen').style.display = 'flex';
+            showLoader(false);
+            return;
+        }
+
+        currentUserProfile = profileRes.data;
+
+        if (currentUserProfile.status === 'pending') { 
+            showCustomAlert('اکانت شما هنوز تایید نشده است.'); 
+            await supabaseClient.auth.signOut();
+            document.getElementById('auth-screen').style.display = 'flex';
+            showLoader(false);
+            return;
+        }
+        if (currentUserProfile.status === 'rejected') { 
+            showCustomAlert('اکانت شما مسدود است.'); 
+            await supabaseClient.auth.signOut();
+            document.getElementById('auth-screen').style.display = 'flex';
+            showLoader(false);
+            return;
+        }
+        
+        // اگر مراحل امنیتی رد شد، سایت را باز کن
+        document.getElementById('auth-screen').style.display = 'none';
+        document.getElementById('bottomNav').style.display = 'flex';
+        document.getElementById('main-app').style.display = 'block';
+
+        if (currentUserProfile.role === 'admin') {
+            document.getElementById('admin-sidebar-btn-container').innerHTML = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()"><span>پنل مدیریت</span><svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>`;
+        }
+        
+        fetchMoviesFromDatabase(); 
+        loadMarquee(); 
+        checkUnreadMessages();
+        
+        // چک کردن زنده سایت هر 45 ثانیه تا به دیتابیس فشار نیاید
+        if (!checkMsgInterval) {
+            checkMsgInterval = setInterval(function() { 
+                checkUnreadMessages(); 
+                loadMarquee(); 
+            }, 45000); 
+        }
+        
         showLoader(false);
     }
 
-    async function doLogin() {
+    window.doLogin = async function() {
         if (!supabaseClient) return showCustomAlert('ارتباط برقرار نیست.');
+        
         let user = toEnglishDigits(document.getElementById('log-user').value).trim().toLowerCase();
         let pass = toEnglishDigits(document.getElementById('log-pass').value).trim();
-        if(!user || !pass) return showCustomAlert('مشخصات را وارد کنید');
+        
+        if (!user || !pass) return showCustomAlert('مشخصات را وارد کنید');
         
         showLoader(true);
+        
         try {
             const { error } = await supabaseClient.auth.signInWithPassword({ email: user+'@plato.com', password: pass });
-            if (error) {
+            if (error) { 
                 showCustomAlert('نام کاربری یا رمز اشتباه است!'); 
+                showLoader(false);
             } else { 
                 document.getElementById('log-user').value = ''; 
                 document.getElementById('log-pass').value = ''; 
-                checkUserSession(); 
+                await checkUserSession(); 
             }
         } catch(e) { 
             showCustomAlert('ارتباط برقرار نشد.'); 
+            showLoader(false);
         }
-        showLoader(false);
     }
 
-    async function finalizeRegistration() {
-        if(!document.getElementById('acceptTermsCheck').checked) return showCustomAlert('قوانین را تایید کنید.');
+    window.doRegister = function() {
+        let u = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase();
+        let p = toEnglishDigits(document.getElementById('reg-pass').value).trim();
+        let m = document.getElementById('reg-model').value.trim();
+        
+        if (!u || !p || !m) {
+            return showCustomAlert('لطفاً همه فیلدها را پر کنید');
+        }
+        document.getElementById('acceptTermsCheck').checked = false;
+        document.getElementById('termsModal').classList.add('show');
+    }
+
+    window.finalizeRegistration = async function() {
+        if (!document.getElementById('acceptTermsCheck').checked) {
+            return showCustomAlert('لطفاً قوانین را تایید کنید.');
+        }
+
         document.getElementById('termsModal').classList.remove('show');
         showLoader(true);
+
         try {
             let u = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase();
             let p = toEnglishDigits(document.getElementById('reg-pass').value).trim();
             let m = document.getElementById('reg-model').value.trim();
+            
             const res = await supabaseClient.auth.signUp({ email: u+'@plato.com', password: p });
             if (res.error) {
-                showCustomAlert('خطا: '+res.error.message);
+                showCustomAlert('خطا: ' + res.error.message);
             } else if (res.data.user) {
-                await supabaseClient.from('users_data').insert([{ id: res.data.user.id, email: u+'@plato.com', username: u, phone_model: m, status: 'pending', role: 'user' }]);
-                showCustomAlert('ثبت‌نام موفق! منتظر تایید بمانید.'); 
+                await supabaseClient.from('users_data').insert([{ 
+                    id: res.data.user.id, 
+                    email: u+'@plato.com', 
+                    username: u, 
+                    phone_model: m, 
+                    status: 'pending', 
+                    role: 'user' 
+                }]);
+                showCustomAlert('ثبت‌نام موفق! منتظر تایید ادمین بمانید.'); 
+                document.getElementById('reg-user').value = '';
+                document.getElementById('reg-pass').value = '';
+                document.getElementById('reg-model').value = '';
                 toggleAuth('login');
             }
         } catch(e) { 
@@ -1605,13 +1698,9 @@
         }
         showLoader(false);
     }
-    
-    window.doRegister = function() { 
-        document.getElementById('termsModal').classList.add('show'); 
-    }
 
     window.doLogout = async function() { 
-        if(supabaseClient) await supabaseClient.auth.signOut(); 
+        if (supabaseClient) await supabaseClient.auth.signOut(); 
         window.location.reload(); 
     }
 
@@ -1628,13 +1717,13 @@
         
         vipBadge.style.display = 'none'; 
         
-        if(currentUserProfile.role === 'admin') {
+        if (currentUserProfile.role === 'admin') {
             subElem.textContent = "مدیریت کل سیستـم";
             vipBadge.style.display = 'inline-flex';
         } else {
-            if(currentUserProfile.sub_end_date) {
+            if (currentUserProfile.sub_end_date) {
                 let diff = new Date(currentUserProfile.sub_end_date) - new Date();
-                if(diff > 0) {
+                if (diff > 0) {
                     subElem.textContent = `اعتبار اشتراک: ${Math.ceil(diff / (1000 * 3600 * 24))} روز`;
                     vipBadge.style.display = 'inline-flex';
                 } else { 
@@ -1670,8 +1759,12 @@
     }
 
     window.switchAdminTab = function(t, el) { 
-        document.querySelectorAll('.tab-content').forEach(function(e) { e.classList.remove('active'); }); 
-        document.querySelectorAll('.tab-btn').forEach(function(e) { e.classList.remove('active'); }); 
+        document.querySelectorAll('.tab-content').forEach(function(e) { 
+            e.classList.remove('active'); 
+        }); 
+        document.querySelectorAll('.tab-btn').forEach(function(e) { 
+            e.classList.remove('active'); 
+        }); 
         document.getElementById(t).classList.add('active'); 
         el.classList.add('active'); 
     }
@@ -1679,17 +1772,18 @@
     async function loadAllUsers() {
         try {
             const { data } = await supabaseClient.from('users_data').select('*').order('created_at', { ascending: false });
-            if(!data) return;
+            if (!data) return;
             
             document.getElementById('onlineUsersCount').textContent = Math.max(1, Math.ceil(data.length * 0.15) + (new Date().getMinutes() % 3)); 
             
             let reqList = document.getElementById('pending-list'); 
             reqList.innerHTML = '';
+            
             let allList = document.getElementById('all-users-list'); 
             allList.innerHTML = '';
             
             data.forEach(function(user) {
-                if(user.status === 'pending') {
+                if (user.status === 'pending') {
                     reqList.innerHTML += `
                         <div class="req-card">
                             <div class="req-info">
@@ -1701,9 +1795,9 @@
                                 <button class="btn-sm btn-reject" onclick="updateStatus('${user.id}', 'rejected')">رد</button>
                             </div>
                         </div>`;
-                } else if(user.role !== 'admin') {
+                } else if (user.role !== 'admin') {
                     let subTxt = "ندارد";
-                    if(user.sub_end_date) {
+                    if (user.sub_end_date) {
                         let d = Math.ceil((new Date(user.sub_end_date) - new Date()) / 86400000);
                         subTxt = d > 0 ? `<span style="color:#10b981;">${d} روز</span>` : `<span style="color:#ef4444;">منقضی</span>`;
                     }
@@ -1720,7 +1814,7 @@
                         </div>`;
                 }
             });
-            if(reqList.innerHTML === '') {
+            if (reqList.innerHTML === '') {
                 reqList.innerHTML = '<div style="color:var(--text-muted); font-size:12px;">موردی نیست.</div>';
             }
         } catch(e) {}
@@ -1729,7 +1823,8 @@
     window.chargeSub = async function() {
         let user = toEnglishDigits(document.getElementById('charge-user').value).trim().toLowerCase();
         let days = parseInt(toEnglishDigits(document.getElementById('charge-days').value));
-        if(!user || isNaN(days)) return showCustomAlert('لطفاً مشخصات را درست وارد کنید.');
+        
+        if (!user || isNaN(days)) return showCustomAlert('لطفاً مشخصات را درست وارد کنید.');
         
         showLoader(true);
         try {
@@ -1740,16 +1835,18 @@
                 return; 
             }
 
-            if(days === 0) {
+            if (days === 0) {
                 await supabaseClient.from('users_data').update({ sub_end_date: null }).eq('username', user);
                 showCustomAlert('اشتراک کاربر لغو شد.');
             } else {
                 let now = new Date();
                 let endD = data.sub_end_date ? new Date(data.sub_end_date) : now;
-                if(endD < now) endD = now; 
+                
+                if (endD < now) endD = now; 
+                
                 endD.setDate(endD.getDate() + days); 
                 await supabaseClient.from('users_data').update({ sub_end_date: endD.toISOString() }).eq('username', user);
-                showCustomAlert(`${days} روز اضافه شد. اعتبار جدید اعمال گردید.`);
+                showCustomAlert(`${days} روز به اعتبار اضافه شد.`);
             }
             document.getElementById('charge-days').value = '';
             loadAllUsers();
@@ -1759,8 +1856,8 @@
     
     window.updateStatus = async function(id, s) { 
         showLoader(true); 
-        if(s === 'rejected') {
-            await supabaseClient.from('users_data').delete().eq('id', id); 
+        if (s === 'rejected') {
+            await supabaseClient.from('users_data').delete().eq('id', id);
         } else {
             await supabaseClient.from('users_data').update({status: s}).eq('id', id); 
         }
@@ -1769,7 +1866,7 @@
     }
 
     window.deleteUserAccount = async function(id) { 
-        if(confirm('مطمئن هستید؟')) { 
+        if (confirm('مطمئن هستید؟')) { 
             showLoader(true); 
             await supabaseClient.from('users_data').delete().eq('id', id); 
             loadAllUsers(); 
@@ -1794,11 +1891,12 @@
     document.getElementById("searchInput").addEventListener("input", function() {
         let q = this.value.trim().toLowerCase();
         let f = dynamicDataArray.filter(function(m) { return m.title.toLowerCase().includes(q); });
+        
         renderList(f.filter(function(m) { return m.category === 'program'; }), 'programsList');
         renderList(f.filter(function(m) { return m.category === 'series' || !m.category; }), 'seriesList');
         renderList(f.filter(function(m) { return m.category === 'movie'; }), 'moviesList');
         
-        if(document.getElementById('fav-view').style.display === 'block') {
+        if (document.getElementById('fav-view').style.display === 'block') {
             renderFavorites();
         }
     });
@@ -1842,7 +1940,7 @@
     const resumePrompt = document.getElementById("resumePrompt");
     
     function checkSubscription() {
-        if(currentUserProfile && currentUserProfile.role === 'admin') return true; 
+        if (currentUserProfile && currentUserProfile.role === 'admin') return true; 
         if (!currentUserProfile || !currentUserProfile.sub_end_date || new Date() > new Date(currentUserProfile.sub_end_date)) {
             showCustomAlert('اشتراک شما فعال نیست!'); 
             return false;
@@ -1851,7 +1949,7 @@
     }
 
     window.openPlayer = function(movie) {
-        if(!checkSubscription()) return; 
+        if (!checkSubscription()) return; 
         
         document.getElementById("modalTitle").textContent = movie.title;
         videoPlayer.pause(); 
@@ -1867,11 +1965,12 @@
             modal.classList.add("show");
             return;
         } 
+        
         document.getElementById("modalExpirationText").style.display = "none";
         
         if (movie.download_url) {
             movie.download_url.split('\n').forEach(function(line) {
-                if(!line.trim()) return; 
+                if (!line.trim()) return; 
                 let parts = line.split('|');
                 let t = parts[0].trim(); 
                 let u = (parts[1] || parts[0]).trim();
@@ -1889,7 +1988,7 @@
     }
 
     window.handlePlayClick = function(url) {
-        let savedRaw = localStorage.getItem('plato_prog_' + btoa(url).substring(0,20));
+        let savedRaw = localStorage.getItem('plato_prog_' + btoa(url).substring(0, 20));
         let savedTime = savedRaw ? parseFloat(savedRaw) : 0;
         
         if (savedTime > 15) { 
@@ -1916,18 +2015,18 @@
         videoPlayer.currentTime = startTime;
         videoPlayer.play().catch(function(e){});
         
-        let progKey = 'plato_prog_' + btoa(url).substring(0,20);
-        if(timeUpdateInterval) clearInterval(timeUpdateInterval);
+        let progKey = 'plato_prog_' + btoa(url).substring(0, 20);
+        if (timeUpdateInterval) clearInterval(timeUpdateInterval);
         
         timeUpdateInterval = setInterval(function() {
-            if(!videoPlayer.paused && videoPlayer.currentTime > 0) {
+            if (!videoPlayer.paused && videoPlayer.currentTime > 0) {
                 localStorage.setItem(progKey, videoPlayer.currentTime);
             }
         }, 5000);
     }
 
     window.closePlayer = function() {
-        if(timeUpdateInterval) clearInterval(timeUpdateInterval);
+        if (timeUpdateInterval) clearInterval(timeUpdateInterval);
         videoPlayer.pause(); 
         videoPlayer.removeAttribute("src"); 
         videoPlayer.load();
@@ -1947,31 +2046,32 @@
             category: document.getElementById('new-movie-category').value 
         };
         
-        if(!p.title || !p.poster) return showCustomAlert('عنوان و عکس الزامیست');
+        if (!p.title || !p.poster) return showCustomAlert('عنوان و عکس الزامیست');
         showLoader(true);
         
-        if(editingMovieId) {
-            await supabaseClient.from('movies').update(p).eq('id', editingMovieId);
-        } else {
-            await supabaseClient.from('movies').insert([p]);
-        }
-        
-        showCustomAlert('ذخیره شد'); 
-        cancelEdit(); 
-        loadAdminMovies(); 
+        try {
+            if (editingMovieId) {
+                await supabaseClient.from('movies').update(p).eq('id', editingMovieId);
+            } else {
+                await supabaseClient.from('movies').insert([p]);
+            }
+            showCustomAlert('ذخیره شد'); 
+            cancelEdit(); 
+            loadAdminMovies(); 
+        } catch(e) {}
         showLoader(false);
     }
 
     window.editMovie = function(id) { 
         let m = dynamicDataArray.find(function(x) { return x.id === id; }); 
-        if(!m) return; 
+        if (!m) return; 
         document.getElementById('new-movie-category').value = m.category || 'series'; 
         document.getElementById('new-movie-title').value = m.title; 
         document.getElementById('new-movie-poster').value = m.poster; 
         document.getElementById('new-movie-url').value = m.download_url || ''; 
         editingMovieId = id; 
         document.getElementById('cancel-edit-btn').style.display = "block"; 
-        window.scrollTo(0,0); 
+        window.scrollTo(0, 0); 
     }
 
     window.cancelEdit = function() { 
@@ -1983,27 +2083,30 @@
     }
 
     async function loadAdminMovies() { 
-        const {data} = await supabaseClient.from('movies').select('*').order('id', {ascending: false}); 
-        let c = document.getElementById('admin-movie-list'); 
-        c.innerHTML = ''; 
-        
-        data.forEach(function(m) { 
-            c.innerHTML += `
-                <div class="req-card">
-                    <div class="req-info">
-                        <div style="color:#fff;">${m.title}</div>
-                        <small style="color:var(--accent);">${m.category}</small>
-                    </div>
-                    <div>
-                        <button class="btn-sm btn-edit" onclick="editMovie(${m.id})">ویرایش</button>
-                        <button class="btn-sm btn-reject" onclick="deleteMovie(${m.id})">حذف</button>
-                    </div>
-                </div>`; 
-        }); 
+        try {
+            const {data} = await supabaseClient.from('movies').select('*').order('id', {ascending: false}); 
+            if(!data) return;
+            let c = document.getElementById('admin-movie-list'); 
+            c.innerHTML = ''; 
+            
+            data.forEach(function(m) { 
+                c.innerHTML += `
+                    <div class="req-card">
+                        <div class="req-info">
+                            <div style="color:#fff;">${m.title}</div>
+                            <small style="color:var(--accent);">${m.category}</small>
+                        </div>
+                        <div>
+                            <button class="btn-sm btn-edit" onclick="editMovie(${m.id})">ویرایش</button>
+                            <button class="btn-sm btn-reject" onclick="deleteMovie(${m.id})">حذف</button>
+                        </div>
+                    </div>`; 
+            }); 
+        } catch(e) {}
     }
 
     window.deleteMovie = async function(id) { 
-        if(confirm('مطمئنی؟')) { 
+        if (confirm('مطمئنی؟')) { 
             showLoader(true); 
             await supabaseClient.from('movies').delete().eq('id', id); 
             loadAdminMovies(); 
@@ -2024,11 +2127,233 @@
         curS = i; 
         slides.style.transform = `translateX(-${i * 100}%)`; 
         dots.forEach(function(d, x) { 
-            if(x === i) { d.classList.add("active"); } else { d.classList.remove("active"); } 
+            if (x === i) { d.classList.add("active"); } else { d.classList.remove("active"); } 
         }); 
     }
     
     setInterval(function() { gS((curS + 1) % dots.length); }, 4000);
+
+    /* =========================
+       سیستم پیام پشتیبانی
+    ========================= */
+    window.openSupportModal = function() {
+        closeSidebar();
+        document.getElementById('supportModal').classList.add('show');
+    }
+    
+    window.sendSupportMessage = async function() {
+        const text = document.getElementById('support-msg-text').value.trim();
+        if(!text) return;
+        showLoader(true);
+        try {
+            const res = await supabaseClient.from('messages').insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text, is_read: false }]);
+            showLoader(false);
+            if(res.error) {
+                showCustomAlert('خطا در دسترسی دیتابیس.');
+            } else {
+                showCustomAlert('پیام با موفقیت ارسال شد.');
+                document.getElementById('support-msg-text').value = '';
+                document.getElementById('supportModal').classList.remove('show');
+            }
+        } catch(e) {
+            showLoader(false);
+        }
+    }
+
+    window.openInboxModal = async function() {
+        closeSidebar();
+        const dot1 = document.getElementById('inbox-notif');
+        const headDot = document.getElementById('header-notif');
+        if(dot1) dot1.style.display = 'none';
+        if(headDot) headDot.style.display = 'none';
+        document.getElementById('inboxModal').classList.add('show');
+        showLoader(true);
+        
+        try {
+            const { data } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: false });
+            const list = document.getElementById('user-messages-list');
+            list.innerHTML = '';
+
+            if(data && data.length > 0) {
+                let userMsgs = data.filter(function(m) {
+                    if(m.direction === 'system_all') return true;
+                    if(m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) return true;
+                    return false;
+                });
+
+                if(userMsgs.length > 0) {
+                    userMsgs.forEach(function(msg) {
+                        let cl = msg.direction === 'system_all' ? 'system' : 'admin-reply';
+                        let titleHTML = msg.direction === 'admin_to_user' ? '<b>پشتیبانی</b>' : '<b>پیام عمومی سیستم</b>';
+                        let headerStyle = 'justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px; margin-bottom:8px;';
+                        
+                        list.innerHTML += `
+                            <div class="msg-bubble ${cl}">
+                                <div style="display:flex; align-items:center; ${headerStyle}">
+                                    ${titleHTML}
+                                </div>
+                                <div style="user-select:text; line-height:1.6; margin-top:4px;">${msg.content}</div>
+                            </div>`;
+                    });
+                    await supabaseClient.from('messages').update({ is_read: true }).eq('direction', 'admin_to_user').eq('user_id', currentUserProfile.id).eq('is_read', false);
+                } else {
+                    list.innerHTML = '<div style="color:var(--text-muted); text-align:center; font-size:13px; margin-top:20px;">صندوق پیام خالی است.</div>';
+                }
+            } else {
+                list.innerHTML = '<div style="color:var(--text-muted); text-align:center; font-size:13px; margin-top:20px;">صندوق پیام خالی است.</div>';
+            }
+        } catch(e) {}
+        showLoader(false);
+    }
+
+    async function checkUnreadMessages() {
+        if(!currentUserProfile || !supabaseClient) return;
+        try {
+            if(currentUserProfile.role === 'admin') {
+                const { data } = await supabaseClient.from('messages').select('id').eq('direction', 'user_to_admin').eq('is_read', false);
+                const count = data ? data.length : 0;
+                const dot = document.getElementById('admin-msg-notif');
+                const headDot = document.getElementById('header-notif');
+                if(count > 0) { 
+                    if(dot) dot.style.display = 'inline-block'; 
+                    if(headDot) headDot.style.display = 'inline-block'; 
+                } else { 
+                    if(dot) dot.style.display = 'none'; 
+                    if(headDot) headDot.style.display = 'none'; 
+                }
+            } else {
+                const { data, error } = await supabaseClient.from('messages').select('*').eq('is_read', false);
+                if(data && !error) {
+                    let unreadCount = data.filter(function(m) {
+                        if(m.direction === 'system_all') return true;
+                        if(m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) return true;
+                        return false;
+                    }).length;
+
+                    const dot1 = document.getElementById('inbox-notif');
+                    const headDot = document.getElementById('header-notif');
+                    if(unreadCount > 0) { 
+                        if(dot1) dot1.style.display = 'inline-block'; 
+                        if(headDot) headDot.style.display = 'inline-block'; 
+                    } else { 
+                        if(dot1) dot1.style.display = 'none'; 
+                        if(headDot) headDot.style.display = 'none'; 
+                    }
+                }
+            }
+        } catch(e) {}
+    }
+
+    async function loadAdminInbox() {
+        try {
+            const { data: usersData } = await supabaseClient.from('users_data').select('id, username');
+            let userMap = {};
+            if(usersData) { usersData.forEach(function(u) { userMap[u.id] = u.username; }); }
+
+            const { data: msgs } = await supabaseClient.from('messages').select('*').eq('direction', 'user_to_admin').order('created_at', { ascending: false });
+            const list = document.getElementById('admin-inbox-list');
+            list.innerHTML = '';
+            
+            if(msgs && msgs.length > 0) {
+                msgs.forEach(function(msg) {
+                    let uname = userMap[msg.user_id] || 'کاربر';
+                    let dot = !msg.is_read ? '<span style="color:#10b981; font-size:11px; margin-right:4px;">(جدید)</span>' : '';
+                    list.innerHTML += `
+                        <div class="req-card" style="flex-direction:column; align-items:stretch;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                                <div style="color:var(--accent); font-weight:bold;">👤 از: ${uname} ${dot}</div>
+                                <div style="display:flex; gap:4px;">
+                                    <button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ</button>
+                                    <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button>
+                                </div>
+                            </div>
+                            <div style="background:var(--bg-box); padding:10px; border-radius:8px; user-select:text; line-height:1.6; font-size:13px;">${msg.content}</div>
+                        </div>`;
+                });
+            } else { 
+                list.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">پیام جدیدی وجود ندارد.</div>'; 
+            }
+
+            const { data: sysMsgs } = await supabaseClient.from('messages').select('*').eq('direction', 'system_all').order('created_at', { ascending: false });
+            const sysList = document.getElementById('admin-sys-list');
+            sysList.innerHTML = '';
+            
+            if(sysMsgs && sysMsgs.length > 0) {
+                sysMsgs.forEach(function(msg) {
+                    sysList.innerHTML += `
+                        <div class="req-card" style="flex-direction:column; align-items:stretch;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                <span style="color:#10b981; font-size:12px; font-weight:bold;">پیام عمومی</span>
+                                <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button>
+                            </div>
+                            <div style="font-size:13px;">${msg.content}</div>
+                        </div>`;
+                });
+            } else { 
+                sysList.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">پیام عمومی ارسال نشده است.</div>'; 
+            }
+        } catch(e) {}
+    }
+
+    window.deleteAdminMsg = async function(id) {
+        if(!confirm("آیا از حذف مطمئن هستید؟")) return;
+        showLoader(true);
+        await supabaseClient.from('messages').delete().eq('id', id);
+        showLoader(false);
+        loadAdminInbox();
+    }
+
+    window.openAdminReply = async function(userId, msgId) {
+        document.getElementById('reply-user-id').value = userId;
+        document.getElementById('adminReplyModal').classList.add('show');
+        await supabaseClient.from('messages').update({ is_read: true }).eq('id', msgId);
+        checkUnreadMessages();
+        loadAdminInbox();
+    }
+
+    window.sendAdminReply = async function() {
+        const text = document.getElementById('admin-reply-text').value.trim();
+        const uid = document.getElementById('reply-user-id').value;
+        if(!text) return;
+        showLoader(true);
+        try {
+            const res = await supabaseClient.from('messages').insert([{ user_id: uid, direction: 'admin_to_user', content: text, is_read: false }]);
+            showLoader(false);
+            if(res.error) {
+                showCustomAlert('خطا در ارسال پاسخ.');
+            } else {
+                showCustomAlert('پاسخ ارسال شد.');
+                document.getElementById('admin-reply-text').value = '';
+                document.getElementById('adminReplyModal').classList.remove('show');
+            }
+        } catch(e) {
+            showLoader(false);
+        }
+    }
+
+    window.openSystemMessageModal = function() { 
+        document.getElementById('sysMsgModal').classList.add('show'); 
+    }
+    
+    window.sendSystemMessage = async function() {
+        const text = document.getElementById('sys-msg-text').value.trim();
+        if(!text) return;
+        showLoader(true);
+        try {
+            const res = await supabaseClient.from('messages').insert([{ direction: 'system_all', content: text, is_read: false }]);
+            showLoader(false);
+            if(res.error) {
+                showCustomAlert('خطا در ارسال پیام.');
+            } else {
+                showCustomAlert('پیام ارسال شد.');
+                document.getElementById('sys-msg-text').value = '';
+                document.getElementById('sysMsgModal').classList.remove('show');
+                loadAdminInbox();
+            }
+        } catch(e) {
+            showLoader(false);
+        }
+    }
 
 </script>
 </body>
