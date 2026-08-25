@@ -396,10 +396,14 @@
             <div class="sidebar-user" id="sidebarUser" style="margin-top: 15px;">نام کاربری</div>
             <div class="sidebar-sub">
                 <div id="sub-time-left" style="margin-bottom:5px;">در حال بررسی...</div>
-                <div class="vip-badge">
+                <div class="vip-badge" id="vip-badge-icon">
                     <svg class="btn-icon" style="margin:0; width:14px; height:14px;" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     VIP
                 </div>
+                <!-- دکمه پرداخت جدید -->
+                <button id="buy-sub-btn" class="btn-primary" style="font-size:12px; height:35px; margin-top:10px; display:none; background:#10b981;" onclick="startPayment(100000)">
+                    خرید اشتراک یک ماهه (۱۰۰ هزار تومان)
+                </button>
             </div>
         </div>
         <div class="sidebar-menu">
@@ -810,9 +814,14 @@
         document.getElementById('sidebarOverlay').classList.add('open');
         document.getElementById('sidebarUser').textContent = currentUserProfile.username;
         const subElem = document.getElementById('sub-time-left');
+        const buyBtn = document.getElementById('buy-sub-btn');
+        const vipBadge = document.getElementById('vip-badge-icon');
         
+        buyBtn.style.display = 'none';
+
         if(currentUserProfile.role === 'admin') {
             subElem.textContent = "حساب مدیریت کل";
+            vipBadge.style.display = 'inline-flex';
         } else {
             if(currentUserProfile.sub_end_date) {
                 const now = new Date().getTime();
@@ -821,11 +830,16 @@
                 if(diff > 0) {
                     const d = Math.ceil(diff / (1000 * 3600 * 24));
                     subElem.textContent = `اعتبار اشتراک: ${d} روز`;
+                    vipBadge.style.display = 'inline-flex';
                 } else { 
-                    subElem.textContent = "اشتراک منقضی شده"; 
+                    subElem.textContent = "اشتراک شما منقضی شده است";
+                    vipBadge.style.display = 'none';
+                    buyBtn.style.display = 'block';
                 }
             } else { 
-                subElem.textContent = "بدون اشتراک فعال"; 
+                subElem.textContent = "بدون اشتراک فعال";
+                vipBadge.style.display = 'none';
+                buyBtn.style.display = 'block';
             }
         }
     }
@@ -1574,6 +1588,31 @@
         
         modal.classList.add("show");
         document.body.style.overflow = "hidden";
+    }
+
+    /* =========================
+       اضافه شدن تابع پرداخت امن
+    ========================= */
+    async function startPayment(amount) {
+        showLoader(true);
+        try {
+            const { data, error } = await supabaseClient.functions.invoke('create-payment', {
+                body: { amount: amount, userId: currentUserProfile.id }
+            });
+
+            if (error) throw error;
+            
+            if (data && data.paymentUrl) {
+                window.location.href = data.paymentUrl; 
+            } else {
+                showCustomAlert('خطا در دریافت لینک پرداخت.');
+                showLoader(false);
+            }
+        } catch(e) {
+            console.error(e);
+            showCustomAlert('ارتباط با درگاه برقرار نشد.');
+            showLoader(false);
+        }
     }
 
     window.playVideo = async function(url) {
