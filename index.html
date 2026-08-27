@@ -28,7 +28,7 @@
             --accent: #3b82f6;
             --accent-glow: rgba(59, 130, 246, 0.35);
             --red-neon: #ef4444;
-            --bottom-nav-h: 85px; /* فضا برای منوی معلق */
+            --bottom-nav-h: 85px; 
         }
 
         body.light-theme {
@@ -68,11 +68,25 @@
         @keyframes logo-sweep { 0%, 20% { left: -150%; } 50%, 100% { left: 200%; } }
 
         /* =========================
+           FANCY CINEMATIC LOADER
+        ========================= */
+        .loader-container { position: relative; width: 85px; height: 85px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+        .loader-glow { position: absolute; width: 100%; height: 100%; background: var(--accent); border-radius: 50%; filter: blur(22px); animation: pulse-glow 1.5s infinite alternate; opacity: 0.5; }
+        .loader-ring { position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 3px solid transparent; border-top-color: #fff; border-bottom-color: var(--red-neon); animation: spin-ring 1s cubic-bezier(0.5, 0, 0.5, 1) infinite; }
+        .loader-inner { position: absolute; z-index: 2; display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(0,0,0,0.6); border-radius: 50%; backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.1); }
+        .loader-text { font-weight: 900; letter-spacing: 5px; font-size: 15px; color: #fff; animation: text-pulse 1.5s infinite alternate; text-transform: uppercase; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        
+        @keyframes spin-ring { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse-glow { 0% { transform: scale(0.8); opacity: 0.2; } 100% { transform: scale(1.2); opacity: 0.7; } }
+        @keyframes text-pulse { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+        
+        #loader { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(12px); }
+
+        /* =========================
            CUSTOM ALERT & MODALS
         ========================= */
         #custom-alert { position: fixed; top: 24px; left: 50%; transform: translateX(-50%); z-index: 9999; background: #1e293b; color: #fff; padding: 14px 28px; border-radius: 12px; display: none; text-align: center; box-shadow: 0 12px 35px rgba(0,0,0,0.5); font-weight: 700; min-width: 280px; font-size: 13.5px; border: 1px solid var(--border-color); transition: 0.3s; }
-        #loader { position: fixed; inset:0; background: rgba(0,0,0,0.8); z-index: 9999; display: none; align-items: center; justify-content: center; color: var(--accent); font-weight: 700; font-size: 16px; backdrop-filter: blur(6px); }
-
+        
         .modal { position: fixed; inset: 0; z-index: 6000; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); }
         .modal.show { display: flex; }
         .modal-box { width: 100%; max-width: 760px; overflow: hidden; border-radius: 20px; background: var(--bg-box); border: 1px solid var(--border-color); box-shadow: 0 25px 60px rgba(0,0,0,0.6); display: flex; flex-direction: column; max-height: 90vh; position: relative; }
@@ -252,14 +266,13 @@
         .news-date { font-size: 11px; color: var(--text-muted); }
         .news-content { padding: 16px; font-size: 14px; line-height: 1.8; color: var(--text-main); white-space: pre-wrap; }
         .news-actions { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-top: 1px solid var(--border-color); background: rgba(0,0,0,0.02); }
-        .action-group { display: flex; gap: 15px; }
         .news-btn { background: none; color: var(--text-main); display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: bold; opacity: 0.8; transition: 0.2s; }
         .news-btn:hover { opacity: 1; }
         .news-btn.liked { color: #ef4444; }
         .news-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
         /* =========================
-           NEON PLAYER BANNER (IMPROVED)
+           NEON PLAYER BANNER
         ========================= */
         .neon-banner { width: 100%; aspect-ratio: 16 / 9; background: #000; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
         .neon-bg { position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(239, 68, 68, 0.15) 0%, #000 70%); }
@@ -289,7 +302,18 @@
 
 <canvas id="confetti-canvas"></canvas>
 <div id="custom-alert"></div>
-<div id="loader" data-i18n="loading">لطفا صبر کنید...</div>
+
+<!-- FANCY LOADER -->
+<div id="loader">
+    <div class="loader-container">
+        <div class="loader-glow"></div>
+        <div class="loader-ring"></div>
+        <div class="loader-inner">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff" style="margin-left: 3px;"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+    </div>
+    <div class="loader-text">PLATO</div>
+</div>
 
 <div id="app-wrapper">
 
@@ -348,6 +372,7 @@
             <div class="modal-content">
                 <h3 class="modal-title" style="text-align:center;" data-i18n="terms_title">قوانین و مقررات پلاتو</h3>
                 <ul style="font-size: 13px; line-height: 1.9; color: var(--text-muted); padding-right: 20px; text-align: justify;" id="terms-list">
+                    <li style="margin-bottom:8px; font-weight:bold; color:#ef4444;">بعد از ارسال درخواست ثبت نام،صبر کنید تا پشتیبانی سایت درخواست شمارا بپذیرد،از ارسال درخواست های متعدد و پیام های اسپم به پشتیبانی جدا پرهیز بفرمایید،درصورت انجام اینکار اکانت شما داعمی مسدود خواهد شد و هر درخواستی از سمت موبایل شما ارسال بشود تایید نخواهد شد</li>
                     <li style="margin-bottom:8px;">حتماً رمزی که برای اکانت می‌گذارید یادتان باشد، چون رمز اکانت به هیچ عنوان قابل بازیابی نیست.</li>
                     <li style="margin-bottom:8px;">حتماً اسمتان ترکیبی از حروف انگلیسی و حداقل چند عدد رندوم باشد. اسم‌های تکراری تایید نمی‌شوند.</li>
                     <li style="margin-bottom:8px;">لینک‌های فیلم‌ها و سریال‌ها ممکن است به دلایلی از کار افتاده یا منقضی شوند. در صورت نیاز به دانلود، اسم محتوا را به پشتیبانی ارسال کنید تا در اسرع وقت رسیدگی شود.</li>
@@ -410,28 +435,6 @@
         <div class="sidebar-footer">
             2026©
             <span>ساخته شده توسط H"N</span>
-        </div>
-    </div>
-
-    <!-- =========================
-         BOTTOM NAVIGATION (Modern Glass)
-    ========================= -->
-    <div class="bottom-nav" id="bottom-nav" style="display:none;">
-        <div class="nav-item active" onclick="switchNav('home')" id="nav-home">
-            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            <span data-i18n="nav_home">خانه</span>
-            <div class="nav-indicator"></div>
-        </div>
-        <div class="nav-item" onclick="switchNav('favs')" id="nav-favs">
-            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            <span data-i18n="nav_favs">علاقه‌مندی‌ها</span>
-            <div class="nav-indicator"></div>
-        </div>
-        <div class="nav-item" onclick="switchNav('news')" id="nav-news">
-            <div class="nav-notif" id="news-notif"></div>
-            <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-            <span data-i18n="nav_news">خبرها</span>
-            <div class="nav-indicator"></div>
         </div>
     </div>
 
@@ -499,10 +502,17 @@
 
         <div id="tab-news-gift" class="tab-content">
             <div class="admin-section">
-                <h3>ایجاد خبر جدید</h3>
+                <h3 id="form-news-title">ایجاد خبر جدید</h3>
                 <textarea id="new-news-content" class="input-field" style="height:100px; padding:12px; resize:none;" placeholder="متن خبر را بنویسید..."></textarea>
-                <button class="btn-primary" onclick="postNews()">انتشار خبر</button>
+                <div style="display:flex; gap:10px;">
+                    <button type="button" class="btn-primary" id="save-news-btn" onclick="postNews()">انتشار خبر</button>
+                    <button type="button" class="btn-primary" id="cancel-news-btn" style="display:none; background:#444;" onclick="cancelEditNews()">انصراف</button>
+                </div>
+                
+                <h3 style="margin-top:30px; border-top:1px solid var(--border-color); padding-top:20px;">لیست اخبار سایت</h3>
+                <div id="admin-news-list"></div>
             </div>
+
             <div class="admin-section">
                 <h3>تولید کد هدیه اشتراک</h3>
                 <div class="input-group">
@@ -641,6 +651,28 @@
     </div>
 
     <!-- =========================
+         MODERN BOTTOM NAVIGATION
+    ========================= -->
+    <div class="bottom-nav" id="bottom-nav" style="display:none;">
+        <div class="nav-item active" onclick="switchNav('home')" id="nav-home">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span data-i18n="nav_home">خانه</span>
+            <div class="nav-indicator"></div>
+        </div>
+        <div class="nav-item" onclick="switchNav('favs')" id="nav-favs">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            <span data-i18n="nav_favs">علاقه‌مندی‌ها</span>
+            <div class="nav-indicator"></div>
+        </div>
+        <div class="nav-item" onclick="switchNav('news')" id="nav-news">
+            <div class="nav-notif" id="news-notif"></div>
+            <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+            <span data-i18n="nav_news">خبرها</span>
+            <div class="nav-indicator"></div>
+        </div>
+    </div>
+
+    <!-- =========================
          MODALS
     ========================= -->
     <div class="modal" id="playerModal">
@@ -651,9 +683,6 @@
             <div class="neon-banner" id="neonBanner">
                 <div class="neon-bg"></div>
                 <div class="neon-text" id="neonTitle">نام محتوا</div>
-                <div class="neon-play-btn" onclick="startNeonPlayer()">
-                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </div>
             </div>
 
             <div class="video-container" id="realPlayerContainer">
@@ -665,6 +694,21 @@
                 <h3 class="modal-title" id="modalTitle">پخش محتوا</h3>
                 <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;" data-i18n="link_expired">این لینک منقضی شده است.</div>
                 <div id="modal-links-container"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Resume Modal -->
+    <div class="modal" id="resumeModal" style="z-index: 6500;">
+        <div class="modal-box" style="max-width: 320px; padding: 25px; text-align: center;">
+            <div style="width: 50px; height: 50px; background: rgba(59, 130, 246, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: var(--accent);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <h3 style="font-size: 16px; margin-bottom: 10px; color: var(--text-main);" data-i18n="resume_title">پخش از ادامه؟</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;" data-i18n="resume_desc">شما قبلاً بخشی از این محتوا را تماشا کرده‌اید.</p>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-primary" style="flex:1;" onclick="resumePlayback(true)" data-i18n="resume_btn">ادامه پخش</button>
+                <button class="btn-primary" style="flex:1; background: var(--bg-input); color: var(--text-main); border: 1px solid var(--border-color);" onclick="resumePlayback(false)" data-i18n="start_over_btn">از اول</button>
             </div>
         </div>
     </div>
@@ -747,22 +791,22 @@
     /* Dictionary for i18n */
     const dict = {
         'fa': {
-            'loading': 'لطفا صبر کنید...', 'show_pass': 'نمایش رمز عبور', 'login_btn': 'ورود به حساب', 'no_account': 'حساب کاربری ندارید؟', 'register_now': 'ثبت‌نام کنید',
+            'loading': 'PLATO', 'show_pass': 'نمایش رمز عبور', 'login_btn': 'ورود به حساب', 'no_account': 'حساب کاربری ندارید؟', 'register_now': 'ثبت‌نام کنید',
             'register_btn': 'ارسال درخواست عضویت', 'have_account': 'قبلاً ثبت‌نام کردید؟', 'login_now': 'وارد شوید', 'terms_title': 'قوانین و مقررات پلاتو',
             'accept_terms': 'پذیرفتن شرایط و قوانین فوق', 'confirm_register': 'تایید و ارسال ثبت‌نام', 'support_btn': 'ارتباط با پشتیبانی', 'inbox_btn': 'صندوق پیام‌ها',
             'gift_code_btn': 'کد هدیه', 'logout_btn': 'خروج از حساب', 'admin_panel': 'پنل مدیریت', 'nav_home': 'خانه', 'nav_favs': 'علاقه‌مندی‌ها', 'nav_news': 'خبرها',
             'cat_programs': 'برنامه‌ها', 'cat_kids': 'انیمیشن/کودکانه', 'cat_series': 'سریال‌ها', 'cat_movies': 'فیلم‌های سینمایی', 'quality_hd': 'کیفیت: عادی (HD)',
             'link_expired': 'این لینک منقضی شده است.', 'support_title': 'ارتباط با پشتیبانی', 'send_msg': 'ارسال پیام', 'inbox_title': 'صندوق پیام‌ها', 'gift_title': 'ثبت کد هدیه',
-            'apply_gift': 'اعمال کد'
+            'apply_gift': 'اعمال کد', 'resume_title': 'پخش از ادامه؟', 'resume_desc': 'شما قبلاً بخشی از این محتوا را تماشا کرده‌اید.', 'resume_btn': 'ادامه پخش', 'start_over_btn': 'از اول'
         },
         'en': {
-            'loading': 'Please wait...', 'show_pass': 'Show Password', 'login_btn': 'Login', 'no_account': 'No account?', 'register_now': 'Sign up',
+            'loading': 'PLATO', 'show_pass': 'Show Password', 'login_btn': 'Login', 'no_account': 'No account?', 'register_now': 'Sign up',
             'register_btn': 'Submit Request', 'have_account': 'Already registered?', 'login_now': 'Login now', 'terms_title': 'Terms & Conditions',
             'accept_terms': 'I accept the terms above', 'confirm_register': 'Confirm Registration', 'support_btn': 'Support', 'inbox_btn': 'Inbox',
             'gift_code_btn': 'Gift Code', 'logout_btn': 'Logout', 'admin_panel': 'Admin Panel', 'nav_home': 'Home', 'nav_favs': 'Favorites', 'nav_news': 'News',
             'cat_programs': 'Programs', 'cat_kids': 'Animation/Kids', 'cat_series': 'Series', 'cat_movies': 'Movies', 'quality_hd': 'Quality: Normal (HD)',
             'link_expired': 'This link has expired.', 'support_title': 'Contact Support', 'send_msg': 'Send Message', 'inbox_title': 'Inbox', 'gift_title': 'Enter Gift Code',
-            'apply_gift': 'Apply Code'
+            'apply_gift': 'Apply Code', 'resume_title': 'Resume playback?', 'resume_desc': 'You have already watched a part of this.', 'resume_btn': 'Resume', 'start_over_btn': 'Start Over'
         }
     };
     const placeholders = {
@@ -826,8 +870,6 @@
             } else {
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
-                
-                // منوی پایین برای همه کاربران و مدیران نمایش داده می‌شود (مگر در داخل پنل)
                 document.getElementById('bottom-nav').style.display = 'flex';
                 
                 if (currentUserProfile.role === 'admin') {
@@ -895,15 +937,8 @@
         document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active-view'));
         
         if(target === 'home') document.getElementById('view-home').classList.add('active-view');
-        if(target === 'favs') { 
-            document.getElementById('view-favs').classList.add('active-view'); 
-            renderFavs(); 
-        }
-        if(target === 'news') { 
-            document.getElementById('view-news').classList.add('active-view'); 
-            document.getElementById('news-notif').style.display = 'none';
-            loadNewsUser(); 
-        }
+        if(target === 'favs') { document.getElementById('view-favs').classList.add('active-view'); renderFavs(); }
+        if(target === 'news') { document.getElementById('view-news').classList.add('active-view'); document.getElementById('news-notif').style.display = 'none'; loadNewsUser(); }
         currentNav = target;
         window.scrollTo(0,0);
     }
@@ -976,7 +1011,6 @@
             const card = document.createElement("article");
             card.className = "movie-card";
             
-            // NEW Badge Logic (Only show if updated in last 3 days manually)
             let newBadgeHTML = "";
             if(item.updated_at) {
                 let diffDays = (new Date() - new Date(item.updated_at)) / (1000*60*60*24);
@@ -1010,10 +1044,10 @@
         renderDynamicList(f.filter(m => m.category === 'movie'), 'moviesList');
     });
 
-    /* Player Logic (Neon Edition Improved) */
+    /* Video Player & Autoplay / Resume Logic */
     const playerModal = document.getElementById("playerModal");
     const videoPlayer = document.getElementById("videoPlayer");
-    let currentVideoUrl = "";
+    let pendingVideoUrl = "";
 
     function checkSubscription() {
         if(currentUserProfile && currentUserProfile.role === 'admin') return true; 
@@ -1052,7 +1086,7 @@
                     row.style.cssText = "display:flex; gap:8px; margin-bottom:8px; align-items:center; background:var(--bg-input); padding:10px 14px; border-radius:12px; border:1px solid var(--border-color);";
                     row.innerHTML = `
                         <div style="flex:1; font-size:13px; font-weight:bold;">${btnTitle}</div>
-                        <button class="btn-sm btn-approve" style="border:none;" onclick="prepareVideo('${btnUrl}')">انتخاب پخش</button>
+                        <button class="btn-sm btn-approve" style="border:none;" onclick="prepareVideo('${btnUrl}')">پخش آنلاین</button>
                         <button class="btn-sm" style="background:var(--bg-box); color:var(--text-main); border:1px solid var(--border-color);" onclick="directDownload('${btnTitle}', '${btnUrl}')">دانلود</button>
                     `;
                     linksContainer.appendChild(row);
@@ -1062,15 +1096,39 @@
         playerModal.classList.add("show"); document.body.style.overflow = "hidden";
     }
 
-    window.prepareVideo = function(url) { currentVideoUrl = url; showCustomAlert('آماده پخش! روی دکمه پلی وسط تصویر کلیک کنید.'); }
-    
-    window.startNeonPlayer = async function() {
-        if(!currentVideoUrl) return showCustomAlert('ابتدا یک قسمت را برای پخش انتخاب کنید.');
+    window.prepareVideo = function(url) {
+        pendingVideoUrl = url;
+        let savedTime = localStorage.getItem('plato_prog_' + pendingVideoUrl);
+        if (savedTime && parseFloat(savedTime) > 10) {
+            document.getElementById('resumeModal').classList.add('show');
+        } else {
+            resumePlayback(false);
+        }
+    }
+
+    window.resumePlayback = async function(useSaved) {
+        document.getElementById('resumeModal').classList.remove('show');
         document.getElementById("neonBanner").style.display = "none";
         document.getElementById("realPlayerContainer").style.display = "block";
-        videoPlayer.src = currentVideoUrl;
+        videoPlayer.src = pendingVideoUrl;
+        
+        if (useSaved) {
+            let savedTime = localStorage.getItem('plato_prog_' + pendingVideoUrl);
+            if(savedTime) videoPlayer.currentTime = parseFloat(savedTime);
+        }
+        
         try { await videoPlayer.play(); } catch(e) {}
     }
+
+    videoPlayer.addEventListener('timeupdate', function() {
+        if (videoPlayer.currentTime > 5 && !videoPlayer.ended) {
+            localStorage.setItem('plato_prog_' + pendingVideoUrl, videoPlayer.currentTime);
+        }
+    });
+
+    videoPlayer.addEventListener('ended', function() {
+        localStorage.removeItem('plato_prog_' + pendingVideoUrl);
+    });
 
     window.toggleVideoQuality = function() {
         const btn = document.getElementById('qualityToggleBtn');
@@ -1082,12 +1140,14 @@
             videoPlayer.style.transform = 'scale(0.96)'; showCustomAlert('کیفیت بهینه شد.');
         }
     }
+
     window.directDownload = function(title, url) {
         if(!checkSubscription() || !url) return;
         const a = document.createElement('a'); a.href = url; a.target = '_blank';
         a.download = title.replace(/[^a-zA-Z0-9ا-ی]/g, '_') + '.mp4';
         document.body.appendChild(a); a.click(); a.remove(); showCustomAlert('دانلود آغاز شد.');
     }
+
     function closePlayer() {
         videoPlayer.pause(); videoPlayer.removeAttribute("src");
         playerModal.classList.remove("show"); document.body.style.overflow = "";
@@ -1125,18 +1185,18 @@
         if(tabId === 'tab-messages') loadAdminInbox();
         if(tabId === 'tab-users') loadAllUsers();
         if(tabId === 'tab-files') loadAdminMovies();
-        if(tabId === 'tab-news-gift') loadAdminGifts();
+        if(tabId === 'tab-news-gift') { loadAdminNews(); loadAdminGifts(); }
     }
     function showAdminPanel() {
         document.getElementById('main-app').style.display = 'none'; closeSidebar();
-        document.getElementById('bottom-nav').style.display = 'none'; // مخفی شدن منو در پنل ادمین
+        document.getElementById('bottom-nav').style.display = 'none'; 
         document.getElementById('admin-screen').style.display = 'flex';
         loadPendingRequests(); loadAdminMovies(); loadAllUsers();
     }
     function hideAdminPanel() {
         document.getElementById('admin-screen').style.display = 'none';
         document.getElementById('main-app').style.display = 'block'; 
-        document.getElementById('bottom-nav').style.display = 'flex'; // بازگشت منو
+        document.getElementById('bottom-nav').style.display = 'flex'; 
         fetchMoviesFromDatabase();
     }
 
@@ -1217,13 +1277,10 @@
         
         var payload = { title: tit, poster: pos, download_url: url, category: cat };
         
-        // کنترل دستی نشان NEW
         if(isNew) {
             payload.updated_at = new Date().toISOString();
         } else {
-            // تاریخی قدیمی ثبت میکنیم که برچسب نشان داده نشود
-            let oldDate = new Date();
-            oldDate.setDate(oldDate.getDate() - 10);
+            let oldDate = new Date(); oldDate.setDate(oldDate.getDate() - 10);
             payload.updated_at = oldDate.toISOString();
         }
 
@@ -1298,16 +1355,12 @@
     }
     window.saveMarqueeText = async function() { showLoader(true); let v = document.getElementById('admin-marquee-input').value.trim(); await supabaseClient.from('messages').delete().eq('direction', 'marquee'); if(v) await supabaseClient.from('messages').insert([{direction:'marquee', content:v, is_read:true}]); loadMarquee(); showLoader(false); }
 
-    /* News System (Fixed Safe Fetching) */
+    /* News System */
     async function checkNewsUpdates() {
         try {
             const { data } = await supabaseClient.from('news').select('id').order('id', {ascending: false}).limit(1);
             if(data && data.length > 0 && data[0].id > parseInt(lastNewsId)) { document.getElementById('news-notif').style.display = 'block'; }
         } catch(e) {}
-    }
-    async function postNews() {
-        const val = document.getElementById('new-news-content').value.trim(); if(!val) return;
-        showLoader(true); await supabaseClient.from('news').insert([{content: val}]); document.getElementById('new-news-content').value=''; showCustomAlert('منتشر شد'); showLoader(false);
     }
     async function loadNewsUser() {
         showLoader(true);
@@ -1318,7 +1371,7 @@
             try {
                 const { data: likes } = await supabaseClient.from('news_likes').select('news_id').eq('user_id', currentUserProfile.id);
                 if(likes) likedIds = likes.map(l => l.news_id);
-            } catch(likeError) { /* ignore if table missing/RLS issue */ }
+            } catch(likeError) {}
             
             const cont = document.getElementById('news-container'); cont.innerHTML = '';
             
@@ -1328,11 +1381,10 @@
                     const isLiked = likedIds.includes(n.id);
                     cont.innerHTML += `
                     <div class="news-card">
-                        <div class="news-header"><div class="news-avatar"><svg class="svg-icon" style="margin:0; width:20px; height:20px;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div><div class="news-author">مدیریت پلاتو</div><div class="news-date">${new Date(n.created_at).toLocaleDateString('fa-IR')}</div></div></div>
+                        <div class="news-header"><div class="news-avatar"><svg class="svg-icon" style="margin:0; width:20px; height:20px;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div><div class="news-author">PLATO News</div><div class="news-date">${new Date(n.created_at).toLocaleDateString('fa-IR')}</div></div></div>
                         <div class="news-content" id="n-txt-${n.id}">${n.content}</div>
                         <div class="news-actions">
                             <button class="news-btn ${isLiked?'liked':''}" onclick="likeNews(${n.id}, this)"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="like-cnt">${n.likes_count||0}</span></button>
-                            <button class="news-btn" onclick="copyNewsText(${n.id})"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>کپی</button>
                         </div>
                     </div>`;
                 });
@@ -1357,9 +1409,65 @@
             }
         } catch(e) {}
     }
-    window.copyNewsText = function(nid) { const t = document.getElementById('n-txt-'+nid).innerText; navigator.clipboard.writeText(t); showCustomAlert('متن کپی شد'); }
 
-    /* Gift Codes (Fixed error handling) */
+    /* Admin News Management */
+    let editingNewsId = null;
+    let adminNewsArray = [];
+    async function loadAdminNews() {
+        const { data } = await supabaseClient.from('news').select('*').order('created_at', { ascending: false });
+        const list = document.getElementById('admin-news-list'); list.innerHTML = '';
+        if(data) {
+            adminNewsArray = data;
+            data.forEach(n => {
+                list.innerHTML += `
+                <div class="req-card" style="flex-direction:column; align-items:stretch;">
+                    <div style="font-size:13px; line-height:1.6; margin-bottom:10px;">${n.content}</div>
+                    <div style="display:flex; justify-content:flex-end; gap:5px;">
+                        <button class="btn-sm btn-edit" onclick="editNews(${n.id})">ویرایش</button>
+                        <button class="btn-sm btn-reject" onclick="deleteNews(${n.id})">حذف</button>
+                    </div>
+                </div>`;
+            });
+        }
+    }
+    window.editNews = function(id) {
+        const n = adminNewsArray.find(x => x.id === id); if(!n) return;
+        document.getElementById('new-news-content').value = n.content;
+        editingNewsId = id;
+        document.getElementById('form-news-title').textContent = "ویرایش خبر";
+        document.getElementById('save-news-btn').textContent = "ثبت ویرایش";
+        document.getElementById('cancel-news-btn').style.display = "block";
+    }
+    window.cancelEditNews = function() {
+        document.getElementById('new-news-content').value = '';
+        editingNewsId = null;
+        document.getElementById('form-news-title').textContent = "ایجاد خبر جدید";
+        document.getElementById('save-news-btn').textContent = "انتشار خبر";
+        document.getElementById('cancel-news-btn').style.display = "none";
+    }
+    async function postNews() {
+        const val = document.getElementById('new-news-content').value.trim(); if(!val) return;
+        showLoader(true);
+        if(editingNewsId) {
+            await supabaseClient.from('news').update({content: val}).eq('id', editingNewsId);
+            showCustomAlert('خبر ویرایش شد');
+        } else {
+            await supabaseClient.from('news').insert([{content: val}]);
+            showCustomAlert('خبر منتشر شد');
+        }
+        cancelEditNews();
+        loadAdminNews();
+        showLoader(false);
+    }
+    window.deleteNews = async function(id) {
+        if(!confirm('آیا از حذف این خبر اطمینان دارید؟')) return;
+        showLoader(true);
+        await supabaseClient.from('news').delete().eq('id', id);
+        loadAdminNews();
+        showLoader(false);
+    }
+
+    /* Gift Codes Management */
     async function createGiftCode() {
         const code = document.getElementById('gift-code-input').value.trim().toUpperCase();
         const days = parseInt(document.getElementById('gift-days-input').value);
@@ -1372,10 +1480,28 @@
     async function loadAdminGifts() {
         const { data } = await supabaseClient.from('gift_codes').select('*').order('id', {ascending: false});
         const list = document.getElementById('gift-codes-list'); list.innerHTML = '';
-        if(data) data.forEach(g => { list.innerHTML += `<div class="req-card"><div class="req-info"><div style="color:var(--accent); letter-spacing:2px;">${g.code}</div><small>${g.days} روز - استفاده: ${g.current_uses}/${g.max_uses}</small></div></div>`; });
+        if(data) data.forEach(g => { 
+            list.innerHTML += `
+            <div class="req-card">
+                <div class="req-info">
+                    <div style="color:var(--accent); letter-spacing:2px;">${g.code}</div>
+                    <small>${g.days} روز - استفاده: ${g.current_uses}/${g.max_uses}</small>
+                </div>
+                <div>
+                    <button class="btn-sm btn-reject" onclick="deleteGiftCode(${g.id})">حذف</button>
+                </div>
+            </div>`; 
+        });
     }
+    window.deleteGiftCode = async function(id) {
+        if(!confirm('آیا از حذف این کد هدیه مطمئن هستید؟')) return;
+        showLoader(true);
+        await supabaseClient.from('gift_codes').delete().eq('id', id);
+        loadAdminGifts();
+        showLoader(false);
+    }
+
     function openGiftModal() { closeSidebar(); document.getElementById('giftModal').classList.add('show'); }
-    
     async function applyGiftCode() {
         const code = document.getElementById('user-gift-code').value.trim().toUpperCase(); if(!code) return;
         showLoader(true);
@@ -1383,13 +1509,10 @@
             const { data: used } = await supabaseClient.from('used_codes').select('*').eq('code', code).eq('user_id', currentUserProfile.id);
             if(used && used.length > 0) { showCustomAlert('شما قبلا از این کد استفاده کرده‌اید!'); showLoader(false); return; }
             
-            // اصلاح مشکل قبلی به همراه error checking مناسب
             const { data: gc, error: gcError } = await supabaseClient.from('gift_codes').select('*').eq('code', code).single();
             if(gcError || !gc) { showCustomAlert('کد وارد شده یافت نشد یا نامعتبر است.'); showLoader(false); return; }
-            
             if(gc.current_uses >= gc.max_uses) { showCustomAlert('ظرفیت استفاده از این کد تمام شده است.'); showLoader(false); return; }
 
-            // Add Sub
             let currentSub = currentUserProfile.sub_end_date ? new Date(currentUserProfile.sub_end_date) : null;
             let now = new Date(); let baseDate = (currentSub && currentSub > now) ? currentSub : now;
             baseDate.setDate(baseDate.getDate() + gc.days);
@@ -1398,7 +1521,6 @@
             await supabaseClient.from('gift_codes').update({ current_uses: gc.current_uses + 1 }).eq('id', gc.id);
             await supabaseClient.from('used_codes').insert([{code: code, user_id: currentUserProfile.id}]);
             
-            // Re-fetch profile
             const { data: np } = await supabaseClient.from('users_data').select('*').eq('id', currentUserProfile.id).single();
             currentUserProfile = np;
             
