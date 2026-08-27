@@ -28,7 +28,7 @@
             --accent: #3b82f6;
             --accent-glow: rgba(59, 130, 246, 0.35);
             --red-neon: #ef4444;
-            --bottom-nav-h: 70px;
+            --bottom-nav-h: 85px; /* فضا برای منوی معلق */
         }
 
         body.light-theme {
@@ -142,7 +142,6 @@
         .admin-section h3 { margin-bottom: 16px; font-size: 15px; color: var(--accent); display: flex; align-items: center; gap: 8px; }
         .admin-section h3::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--accent); border-radius: 4px; }
         
-        /* Draggable Items */
         .req-card { background: var(--bg-input); padding: 14px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); transition: 0.2s; }
         .req-card.draggable { cursor: grab; }
         .req-card.draggable:active { cursor: grabbing; opacity: 0.7; transform: scale(0.98); }
@@ -156,18 +155,42 @@
         .btn-reject { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
 
         /* =========================
-           BOTTOM NAVIGATION
+           MODERN BOTTOM NAVIGATION
         ========================= */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: var(--bottom-nav-h); background: var(--header-bg); backdrop-filter: blur(15px); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; align-items: center; z-index: 1000; padding-bottom: max(0px, env(safe-area-inset-bottom)); }
-        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; position: relative; }
-        .nav-item svg { width: 22px; height: 22px; margin-bottom: 4px; stroke: currentColor; stroke-width: 2; fill: none; }
+        .bottom-nav { 
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
+            width: calc(100% - 40px); max-width: 400px; height: 70px; 
+            background: rgba(18, 18, 22, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 35px; 
+            display: flex; justify-content: space-around; align-items: center; z-index: 1000; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding: 0 10px;
+        }
+        .nav-item { 
+            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            color: var(--text-muted); font-size: 11px; font-weight: bold; cursor: pointer; 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; height: 100%;
+        }
+        .nav-item svg { width: 22px; height: 22px; margin-bottom: 4px; stroke: currentColor; stroke-width: 2; fill: none; transition: transform 0.3s ease; }
         .nav-item.active { color: var(--accent); }
-        .nav-notif { position: absolute; top: 8px; right: calc(50% - 15px); width: 8px; height: 8px; background: rgba(16, 185, 129, 0.8); border-radius: 50%; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); display: none; }
+        .nav-item.active svg { transform: translateY(-3px) scale(1.1); filter: drop-shadow(0 4px 6px rgba(59, 130, 246, 0.4)); }
+        
+        .nav-indicator {
+            position: absolute; bottom: 8px; width: 5px; height: 5px; background: var(--accent);
+            border-radius: 50%; opacity: 0; transform: scale(0); transition: all 0.3s ease;
+        }
+        .nav-item.active .nav-indicator { opacity: 1; transform: scale(1); }
+
+        .nav-notif { position: absolute; top: 12px; right: calc(50% - 15px); width: 8px; height: 8px; background: rgba(16, 185, 129, 0.8); border-radius: 50%; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); display: none; }
+
+        /* VIEW TRANSITIONS */
+        .view-section { display: none; animation: fadeSlide 0.3s ease-out forwards; }
+        .view-section.active-view { display: block; }
+        @keyframes fadeSlide { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         /* =========================
            MAIN APP & HEADER
         ========================= */
-        #app-wrapper { width: 100%; max-width: 1400px; margin: 0 auto; position: relative; padding-bottom: calc(var(--bottom-nav-h) + 20px); }
+        #app-wrapper { width: 100%; max-width: 1400px; margin: 0 auto; position: relative; padding-bottom: var(--bottom-nav-h); }
         #main-app { display: none; }
         
         .header { position: sticky; top: 0; z-index: 1000; height: 75px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--header-bg); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color); }
@@ -219,9 +242,9 @@
         .new-badge { position: absolute; top: 12px; right: 12px; z-index: 10; background: #ef4444; color: #fff; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 6px; letter-spacing: 1px; box-shadow: 0 2px 5px rgba(239, 68, 68, 0.5); }
 
         /* =========================
-           NEWS SECTION (Instagram Style)
+           NEWS SECTION 
         ========================= */
-        #news-container { display: none; padding: 20px; max-width: 600px; margin: 0 auto; }
+        #news-container { padding: 20px; max-width: 600px; margin: 0 auto; padding-bottom: 90px; }
         .news-card { background: var(--bg-box); border: 1px solid var(--border-color); border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .news-header { display: flex; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border-color); }
         .news-avatar { width: 36px; height: 36px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 10px; color: #fff; }
@@ -236,16 +259,22 @@
         .news-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
         /* =========================
-           NEON PLAYER BANNER
+           NEON PLAYER BANNER (IMPROVED)
         ========================= */
-        .neon-banner { width: 100%; aspect-ratio: 16 / 9; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .neon-banner { width: 100%; aspect-ratio: 16 / 9; background: #000; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
         .neon-bg { position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(239, 68, 68, 0.15) 0%, #000 70%); }
-        .neon-text { position: relative; z-index: 2; font-size: 28px; font-weight: 900; color: #fff; text-align: center; text-shadow: 0 0 10px var(--red-neon), 0 0 20px var(--red-neon), 0 0 40px var(--red-neon); letter-spacing: 2px; padding: 0 20px; }
-        .neon-play-btn { position: absolute; z-index: 3; width: 60px; height: 60px; background: rgba(239,68,68,0.2); border: 2px solid var(--red-neon); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px var(--red-neon); cursor: pointer; transition: 0.3s; margin-top: 80px; }
-        .neon-play-btn:hover { background: var(--red-neon); transform: scale(1.1); }
-        .neon-play-btn svg { width: 24px; height: 24px; fill: #fff; margin-left: 4px; }
+        .neon-text { position: relative; z-index: 2; font-size: 30px; font-weight: 900; color: #fff; text-align: center; text-shadow: 0 0 10px var(--red-neon), 0 0 20px var(--red-neon), 0 0 40px var(--red-neon); letter-spacing: 2px; padding: 0 20px; margin-bottom: 25px; }
+        .neon-play-btn { 
+            position: relative; z-index: 3; width: 65px; height: 65px; 
+            background: rgba(239, 68, 68, 0.15); border: 2px solid var(--red-neon); 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5), inset 0 0 15px rgba(239, 68, 68, 0.3); 
+            backdrop-filter: blur(5px); cursor: pointer; transition: all 0.3s ease; 
+        }
+        .neon-play-btn:hover { background: rgba(239, 68, 68, 0.3); transform: scale(1.08); box-shadow: 0 0 30px rgba(239, 68, 68, 0.8), inset 0 0 20px rgba(239, 68, 68, 0.5); }
+        .neon-play-btn svg { width: 28px; height: 28px; fill: #fff; margin-left: 4px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.8)); }
 
-        .video-container { width: 100%; background: #000; flex-shrink: 0; position: relative; display: none; } /* Hidden initially */
+        .video-container { width: 100%; background: #000; flex-shrink: 0; position: relative; display: none; }
         .video-container video { width: 100%; aspect-ratio: 16 / 9; display: block; }
         .quality-badge { position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; z-index: 10; }
         
@@ -253,7 +282,6 @@
         .msg-bubble.system { border-right-color: #3b82f6; } 
         .msg-bubble.admin-reply { border-right-color: #10b981; } 
 
-        /* Confetti Canvas */
         #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; display: none; }
     </style>
 </head>
@@ -386,21 +414,24 @@
     </div>
 
     <!-- =========================
-         BOTTOM NAVIGATION
+         BOTTOM NAVIGATION (Modern Glass)
     ========================= -->
     <div class="bottom-nav" id="bottom-nav" style="display:none;">
         <div class="nav-item active" onclick="switchNav('home')" id="nav-home">
             <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             <span data-i18n="nav_home">خانه</span>
+            <div class="nav-indicator"></div>
         </div>
         <div class="nav-item" onclick="switchNav('favs')" id="nav-favs">
             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
             <span data-i18n="nav_favs">علاقه‌مندی‌ها</span>
+            <div class="nav-indicator"></div>
         </div>
         <div class="nav-item" onclick="switchNav('news')" id="nav-news">
             <div class="nav-notif" id="news-notif"></div>
             <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
             <span data-i18n="nav_news">خبرها</span>
+            <div class="nav-indicator"></div>
         </div>
     </div>
 
@@ -451,6 +482,12 @@
             <div class="input-group">
                 <input type="number" id="new-movie-timer" class="input-field" placeholder="زمان انقضای لینک به ساعت (خالی = بدون انقضا)">
             </div>
+            
+            <!-- NEW Badge Toggle -->
+            <label class="checkbox-container" style="margin-bottom:15px; background:var(--bg-box); padding:10px; border-radius:8px; border:1px solid var(--border-color);">
+                <input type="checkbox" id="new-movie-isnew"> نشان دادن برچسب NEW (به عنوان قسمت جدید)
+            </label>
+
             <div style="display:flex; gap:10px;">
                 <button type="button" id="save-movie-btn" class="btn-primary" onclick="saveMovie()">ذخیره در سایت</button>
                 <button type="button" id="cancel-edit-btn" class="btn-primary" style="display:none; background:#444;" onclick="cancelEdit()">انصراف</button>
@@ -489,13 +526,14 @@
             </div>
             <div class="admin-section">
                 <h3>شارژ اشتراک کاربری</h3>
+                <div style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">نکته: در صورت وارد کردن عدد 0 اشتراک کاربر به کل حذف می‌شود.</div>
                 <div class="input-group">
                     <input type="text" id="charge-user" class="input-field" placeholder="نام کاربری مخاطب" autocapitalize="none">
                 </div>
                 <div class="input-group">
-                    <input type="number" id="charge-days" class="input-field" placeholder="تعداد روز">
+                    <input type="number" id="charge-days" class="input-field" placeholder="تعداد روز (0 = لغو)">
                 </div>
-                <button type="button" class="btn-primary" onclick="chargeSub()">افزودن به اشتراک فعلی</button>
+                <button type="button" class="btn-primary" onclick="chargeSub()">اعمال تغییرات اشتراک</button>
             </div>
         </div>
 
@@ -542,7 +580,7 @@
         </header>
 
         <!-- Home View -->
-        <div id="view-home">
+        <div id="view-home" class="view-section active-view">
             <div id="marqueeContainer" class="marquee-box" style="display:none;">
                 <div class="marquee-text-wrapper">
                     <div class="marquee-text" id="marqueeTextContent"></div>
@@ -591,14 +629,14 @@
         </div>
 
         <!-- Favs View -->
-        <div id="view-favs" style="display:none; padding:20px;">
+        <div id="view-favs" class="view-section" style="padding:20px;">
             <h2 style="font-size: 18px; margin-bottom: 20px; border-right: 4px solid var(--accent); padding-right: 10px;" data-i18n="nav_favs">علاقه‌مندی‌ها</h2>
             <div id="favsList" style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"></div>
         </div>
 
         <!-- News View -->
-        <div id="view-news" style="display:none;">
-            <div id="news-container" style="display:block;"></div>
+        <div id="view-news" class="view-section">
+            <div id="news-container"></div>
         </div>
     </div>
 
@@ -789,16 +827,16 @@
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
                 
+                // منوی پایین برای همه کاربران و مدیران نمایش داده می‌شود (مگر در داخل پنل)
+                document.getElementById('bottom-nav').style.display = 'flex';
+                
                 if (currentUserProfile.role === 'admin') {
                     document.getElementById('admin-sidebar-btn-container').innerHTML = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()"><span data-i18n="admin_panel">پنل مدیریت</span><svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>`;
-                } else {
-                    document.getElementById('bottom-nav').style.display = 'flex';
                 }
                 
                 await updateHeartbeat();
                 await Promise.all([fetchFavorites(), fetchMoviesFromDatabase(), loadMarquee(), checkNewsUpdates()]);
                 
-                // Polling optimized: 60s for messages/heartbeat
                 setInterval(() => { updateHeartbeat(); checkUnreadMessages(); }, 60000);
             }
         } catch (err) { document.getElementById('auth-screen').style.display = 'flex'; }
@@ -849,18 +887,20 @@
     }
     async function doLogout() { if(supabaseClient) await supabaseClient.auth.signOut(); window.location.reload(); }
 
-    /* Bottom Nav */
+    /* Modern Bottom Nav Switches */
     function switchNav(target) {
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
         document.getElementById('nav-' + target).classList.add('active');
-        document.getElementById('view-home').style.display = 'none';
-        document.getElementById('view-favs').style.display = 'none';
-        document.getElementById('view-news').style.display = 'none';
         
-        if(target === 'home') document.getElementById('view-home').style.display = 'block';
-        if(target === 'favs') { document.getElementById('view-favs').style.display = 'block'; renderFavs(); }
+        document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active-view'));
+        
+        if(target === 'home') document.getElementById('view-home').classList.add('active-view');
+        if(target === 'favs') { 
+            document.getElementById('view-favs').classList.add('active-view'); 
+            renderFavs(); 
+        }
         if(target === 'news') { 
-            document.getElementById('view-news').style.display = 'block'; 
+            document.getElementById('view-news').classList.add('active-view'); 
             document.getElementById('news-notif').style.display = 'none';
             loadNewsUser(); 
         }
@@ -915,7 +955,6 @@
     /* Movies & UI Render */
     async function fetchMoviesFromDatabase() {
         try {
-            // Added sort_order logic
             const { data } = await supabaseClient.from('movies').select('*').order('sort_order', { ascending: true }).order('id', { ascending: false });
             if(data) {
                 dynamicDataArray = data;
@@ -937,11 +976,11 @@
             const card = document.createElement("article");
             card.className = "movie-card";
             
-            // NEW Badge Logic (if updated in last 3 days)
+            // NEW Badge Logic (Only show if updated in last 3 days manually)
             let newBadgeHTML = "";
             if(item.updated_at) {
                 let diffDays = (new Date() - new Date(item.updated_at)) / (1000*60*60*24);
-                if(diffDays <= 3) newBadgeHTML = `<div class="new-badge">NEW</div>`;
+                if(diffDays <= 3 && diffDays >= 0) newBadgeHTML = `<div class="new-badge">NEW</div>`;
             }
 
             card.innerHTML = `
@@ -971,7 +1010,7 @@
         renderDynamicList(f.filter(m => m.category === 'movie'), 'moviesList');
     });
 
-    /* Player Logic (Neon Edition) */
+    /* Player Logic (Neon Edition Improved) */
     const playerModal = document.getElementById("playerModal");
     const videoPlayer = document.getElementById("videoPlayer");
     let currentVideoUrl = "";
@@ -1090,31 +1129,39 @@
     }
     function showAdminPanel() {
         document.getElementById('main-app').style.display = 'none'; closeSidebar();
+        document.getElementById('bottom-nav').style.display = 'none'; // مخفی شدن منو در پنل ادمین
         document.getElementById('admin-screen').style.display = 'flex';
         loadPendingRequests(); loadAdminMovies(); loadAllUsers();
     }
     function hideAdminPanel() {
         document.getElementById('admin-screen').style.display = 'none';
-        document.getElementById('main-app').style.display = 'block'; fetchMoviesFromDatabase();
+        document.getElementById('main-app').style.display = 'block'; 
+        document.getElementById('bottom-nav').style.display = 'flex'; // بازگشت منو
+        fetchMoviesFromDatabase();
     }
 
-    /* Sub Charging (Additive Logic) */
+    /* Sub Charging (Zero sets to Null) */
     async function chargeSub() {
         var user = toEnglishDigits(document.getElementById('charge-user').value).trim().toLowerCase();
         var days = parseInt(toEnglishDigits(document.getElementById('charge-days').value));
-        if(!user || !days) return showCustomAlert('اطلاعات را کامل وارد کنید');
+        if(!user || isNaN(days)) return showCustomAlert('اطلاعات را کامل وارد کنید');
+        
         showLoader(true);
         try {
             const { data: udata } = await supabaseClient.from('users_data').select('id, sub_end_date').eq('username', user).single();
             if (!udata) { showCustomAlert('کاربر پیدا نشد.'); showLoader(false); return; }
             
-            let currentSub = udata.sub_end_date ? new Date(udata.sub_end_date) : null;
-            let now = new Date();
-            let baseDate = (currentSub && currentSub > now) ? currentSub : now;
-            baseDate.setDate(baseDate.getDate() + days);
-            
-            await supabaseClient.from('users_data').update({ sub_end_date: baseDate.toISOString() }).eq('id', udata.id);
-            showCustomAlert('اشتراک جمع و فعال شد.');
+            if(days === 0) {
+                await supabaseClient.from('users_data').update({ sub_end_date: null }).eq('id', udata.id);
+                showCustomAlert('اشتراک کاربر لغو شد.');
+            } else {
+                let currentSub = udata.sub_end_date ? new Date(udata.sub_end_date) : null;
+                let now = new Date();
+                let baseDate = (currentSub && currentSub > now) ? currentSub : now;
+                baseDate.setDate(baseDate.getDate() + days);
+                await supabaseClient.from('users_data').update({ sub_end_date: baseDate.toISOString() }).eq('id', udata.id);
+                showCustomAlert('اشتراک جمع و فعال شد.');
+            }
         } catch(e) {}
         showLoader(false);
     }
@@ -1145,7 +1192,6 @@
                         if(dragIndex < dropIndex) card.after(dragSourceElement); else card.before(dragSourceElement);
                         
                         showLoader(true);
-                        // Update sort_order for all in DB
                         const updatedCards = [...list.querySelectorAll('.draggable')];
                         const updates = updatedCards.map((c, idx) => supabaseClient.from('movies').update({ sort_order: idx }).eq('id', c.dataset.id));
                         await Promise.all(updates);
@@ -1160,9 +1206,27 @@
     }
 
     async function saveMovie() {
-        var cat = document.getElementById('new-movie-category').value, tit = document.getElementById('new-movie-title').value.trim(), pos = document.getElementById('new-movie-poster').value.trim(), url = document.getElementById('new-movie-url').value.trim(), tHour = document.getElementById('new-movie-timer').value.trim();
+        var cat = document.getElementById('new-movie-category').value;
+        var tit = document.getElementById('new-movie-title').value.trim();
+        var pos = document.getElementById('new-movie-poster').value.trim();
+        var url = document.getElementById('new-movie-url').value.trim();
+        var tHour = document.getElementById('new-movie-timer').value.trim();
+        var isNew = document.getElementById('new-movie-isnew').checked;
+        
         if(!tit || !pos) return showCustomAlert('عنوان و لینک عکس را وارد کنید');
-        var payload = { title: tit, poster: pos, download_url: url, category: cat, updated_at: new Date().toISOString() };
+        
+        var payload = { title: tit, poster: pos, download_url: url, category: cat };
+        
+        // کنترل دستی نشان NEW
+        if(isNew) {
+            payload.updated_at = new Date().toISOString();
+        } else {
+            // تاریخی قدیمی ثبت میکنیم که برچسب نشان داده نشود
+            let oldDate = new Date();
+            oldDate.setDate(oldDate.getDate() - 10);
+            payload.updated_at = oldDate.toISOString();
+        }
+
         if(tHour) { let d = new Date(); d.setHours(d.getHours() + parseFloat(tHour)); payload.countdown_end = d.toISOString(); } 
         else payload.countdown_end = null;
 
@@ -1173,17 +1237,26 @@
             showCustomAlert("ذخیره شد!"); cancelEdit(); await fetchMoviesFromDatabase(); loadAdminMovies();
         } catch(e) {} showLoader(false);
     }
+
     function editMovie(id) {
         const m = dynamicDataArray.find(x => x.id === id); if(!m) return;
         document.getElementById('new-movie-category').value = m.category || 'series'; document.getElementById('new-movie-title').value = m.title;
         document.getElementById('new-movie-poster').value = m.poster; document.getElementById('new-movie-url').value = m.download_url || '';
+        
+        if(m.updated_at) {
+            let diffDays = (new Date() - new Date(m.updated_at)) / (1000*60*60*24);
+            document.getElementById('new-movie-isnew').checked = (diffDays <= 3 && diffDays >= 0);
+        } else {
+            document.getElementById('new-movie-isnew').checked = false;
+        }
+
         editingMovieId = id; document.getElementById('form-movie-title').textContent = "ویرایش محتوا";
         document.getElementById('cancel-edit-btn').style.display = "block"; window.scrollTo(0,0);
     }
-    function cancelEdit() { document.getElementById('new-movie-title').value = ''; document.getElementById('new-movie-poster').value = ''; document.getElementById('new-movie-url').value = ''; editingMovieId = null; document.getElementById('form-movie-title').textContent = "اضافه کردن محتوای جدید"; document.getElementById('cancel-edit-btn').style.display = "none"; }
+    function cancelEdit() { document.getElementById('new-movie-title').value = ''; document.getElementById('new-movie-poster').value = ''; document.getElementById('new-movie-url').value = ''; document.getElementById('new-movie-isnew').checked = false; editingMovieId = null; document.getElementById('form-movie-title').textContent = "اضافه کردن محتوای جدید"; document.getElementById('cancel-edit-btn').style.display = "none"; }
     async function deleteMovie(id) { if(!confirm('حذف شود؟')) return; showLoader(true); await supabaseClient.from('movies').delete().eq('id', id); await fetchMoviesFromDatabase(); loadAdminMovies(); showLoader(false); }
 
-    /* Admin Users (Sub precise display & Online fix) */
+    /* Admin Users */
     async function loadAllUsers() {
         try {
             const { data } = await supabaseClient.from('users_data').select('*').order('created_at', { ascending: false });
@@ -1193,9 +1266,7 @@
 
             if(data) {
                 data.forEach(user => {
-                    // Check heartbeat (5 mins)
                     if(user.last_active && (nowTime - new Date(user.last_active).getTime()) < 300000) onlineCount++;
-                    
                     if(user.role === 'admin') return;
                     let subText = "ندارد";
                     if(user.sub_end_date) {
@@ -1208,7 +1279,7 @@
             }
         } catch(e) {}
     }
-    async function loadPendingRequests() { /* Kept same simple logic */
+    async function loadPendingRequests() { 
         const { data } = await supabaseClient.from('users_data').select('*').eq('status', 'pending');
         const list = document.getElementById('pending-list'); list.innerHTML = '';
         if(data) data.forEach(req => list.innerHTML += `<div class="req-card"><div class="req-info"><div>آیدی: <b>${req.username}</b></div><small>مدل: ${req.phone_model}</small></div><div><button class="btn-sm btn-approve" onclick="updateStatus('${req.id}', 'approved')">تایید</button><button class="btn-sm btn-reject" onclick="updateStatus('${req.id}', 'rejected')">رد</button></div></div>`);
@@ -1227,10 +1298,12 @@
     }
     window.saveMarqueeText = async function() { showLoader(true); let v = document.getElementById('admin-marquee-input').value.trim(); await supabaseClient.from('messages').delete().eq('direction', 'marquee'); if(v) await supabaseClient.from('messages').insert([{direction:'marquee', content:v, is_read:true}]); loadMarquee(); showLoader(false); }
 
-    /* News System */
+    /* News System (Fixed Safe Fetching) */
     async function checkNewsUpdates() {
-        const { data } = await supabaseClient.from('news').select('id').order('id', {ascending: false}).limit(1);
-        if(data && data.length > 0 && data[0].id > parseInt(lastNewsId)) { document.getElementById('news-notif').style.display = 'block'; }
+        try {
+            const { data } = await supabaseClient.from('news').select('id').order('id', {ascending: false}).limit(1);
+            if(data && data.length > 0 && data[0].id > parseInt(lastNewsId)) { document.getElementById('news-notif').style.display = 'block'; }
+        } catch(e) {}
     }
     async function postNews() {
         const val = document.getElementById('new-news-content').value.trim(); if(!val) return;
@@ -1238,46 +1311,55 @@
     }
     async function loadNewsUser() {
         showLoader(true);
-        const { data: news } = await supabaseClient.from('news').select('*').order('created_at', { ascending: false });
-        const { data: likes } = await supabaseClient.from('news_likes').select('news_id').eq('user_id', currentUserProfile.id);
-        const likedIds = likes ? likes.map(l => l.news_id) : [];
-        const cont = document.getElementById('news-container'); cont.innerHTML = '';
-        
-        if(news && news.length > 0) {
-            lastNewsId = news[0].id; localStorage.setItem('plato_last_news', lastNewsId);
-            news.forEach(n => {
-                const isLiked = likedIds.includes(n.id);
-                cont.innerHTML += `
-                <div class="news-card">
-                    <div class="news-header"><div class="news-avatar"><svg class="svg-icon" style="margin:0; width:20px; height:20px;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div><div class="news-author">مدیریت پلاتو</div><div class="news-date">${new Date(n.created_at).toLocaleDateString('fa-IR')}</div></div></div>
-                    <div class="news-content" id="n-txt-${n.id}">${n.content}</div>
-                    <div class="news-actions">
-                        <button class="news-btn ${isLiked?'liked':''}" onclick="likeNews(${n.id}, this)"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="like-cnt">${n.likes_count||0}</span></button>
-                        <button class="news-btn" onclick="copyNewsText(${n.id})"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>کپی</button>
-                    </div>
-                </div>`;
-            });
-        }
+        try {
+            const { data: news } = await supabaseClient.from('news').select('*').order('created_at', { ascending: false });
+            let likedIds = [];
+            
+            try {
+                const { data: likes } = await supabaseClient.from('news_likes').select('news_id').eq('user_id', currentUserProfile.id);
+                if(likes) likedIds = likes.map(l => l.news_id);
+            } catch(likeError) { /* ignore if table missing/RLS issue */ }
+            
+            const cont = document.getElementById('news-container'); cont.innerHTML = '';
+            
+            if(news && news.length > 0) {
+                lastNewsId = news[0].id; localStorage.setItem('plato_last_news', lastNewsId);
+                news.forEach(n => {
+                    const isLiked = likedIds.includes(n.id);
+                    cont.innerHTML += `
+                    <div class="news-card">
+                        <div class="news-header"><div class="news-avatar"><svg class="svg-icon" style="margin:0; width:20px; height:20px;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div><div class="news-author">مدیریت پلاتو</div><div class="news-date">${new Date(n.created_at).toLocaleDateString('fa-IR')}</div></div></div>
+                        <div class="news-content" id="n-txt-${n.id}">${n.content}</div>
+                        <div class="news-actions">
+                            <button class="news-btn ${isLiked?'liked':''}" onclick="likeNews(${n.id}, this)"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="like-cnt">${n.likes_count||0}</span></button>
+                            <button class="news-btn" onclick="copyNewsText(${n.id})"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>کپی</button>
+                        </div>
+                    </div>`;
+                });
+            }
+        } catch(e) {}
         showLoader(false);
     }
     window.likeNews = async function(nid, btn) {
         const cntEl = btn.querySelector('.like-cnt');
         let cnt = parseInt(cntEl.textContent);
-        if(btn.classList.contains('liked')) {
-            btn.classList.remove('liked'); cntEl.textContent = Math.max(0, cnt-1);
-            await supabaseClient.from('news_likes').delete().eq('user_id', currentUserProfile.id).eq('news_id', nid);
-            await supabaseClient.rpc('decrement_likes', { row_id: nid }); // Or manual update if RPC not present
-        } else {
-            btn.classList.add('liked'); cntEl.textContent = cnt+1;
-            await supabaseClient.from('news_likes').insert([{user_id: currentUserProfile.id, news_id: nid}]);
-            // Since RPC might not exist, doing manual update on client side is acceptable for this level
-            const {data} = await supabaseClient.from('news').select('likes_count').eq('id',nid).single();
-            if(data) await supabaseClient.from('news').update({likes_count: data.likes_count+1}).eq('id', nid);
-        }
+        try {
+            if(btn.classList.contains('liked')) {
+                btn.classList.remove('liked'); cntEl.textContent = Math.max(0, cnt-1);
+                await supabaseClient.from('news_likes').delete().eq('user_id', currentUserProfile.id).eq('news_id', nid);
+                const {data} = await supabaseClient.from('news').select('likes_count').eq('id',nid).single();
+                if(data) await supabaseClient.from('news').update({likes_count: Math.max(0, data.likes_count-1)}).eq('id', nid);
+            } else {
+                btn.classList.add('liked'); cntEl.textContent = cnt+1;
+                await supabaseClient.from('news_likes').insert([{user_id: currentUserProfile.id, news_id: nid}]);
+                const {data} = await supabaseClient.from('news').select('likes_count').eq('id',nid).single();
+                if(data) await supabaseClient.from('news').update({likes_count: data.likes_count+1}).eq('id', nid);
+            }
+        } catch(e) {}
     }
     window.copyNewsText = function(nid) { const t = document.getElementById('n-txt-'+nid).innerText; navigator.clipboard.writeText(t); showCustomAlert('متن کپی شد'); }
 
-    /* Gift Codes */
+    /* Gift Codes (Fixed error handling) */
     async function createGiftCode() {
         const code = document.getElementById('gift-code-input').value.trim().toUpperCase();
         const days = parseInt(document.getElementById('gift-days-input').value);
@@ -1293,6 +1375,7 @@
         if(data) data.forEach(g => { list.innerHTML += `<div class="req-card"><div class="req-info"><div style="color:var(--accent); letter-spacing:2px;">${g.code}</div><small>${g.days} روز - استفاده: ${g.current_uses}/${g.max_uses}</small></div></div>`; });
     }
     function openGiftModal() { closeSidebar(); document.getElementById('giftModal').classList.add('show'); }
+    
     async function applyGiftCode() {
         const code = document.getElementById('user-gift-code').value.trim().toUpperCase(); if(!code) return;
         showLoader(true);
@@ -1300,8 +1383,11 @@
             const { data: used } = await supabaseClient.from('used_codes').select('*').eq('code', code).eq('user_id', currentUserProfile.id);
             if(used && used.length > 0) { showCustomAlert('شما قبلا از این کد استفاده کرده‌اید!'); showLoader(false); return; }
             
-            const { data: gc } = await supabaseClient.from('gift_codes').select('*').eq('code', code).single();
-            if(!gc || gc.current_uses >= gc.max_uses) { showCustomAlert('کد نامعتبر یا ظرفیت تمام شده است.'); showLoader(false); return; }
+            // اصلاح مشکل قبلی به همراه error checking مناسب
+            const { data: gc, error: gcError } = await supabaseClient.from('gift_codes').select('*').eq('code', code).single();
+            if(gcError || !gc) { showCustomAlert('کد وارد شده یافت نشد یا نامعتبر است.'); showLoader(false); return; }
+            
+            if(gc.current_uses >= gc.max_uses) { showCustomAlert('ظرفیت استفاده از این کد تمام شده است.'); showLoader(false); return; }
 
             // Add Sub
             let currentSub = currentUserProfile.sub_end_date ? new Date(currentUserProfile.sub_end_date) : null;
@@ -1338,7 +1424,7 @@
         animate();
     }
 
-    /* Messages (Support/Inbox) Logic - Kept from original, slightly optimized */
+    /* Messages (Support/Inbox) Logic */
     async function checkUnreadMessages() {
         if(!currentUserProfile) return;
         if(currentUserProfile.role === 'admin') {
