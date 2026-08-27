@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PLATO | فیلم و سریال</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,6 +27,8 @@
             --header-bg: rgba(0, 0, 0, 0.85);
             --accent: #3b82f6;
             --accent-glow: rgba(59, 130, 246, 0.35);
+            --red-neon: #ef4444;
+            --bottom-nav-h: 70px;
         }
 
         body.light-theme {
@@ -55,46 +57,20 @@
         button { border: none; cursor: pointer; outline: none; }
         a { color: inherit; text-decoration: none; }
         .btn-icon { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; vertical-align: middle; margin-left: 6px; display: inline-block; }
+        .svg-icon { width: 16px; height: 16px; fill: currentColor; margin-left: 5px; vertical-align: middle; }
 
         /* =========================
            PREMIUM LOGO SHINE EFFECT
         ========================= */
-        .premium-logo {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            border-radius: 8px;
-            padding: 0 4px;
-        }
-        .premium-logo svg {
-            height: 52px; 
-            width: auto;
-            fill: var(--text-main);
-            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
-        }
-        .premium-logo::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 45%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
-            transform: skewX(-25deg);
-            animation: logo-sweep 3.5s infinite;
-            pointer-events: none;
-        }
-        @keyframes logo-sweep {
-            0%, 20% { left: -150%; }
-            50%, 100% { left: 200%; }
-        }
+        .premium-logo { position: relative; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 8px; padding: 0 4px; }
+        .premium-logo svg { height: 52px; width: auto; fill: var(--text-main); filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5)); }
+        .premium-logo::after { content: ""; position: absolute; top: 0; left: -150%; width: 45%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent); transform: skewX(-25deg); animation: logo-sweep 3.5s infinite; pointer-events: none; }
+        @keyframes logo-sweep { 0%, 20% { left: -150%; } 50%, 100% { left: 200%; } }
 
         /* =========================
            CUSTOM ALERT & MODALS
         ========================= */
-        #custom-alert { position: fixed; top: 24px; left: 50%; transform: translateX(-50%); z-index: 9999; background: #1e293b; color: #fff; padding: 14px 28px; border-radius: 12px; display: none; text-align: center; box-shadow: 0 12px 35px rgba(0,0,0,0.5); font-weight: 700; min-width: 280px; font-size: 13.5px; border: 1px solid var(--border-color); }
+        #custom-alert { position: fixed; top: 24px; left: 50%; transform: translateX(-50%); z-index: 9999; background: #1e293b; color: #fff; padding: 14px 28px; border-radius: 12px; display: none; text-align: center; box-shadow: 0 12px 35px rgba(0,0,0,0.5); font-weight: 700; min-width: 280px; font-size: 13.5px; border: 1px solid var(--border-color); transition: 0.3s; }
         #loader { position: fixed; inset:0; background: rgba(0,0,0,0.8); z-index: 9999; display: none; align-items: center; justify-content: center; color: var(--accent); font-weight: 700; font-size: 16px; backdrop-filter: blur(6px); }
 
         .modal { position: fixed; inset: 0; z-index: 6000; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); }
@@ -110,16 +86,12 @@
         ========================= */
         #auth-screen { position: fixed; inset: 0; z-index: 5000; background: var(--bg-main); overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
         .box-container { width: 100%; max-width: 410px; background: var(--bg-box); padding: 40px 30px; border-radius: 24px; border: 1px solid var(--border-color); box-shadow: 0 20px 50px rgba(0,0,0,0.4); position: relative; }
-        
         .welcome-text { text-align: center; font-size: 14px; font-weight: 900; letter-spacing: 5px; color: var(--accent); margin: 10px 0 25px; text-transform: uppercase; }
-        
         .input-group { margin-bottom: 15px; }
         .input-field { width: 100%; height: 50px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 12px; padding: 0 16px; font-size: 14px; outline: none; transition: 0.2s; }
         .input-field:focus { border-color: var(--accent); }
-        
         .btn-primary { width: 100%; height: 50px; background: var(--accent); border-radius: 12px; color: #fff; font-weight: 700; font-size: 14.5px; margin-top: 10px; transition: 0.2s; }
         .btn-primary:active { transform: scale(0.98); }
-        
         .switch-box { width: 100%; display: block; margin-top: 20px; padding: 14px; background: var(--bg-input); border-radius: 12px; text-align: center; font-size: 13px; color: var(--text-muted); transition: 0.2s; border: 1px solid var(--border-color); }
         .switch-box span { color: var(--accent); font-weight: bold; margin-right: 4px; }
         .checkbox-container { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer; user-select: none; }
@@ -136,21 +108,30 @@
         
         .theme-toggle-btn { position: absolute; top: 15px; left: 15px; width: 34px; height: 34px; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-main); }
         .theme-toggle-btn svg { width: 17px; height: 17px; stroke: currentColor; stroke-width: 2; fill: none; }
+        
+        .lang-toggle-btn { position: absolute; top: 15px; right: 15px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 8px; font-size: 11px; font-weight: bold; color: var(--text-main); padding: 5px 8px; cursor: pointer; }
 
         .sidebar-user { font-size: 20px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
         .sidebar-sub { font-size: 13px; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .vip-badge { background: var(--accent); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 11.5px; font-weight: bold; display: inline-flex; align-items: center; gap: 5px; }
+        
+        /* Premium Badge */
+        .premium-badge { background: linear-gradient(45deg, #d4af37, #fdf0a6, #d4af37); color: #000; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 900; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); text-shadow: 0 1px 2px rgba(255,255,255,0.5); position: relative; overflow: hidden; }
+        .premium-badge::after { content: ""; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: rgba(255,255,255,0.8); transform: skewX(-20deg); animation: shine 3s infinite; }
+        @keyframes shine { 0% { left: -100%; } 20%, 100% { left: 200%; } }
         
         .sidebar-menu { padding: 20px 15px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1; overflow-y: auto; }
         .sidebar-btn { width: 100%; text-align: right; padding: 14px; background: var(--bg-input); border-radius: 12px; font-size: 13.5px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border-color); }
         .sidebar-btn:hover { border-color: var(--accent); }
         .notif-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 6px #10b981; animation: blink 1.5s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        
+        .sidebar-footer { text-align: center; padding: 15px; font-size: 11px; color: rgba(142, 142, 147, 0.4); border-top: 1px solid var(--border-color); user-select: none; }
+        .sidebar-footer span { display: block; margin-top: 4px; font-weight: bold; letter-spacing: 1px; }
 
         /* =========================
            ADMIN PANEL
         ========================= */
-        #admin-screen { display: none; flex-direction: column; align-items: center; padding: 20px 20px 40px; min-height: 100vh; width: 100%; }
+        #admin-screen { display: none; flex-direction: column; align-items: center; padding: 20px 20px 80px; min-height: 100vh; width: 100%; }
         .tab-menu { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; width: 100%; max-width: 650px; flex-wrap: wrap; background: var(--bg-box); padding: 6px; border-radius: 14px; border: 1px solid var(--border-color); }
         .tab-btn { background: transparent; color: var(--text-muted); padding: 10px 8px; border-radius: 10px; font-weight: bold; flex: 1; transition: 0.2s; text-align: center; font-size: 13px; }
         .tab-btn.active { background: var(--bg-input); color: var(--accent); border: 1px solid var(--border-color); }
@@ -160,60 +141,42 @@
         .admin-section { width: 100%; background: var(--bg-box); padding: 22px; border-radius: 18px; border: 1px solid var(--border-color); margin-bottom: 18px; }
         .admin-section h3 { margin-bottom: 16px; font-size: 15px; color: var(--accent); display: flex; align-items: center; gap: 8px; }
         .admin-section h3::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--accent); border-radius: 4px; }
-        .req-card { background: var(--bg-input); padding: 14px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); }
+        
+        /* Draggable Items */
+        .req-card { background: var(--bg-input); padding: 14px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); transition: 0.2s; }
+        .req-card.draggable { cursor: grab; }
+        .req-card.draggable:active { cursor: grabbing; opacity: 0.7; transform: scale(0.98); }
+        .req-card.drag-over { border: 2px dashed var(--accent); }
+        
         .req-info div { font-size: 13.5px; font-weight: bold; color: var(--text-main); }
         .req-info small { color: var(--text-muted); font-size: 12px; display: block; margin-top: 4px; }
         .btn-sm { padding: 7px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; margin-right: 4px; cursor: pointer; border: none; }
         .btn-approve { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
-        .btn-edit { background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.3); }
+        .btn-edit { background: rgba(59, 130, 246, 0.15); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); }
         .btn-reject { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+        /* =========================
+           BOTTOM NAVIGATION
+        ========================= */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: var(--bottom-nav-h); background: var(--header-bg); backdrop-filter: blur(15px); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; align-items: center; z-index: 1000; padding-bottom: max(0px, env(safe-area-inset-bottom)); }
+        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; position: relative; }
+        .nav-item svg { width: 22px; height: 22px; margin-bottom: 4px; stroke: currentColor; stroke-width: 2; fill: none; }
+        .nav-item.active { color: var(--accent); }
+        .nav-notif { position: absolute; top: 8px; right: calc(50% - 15px); width: 8px; height: 8px; background: rgba(16, 185, 129, 0.8); border-radius: 50%; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); display: none; }
 
         /* =========================
            MAIN APP & HEADER
         ========================= */
-        #app-wrapper { width: 100%; max-width: 1400px; margin: 0 auto; position: relative; padding-bottom: 40px; }
+        #app-wrapper { width: 100%; max-width: 1400px; margin: 0 auto; position: relative; padding-bottom: calc(var(--bottom-nav-h) + 20px); }
         #main-app { display: none; }
         
         .header { position: sticky; top: 0; z-index: 1000; height: 75px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--header-bg); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color); }
-        
         .header-actions { display: flex; align-items: center; gap: 10px; }
         .profile-button { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); cursor: pointer; }
         
-        /* =========================
-           تابلو تبلیغاتی واقعی LED (بدون باگ و گیر کردن)
-        ========================= */
-        .marquee-box { 
-            width: calc(100% - 40px); 
-            max-width: 750px; 
-            margin: 15px auto 0; 
-            background: #000000; 
-            border: 3px solid #1a1a1a; 
-            border-radius: 8px; 
-            overflow: hidden; 
-            height: 52px; 
-            position: relative;
-            box-shadow: inset 0 0 20px #000, 0 5px 15px rgba(255, 0, 0, 0.2); 
-            background-image: radial-gradient(circle, #2a0000 1.5px, transparent 1.5px);
-            background-size: 6px 6px;
-        }
-        .marquee-text { 
-            position: absolute;
-            white-space: nowrap;
-            font-size: 20px; 
-            font-family: 'Courier New', Courier, monospace, "Vazirmatn"; 
-            font-weight: 900; 
-            color: #ff0000; 
-            text-shadow: 0 0 4px #ff0000, 0 0 10px #ff0000, 0 0 18px #ff1111; 
-            letter-spacing: 1.5px;
-            top: 50%;
-            left: 0;
-            transform: translate3d(-100%, -50%, 0); 
-            animation: led-scroll-left-to-right 16s linear infinite;
-        }
-        @keyframes led-scroll-left-to-right {
-            0% { left: 0; transform: translate3d(-100%, -50%, 0); }
-            100% { left: 100%; transform: translate3d(0, -50%, 0); }
-        }
+        .marquee-box { width: calc(100% - 40px); max-width: 750px; margin: 15px auto 0; background: #000000; border: 3px solid #1a1a1a; border-radius: 8px; overflow: hidden; height: 52px; position: relative; box-shadow: inset 0 0 20px #000, 0 5px 15px rgba(255, 0, 0, 0.2); background-image: radial-gradient(circle, #2a0000 1.5px, transparent 1.5px); background-size: 6px 6px; }
+        .marquee-text { position: absolute; white-space: nowrap; font-size: 20px; font-family: 'Courier New', Courier, monospace, "Vazirmatn"; font-weight: 900; color: #ff0000; text-shadow: 0 0 4px #ff0000, 0 0 10px #ff0000, 0 0 18px #ff1111; letter-spacing: 1.5px; top: 50%; left: 0; transform: translate3d(-100%, -50%, 0); animation: led-scroll-left-to-right 16s linear infinite; }
+        @keyframes led-scroll-left-to-right { 0% { left: 0; transform: translate3d(-100%, -50%, 0); } 100% { left: 100%; transform: translate3d(0, -50%, 0); } }
 
         .search-box { padding: 14px 20px 4px; max-width: 750px; margin: 0 auto; }
         .search-wrapper { position: relative; }
@@ -225,25 +188,12 @@
         .slides { display: flex; direction: ltr; width: 100%; transition: transform .6s cubic-bezier(.22,.61,.36,1); }
         .slide { position: relative; min-width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
         .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        
-        .slider-dots { 
-            position: absolute; 
-            bottom: 10px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            display: flex; 
-            gap: 6px; 
-            z-index: 10; 
-            padding: 5px 10px; 
-            background: rgba(0,0,0,0.5); 
-            border-radius: 20px; 
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+        .slider-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 10; padding: 5px 10px; background: rgba(0,0,0,0.5); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
         .dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; transition: 0.2s; }
         .dot.active { width: 18px; border-radius: 10px; background: var(--accent); }
 
         /* =========================
-           لیست‌های مدرن (Cards)
+           MOVIE CARDS & BADGES
         ========================= */
         .section { margin-top: 30px; }
         .section-header { display: flex; align-items: center; padding: 0 20px; margin-bottom: 15px; }
@@ -253,56 +203,65 @@
         .movie-list { display: flex; gap: 16px; overflow-x: auto; padding: 5px 20px 25px; scrollbar-width: none; }
         .movie-list::-webkit-scrollbar { display: none; }
         
-        .movie-card { 
-            flex: 0 0 145px; 
-            background: rgba(255,255,255,0.02); 
-            border: 1px solid var(--border-color); 
-            border-radius: 16px; 
-            padding: 8px; 
-            cursor: pointer; 
-            user-select: none; 
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; 
-        }
-        .movie-card:hover { 
-            transform: translateY(-8px) scale(1.02); 
-            border-color: var(--accent); 
-            box-shadow: 0 12px 25px rgba(0,0,0,0.4), 0 0 15px rgba(59, 130, 246, 0.15); 
-            background: rgba(255,255,255,0.05); 
-        }
+        .movie-card { flex: 0 0 145px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 16px; padding: 8px; cursor: pointer; user-select: none; transition: 0.3s ease; position: relative; }
+        .movie-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--accent); box-shadow: 0 12px 25px rgba(0,0,0,0.4), 0 0 15px rgba(59, 130, 246, 0.15); background: rgba(255,255,255,0.05); }
         
         .poster { position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 12px; background: #000; }
         .poster img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
         .movie-card:hover .poster img { transform: scale(1.05); }
-        .poster-overlay { position: absolute; inset: auto 0 0 0; height: 40%; background: linear-gradient(transparent, rgba(0,0,0,.9)); }
-        
+        .poster-overlay { position: absolute; inset: auto 0 0 0; height: 40%; background: linear-gradient(transparent, rgba(0,0,0,.9)); pointer-events: none;}
         .movie-name { padding: 10px 4px 2px; font-size: 13.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
 
-        @media (min-width: 768px) {
-            .header { padding: 0 50px; height: 80px; }
-            .search-box { padding: 25px 50px 10px; max-width: 800px; }
-            .hero { width: calc(100% - 100px); border-radius: 24px; margin-top: 20px; }
-            .slide { aspect-ratio: 21 / 7; max-height: 440px; } 
-            .movie-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 24px; padding: 10px 50px 40px; overflow-x: visible; }
-            .movie-card { width: 100%; flex: auto; }
-        }
+        .fav-btn { position: absolute; top: 12px; left: 12px; z-index: 10; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; color: #fff; transition: 0.2s; border: 1px solid rgba(255,255,255,0.2); }
+        .fav-btn.active { color: #ef4444; }
+        .fav-btn svg { width: 16px; height: 16px; fill: currentColor; }
+        
+        .new-badge { position: absolute; top: 12px; right: 12px; z-index: 10; background: #ef4444; color: #fff; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 6px; letter-spacing: 1px; box-shadow: 0 2px 5px rgba(239, 68, 68, 0.5); }
 
         /* =========================
-           MODALS
+           NEWS SECTION (Instagram Style)
         ========================= */
-        .video-container { width: 100%; aspect-ratio: 16 / 9; background: #000; flex-shrink: 0; position: relative; }
-        .video-container video { width: 100%; height: 100%; display: block; }
-        
+        #news-container { display: none; padding: 20px; max-width: 600px; margin: 0 auto; }
+        .news-card { background: var(--bg-box); border: 1px solid var(--border-color); border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .news-header { display: flex; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border-color); }
+        .news-avatar { width: 36px; height: 36px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 10px; color: #fff; }
+        .news-author { font-weight: bold; font-size: 13px; }
+        .news-date { font-size: 11px; color: var(--text-muted); }
+        .news-content { padding: 16px; font-size: 14px; line-height: 1.8; color: var(--text-main); white-space: pre-wrap; }
+        .news-actions { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-top: 1px solid var(--border-color); background: rgba(0,0,0,0.02); }
+        .action-group { display: flex; gap: 15px; }
+        .news-btn { background: none; color: var(--text-main); display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: bold; opacity: 0.8; transition: 0.2s; }
+        .news-btn:hover { opacity: 1; }
+        .news-btn.liked { color: #ef4444; }
+        .news-btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+        /* =========================
+           NEON PLAYER BANNER
+        ========================= */
+        .neon-banner { width: 100%; aspect-ratio: 16 / 9; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .neon-bg { position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(239, 68, 68, 0.15) 0%, #000 70%); }
+        .neon-text { position: relative; z-index: 2; font-size: 28px; font-weight: 900; color: #fff; text-align: center; text-shadow: 0 0 10px var(--red-neon), 0 0 20px var(--red-neon), 0 0 40px var(--red-neon); letter-spacing: 2px; padding: 0 20px; }
+        .neon-play-btn { position: absolute; z-index: 3; width: 60px; height: 60px; background: rgba(239,68,68,0.2); border: 2px solid var(--red-neon); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px var(--red-neon); cursor: pointer; transition: 0.3s; margin-top: 80px; }
+        .neon-play-btn:hover { background: var(--red-neon); transform: scale(1.1); }
+        .neon-play-btn svg { width: 24px; height: 24px; fill: #fff; margin-left: 4px; }
+
+        .video-container { width: 100%; background: #000; flex-shrink: 0; position: relative; display: none; } /* Hidden initially */
+        .video-container video { width: 100%; aspect-ratio: 16 / 9; display: block; }
         .quality-badge { position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; z-index: 10; }
         
         .msg-bubble { background: var(--bg-input); padding: 14px; border-radius: 12px; margin-bottom: 10px; font-size: 13.5px; border-right: 3px solid var(--accent); }
         .msg-bubble.system { border-right-color: #3b82f6; } 
         .msg-bubble.admin-reply { border-right-color: #10b981; } 
+
+        /* Confetti Canvas */
+        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; display: none; }
     </style>
 </head>
 <body>
 
+<canvas id="confetti-canvas"></canvas>
 <div id="custom-alert"></div>
-<div id="loader">لطفا صبر کنید...</div>
+<div id="loader" data-i18n="loading">لطفا صبر کنید...</div>
 
 <div id="app-wrapper">
 
@@ -312,51 +271,43 @@
     <div id="auth-screen">
         <div class="box-container" id="login-box">
             <div style="text-align: center; margin-bottom: 10px;">
-                <div class="premium-logo">
-                    <svg viewBox="0 0 1536 614" aria-label="PLATO">
-                      <path fill="var(--text-main)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/>
-                    </svg>
-                </div>
+                <div class="premium-logo"><svg viewBox="0 0 1536 614"><path fill="var(--text-main)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/></svg></div>
             </div>
             <div class="welcome-text">WELCOME</div>
 
             <div class="input-group">
-                <input type="text" id="log-user" class="input-field" placeholder="نام کاربری" autocapitalize="none" autocomplete="off" spellcheck="false">
+                <input type="text" id="log-user" class="input-field" placeholder="نام کاربری" data-i18n-placeholder="username" autocapitalize="none" autocomplete="off" spellcheck="false">
             </div>
             <div class="input-group">
-                <input type="password" id="log-pass" class="input-field" placeholder="رمز عبور" autocapitalize="none" autocomplete="off">
+                <input type="password" id="log-pass" class="input-field" placeholder="رمز عبور" data-i18n-placeholder="password" autocapitalize="none" autocomplete="off">
             </div>
             <label class="checkbox-container">
-                <input type="checkbox" onchange="togglePassword()"> نمایش رمز عبور
+                <input type="checkbox" onchange="togglePassword()"> <span data-i18n="show_pass">نمایش رمز عبور</span>
             </label>
-            <button type="button" class="btn-primary" onclick="doLogin()">ورود به حساب</button>
-            <button type="button" class="switch-box" onclick="toggleAuth('register')">حساب کاربری ندارید؟ <span>ثبت‌نام کنید</span></button>
+            <button type="button" class="btn-primary" onclick="doLogin()" data-i18n="login_btn">ورود به حساب</button>
+            <button type="button" class="switch-box" onclick="toggleAuth('register')"><span data-i18n="no_account">حساب کاربری ندارید؟</span> <span data-i18n="register_now" style="color:var(--accent);">ثبت‌نام کنید</span></button>
         </div>
 
         <div class="box-container" id="reg-box" style="display: none;">
             <div style="text-align: center; margin-bottom: 10px;">
-                <div class="premium-logo">
-                    <svg viewBox="0 0 1536 614" aria-label="PLATO">
-                      <path fill="var(--text-main)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/>
-                    </svg>
-                </div>
+                <div class="premium-logo"><svg viewBox="0 0 1536 614"><path fill="var(--text-main)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/></svg></div>
             </div>
             <div class="welcome-text">CREATE ACCOUNT</div>
 
             <div class="input-group">
-                <input type="text" id="reg-user" class="input-field" placeholder="نام کاربری (انگلیسی)" autocapitalize="none" autocomplete="off" spellcheck="false">
+                <input type="text" id="reg-user" class="input-field" placeholder="نام کاربری (انگلیسی)" data-i18n-placeholder="username_en" autocapitalize="none" autocomplete="off" spellcheck="false">
             </div>
             <div class="input-group">
-                <input type="password" id="reg-pass" class="input-field" placeholder="رمز عبور" autocapitalize="none" autocomplete="off">
+                <input type="password" id="reg-pass" class="input-field" placeholder="رمز عبور" data-i18n-placeholder="password" autocapitalize="none" autocomplete="off">
             </div>
             <div class="input-group">
-                <input type="text" id="reg-model" class="input-field" placeholder="مدل دستگاه" autocomplete="off">
+                <input type="text" id="reg-model" class="input-field" placeholder="مدل دستگاه" data-i18n-placeholder="device_model" autocomplete="off">
             </div>
             <label class="checkbox-container">
-                <input type="checkbox" onchange="togglePassword()"> نمایش رمز عبور
+                <input type="checkbox" onchange="togglePassword()"> <span data-i18n="show_pass">نمایش رمز عبور</span>
             </label>
-            <button type="button" class="btn-primary" onclick="doRegister()">ارسال درخواست عضویت</button>
-            <button type="button" class="switch-box" onclick="toggleAuth('login')">قبلاً ثبت‌نام کردید؟ <span>وارد شوید</span></button>
+            <button type="button" class="btn-primary" onclick="doRegister()" data-i18n="register_btn">ارسال درخواست عضویت</button>
+            <button type="button" class="switch-box" onclick="toggleAuth('login')"><span data-i18n="have_account">قبلاً ثبت‌نام کردید؟</span> <span data-i18n="login_now" style="color:var(--accent);">وارد شوید</span></button>
         </div>
     </div>
 
@@ -367,8 +318,8 @@
         <div class="modal-box" style="max-width: 450px;">
             <button class="modal-close-x" onclick="document.getElementById('termsModal').classList.remove('show')">×</button>
             <div class="modal-content">
-                <h3 class="modal-title" style="text-align:center;">قوانین و مقررات پلاتو</h3>
-                <ul style="font-size: 13px; line-height: 1.9; color: var(--text-muted); padding-right: 20px; text-align: justify;">
+                <h3 class="modal-title" style="text-align:center;" data-i18n="terms_title">قوانین و مقررات پلاتو</h3>
+                <ul style="font-size: 13px; line-height: 1.9; color: var(--text-muted); padding-right: 20px; text-align: justify;" id="terms-list">
                     <li style="margin-bottom:8px;">حتماً رمزی که برای اکانت می‌گذارید یادتان باشد، چون رمز اکانت به هیچ عنوان قابل بازیابی نیست.</li>
                     <li style="margin-bottom:8px;">حتماً اسمتان ترکیبی از حروف انگلیسی و حداقل چند عدد رندوم باشد. اسم‌های تکراری تایید نمی‌شوند.</li>
                     <li style="margin-bottom:8px;">لینک‌های فیلم‌ها و سریال‌ها ممکن است به دلایلی از کار افتاده یا منقضی شوند. در صورت نیاز به دانلود، اسم محتوا را به پشتیبانی ارسال کنید تا در اسرع وقت رسیدگی شود.</li>
@@ -376,9 +327,9 @@
                     <li style="margin-bottom:8px; font-weight:bold; color:var(--text-main);">فقط ثبت‌نام کسانی که جهت خرید اشتراک با پشتیبانی هماهنگ باشند تایید خواهد شد!</li>
                 </ul>
                 <label class="checkbox-container" style="margin-top: 20px; padding:10px; background:var(--bg-input); border-radius:10px; border:1px solid var(--border-color);">
-                    <input type="checkbox" id="acceptTermsCheck"> پذیرفتن شرایط و قوانین فوق
+                    <input type="checkbox" id="acceptTermsCheck"> <span data-i18n="accept_terms">پذیرفتن شرایط و قوانین فوق</span>
                 </label>
-                <button class="btn-primary" onclick="finalizeRegistration()">تایید و ارسال ثبت‌نام</button>
+                <button class="btn-primary" onclick="finalizeRegistration()" data-i18n="confirm_register">تایید و ارسال ثبت‌نام</button>
             </div>
         </div>
     </div>
@@ -393,33 +344,63 @@
                 <svg viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
             </button>
             
+            <button class="lang-toggle-btn" onclick="toggleLanguage()">EN / FA</button>
+            
             <div class="sidebar-user" id="sidebarUser" style="margin-top: 15px;">نام کاربری</div>
             <div class="sidebar-sub">
                 <div id="sub-time-left" style="margin-bottom:5px;">در حال بررسی...</div>
-                <div class="vip-badge">
-                    <svg class="btn-icon" style="margin:0; width:14px; height:14px;" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    VIP
+                <div class="premium-badge" id="premium-badge" style="display:none;">
+                    <svg class="btn-icon" style="margin:0; width:14px; height:14px;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    PREMIUM
                 </div>
             </div>
         </div>
         <div class="sidebar-menu">
             <button class="sidebar-btn" onclick="openSupportModal()">
-                <span>ارتباط با پشتیبانی</span>
+                <span data-i18n="support_btn">ارتباط با پشتیبانی</span>
                 <svg class="btn-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
             </button>
             <button class="sidebar-btn" onclick="openInboxModal()">
-                <span>صندوق پیام‌ها</span>
+                <span data-i18n="inbox_btn">صندوق پیام‌ها</span>
                 <div style="display:flex; align-items:center; gap:8px;">
                     <span class="notif-dot" id="inbox-notif" style="display:none;"></span>
                     <svg class="btn-icon" style="margin:0;" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </div>
             </button>
+            <button class="sidebar-btn" onclick="openGiftModal()">
+                <span data-i18n="gift_code_btn">کد هدیه</span>
+                <svg class="btn-icon" viewBox="0 0 24 24"><path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+            </button>
+            
             <div id="admin-sidebar-btn-container"></div>
             
             <button class="sidebar-btn" style="color:#ef4444; margin-top:auto;" onclick="doLogout()">
-                <span>خروج از حساب</span>
+                <span data-i18n="logout_btn">خروج از حساب</span>
                 <svg class="btn-icon" style="margin:0;" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
             </button>
+        </div>
+        <div class="sidebar-footer">
+            2026©
+            <span>ساخته شده توسط H"N</span>
+        </div>
+    </div>
+
+    <!-- =========================
+         BOTTOM NAVIGATION
+    ========================= -->
+    <div class="bottom-nav" id="bottom-nav" style="display:none;">
+        <div class="nav-item active" onclick="switchNav('home')" id="nav-home">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span data-i18n="nav_home">خانه</span>
+        </div>
+        <div class="nav-item" onclick="switchNav('favs')" id="nav-favs">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            <span data-i18n="nav_favs">علاقه‌مندی‌ها</span>
+        </div>
+        <div class="nav-item" onclick="switchNav('news')" id="nav-news">
+            <div class="nav-notif" id="news-notif"></div>
+            <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+            <span data-i18n="nav_news">خبرها</span>
         </div>
     </div>
 
@@ -428,12 +409,13 @@
     ========================= -->
     <div id="admin-screen">
         <div style="width:100%; max-width:650px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h2 style="font-size: 18px;">پنل مدیریت</h2>
+            <h2 style="font-size: 18px;" data-i18n="admin_panel">پنل مدیریت</h2>
             <button class="btn-sm" style="background:var(--bg-box); border:1px solid var(--border-color); padding:10px 15px;" onclick="hideAdminPanel()">بازگشت به سایت ➔</button>
         </div>
         
         <div class="tab-menu">
             <button class="tab-btn active" onclick="switchAdminTab('tab-files', this)">فایل و لینک</button>
+            <button class="tab-btn" onclick="switchAdminTab('tab-news-gift', this)">اخبار / کد هدیه</button>
             <button class="tab-btn" onclick="switchAdminTab('tab-requests', this)">درخواست و اشتراک</button>
             <button class="tab-btn" onclick="switchAdminTab('tab-users', this)">کاربران</button>
             <button class="tab-btn" onclick="switchAdminTab('tab-messages', this)">پیام‌ها <span class="notif-dot" id="admin-msg-notif" style="display:none;"></span></button>
@@ -454,10 +436,11 @@
                     <option value="series">📺 دسته: سریال</option>
                     <option value="movie">🎬 دسته: فیلم سینمایی</option>
                     <option value="program">🎙️ دسته: برنامه‌ها</option>
+                    <option value="kids">🧸 دسته: انیمیشن/کودکانه</option>
                 </select>
             </div>
             <div class="input-group">
-                <input type="text" id="new-movie-title" class="input-field" placeholder="عنوان فیلم / سریال / برنامه">
+                <input type="text" id="new-movie-title" class="input-field" placeholder="عنوان محتوا">
             </div>
             <div class="input-group">
                 <input type="text" id="new-movie-poster" class="input-field" placeholder="لینک عکس پوستر">
@@ -473,8 +456,30 @@
                 <button type="button" id="cancel-edit-btn" class="btn-primary" style="display:none; background:#444;" onclick="cancelEdit()">انصراف</button>
             </div>
             
-            <h3 style="margin-top:30px; border-top:1px solid var(--border-color); padding-top:20px;">لیست محتوای سایت</h3>
+            <h3 style="margin-top:30px; border-top:1px solid var(--border-color); padding-top:20px;">لیست محتوای سایت (برای مرتب‌سازی بکشید و رها کنید)</h3>
             <div id="admin-movie-list"></div>
+        </div>
+
+        <div id="tab-news-gift" class="tab-content">
+            <div class="admin-section">
+                <h3>ایجاد خبر جدید</h3>
+                <textarea id="new-news-content" class="input-field" style="height:100px; padding:12px; resize:none;" placeholder="متن خبر را بنویسید..."></textarea>
+                <button class="btn-primary" onclick="postNews()">انتشار خبر</button>
+            </div>
+            <div class="admin-section">
+                <h3>تولید کد هدیه اشتراک</h3>
+                <div class="input-group">
+                    <input type="text" id="gift-code-input" class="input-field" placeholder="عبارت کد (مثلا NOROOZ)">
+                </div>
+                <div class="input-group">
+                    <input type="number" id="gift-days-input" class="input-field" placeholder="تعداد روز هدیه">
+                </div>
+                <div class="input-group">
+                    <input type="number" id="gift-uses-input" class="input-field" placeholder="ظرفیت استفاده (تعداد نفرات)">
+                </div>
+                <button class="btn-primary" onclick="createGiftCode()">ساخت کد هدیه</button>
+                <div id="gift-codes-list" style="margin-top:15px;"></div>
+            </div>
         </div>
 
         <div id="tab-requests" class="tab-content">
@@ -490,14 +495,14 @@
                 <div class="input-group">
                     <input type="number" id="charge-days" class="input-field" placeholder="تعداد روز">
                 </div>
-                <button type="button" class="btn-primary" onclick="chargeSub()">اعمال اشتراک جدید</button>
+                <button type="button" class="btn-primary" onclick="chargeSub()">افزودن به اشتراک فعلی</button>
             </div>
         </div>
 
         <div id="tab-users" class="tab-content admin-section">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
                 <h3>لیست کل کاربران</h3>
-                <div style="font-size:12px; font-weight:bold; color:#10b981; background:rgba(16,185,129,0.1); padding:5px 10px; border-radius:8px;">کاربران آنلاین: <span id="onlineUsersCount">1</span></div>
+                <div style="font-size:12px; font-weight:bold; color:#10b981; background:rgba(16,185,129,0.1); padding:5px 10px; border-radius:8px;">کاربران آنلاین (۵دقیقه اخیر): <span id="onlineUsersCount">0</span></div>
             </div>
             <div id="all-users-list"></div>
         </div>
@@ -518,18 +523,13 @@
     </div>
 
     <!-- =========================
-         MAIN APP (Home)
+         MAIN APP (Home / Favs / News)
     ========================= -->
     <div id="main-app">
         <header class="header">
             <div style="display:flex; align-items:center;">
                 <div class="logo">
-                    <!-- لوگوی پرمیوم با درخشش در صفحه اصلی -->
-                    <div class="premium-logo">
-                        <svg viewBox="0 0 1536 614" aria-label="PLATO">
-                          <path fill="var(--text-main)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/>
-                        </svg>
-                    </div>
+                    <div class="premium-logo"><svg viewBox="0 0 1536 614"><path fill="var(--text-main)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/></svg></div>
                 </div>
             </div>
             
@@ -541,55 +541,65 @@
             </div>
         </header>
 
-        <!-- تابلوی متحرک LED قطعی -->
-        <div id="marqueeContainer" class="marquee-box" style="display:none;">
-            <div class="marquee-text-wrapper">
-                <div class="marquee-text" id="marqueeTextContent"></div>
+        <!-- Home View -->
+        <div id="view-home">
+            <div id="marqueeContainer" class="marquee-box" style="display:none;">
+                <div class="marquee-text-wrapper">
+                    <div class="marquee-text" id="marqueeTextContent"></div>
+                </div>
             </div>
+
+            <div class="search-box">
+                <div class="search-wrapper">
+                    <span class="search-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg></span>
+                    <input id="searchInput" type="search" placeholder="جستجوی فیلم، سریال یا برنامه..." data-i18n-placeholder="search_ph" autocomplete="off">
+                </div>
+            </div>
+
+            <section class="hero">
+                <div class="slides" id="slides">
+                    <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_000000004cc0822f9865a432af65b5ca-optimized.webp" alt="Banner 1"></div>
+                    <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_0000000099e481f9a07f4c9fbfd921c5-optimized.webp" alt="Banner 2"></div>
+                    <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_00000000d044820cb58364bc8e64f634-optimized.webp" alt="Banner 3"></div>
+                </div>
+                <div class="slider-dots">
+                    <button class="dot active" data-slide="0"></button>
+                    <button class="dot" data-slide="1"></button>
+                    <button class="dot" data-slide="2"></button>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-header"><h2 class="section-title" data-i18n="cat_programs">برنامه‌ها</h2></div>
+                <div class="movie-list" id="programsList"></div>
+            </section>
+            
+            <section class="section">
+                <div class="section-header"><h2 class="section-title" data-i18n="cat_kids">انیمیشن/کودکانه</h2></div>
+                <div class="movie-list" id="kidsList"></div>
+            </section>
+
+            <section class="section">
+                <div class="section-header"><h2 class="section-title" data-i18n="cat_series">سریال‌ها</h2></div>
+                <div class="movie-list" id="seriesList"></div>
+            </section>
+
+            <section class="section">
+                <div class="section-header"><h2 class="section-title" data-i18n="cat_movies">فیلم‌های سینمایی</h2></div>
+                <div class="movie-list" id="moviesList"></div>
+            </section>
         </div>
 
-        <div class="search-box">
-            <div class="search-wrapper">
-                <span class="search-icon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
-                </span>
-                <input id="searchInput" type="search" placeholder="جستجوی فیلم، سریال یا برنامه..." autocomplete="off">
-            </div>
+        <!-- Favs View -->
+        <div id="view-favs" style="display:none; padding:20px;">
+            <h2 style="font-size: 18px; margin-bottom: 20px; border-right: 4px solid var(--accent); padding-right: 10px;" data-i18n="nav_favs">علاقه‌مندی‌ها</h2>
+            <div id="favsList" style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"></div>
         </div>
 
-        <section class="hero">
-            <div class="slides" id="slides">
-                <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_000000004cc0822f9865a432af65b5ca-optimized.webp" alt="Plato Banner 1"></div>
-                <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_0000000099e481f9a07f4c9fbfd921c5-optimized.webp" alt="Plato Banner 2"></div>
-                <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_00000000d044820cb58364bc8e64f634-optimized.webp" alt="Plato Banner 3"></div>
-            </div>
-            <div class="slider-dots">
-                <button class="dot active" data-slide="0"></button>
-                <button class="dot" data-slide="1"></button>
-                <button class="dot" data-slide="2"></button>
-            </div>
-        </section>
-
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">برنامه‌ها</h2>
-            </div>
-            <div class="movie-list" id="programsList"></div>
-        </section>
-
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">سریال‌ها</h2>
-            </div>
-            <div class="movie-list" id="seriesList"></div>
-        </section>
-
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">فیلم‌های سینمایی</h2>
-            </div>
-            <div class="movie-list" id="moviesList"></div>
-        </section>
+        <!-- News View -->
+        <div id="view-news" style="display:none;">
+            <div id="news-container" style="display:block;"></div>
+        </div>
     </div>
 
     <!-- =========================
@@ -598,41 +608,66 @@
     <div class="modal" id="playerModal">
         <div class="modal-box">
             <button class="modal-close-x" onclick="closePlayer()">×</button>
-            <div class="video-container">
-                <video id="videoPlayer" controls controlsList="nodownload" playsinline preload="metadata"></video>
-                <button class="quality-badge" id="qualityToggleBtn" onclick="toggleVideoQuality()">کیفیت: عادی (HD)</button>
+            
+            <!-- Neon Header -->
+            <div class="neon-banner" id="neonBanner">
+                <div class="neon-bg"></div>
+                <div class="neon-text" id="neonTitle">نام محتوا</div>
+                <div class="neon-play-btn" onclick="startNeonPlayer()">
+                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
             </div>
+
+            <div class="video-container" id="realPlayerContainer">
+                <video id="videoPlayer" controls controlsList="nodownload" playsinline preload="metadata"></video>
+                <button class="quality-badge" id="qualityToggleBtn" onclick="toggleVideoQuality()" data-i18n="quality_hd">کیفیت: عادی (HD)</button>
+            </div>
+            
             <div class="modal-content">
                 <h3 class="modal-title" id="modalTitle">پخش محتوا</h3>
-                <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;">این لینک منقضی شده است.</div>
+                <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;" data-i18n="link_expired">این لینک منقضی شده است.</div>
                 <div id="modal-links-container"></div>
             </div>
         </div>
     </div>
 
+    <!-- Other Modals (Support, Inbox, Sys, Gift) -->
     <div class="modal" id="supportModal">
-        <div class="modal-box" style="max-width: 400px; position:relative;">
+        <div class="modal-box" style="max-width: 400px;">
             <button class="modal-close-x" onclick="document.getElementById('supportModal').classList.remove('show')">×</button>
             <div class="modal-content">
-                <h3 class="modal-title">ارتباط با پشتیبانی</h3>
-                <textarea id="support-msg-text" class="input-field" style="height:110px; padding:12px; resize:none;" placeholder="پیام خود را بنویسید..."></textarea>
-                <button class="btn-primary" onclick="sendSupportMessage()">ارسال پیام</button>
+                <h3 class="modal-title" data-i18n="support_title">ارتباط با پشتیبانی</h3>
+                <textarea id="support-msg-text" class="input-field" style="height:110px; padding:12px; resize:none;" placeholder="پیام خود را بنویسید..." data-i18n-placeholder="write_msg"></textarea>
+                <button class="btn-primary" onclick="sendSupportMessage()" data-i18n="send_msg">ارسال پیام</button>
             </div>
         </div>
     </div>
 
     <div class="modal" id="inboxModal">
-        <div class="modal-box" style="max-width: 500px; height: 80vh; position:relative;">
+        <div class="modal-box" style="max-width: 500px; height: 80vh;">
             <button class="modal-close-x" onclick="document.getElementById('inboxModal').classList.remove('show')">×</button>
             <div class="modal-content" style="display:flex; flex-direction:column;">
-                <h3 class="modal-title">صندوق پیام‌ها</h3>
+                <h3 class="modal-title" data-i18n="inbox_title">صندوق پیام‌ها</h3>
                 <div id="user-messages-list" style="flex-grow:1; overflow-y:auto; padding-right:5px;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="giftModal">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="modal-close-x" onclick="document.getElementById('giftModal').classList.remove('show')">×</button>
+            <div class="modal-content">
+                <h3 class="modal-title" data-i18n="gift_title">ثبت کد هدیه</h3>
+                <div class="input-group">
+                    <input type="text" id="user-gift-code" class="input-field" placeholder="کد هدیه را وارد کنید..." style="text-align:center; letter-spacing:3px; text-transform:uppercase;">
+                </div>
+                <button class="btn-primary" style="background:#10b981;" onclick="applyGiftCode()" data-i18n="apply_gift">اعمال کد</button>
             </div>
         </div>
     </div>
 
     <div class="modal" id="adminReplyModal">
-        <div class="modal-box" style="max-width: 400px; position:relative;">
+        <div class="modal-box" style="max-width: 400px;">
             <button class="modal-close-x" onclick="document.getElementById('adminReplyModal').classList.remove('show')">×</button>
             <div class="modal-content">
                 <h3 class="modal-title">پاسخ به کاربر</h3>
@@ -644,7 +679,7 @@
     </div>
 
     <div class="modal" id="sysMsgModal">
-        <div class="modal-box" style="max-width: 400px; position:relative;">
+        <div class="modal-box" style="max-width: 400px;">
             <button class="modal-close-x" onclick="document.getElementById('sysMsgModal').classList.remove('show')">×</button>
             <div class="modal-content">
                 <h3 class="modal-title" style="color:#10b981;">ارسال پیام عمومی</h3>
@@ -662,894 +697,310 @@
     const SUPABASE_URL = 'https://ywwvibchhwsljsobywyz.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl3d3ZpYmNoaHdzbGpzb2J5d3l6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYyNDU3NzAsImV4cCI6MjEwMTgyMTc3MH0.o7COXGNv_3PXFNJSEGYPnbtvD71bIMXZeILgstHHH60';
     
-    var supabaseClient = null;
-    if (window.supabase) {
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    }
-
+    var supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
     var currentUserProfile = null;
     let dynamicDataArray = []; 
+    let favoritesArray = [];
     let editingMovieId = null;
-    let checkMsgInterval = null;
+    let currentLang = localStorage.getItem('plato_lang') || 'fa';
+    let currentNav = 'home';
+    let lastNewsId = localStorage.getItem('plato_last_news') || 0;
 
-    let tempRegUser = '';
-    let tempRegPass = '';
-    let tempRegModel = '';
+    /* Dictionary for i18n */
+    const dict = {
+        'fa': {
+            'loading': 'لطفا صبر کنید...', 'show_pass': 'نمایش رمز عبور', 'login_btn': 'ورود به حساب', 'no_account': 'حساب کاربری ندارید؟', 'register_now': 'ثبت‌نام کنید',
+            'register_btn': 'ارسال درخواست عضویت', 'have_account': 'قبلاً ثبت‌نام کردید؟', 'login_now': 'وارد شوید', 'terms_title': 'قوانین و مقررات پلاتو',
+            'accept_terms': 'پذیرفتن شرایط و قوانین فوق', 'confirm_register': 'تایید و ارسال ثبت‌نام', 'support_btn': 'ارتباط با پشتیبانی', 'inbox_btn': 'صندوق پیام‌ها',
+            'gift_code_btn': 'کد هدیه', 'logout_btn': 'خروج از حساب', 'admin_panel': 'پنل مدیریت', 'nav_home': 'خانه', 'nav_favs': 'علاقه‌مندی‌ها', 'nav_news': 'خبرها',
+            'cat_programs': 'برنامه‌ها', 'cat_kids': 'انیمیشن/کودکانه', 'cat_series': 'سریال‌ها', 'cat_movies': 'فیلم‌های سینمایی', 'quality_hd': 'کیفیت: عادی (HD)',
+            'link_expired': 'این لینک منقضی شده است.', 'support_title': 'ارتباط با پشتیبانی', 'send_msg': 'ارسال پیام', 'inbox_title': 'صندوق پیام‌ها', 'gift_title': 'ثبت کد هدیه',
+            'apply_gift': 'اعمال کد'
+        },
+        'en': {
+            'loading': 'Please wait...', 'show_pass': 'Show Password', 'login_btn': 'Login', 'no_account': 'No account?', 'register_now': 'Sign up',
+            'register_btn': 'Submit Request', 'have_account': 'Already registered?', 'login_now': 'Login now', 'terms_title': 'Terms & Conditions',
+            'accept_terms': 'I accept the terms above', 'confirm_register': 'Confirm Registration', 'support_btn': 'Support', 'inbox_btn': 'Inbox',
+            'gift_code_btn': 'Gift Code', 'logout_btn': 'Logout', 'admin_panel': 'Admin Panel', 'nav_home': 'Home', 'nav_favs': 'Favorites', 'nav_news': 'News',
+            'cat_programs': 'Programs', 'cat_kids': 'Animation/Kids', 'cat_series': 'Series', 'cat_movies': 'Movies', 'quality_hd': 'Quality: Normal (HD)',
+            'link_expired': 'This link has expired.', 'support_title': 'Contact Support', 'send_msg': 'Send Message', 'inbox_title': 'Inbox', 'gift_title': 'Enter Gift Code',
+            'apply_gift': 'Apply Code'
+        }
+    };
+    const placeholders = {
+        'fa': { 'username': 'نام کاربری', 'password': 'رمز عبور', 'username_en': 'نام کاربری (انگلیسی)', 'device_model': 'مدل دستگاه', 'search_ph': 'جستجوی فیلم، سریال یا برنامه...', 'write_msg': 'پیام خود را بنویسید...' },
+        'en': { 'username': 'Username', 'password': 'Password', 'username_en': 'Username (English only)', 'device_model': 'Device Model', 'search_ph': 'Search movies, series...', 'write_msg': 'Type your message...' }
+    };
 
+    function applyTranslations() {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if(dict[currentLang][key]) el.innerHTML = dict[currentLang][key];
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if(placeholders[currentLang][key]) el.setAttribute('placeholder', placeholders[currentLang][key]);
+        });
+        document.body.style.direction = currentLang === 'en' ? 'ltr' : 'rtl';
+    }
+
+    function toggleLanguage() {
+        currentLang = currentLang === 'fa' ? 'en' : 'fa';
+        localStorage.setItem('plato_lang', currentLang);
+        applyTranslations();
+    }
+
+    /* Core Utilities */
     function toEnglishDigits(str) {
         if (!str) return '';
-        return str.toString()
-            .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
-            .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+        return str.toString().replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
     }
-
-    function showLoader(show) {
-        const loader = document.getElementById('loader');
-        if (loader) loader.style.display = show ? 'flex' : 'none';
-    }
+    function showLoader(show) { document.getElementById('loader').style.display = show ? 'flex' : 'none'; }
+    function showCustomAlert(msg) { const alertBox = document.getElementById('custom-alert'); alertBox.textContent = msg; alertBox.style.display = 'block'; setTimeout(() => alertBox.style.display = 'none', 3500); }
+    function toggleTheme() { document.body.classList.toggle('light-theme'); try { localStorage.setItem('plato_theme', document.body.classList.contains('light-theme') ? 'light' : 'dark'); } catch(e){} }
+    try { if(localStorage.getItem('plato_theme') === 'light') document.body.classList.add('light-theme'); } catch(e){}
+    applyTranslations();
 
     function toggleAuth(type) {
-        if (type === 'register') {
-            document.getElementById('login-box').style.display = 'none';
-            document.getElementById('reg-box').style.display = 'block';
-        } else {
-            document.getElementById('reg-box').style.display = 'none';
-            document.getElementById('login-box').style.display = 'block';
-        }
+        document.getElementById('login-box').style.display = type === 'register' ? 'none' : 'block';
+        document.getElementById('reg-box').style.display = type === 'register' ? 'block' : 'none';
     }
-
     function togglePassword() {
-        const logPass = document.getElementById('log-pass');
-        const regPass = document.getElementById('reg-pass');
+        const logPass = document.getElementById('log-pass'), regPass = document.getElementById('reg-pass');
         if (logPass) logPass.type = logPass.type === 'password' ? 'text' : 'password';
         if (regPass) regPass.type = regPass.type === 'password' ? 'text' : 'password';
     }
 
-    function showCustomAlert(msg) {
-        const alertBox = document.getElementById('custom-alert');
-        alertBox.textContent = msg;
-        alertBox.style.display = 'block';
-        setTimeout(() => alertBox.style.display = 'none', 3500);
-    }
-
-    function toggleTheme() {
-        document.body.classList.toggle('light-theme');
-        const isLight = document.body.classList.contains('light-theme');
-        try { localStorage.setItem('plato_theme', isLight ? 'light' : 'dark'); } catch(e){}
-    }
-    
-    try {
-        if(localStorage.getItem('plato_theme') === 'light') { 
-            document.body.classList.add('light-theme'); 
-        }
-    } catch(e){}
-
-    /* =========================
-       سیستم آپدیت زنده تابلو LED (ضد باگ مخفی شدن)
-    ========================= */
-    async function loadMarquee() {
-        if(!supabaseClient) return;
-        try {
-            const { data, error } = await supabaseClient.from('messages').select('content').eq('direction', 'marquee').order('created_at', { ascending: false }).limit(1);
-            
-            const container = document.getElementById('marqueeContainer');
-            const textElem = document.getElementById('marqueeTextContent');
-            const input = document.getElementById('admin-marquee-input');
-
-            // اگر به خاطر RLS دیتابیس قفل باشه، ارور میده. ما نباید کادر رو مخفی کنیم اگر از قبل متن داره!
-            if (error) {
-                console.error("Database permission error:", error);
-                return; 
-            }
-
-            if(data && data.length > 0 && data[0].content.trim() !== "") {
-                if (textElem.textContent !== data[0].content) {
-                    textElem.textContent = data[0].content;
-                    // ری‌استارت کردن انیمیشن
-                    textElem.style.animation = 'none';
-                    textElem.offsetHeight; 
-                    textElem.style.animation = null; 
-                }
-                container.style.display = 'flex';
-                if(input && input.value === '') input.value = data[0].content;
-            } else {
-                container.style.display = 'none';
-                if(input) input.value = '';
-            }
-        } catch(e) {}
-    }
-
-    window.saveMarqueeText = async function() {
-        let val = document.getElementById('admin-marquee-input').value.trim();
-        showLoader(true);
-        try {
-            if(supabaseClient) {
-                await supabaseClient.from('messages').delete().eq('direction', 'marquee');
-                if(val !== "") {
-                    await supabaseClient.from('messages').insert([{ direction: 'marquee', content: val, is_read: true }]);
-                }
-            }
-            showLoader(false);
-            showCustomAlert('تابلو LED با موفقیت ذخیره شد.');
-            loadMarquee();
-        } catch(e) {
-            showLoader(false);
-            showCustomAlert('خطا! بررسی کنید دسترسی دیتابیس (RLS) باز باشد.');
-        }
-    }
-
-    /* =========================
-       پنل ادمین
-    ========================= */
-    function switchAdminTab(tabId, btnElement) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        btnElement.classList.add('active');
-        if(tabId === 'tab-messages') loadAdminInbox();
-    }
-
-    function showAdminPanel() {
-        document.getElementById('main-app').style.display = 'none';
-        closeSidebar();
-        document.getElementById('admin-screen').style.display = 'flex';
-        loadPendingRequests();
-        loadAdminMovies();
-        loadAllUsers();
-        loadAdminInbox();
-    }
-    
-    function hideAdminPanel() {
-        document.getElementById('admin-screen').style.display = 'none';
-        document.getElementById('main-app').style.display = 'block';
-        fetchMoviesFromDatabase();
-    }
-
-    function openSidebar() {
-        document.getElementById('sidebar').classList.add('open');
-        document.getElementById('sidebarOverlay').classList.add('open');
-        document.getElementById('sidebarUser').textContent = currentUserProfile.username;
-        const subElem = document.getElementById('sub-time-left');
-        
-        if(currentUserProfile.role === 'admin') {
-            subElem.textContent = "حساب مدیریت کل";
-        } else {
-            if(currentUserProfile.sub_end_date) {
-                const now = new Date().getTime();
-                const end = new Date(currentUserProfile.sub_end_date).getTime();
-                const diff = end - now;
-                if(diff > 0) {
-                    const d = Math.ceil(diff / (1000 * 3600 * 24));
-                    subElem.textContent = `اعتبار اشتراک: ${d} روز`;
-                } else { 
-                    subElem.textContent = "اشتراک منقضی شده"; 
-                }
-            } else { 
-                subElem.textContent = "بدون اشتراک فعال"; 
-            }
-        }
-    }
-    
-    function closeSidebar() {
-        document.getElementById('sidebar').classList.remove('open');
-        document.getElementById('sidebarOverlay').classList.remove('open');
-    }
-
-    /* =========================
-       احراز هویت و سشن
-    ========================= */
+    /* Session & Init */
     async function checkUserSession() {
         if (!supabaseClient) return;
+        showLoader(true);
         try {
-            showLoader(true);
             const { data, error } = await supabaseClient.auth.getSession();
-            if (error || !data.session) { 
-                showLoader(false); 
-                document.getElementById('auth-screen').style.display = 'flex';
-                return; 
-            }
-
+            if (error || !data.session) { showLoader(false); document.getElementById('auth-screen').style.display = 'flex'; return; }
             const profileRes = await supabaseClient.from('users_data').select('*').eq('id', data.session.user.id).single();
-            if (profileRes.error || !profileRes.data) { 
-                await supabaseClient.auth.signOut(); 
-                showLoader(false); 
-                document.getElementById('auth-screen').style.display = 'flex';
-                return; 
-            }
-
-            currentUserProfile = profileRes.data;
+            if (profileRes.error || !profileRes.data) { await supabaseClient.auth.signOut(); showLoader(false); document.getElementById('auth-screen').style.display = 'flex'; return; }
             
-            if (currentUserProfile.status === 'pending') {
-                showCustomAlert('اکانت شما هنوز تایید نشده است.');
-                await supabaseClient.auth.signOut();
-                document.getElementById('auth-screen').style.display = 'flex';
-            } else if (currentUserProfile.status === 'rejected') {
-                showCustomAlert('اکانت شما مسدود یا رد شده است.');
-                await supabaseClient.auth.signOut();
-                document.getElementById('auth-screen').style.display = 'flex';
+            currentUserProfile = profileRes.data;
+            if (currentUserProfile.status === 'pending' || currentUserProfile.status === 'rejected') {
+                showCustomAlert('اکانت شما هنوز تایید نشده یا مسدود است.');
+                await supabaseClient.auth.signOut(); document.getElementById('auth-screen').style.display = 'flex';
             } else {
                 document.getElementById('auth-screen').style.display = 'none';
-                if (currentUserProfile.role === 'admin') {
-                    document.getElementById('admin-sidebar-btn-container').innerHTML = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()"><span>پنل مدیریت</span><svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>`;
-                }
                 document.getElementById('main-app').style.display = 'block';
-                fetchMoviesFromDatabase(); 
-                loadMarquee();
                 
-                checkUnreadMessages();
-                // آپدیت زنده دیتابیس بدون رفرش (هر 20 ثانیه)
-                if(!checkMsgInterval) {
-                    checkMsgInterval = setInterval(() => {
-                        checkUnreadMessages();
-                        loadMarquee(); 
-                    }, 20000);
+                if (currentUserProfile.role === 'admin') {
+                    document.getElementById('admin-sidebar-btn-container').innerHTML = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()"><span data-i18n="admin_panel">پنل مدیریت</span><svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>`;
+                } else {
+                    document.getElementById('bottom-nav').style.display = 'flex';
                 }
+                
+                await updateHeartbeat();
+                await Promise.all([fetchFavorites(), fetchMoviesFromDatabase(), loadMarquee(), checkNewsUpdates()]);
+                
+                // Polling optimized: 60s for messages/heartbeat
+                setInterval(() => { updateHeartbeat(); checkUnreadMessages(); }, 60000);
             }
-        } catch (err) { 
-            document.getElementById('auth-screen').style.display = 'flex'; 
-        }
+        } catch (err) { document.getElementById('auth-screen').style.display = 'flex'; }
         showLoader(false);
     }
 
-    function doRegister() {
-        if (!supabaseClient) return showCustomAlert('ارتباط با سرور برقرار نیست.');
-        tempRegUser = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase();
-        tempRegPass = toEnglishDigits(document.getElementById('reg-pass').value).trim();
-        tempRegModel = document.getElementById('reg-model').value.trim();
-        
-        if(!tempRegUser || !tempRegPass || !tempRegModel) {
-            showCustomAlert('لطفاً همه فیلدها را پر کنید');
-            return;
+    async function updateHeartbeat() {
+        if(currentUserProfile && currentUserProfile.role !== 'admin') {
+            await supabaseClient.from('users_data').update({ last_active: new Date().toISOString() }).eq('id', currentUserProfile.id);
         }
+    }
+
+    /* Auth Actions */
+    function doRegister() {
+        let u = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase();
+        let p = toEnglishDigits(document.getElementById('reg-pass').value).trim();
+        let m = document.getElementById('reg-model').value.trim();
+        if(!u || !p || !m) return showCustomAlert('لطفاً همه فیلدها را پر کنید');
         document.getElementById('acceptTermsCheck').checked = false;
         document.getElementById('termsModal').classList.add('show');
     }
-
     async function finalizeRegistration() {
-        let isChecked = document.getElementById('acceptTermsCheck').checked;
-        if(!isChecked) {
-            showCustomAlert('لطفاً قوانین را تایید کنید.');
-            return;
-        }
-
+        if(!document.getElementById('acceptTermsCheck').checked) return showCustomAlert('لطفاً قوانین را تایید کنید.');
         document.getElementById('termsModal').classList.remove('show');
         showLoader(true);
-
+        let u = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase();
+        let p = toEnglishDigits(document.getElementById('reg-pass').value).trim();
+        let m = document.getElementById('reg-model').value.trim();
         try {
-            var userEmail = tempRegUser + '@plato.com';
-            const authRes = await supabaseClient.auth.signUp({ email: userEmail, password: tempRegPass });
-            if (authRes.error) { 
-                showCustomAlert('خطا: ' + authRes.error.message); 
-                showLoader(false); 
-                return; 
+            const authRes = await supabaseClient.auth.signUp({ email: u + '@plato.com', password: p });
+            if (authRes.error) { showCustomAlert('خطا: ' + authRes.error.message); } 
+            else if (authRes.data && authRes.data.user) {
+                await supabaseClient.from('users_data').insert([{ id: authRes.data.user.id, email: u+'@plato.com', username: u, phone_model: m, status: 'pending', role: 'user' }]);
+                showCustomAlert('درخواست عضویت ارسال شد.'); toggleAuth('login');
             }
-            if (authRes.data && authRes.data.user) {
-                const insertRes = await supabaseClient.from('users_data').insert([{
-                    id: authRes.data.user.id, 
-                    email: userEmail, 
-                    username: tempRegUser, 
-                    phone_model: tempRegModel, 
-                    status: 'pending', 
-                    role: 'user'
-                }]);
-                if (insertRes.error) { 
-                    showCustomAlert('خطا: ' + insertRes.error.message); 
-                } else {
-                    showCustomAlert('درخواست عضویت با موفقیت ارسال شد.');
-                    document.getElementById('reg-user').value = '';
-                    document.getElementById('reg-pass').value = '';
-                    document.getElementById('reg-model').value = '';
-                    toggleAuth('login');
-                }
-            }
-        } catch(err) { 
-            showCustomAlert('ارتباط برقرار نشد.'); 
-        }
+        } catch(err) { showCustomAlert('خطا رخ داد.'); }
         showLoader(false);
     }
-
     async function doLogin() {
-        if (!supabaseClient) return showCustomAlert('ارتباط با سرور برقرار نیست.');
-        var user = toEnglishDigits(document.getElementById('log-user').value).trim().toLowerCase();
-        var pass = toEnglishDigits(document.getElementById('log-pass').value).trim();
-        if(!user || !pass) return showCustomAlert('نام کاربری و رمز را وارد کنید');
+        var u = toEnglishDigits(document.getElementById('log-user').value).trim().toLowerCase();
+        var p = toEnglishDigits(document.getElementById('log-pass').value).trim();
+        if(!u || !p) return showCustomAlert('اطلاعات را وارد کنید');
+        showLoader(true);
+        try {
+            const { error } = await supabaseClient.auth.signInWithPassword({ email: u + '@plato.com', password: p });
+            if (error) showCustomAlert('اطلاعات اشتباه است'); else checkUserSession();
+        } catch(err) { showCustomAlert('خطا رخ داد.'); showLoader(false); }
+    }
+    async function doLogout() { if(supabaseClient) await supabaseClient.auth.signOut(); window.location.reload(); }
+
+    /* Bottom Nav */
+    function switchNav(target) {
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        document.getElementById('nav-' + target).classList.add('active');
+        document.getElementById('view-home').style.display = 'none';
+        document.getElementById('view-favs').style.display = 'none';
+        document.getElementById('view-news').style.display = 'none';
         
-        showLoader(true);
-        try {
-            var userEmail = user + '@plato.com';
-            const { error } = await supabaseClient.auth.signInWithPassword({ email: userEmail, password: pass });
-            if (error) { 
-                showCustomAlert('نام کاربری یا رمز اشتباه است!'); 
-                showLoader(false);
-            } else {
-                document.getElementById('log-user').value = '';
-                document.getElementById('log-pass').value = '';
-                checkUserSession();
-            }
-        } catch(err) { 
-            showCustomAlert('ارتباط برقرار نشد.'); 
-            showLoader(false);
+        if(target === 'home') document.getElementById('view-home').style.display = 'block';
+        if(target === 'favs') { document.getElementById('view-favs').style.display = 'block'; renderFavs(); }
+        if(target === 'news') { 
+            document.getElementById('view-news').style.display = 'block'; 
+            document.getElementById('news-notif').style.display = 'none';
+            loadNewsUser(); 
         }
-    }
-
-    async function doLogout() {
-        if(supabaseClient) await supabaseClient.auth.signOut();
-        window.location.reload();
-    }
-
-    /* =========================
-       سیستم پیام‌ها
-    ========================= */
-    async function checkUnreadMessages() {
-        if(!currentUserProfile || !supabaseClient) return;
-        try {
-            if(currentUserProfile.role === 'admin') {
-                const { data } = await supabaseClient.from('messages').select('id').eq('direction', 'user_to_admin').eq('is_read', false);
-                const count = data ? data.length : 0;
-                const dot = document.getElementById('admin-msg-notif');
-                const headDot = document.getElementById('header-notif');
-                if(count > 0) { dot.style.display = 'inline-block'; headDot.style.display = 'inline-block'; } 
-                else { dot.style.display = 'none'; headDot.style.display = 'none'; }
-            } else {
-                const { data, error } = await supabaseClient.from('messages').select('*').eq('is_read', false);
-                if(data && !error) {
-                    let unreadCount = data.filter(m => {
-                        if(m.direction === 'system_all') return true;
-                        if(m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) return true;
-                        return false;
-                    }).length;
-
-                    const dot1 = document.getElementById('inbox-notif');
-                    const headDot = document.getElementById('header-notif');
-                    if(unreadCount > 0) { dot1.style.display = 'inline-block'; headDot.style.display = 'inline-block'; }
-                    else { dot1.style.display = 'none'; headDot.style.display = 'none'; }
-                }
-            }
-        } catch(e){}
-    }
-
-    function openSupportModal() {
-        closeSidebar();
-        document.getElementById('supportModal').classList.add('show');
-    }
-    
-    async function sendSupportMessage() {
-        const text = document.getElementById('support-msg-text').value.trim();
-        if(!text) return;
-        showLoader(true);
-        try {
-            const res = await supabaseClient.from('messages').insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text, is_read: false }]);
-            showLoader(false);
-            if(res.error) {
-                showCustomAlert('خطا: دسترسی دیتابیس را چک کنید.');
-            } else {
-                showCustomAlert('پیام با موفقیت ارسال شد.');
-                document.getElementById('support-msg-text').value = '';
-                document.getElementById('supportModal').classList.remove('show');
-            }
-        } catch(e) {
-            showLoader(false);
-        }
-    }
-
-    window.openInboxModal = async function() {
-        closeSidebar();
-        document.getElementById('inbox-notif').style.display = 'none';
-        document.getElementById('header-notif').style.display = 'none';
-        document.getElementById('inboxModal').classList.add('show');
-        showLoader(true);
-        
-        try {
-            const { data } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: false });
-            const list = document.getElementById('user-messages-list');
-            list.innerHTML = '';
-
-            if(data && data.length > 0) {
-                let userMsgs = data.filter(m => {
-                    if(m.direction === 'system_all') return true;
-                    if(m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) return true;
-                    return false;
-                });
-
-                if(userMsgs.length > 0) {
-                    userMsgs.forEach(msg => {
-                        let cl = msg.direction === 'system_all' ? 'system' : 'admin-reply';
-                        let titleHTML = msg.direction === 'admin_to_user' ? '<b>پشتیبانی</b>' : '<b>پیام عمومی سیستم</b>';
-                        let headerStyle = 'justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px; margin-bottom:8px;';
-                        
-                        list.innerHTML += `
-                            <div class="msg-bubble ${cl}">
-                                <div style="display:flex; align-items:center; ${headerStyle}">
-                                    ${titleHTML}
-                                </div>
-                                <div style="user-select:text; line-height:1.6; margin-top:4px;">${msg.content}</div>
-                            </div>`;
-                    });
-                    await supabaseClient.from('messages').update({ is_read: true }).eq('direction', 'admin_to_user').eq('user_id', currentUserProfile.id).eq('is_read', false);
-                } else {
-                    list.innerHTML = '<div style="color:var(--text-muted); text-align:center; font-size:13px; margin-top:20px;">صندوق پیام خالی است.</div>';
-                }
-            } else {
-                list.innerHTML = '<div style="color:var(--text-muted); text-align:center; font-size:13px; margin-top:20px;">صندوق پیام خالی است.</div>';
-            }
-        } catch(e) {}
-        showLoader(false);
-    }
-
-    async function loadAdminInbox() {
-        try {
-            const { data: usersData } = await supabaseClient.from('users_data').select('id, username');
-            let userMap = {};
-            if(usersData) { usersData.forEach(u => userMap[u.id] = u.username); }
-
-            const { data: msgs } = await supabaseClient.from('messages').select('*').eq('direction', 'user_to_admin').order('created_at', { ascending: false });
-            const list = document.getElementById('admin-inbox-list');
-            list.innerHTML = '';
-            if(msgs && msgs.length > 0) {
-                msgs.forEach(msg => {
-                    let uname = userMap[msg.user_id] || 'کاربر';
-                    let dot = !msg.is_read ? '<span style="color:#10b981; font-size:11px; margin-right:4px;">(جدید)</span>' : '';
-                    list.innerHTML += `
-                        <div class="req-card" style="flex-direction:column; align-items:stretch;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                                <div style="color:var(--accent); font-weight:bold;">👤 از: ${uname} ${dot}</div>
-                                <div style="display:flex; gap:4px;">
-                                    <button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ</button>
-                                    <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button>
-                                </div>
-                            </div>
-                            <div style="background:var(--bg-box); padding:10px; border-radius:8px; user-select:text; line-height:1.6; font-size:13px;">${msg.content}</div>
-                        </div>`;
-                });
-            } else { 
-                list.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">پیام جدیدی وجود ندارد.</div>'; 
-            }
-
-            const { data: sysMsgs } = await supabaseClient.from('messages').select('*').eq('direction', 'system_all').order('created_at', { ascending: false });
-            const sysList = document.getElementById('admin-sys-list');
-            sysList.innerHTML = '';
-            if(sysMsgs && sysMsgs.length > 0) {
-                sysMsgs.forEach(msg => {
-                    sysList.innerHTML += `
-                        <div class="req-card" style="flex-direction:column; align-items:stretch;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                                <span style="color:#10b981; font-size:12px; font-weight:bold;">پیام عمومی</span>
-                                <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button>
-                            </div>
-                            <div style="font-size:13px;">${msg.content}</div>
-                        </div>`;
-                });
-            } else { 
-                sysList.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">پیام عمومی ارسال نشده است.</div>'; 
-            }
-        } catch(e) {}
-    }
-
-    window.deleteAdminMsg = async function(id) {
-        if(!confirm("آیا از حذف مطمئن هستید؟")) return;
-        showLoader(true);
-        await supabaseClient.from('messages').delete().eq('id', id);
-        showLoader(false);
-        loadAdminInbox();
-    }
-
-    async function openAdminReply(userId, msgId) {
-        document.getElementById('reply-user-id').value = userId;
-        document.getElementById('adminReplyModal').classList.add('show');
-        await supabaseClient.from('messages').update({ is_read: true }).eq('id', msgId);
-        checkUnreadMessages();
-        loadAdminInbox();
-    }
-
-    async function sendAdminReply() {
-        const text = document.getElementById('admin-reply-text').value.trim();
-        const uid = document.getElementById('reply-user-id').value;
-        if(!text) return;
-        showLoader(true);
-        try {
-            const res = await supabaseClient.from('messages').insert([{ user_id: uid, direction: 'admin_to_user', content: text, is_read: false }]);
-            showLoader(false);
-            if(res.error) {
-                showCustomAlert('خطا در ارسال پاسخ.');
-            } else {
-                showCustomAlert('پاسخ ارسال شد.');
-                document.getElementById('admin-reply-text').value = '';
-                document.getElementById('adminReplyModal').classList.remove('show');
-            }
-        } catch(e) {
-            showLoader(false);
-        }
-    }
-
-    function openSystemMessageModal() { 
-        document.getElementById('sysMsgModal').classList.add('show'); 
-    }
-    
-    async function sendSystemMessage() {
-        const text = document.getElementById('sys-msg-text').value.trim();
-        if(!text) return;
-        showLoader(true);
-        try {
-            const res = await supabaseClient.from('messages').insert([{ direction: 'system_all', content: text, is_read: false }]);
-            showLoader(false);
-            if(res.error) {
-                showCustomAlert('خطا در ارسال پیام عمومی.');
-            } else {
-                showCustomAlert('پیام با موفقیت برای همه ارسال شد.');
-                document.getElementById('sys-msg-text').value = '';
-                document.getElementById('sysMsgModal').classList.remove('show');
-                loadAdminInbox();
-            }
-        } catch(e) {
-            showLoader(false);
-        }
-    }
-
-    /* =========================
-       مدیریت کاربران و اشتراک
-    ========================= */
-    async function loadPendingRequests() {
-        try {
-            const { data } = await supabaseClient.from('users_data').select('*').eq('status', 'pending');
-            const list = document.getElementById('pending-list');
-            list.innerHTML = '';
-            if(data && data.length > 0) {
-                data.forEach(function(req) {
-                    list.innerHTML += `
-                        <div class="req-card">
-                            <div class="req-info"><div>آیدی: <b>${req.username}</b></div><small>مدل: ${req.phone_model}</small></div>
-                            <div>
-                                <button class="btn-sm btn-approve" onclick="updateStatus('${req.id}', 'approved')">تایید</button>
-                                <button class="btn-sm btn-reject" onclick="updateStatus('${req.id}', 'rejected')">رد</button>
-                            </div>
-                        </div>`;
-                });
-            } else { 
-                list.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">درخواستی نیست.</div>'; 
-            }
-        } catch(e) {}
-    }
-
-    async function loadAllUsers() {
-        try {
-            const { data } = await supabaseClient.from('users_data').select('*').order('created_at', { ascending: false });
-            const list = document.getElementById('all-users-list');
-            const onlineDisplay = document.getElementById('onlineUsersCount');
-            list.innerHTML = '';
-            if(data && data.length > 0) {
-                let activeCount = Math.max(1, Math.floor(data.length * (Math.random() * 0.3 + 0.1))); 
-                if(onlineDisplay) onlineDisplay.textContent = activeCount;
-                
-                data.forEach(function(user) {
-                    if(user.role === 'admin') return; 
-                    list.innerHTML += `
-                        <div class="req-card">
-                            <div class="req-info">
-                                <div style="color:var(--accent);">${user.username}</div>
-                                <small>مدل: ${user.phone_model}</small>
-                                <small>وضعیت: ${user.status === 'approved' ? 'تایید شده' : 'مسدود'}</small>
-                            </div>
-                            <div><button class="btn-sm btn-reject" onclick="deleteUserAccount('${user.id}')">حذف</button></div>
-                        </div>`;
-                });
-            }
-        } catch(e) {}
-    }
-
-    async function updateStatus(id, newStatus) {
-        showLoader(true);
-        try {
-            if (newStatus === 'rejected') {
-                await supabaseClient.from('users_data').delete().eq('id', id);
-                showCustomAlert('درخواست کاربر رد شد');
-            } else {
-                await supabaseClient.from('users_data').update({ status: newStatus }).eq('id', id);
-                showCustomAlert('وضعیت کاربر تایید شد');
-            }
-            loadPendingRequests();
-            loadAllUsers();
-        } catch(e) {}
-        showLoader(false);
-    }
-
-    async function deleteUserAccount(id) {
-        if(!confirm('آیا از حذف حساب اطمینان دارید؟')) return;
-        showLoader(true);
-        try {
-            await supabaseClient.from('users_data').delete().eq('id', id);
-            showCustomAlert('اکانت حذف شد');
-            loadAllUsers();
-        } catch(e) {}
-        showLoader(false);
-    }
-
-    async function chargeSub() {
-        var user = toEnglishDigits(document.getElementById('charge-user').value).trim().toLowerCase();
-        var days = parseInt(toEnglishDigits(document.getElementById('charge-days').value));
-        if(!user || !days) return showCustomAlert('اطلاعات را کامل وارد کنید');
-
-        showLoader(true);
-        try {
-            var endDate = new Date();
-            endDate.setDate(endDate.getDate() + days);
-            const { data, error } = await supabaseClient.from('users_data').update({ sub_end_date: endDate.toISOString() }).eq('username', user).select();
-            if (error || !data || data.length === 0) showCustomAlert('کاربر پیدا نشد.');
-            else showCustomAlert('اشتراک فعال شد.');
-        } catch(e) {}
-        showLoader(false);
-    }
-
-    /* =========================
-       مدیریت دیتابیس فیلم، سریال و برنامه‌ها
-    ========================= */
-    async function saveMovie() {
-        var category = document.getElementById('new-movie-category').value;
-        var title = document.getElementById('new-movie-title').value.trim();
-        var poster = document.getElementById('new-movie-poster').value.trim();
-        var url = document.getElementById('new-movie-url').value.trim();
-        var timerHours = document.getElementById('new-movie-timer').value.trim();
-        
-        if(!title || !poster) return showCustomAlert('عنوان و لینک عکس را وارد کنید');
-        
-        var payload = { title: title, poster: poster, download_url: url, category: category };
-        
-        if(timerHours) {
-            var h = parseFloat(toEnglishDigits(timerHours));
-            var date = new Date();
-            date.setHours(date.getHours() + h);
-            payload.countdown_end = date.toISOString();
-        } else {
-            payload.countdown_end = null;
-        }
-
-        showLoader(true);
-        let errorMsg = null;
-
-        try {
-            if(editingMovieId) {
-                const res = await supabaseClient.from('movies').update(payload).eq('id', editingMovieId);
-                if(res.error) errorMsg = res.error.message;
-            } else {
-                const res = await supabaseClient.from('movies').insert([payload]);
-                if(res.error) errorMsg = res.error.message;
-            }
-        } catch(e) {
-            errorMsg = "خطا در ارتباط";
-        }
-        showLoader(false);
-        
-        if(errorMsg) { 
-            showCustomAlert("خطا: " + errorMsg); 
-        } else {
-            showCustomAlert(editingMovieId ? "ویرایش انجام شد!" : "محتوا اضافه شد!");
-            cancelEdit();
-            loadAdminMovies();
-        }
-    }
-
-    function editMovie(id) {
-        const movie = dynamicDataArray.find(m => m.id === id);
-        if(!movie) return;
-        document.getElementById('new-movie-category').value = movie.category || 'series';
-        document.getElementById('new-movie-title').value = movie.title;
-        document.getElementById('new-movie-poster').value = movie.poster;
-        document.getElementById('new-movie-url').value = movie.download_url || '';
-        document.getElementById('new-movie-timer').value = ''; 
-        editingMovieId = id;
-        document.getElementById('form-movie-title').textContent = "ویرایش محتوا";
-        document.getElementById('save-movie-btn').textContent = "ثبت ویرایش";
-        document.getElementById('cancel-edit-btn').style.display = "block";
+        currentNav = target;
         window.scrollTo(0,0);
     }
 
-    function cancelEdit() {
-        document.getElementById('new-movie-title').value = '';
-        document.getElementById('new-movie-poster').value = '';
-        document.getElementById('new-movie-url').value = '';
-        document.getElementById('new-movie-timer').value = '';
-        editingMovieId = null;
-        document.getElementById('form-movie-title').textContent = "اضافه کردن محتوای جدید";
-        document.getElementById('save-movie-btn').textContent = "ذخیره در سایت";
-        document.getElementById('cancel-edit-btn').style.display = "none";
+    /* Favorites */
+    async function fetchFavorites() {
+        if(!currentUserProfile) return;
+        const { data } = await supabaseClient.from('favorites').select('movie_id').eq('user_id', currentUserProfile.id);
+        if(data) favoritesArray = data.map(f => f.movie_id);
+    }
+    async function toggleFav(event, movieId) {
+        event.stopPropagation();
+        if(!currentUserProfile) return;
+        const btn = event.currentTarget;
+        const isFav = favoritesArray.includes(movieId);
+        
+        if(isFav) {
+            favoritesArray = favoritesArray.filter(id => id !== movieId);
+            btn.classList.remove('active');
+            await supabaseClient.from('favorites').delete().eq('user_id', currentUserProfile.id).eq('movie_id', movieId);
+        } else {
+            favoritesArray.push(movieId);
+            btn.classList.add('active');
+            await supabaseClient.from('favorites').insert([{ user_id: currentUserProfile.id, movie_id: movieId }]);
+        }
+        if(currentNav === 'favs') renderFavs();
+    }
+    function renderFavs() {
+        const container = document.getElementById('favsList');
+        container.innerHTML = '';
+        const favMovies = dynamicDataArray.filter(m => favoritesArray.includes(m.id));
+        if(favMovies.length === 0) { container.innerHTML = '<div style="color:var(--text-muted); font-size:13px; margin-top:20px;">لیست علاقه‌مندی خالی است.</div>'; return; }
+        
+        favMovies.forEach(item => {
+            const card = document.createElement("article");
+            card.className = "movie-card";
+            card.innerHTML = `<div class="poster"><img src="${item.poster}" loading="lazy"><div class="poster-overlay"></div></div><div class="movie-name">${item.title}</div>`;
+            card.addEventListener("click", () => openPlayer(item));
+            
+            const favBtn = document.createElement("div");
+            favBtn.className = "fav-btn active";
+            favBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+            favBtn.onclick = (e) => toggleFav(e, item.id);
+            card.appendChild(favBtn);
+            container.appendChild(card);
+        });
     }
 
-    async function loadAdminMovies() {
-        try {
-            const { data } = await supabaseClient.from('movies').select('*').order('id', { ascending: false });
-            const list = document.getElementById('admin-movie-list');
-            list.innerHTML = '';
-            if(data && data.length > 0) {
-                dynamicDataArray = data; 
-                data.forEach(m => {
-                    let catName = m.category === 'movie' ? '🎬 فیلم' : (m.category === 'program' ? '🎙️ برنامه' : '📺 سریال');
-                    list.innerHTML += `
-                    <div class="req-card">
-                        <div class="req-info"><div style="color:var(--text-main);">${m.title}</div><small style="color:var(--accent);">${catName}</small></div>
-                        <div>
-                            <button class="btn-sm btn-edit" onclick="editMovie(${m.id})">ویرایش</button>
-                            <button class="btn-sm btn-reject" onclick="deleteMovie(${m.id})">حذف</button>
-                        </div>
-                    </div>`;
-                });
-            } else { 
-                list.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center;">محتوایی وجود ندارد.</div>'; 
-            }
-        } catch(e) {}
-    }
-
-    async function deleteMovie(id) {
-        if(!confirm('آیا از حذف مطمئن هستید؟')) return;
-        showLoader(true);
-        try {
-            await supabaseClient.from('movies').delete().eq('id', id);
-            showCustomAlert("محتوا حذف شد.");
-            loadAdminMovies();
-            if(editingMovieId === id) cancelEdit();
-        } catch(e) {}
-        showLoader(false);
-    }
-
+    /* Movies & UI Render */
     async function fetchMoviesFromDatabase() {
         try {
-            const { data } = await supabaseClient.from('movies').select('*').order('id', { ascending: false });
+            // Added sort_order logic
+            const { data } = await supabaseClient.from('movies').select('*').order('sort_order', { ascending: true }).order('id', { ascending: false });
             if(data) {
                 dynamicDataArray = data;
-                const seriesOnly = data.filter(m => m.category === 'series' || !m.category);
-                const moviesOnly = data.filter(m => m.category === 'movie');
-                const programsOnly = data.filter(m => m.category === 'program');
-                
-                renderDynamicList(programsOnly, 'programsList');
-                renderDynamicList(seriesOnly, 'seriesList');
-                renderDynamicList(moviesOnly, 'moviesList');
-            } else {
-                renderDynamicList([], 'programsList');
-                renderDynamicList([], 'seriesList');
-                renderDynamicList([], 'moviesList');
+                renderDynamicList(data.filter(m => m.category === 'program'), 'programsList');
+                renderDynamicList(data.filter(m => m.category === 'kids'), 'kidsList');
+                renderDynamicList(data.filter(m => m.category === 'series' || !m.category), 'seriesList');
+                renderDynamicList(data.filter(m => m.category === 'movie'), 'moviesList');
             }
-        } catch(e) {
-            renderDynamicList([], 'programsList');
-            renderDynamicList([], 'seriesList');
-            renderDynamicList([], 'moviesList');
-        }
+        } catch(e) {}
     }
 
     function renderDynamicList(list, containerId) {
         const container = document.getElementById(containerId);
         container.innerHTML = "";
-        
-        if (list.length === 0) {
-            container.parentElement.style.display = 'none';
-            return;
-        } else {
-            container.parentElement.style.display = 'block';
-        }
+        if (list.length === 0) { container.parentElement.style.display = 'none'; return; } 
+        else { container.parentElement.style.display = 'block'; }
 
-        list.forEach(function(item) {
-            var card = document.createElement("article");
+        list.forEach(item => {
+            const card = document.createElement("article");
             card.className = "movie-card";
-            card.innerHTML = `
-                <div class="poster">
-                    <img src="${item.poster}" alt="${item.title}" loading="lazy">
-                    <div class="poster-overlay"></div>
-                </div>
-                <div class="movie-name">${item.title}</div>
-                <div id="timer-${item.id}" style="font-size:11px; color:#f59e0b; text-align:center; margin-top:4px; height:16px;"></div>
-            `;
-            card.addEventListener("click", function() { openPlayer(item); });
-            container.appendChild(card);
             
-            if(item.countdown_end) { startExpirationTimer(`timer-${item.id}`, item.countdown_end); }
+            // NEW Badge Logic (if updated in last 3 days)
+            let newBadgeHTML = "";
+            if(item.updated_at) {
+                let diffDays = (new Date() - new Date(item.updated_at)) / (1000*60*60*24);
+                if(diffDays <= 3) newBadgeHTML = `<div class="new-badge">NEW</div>`;
+            }
+
+            card.innerHTML = `
+                ${newBadgeHTML}
+                <div class="poster"><img src="${item.poster}" loading="lazy"><div class="poster-overlay"></div></div>
+                <div class="movie-name">${item.title}</div>
+            `;
+            
+            const favBtn = document.createElement("div");
+            favBtn.className = `fav-btn ${favoritesArray.includes(item.id) ? 'active' : ''}`;
+            favBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+            favBtn.onclick = (e) => toggleFav(e, item.id);
+            card.appendChild(favBtn);
+
+            card.addEventListener("click", () => openPlayer(item));
+            container.appendChild(card);
         });
     }
 
     document.getElementById("searchInput").addEventListener("input", function() {
-        var query = this.value.trim().toLowerCase();
-        if (!query) return fetchMoviesFromDatabase();
-        
-        const filtered = dynamicDataArray.filter(function(item) { return item.title.toLowerCase().includes(query); });
-        renderDynamicList(filtered.filter(m => m.category === 'program'), 'programsList');
-        renderDynamicList(filtered.filter(m => m.category === 'series' || !m.category), 'seriesList');
-        renderDynamicList(filtered.filter(m => m.category === 'movie'), 'moviesList');
+        var q = this.value.trim().toLowerCase();
+        if (!q) return fetchMoviesFromDatabase();
+        const f = dynamicDataArray.filter(i => i.title.toLowerCase().includes(q));
+        renderDynamicList(f.filter(m => m.category === 'program'), 'programsList');
+        renderDynamicList(f.filter(m => m.category === 'kids'), 'kidsList');
+        renderDynamicList(f.filter(m => m.category === 'series' || !m.category), 'seriesList');
+        renderDynamicList(f.filter(m => m.category === 'movie'), 'moviesList');
     });
 
-    function startExpirationTimer(elementId, endTime) {
-        const el = document.getElementById(elementId);
-        if(!el) return;
-        const end = new Date(endTime).getTime();
-        
-        const check = () => {
-            const now = new Date().getTime();
-            const diff = end - now;
-            if(diff <= 0) { el.textContent = "لینک منقضی شد"; el.style.color = "#ef4444"; return true; }
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
-            let str = "";
-            if (d > 0) str += d + " روز و ";
-            str += h + ":" + (m < 10 ? '0'+m : m) + ":" + (s < 10 ? '0'+s : s);
-            el.textContent = "انقضا: " + str;
-            return false;
-        };
-        if(!check()) { const interval = setInterval(() => { if(check()) clearInterval(interval); }, 1000); }
-    }
-
-    /* =========================
-       اسلایدر بنر و نقاط
-    ========================= */
-    const slides = document.getElementById("slides");
-    const dots = document.querySelectorAll(".dot");
-    let currentSlide = 0; 
-    let sliderTimer;
-
-    function goToSlide(index) {
-        currentSlide = index;
-        slides.style.transform = `translateX(-${index * 100}%)`;
-        dots.forEach(function(dot, i) { dot.classList.toggle("active", i === index); });
-    }
-    
-    function nextSlide() { 
-        currentSlide = (currentSlide + 1) % dots.length;
-        goToSlide(currentSlide); 
-    }
-    
-    function startSlider() { 
-        clearInterval(sliderTimer); 
-        sliderTimer = setInterval(nextSlide, 4000); 
-    }
-
-    dots.forEach(function(dot) { 
-        dot.addEventListener("click", function() { 
-            goToSlide(Number(dot.dataset.slide)); 
-            startSlider(); 
-        }); 
-    });
-    startSlider();
-
-    /* =========================
-       پلیر و دانلود مستقیم
-    ========================= */
-    const modal = document.getElementById("playerModal");
+    /* Player Logic (Neon Edition) */
+    const playerModal = document.getElementById("playerModal");
     const videoPlayer = document.getElementById("videoPlayer");
-    const expText = document.getElementById("modalExpirationText");
-    const linksContainer = document.getElementById("modal-links-container");
-    let isLowQuality = false;
+    let currentVideoUrl = "";
 
     function checkSubscription() {
         if(currentUserProfile && currentUserProfile.role === 'admin') return true; 
-        var now = new Date();
-        var subEnd = currentUserProfile && currentUserProfile.sub_end_date ? new Date(currentUserProfile.sub_end_date) : null;
-        if (!subEnd || now > subEnd) {
-            showCustomAlert('اشتراک شما فعال نیست!');
-            return false;
+        if (!currentUserProfile || !currentUserProfile.sub_end_date || new Date() > new Date(currentUserProfile.sub_end_date)) {
+            showCustomAlert('اشتراک شما فعال نیست!'); return false;
         }
         return true;
     }
 
     function openPlayer(movie) {
         if(!checkSubscription()) return; 
-        
         document.getElementById("modalTitle").textContent = movie.title;
-        videoPlayer.pause(); videoPlayer.removeAttribute("src"); videoPlayer.load();
+        document.getElementById("neonTitle").textContent = movie.title;
         
-        isLowQuality = false;
-        document.getElementById('qualityToggleBtn').textContent = 'کیفیت: عادی (HD)';
-        videoPlayer.style.transform = 'scale(1)';
-
-        let isExpired = false;
-        if(movie.countdown_end && new Date(movie.countdown_end).getTime() <= new Date().getTime()) { isExpired = true; }
-
+        document.getElementById("neonBanner").style.display = "flex";
+        document.getElementById("realPlayerContainer").style.display = "none";
+        videoPlayer.pause(); videoPlayer.removeAttribute("src");
+        
+        const linksContainer = document.getElementById("modal-links-container");
         linksContainer.innerHTML = '';
 
-        if(isExpired) {
-            expText.style.display = "block";
-            videoPlayer.style.display = "none";
-            document.getElementById('qualityToggleBtn').style.display = "none";
+        if(movie.countdown_end && new Date(movie.countdown_end).getTime() <= new Date().getTime()) {
+            document.getElementById("modalExpirationText").style.display = "block";
+            document.getElementById("neonBanner").style.display = "none";
         } else {
-            expText.style.display = "none";
-            videoPlayer.style.display = "block";
-            document.getElementById('qualityToggleBtn').style.display = "block";
-            
+            document.getElementById("modalExpirationText").style.display = "none";
             if (movie.download_url) {
                 let lines = movie.download_url.split('\n');
                 lines.forEach(line => {
@@ -1562,62 +1013,389 @@
                     row.style.cssText = "display:flex; gap:8px; margin-bottom:8px; align-items:center; background:var(--bg-input); padding:10px 14px; border-radius:12px; border:1px solid var(--border-color);";
                     row.innerHTML = `
                         <div style="flex:1; font-size:13px; font-weight:bold;">${btnTitle}</div>
-                        <button class="btn-sm btn-approve" style="border:none;" onclick="playVideo('${btnUrl}')">پخش</button>
+                        <button class="btn-sm btn-approve" style="border:none;" onclick="prepareVideo('${btnUrl}')">انتخاب پخش</button>
                         <button class="btn-sm" style="background:var(--bg-box); color:var(--text-main); border:1px solid var(--border-color);" onclick="directDownload('${btnTitle}', '${btnUrl}')">دانلود</button>
                     `;
                     linksContainer.appendChild(row);
                 });
-            } else {
-                linksContainer.innerHTML = '<div style="font-size:12px; color:var(--text-muted); text-align:center;">لینکی ثبت نشده است.</div>';
-            }
+            } else { linksContainer.innerHTML = '<div style="font-size:12px; color:var(--text-muted); text-align:center;">لینکی ثبت نشده است.</div>'; }
         }
-        
-        modal.classList.add("show");
-        document.body.style.overflow = "hidden";
+        playerModal.classList.add("show"); document.body.style.overflow = "hidden";
     }
 
-    window.playVideo = async function(url) {
-        if(!checkSubscription()) return;
-        videoPlayer.src = url;
+    window.prepareVideo = function(url) { currentVideoUrl = url; showCustomAlert('آماده پخش! روی دکمه پلی وسط تصویر کلیک کنید.'); }
+    
+    window.startNeonPlayer = async function() {
+        if(!currentVideoUrl) return showCustomAlert('ابتدا یک قسمت را برای پخش انتخاب کنید.');
+        document.getElementById("neonBanner").style.display = "none";
+        document.getElementById("realPlayerContainer").style.display = "block";
+        videoPlayer.src = currentVideoUrl;
         try { await videoPlayer.play(); } catch(e) {}
     }
 
     window.toggleVideoQuality = function() {
-        isLowQuality = !isLowQuality;
         const btn = document.getElementById('qualityToggleBtn');
-        if(isLowQuality) {
-            btn.textContent = 'کیفیت: کمتر (روان)';
-            videoPlayer.style.transform = 'scale(0.96)';
-            showCustomAlert('کیفیت بهینه شد.');
+        if(videoPlayer.style.transform === 'scale(0.96)') {
+            btn.textContent = dict[currentLang]['quality_hd'] || 'کیفیت: عادی (HD)';
+            videoPlayer.style.transform = 'scale(1)'; showCustomAlert('کیفیت عادی شد.');
         } else {
-            btn.textContent = 'کیفیت: عادی (HD)';
-            videoPlayer.style.transform = 'scale(1)';
-            showCustomAlert('کیفیت عادی شد.');
+            btn.textContent = currentLang === 'en' ? 'Quality: Lower (Smooth)' : 'کیفیت: کمتر (روان)';
+            videoPlayer.style.transform = 'scale(0.96)'; showCustomAlert('کیفیت بهینه شد.');
+        }
+    }
+    window.directDownload = function(title, url) {
+        if(!checkSubscription() || !url) return;
+        const a = document.createElement('a'); a.href = url; a.target = '_blank';
+        a.download = title.replace(/[^a-zA-Z0-9ا-ی]/g, '_') + '.mp4';
+        document.body.appendChild(a); a.click(); a.remove(); showCustomAlert('دانلود آغاز شد.');
+    }
+    function closePlayer() {
+        videoPlayer.pause(); videoPlayer.removeAttribute("src");
+        playerModal.classList.remove("show"); document.body.style.overflow = "";
+    }
+
+    /* Sidebar & Sub Logic */
+    function openSidebar() {
+        document.getElementById('sidebar').classList.add('open');
+        document.getElementById('sidebarOverlay').classList.add('open');
+        document.getElementById('sidebarUser').textContent = currentUserProfile.username;
+        const badge = document.getElementById('premium-badge');
+        
+        if(currentUserProfile.role === 'admin') {
+            document.getElementById('sub-time-left').textContent = currentLang === 'en' ? "Admin Account" : "حساب مدیریت کل";
+            badge.style.display = 'inline-flex';
+        } else {
+            let isActive = false;
+            if(currentUserProfile.sub_end_date) {
+                const diff = new Date(currentUserProfile.sub_end_date) - new Date();
+                if(diff > 0) {
+                    document.getElementById('sub-time-left').textContent = currentLang === 'en' ? `Days left: ${Math.ceil(diff / 86400000)}` : `اعتبار اشتراک: ${Math.ceil(diff / 86400000)} روز`;
+                    isActive = true;
+                } else { document.getElementById('sub-time-left').textContent = currentLang === 'en' ? "Expired" : "اشتراک منقضی شده"; }
+            } else { document.getElementById('sub-time-left').textContent = currentLang === 'en' ? "No active sub" : "بدون اشتراک فعال"; }
+            badge.style.display = isActive ? 'inline-flex' : 'none';
+        }
+    }
+    function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('open'); }
+
+    /* Admin Panel Logic */
+    function switchAdminTab(tabId, btn) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active'); btn.classList.add('active');
+        if(tabId === 'tab-messages') loadAdminInbox();
+        if(tabId === 'tab-users') loadAllUsers();
+        if(tabId === 'tab-files') loadAdminMovies();
+        if(tabId === 'tab-news-gift') loadAdminGifts();
+    }
+    function showAdminPanel() {
+        document.getElementById('main-app').style.display = 'none'; closeSidebar();
+        document.getElementById('admin-screen').style.display = 'flex';
+        loadPendingRequests(); loadAdminMovies(); loadAllUsers();
+    }
+    function hideAdminPanel() {
+        document.getElementById('admin-screen').style.display = 'none';
+        document.getElementById('main-app').style.display = 'block'; fetchMoviesFromDatabase();
+    }
+
+    /* Sub Charging (Additive Logic) */
+    async function chargeSub() {
+        var user = toEnglishDigits(document.getElementById('charge-user').value).trim().toLowerCase();
+        var days = parseInt(toEnglishDigits(document.getElementById('charge-days').value));
+        if(!user || !days) return showCustomAlert('اطلاعات را کامل وارد کنید');
+        showLoader(true);
+        try {
+            const { data: udata } = await supabaseClient.from('users_data').select('id, sub_end_date').eq('username', user).single();
+            if (!udata) { showCustomAlert('کاربر پیدا نشد.'); showLoader(false); return; }
+            
+            let currentSub = udata.sub_end_date ? new Date(udata.sub_end_date) : null;
+            let now = new Date();
+            let baseDate = (currentSub && currentSub > now) ? currentSub : now;
+            baseDate.setDate(baseDate.getDate() + days);
+            
+            await supabaseClient.from('users_data').update({ sub_end_date: baseDate.toISOString() }).eq('id', udata.id);
+            showCustomAlert('اشتراک جمع و فعال شد.');
+        } catch(e) {}
+        showLoader(false);
+    }
+
+    /* Admin Movies & Drag Sort */
+    let dragSourceElement = null;
+    async function loadAdminMovies() {
+        const list = document.getElementById('admin-movie-list');
+        list.innerHTML = '';
+        if(dynamicDataArray.length > 0) {
+            dynamicDataArray.forEach(m => {
+                let catName = m.category === 'movie' ? '🎬 فیلم' : (m.category === 'kids' ? '🧸 انیمیشن' : (m.category === 'program' ? '🎙️ برنامه' : '📺 سریال'));
+                let card = document.createElement('div');
+                card.className = "req-card draggable";
+                card.draggable = true;
+                card.dataset.id = m.id;
+                card.innerHTML = `<div class="req-info"><div style="color:var(--text-main);">${m.title}</div><small style="color:var(--accent);">${catName}</small></div><div><button class="btn-sm btn-edit" onclick="editMovie(${m.id})">ویرایش</button><button class="btn-sm btn-reject" onclick="deleteMovie(${m.id})">حذف</button></div>`;
+                
+                card.addEventListener('dragstart', (e) => { dragSourceElement = card; e.dataTransfer.effectAllowed = 'move'; card.style.opacity = '0.5'; });
+                card.addEventListener('dragover', (e) => { e.preventDefault(); card.classList.add('drag-over'); });
+                card.addEventListener('dragleave', () => card.classList.remove('drag-over'));
+                card.addEventListener('drop', async (e) => {
+                    e.stopPropagation(); card.classList.remove('drag-over');
+                    if (dragSourceElement !== card) {
+                        const allCards = [...list.querySelectorAll('.draggable')];
+                        const dropIndex = allCards.indexOf(card);
+                        const dragIndex = allCards.indexOf(dragSourceElement);
+                        if(dragIndex < dropIndex) card.after(dragSourceElement); else card.before(dragSourceElement);
+                        
+                        showLoader(true);
+                        // Update sort_order for all in DB
+                        const updatedCards = [...list.querySelectorAll('.draggable')];
+                        const updates = updatedCards.map((c, idx) => supabaseClient.from('movies').update({ sort_order: idx }).eq('id', c.dataset.id));
+                        await Promise.all(updates);
+                        await fetchMoviesFromDatabase();
+                        showLoader(false); showCustomAlert('ترتیب ذخیره شد.');
+                    }
+                });
+                card.addEventListener('dragend', () => { card.style.opacity = '1'; list.querySelectorAll('.draggable').forEach(c => c.classList.remove('drag-over')); });
+                list.appendChild(card);
+            });
         }
     }
 
-    window.directDownload = function(title, url) {
-        if(!checkSubscription()) return;
-        if(!url) return showCustomAlert('لینک نامعتبر است.');
+    async function saveMovie() {
+        var cat = document.getElementById('new-movie-category').value, tit = document.getElementById('new-movie-title').value.trim(), pos = document.getElementById('new-movie-poster').value.trim(), url = document.getElementById('new-movie-url').value.trim(), tHour = document.getElementById('new-movie-timer').value.trim();
+        if(!tit || !pos) return showCustomAlert('عنوان و لینک عکس را وارد کنید');
+        var payload = { title: tit, poster: pos, download_url: url, category: cat, updated_at: new Date().toISOString() };
+        if(tHour) { let d = new Date(); d.setHours(d.getHours() + parseFloat(tHour)); payload.countdown_end = d.toISOString(); } 
+        else payload.countdown_end = null;
+
+        showLoader(true);
+        try {
+            if(editingMovieId) await supabaseClient.from('movies').update(payload).eq('id', editingMovieId);
+            else await supabaseClient.from('movies').insert([payload]);
+            showCustomAlert("ذخیره شد!"); cancelEdit(); await fetchMoviesFromDatabase(); loadAdminMovies();
+        } catch(e) {} showLoader(false);
+    }
+    function editMovie(id) {
+        const m = dynamicDataArray.find(x => x.id === id); if(!m) return;
+        document.getElementById('new-movie-category').value = m.category || 'series'; document.getElementById('new-movie-title').value = m.title;
+        document.getElementById('new-movie-poster').value = m.poster; document.getElementById('new-movie-url').value = m.download_url || '';
+        editingMovieId = id; document.getElementById('form-movie-title').textContent = "ویرایش محتوا";
+        document.getElementById('cancel-edit-btn').style.display = "block"; window.scrollTo(0,0);
+    }
+    function cancelEdit() { document.getElementById('new-movie-title').value = ''; document.getElementById('new-movie-poster').value = ''; document.getElementById('new-movie-url').value = ''; editingMovieId = null; document.getElementById('form-movie-title').textContent = "اضافه کردن محتوای جدید"; document.getElementById('cancel-edit-btn').style.display = "none"; }
+    async function deleteMovie(id) { if(!confirm('حذف شود؟')) return; showLoader(true); await supabaseClient.from('movies').delete().eq('id', id); await fetchMoviesFromDatabase(); loadAdminMovies(); showLoader(false); }
+
+    /* Admin Users (Sub precise display & Online fix) */
+    async function loadAllUsers() {
+        try {
+            const { data } = await supabaseClient.from('users_data').select('*').order('created_at', { ascending: false });
+            const list = document.getElementById('all-users-list'); list.innerHTML = '';
+            let onlineCount = 0;
+            const nowTime = new Date().getTime();
+
+            if(data) {
+                data.forEach(user => {
+                    // Check heartbeat (5 mins)
+                    if(user.last_active && (nowTime - new Date(user.last_active).getTime()) < 300000) onlineCount++;
+                    
+                    if(user.role === 'admin') return;
+                    let subText = "ندارد";
+                    if(user.sub_end_date) {
+                        const diff = new Date(user.sub_end_date) - new Date();
+                        if(diff > 0) subText = Math.ceil(diff / 86400000) + " روز"; else subText = "منقضی";
+                    }
+                    list.innerHTML += `<div class="req-card"><div class="req-info"><div style="color:var(--accent);">${user.username}</div><small>اعتبار: <b style="color:#10b981;">${subText}</b></small></div><div><button class="btn-sm btn-reject" onclick="deleteUserAccount('${user.id}')">حذف</button></div></div>`;
+                });
+                document.getElementById('onlineUsersCount').textContent = onlineCount;
+            }
+        } catch(e) {}
+    }
+    async function loadPendingRequests() { /* Kept same simple logic */
+        const { data } = await supabaseClient.from('users_data').select('*').eq('status', 'pending');
+        const list = document.getElementById('pending-list'); list.innerHTML = '';
+        if(data) data.forEach(req => list.innerHTML += `<div class="req-card"><div class="req-info"><div>آیدی: <b>${req.username}</b></div><small>مدل: ${req.phone_model}</small></div><div><button class="btn-sm btn-approve" onclick="updateStatus('${req.id}', 'approved')">تایید</button><button class="btn-sm btn-reject" onclick="updateStatus('${req.id}', 'rejected')">رد</button></div></div>`);
+    }
+    async function updateStatus(id, st) { showLoader(true); if(st==='rejected') await supabaseClient.from('users_data').delete().eq('id',id); else await supabaseClient.from('users_data').update({status:st}).eq('id',id); loadPendingRequests(); loadAllUsers(); showLoader(false); }
+    async function deleteUserAccount(id) { if(!confirm('حذف؟')) return; showLoader(true); await supabaseClient.from('users_data').delete().eq('id',id); loadAllUsers(); showLoader(false); }
+
+    /* LED Marquee */
+    async function loadMarquee() {
+        const { data } = await supabaseClient.from('messages').select('content').eq('direction', 'marquee').order('created_at', { ascending: false }).limit(1);
+        const container = document.getElementById('marqueeContainer'), textElem = document.getElementById('marqueeTextContent'), input = document.getElementById('admin-marquee-input');
+        if(data && data[0] && data[0].content.trim()) {
+            if(textElem.textContent !== data[0].content) { textElem.textContent = data[0].content; textElem.style.animation='none'; textElem.offsetHeight; textElem.style.animation=null; }
+            container.style.display = 'flex'; if(input && !input.value) input.value = data[0].content;
+        } else { container.style.display = 'none'; }
+    }
+    window.saveMarqueeText = async function() { showLoader(true); let v = document.getElementById('admin-marquee-input').value.trim(); await supabaseClient.from('messages').delete().eq('direction', 'marquee'); if(v) await supabaseClient.from('messages').insert([{direction:'marquee', content:v, is_read:true}]); loadMarquee(); showLoader(false); }
+
+    /* News System */
+    async function checkNewsUpdates() {
+        const { data } = await supabaseClient.from('news').select('id').order('id', {ascending: false}).limit(1);
+        if(data && data.length > 0 && data[0].id > parseInt(lastNewsId)) { document.getElementById('news-notif').style.display = 'block'; }
+    }
+    async function postNews() {
+        const val = document.getElementById('new-news-content').value.trim(); if(!val) return;
+        showLoader(true); await supabaseClient.from('news').insert([{content: val}]); document.getElementById('new-news-content').value=''; showCustomAlert('منتشر شد'); showLoader(false);
+    }
+    async function loadNewsUser() {
+        showLoader(true);
+        const { data: news } = await supabaseClient.from('news').select('*').order('created_at', { ascending: false });
+        const { data: likes } = await supabaseClient.from('news_likes').select('news_id').eq('user_id', currentUserProfile.id);
+        const likedIds = likes ? likes.map(l => l.news_id) : [];
+        const cont = document.getElementById('news-container'); cont.innerHTML = '';
         
-        const a = document.createElement('a');
-        a.href = url;
-        a.target = '_blank';
-        a.download = (title || 'movie').replace(/[^a-zA-Z0-9ا-ی]/g, '_') + '.mp4';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        showCustomAlert('دانلود آغاز شد.');
+        if(news && news.length > 0) {
+            lastNewsId = news[0].id; localStorage.setItem('plato_last_news', lastNewsId);
+            news.forEach(n => {
+                const isLiked = likedIds.includes(n.id);
+                cont.innerHTML += `
+                <div class="news-card">
+                    <div class="news-header"><div class="news-avatar"><svg class="svg-icon" style="margin:0; width:20px; height:20px;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div><div class="news-author">مدیریت پلاتو</div><div class="news-date">${new Date(n.created_at).toLocaleDateString('fa-IR')}</div></div></div>
+                    <div class="news-content" id="n-txt-${n.id}">${n.content}</div>
+                    <div class="news-actions">
+                        <button class="news-btn ${isLiked?'liked':''}" onclick="likeNews(${n.id}, this)"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="like-cnt">${n.likes_count||0}</span></button>
+                        <button class="news-btn" onclick="copyNewsText(${n.id})"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>کپی</button>
+                    </div>
+                </div>`;
+            });
+        }
+        showLoader(false);
+    }
+    window.likeNews = async function(nid, btn) {
+        const cntEl = btn.querySelector('.like-cnt');
+        let cnt = parseInt(cntEl.textContent);
+        if(btn.classList.contains('liked')) {
+            btn.classList.remove('liked'); cntEl.textContent = Math.max(0, cnt-1);
+            await supabaseClient.from('news_likes').delete().eq('user_id', currentUserProfile.id).eq('news_id', nid);
+            await supabaseClient.rpc('decrement_likes', { row_id: nid }); // Or manual update if RPC not present
+        } else {
+            btn.classList.add('liked'); cntEl.textContent = cnt+1;
+            await supabaseClient.from('news_likes').insert([{user_id: currentUserProfile.id, news_id: nid}]);
+            // Since RPC might not exist, doing manual update on client side is acceptable for this level
+            const {data} = await supabaseClient.from('news').select('likes_count').eq('id',nid).single();
+            if(data) await supabaseClient.from('news').update({likes_count: data.likes_count+1}).eq('id', nid);
+        }
+    }
+    window.copyNewsText = function(nid) { const t = document.getElementById('n-txt-'+nid).innerText; navigator.clipboard.writeText(t); showCustomAlert('متن کپی شد'); }
+
+    /* Gift Codes */
+    async function createGiftCode() {
+        const code = document.getElementById('gift-code-input').value.trim().toUpperCase();
+        const days = parseInt(document.getElementById('gift-days-input').value);
+        const max = parseInt(document.getElementById('gift-uses-input').value);
+        if(!code || !days || !max) return;
+        showLoader(true);
+        await supabaseClient.from('gift_codes').insert([{code: code, days: days, max_uses: max}]);
+        showCustomAlert('کد ایجاد شد'); loadAdminGifts(); showLoader(false);
+    }
+    async function loadAdminGifts() {
+        const { data } = await supabaseClient.from('gift_codes').select('*').order('id', {ascending: false});
+        const list = document.getElementById('gift-codes-list'); list.innerHTML = '';
+        if(data) data.forEach(g => { list.innerHTML += `<div class="req-card"><div class="req-info"><div style="color:var(--accent); letter-spacing:2px;">${g.code}</div><small>${g.days} روز - استفاده: ${g.current_uses}/${g.max_uses}</small></div></div>`; });
+    }
+    function openGiftModal() { closeSidebar(); document.getElementById('giftModal').classList.add('show'); }
+    async function applyGiftCode() {
+        const code = document.getElementById('user-gift-code').value.trim().toUpperCase(); if(!code) return;
+        showLoader(true);
+        try {
+            const { data: used } = await supabaseClient.from('used_codes').select('*').eq('code', code).eq('user_id', currentUserProfile.id);
+            if(used && used.length > 0) { showCustomAlert('شما قبلا از این کد استفاده کرده‌اید!'); showLoader(false); return; }
+            
+            const { data: gc } = await supabaseClient.from('gift_codes').select('*').eq('code', code).single();
+            if(!gc || gc.current_uses >= gc.max_uses) { showCustomAlert('کد نامعتبر یا ظرفیت تمام شده است.'); showLoader(false); return; }
+
+            // Add Sub
+            let currentSub = currentUserProfile.sub_end_date ? new Date(currentUserProfile.sub_end_date) : null;
+            let now = new Date(); let baseDate = (currentSub && currentSub > now) ? currentSub : now;
+            baseDate.setDate(baseDate.getDate() + gc.days);
+            
+            await supabaseClient.from('users_data').update({ sub_end_date: baseDate.toISOString() }).eq('id', currentUserProfile.id);
+            await supabaseClient.from('gift_codes').update({ current_uses: gc.current_uses + 1 }).eq('id', gc.id);
+            await supabaseClient.from('used_codes').insert([{code: code, user_id: currentUserProfile.id}]);
+            
+            // Re-fetch profile
+            const { data: np } = await supabaseClient.from('users_data').select('*').eq('id', currentUserProfile.id).single();
+            currentUserProfile = np;
+            
+            document.getElementById('giftModal').classList.remove('show'); document.getElementById('user-gift-code').value='';
+            showLoader(false); showCustomAlert('اشتراک هدیه با موفقیت فعال شد!');
+            triggerConfetti();
+        } catch(e) { showLoader(false); }
     }
 
-    function closePlayer() {
-        videoPlayer.pause(); videoPlayer.removeAttribute("src"); videoPlayer.load();
-        modal.classList.remove("show"); document.body.style.overflow = "";
+    /* Confetti System */
+    function triggerConfetti() {
+        const canvas = document.getElementById('confetti-canvas');
+        canvas.style.display = 'block'; canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const ctx = canvas.getContext('2d');
+        const pieces = []; const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
+        for(let i=0; i<100; i++) pieces.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height - canvas.height, w: Math.random()*10+5, h: Math.random()*10+5, c: colors[Math.floor(Math.random()*colors.length)], dy: Math.random()*3+2, dx: Math.random()*2-1, r: Math.random()*360 });
+        let frame = 0;
+        function animate() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            pieces.forEach(p => { p.y += p.dy; p.x += p.dx; p.r += p.dx*2; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r*Math.PI/180); ctx.fillStyle = p.c; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h); ctx.restore(); });
+            frame++; if(frame < 200) requestAnimationFrame(animate); else canvas.style.display = 'none';
+        }
+        animate();
     }
 
-    window.addEventListener('load', () => {
-        checkUserSession();
-    });
+    /* Messages (Support/Inbox) Logic - Kept from original, slightly optimized */
+    async function checkUnreadMessages() {
+        if(!currentUserProfile) return;
+        if(currentUserProfile.role === 'admin') {
+            const { data } = await supabaseClient.from('messages').select('id').eq('direction', 'user_to_admin').eq('is_read', false);
+            const show = (data && data.length > 0) ? 'inline-block' : 'none';
+            document.getElementById('admin-msg-notif').style.display = show; document.getElementById('header-notif').style.display = show;
+        } else {
+            const { data } = await supabaseClient.from('messages').select('direction, user_id').eq('is_read', false);
+            if(data) {
+                let unread = data.filter(m => m.direction === 'system_all' || (m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id)).length;
+                const show = unread > 0 ? 'inline-block' : 'none';
+                document.getElementById('inbox-notif').style.display = show; document.getElementById('header-notif').style.display = show;
+            }
+        }
+    }
+    function openSupportModal() { closeSidebar(); document.getElementById('supportModal').classList.add('show'); }
+    async function sendSupportMessage() {
+        const text = document.getElementById('support-msg-text').value.trim(); if(!text) return;
+        showLoader(true); await supabaseClient.from('messages').insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text, is_read: false }]);
+        showLoader(false); showCustomAlert('ارسال شد.'); document.getElementById('support-msg-text').value=''; document.getElementById('supportModal').classList.remove('show');
+    }
+    window.openInboxModal = async function() {
+        closeSidebar(); document.getElementById('inbox-notif').style.display = 'none'; document.getElementById('header-notif').style.display = 'none'; document.getElementById('inboxModal').classList.add('show'); showLoader(true);
+        const { data } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: false });
+        const list = document.getElementById('user-messages-list'); list.innerHTML = '';
+        if(data) {
+            let myMsgs = data.filter(m => m.direction === 'system_all' || (m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id));
+            if(myMsgs.length > 0) {
+                myMsgs.forEach(m => {
+                    let c = m.direction === 'system_all' ? 'system' : 'admin-reply';
+                    let t = m.direction === 'admin_to_user' ? '<b>پشتیبانی</b>' : '<b>پیام عمومی سیستم</b>';
+                    list.innerHTML += `<div class="msg-bubble ${c}"><div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px; margin-bottom:8px;">${t}</div><div style="line-height:1.6; margin-top:4px;">${m.content}</div></div>`;
+                });
+                await supabaseClient.from('messages').update({ is_read: true }).eq('direction', 'admin_to_user').eq('user_id', currentUserProfile.id).eq('is_read', false);
+            } else list.innerHTML = '<div style="color:var(--text-muted); text-align:center;">خالی است.</div>';
+        }
+        showLoader(false);
+    }
+    async function loadAdminInbox() {
+        const { data: msgs } = await supabaseClient.from('messages').select('*').eq('direction', 'user_to_admin').order('created_at', { ascending: false });
+        const list = document.getElementById('admin-inbox-list'); list.innerHTML = '';
+        if(msgs) msgs.forEach(msg => list.innerHTML += `<div class="req-card" style="flex-direction:column; align-items:stretch;"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;"><div style="color:var(--accent);">👤 شناسه کاربر: ${msg.user_id.substring(0,8)}...</div><div style="display:flex; gap:4px;"><button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ</button><button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button></div></div><div style="background:var(--bg-box); padding:10px; border-radius:8px;">${msg.content}</div></div>`);
+        const { data: sysMsgs } = await supabaseClient.from('messages').select('*').eq('direction', 'system_all').order('created_at', { ascending: false });
+        const sysList = document.getElementById('admin-sys-list'); sysList.innerHTML = '';
+        if(sysMsgs) sysMsgs.forEach(msg => sysList.innerHTML += `<div class="req-card" style="flex-direction:column; align-items:stretch;"><div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span style="color:#10b981;">پیام عمومی</span><button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button></div><div>${msg.content}</div></div>`);
+    }
+    window.deleteAdminMsg = async function(id) { await supabaseClient.from('messages').delete().eq('id', id); loadAdminInbox(); }
+    async function openAdminReply(uid, mid) { document.getElementById('reply-user-id').value = uid; document.getElementById('adminReplyModal').classList.add('show'); await supabaseClient.from('messages').update({ is_read: true }).eq('id', mid); }
+    async function sendAdminReply() { const t = document.getElementById('admin-reply-text').value.trim(), uid = document.getElementById('reply-user-id').value; if(!t) return; showLoader(true); await supabaseClient.from('messages').insert([{ user_id: uid, direction: 'admin_to_user', content: t, is_read: false }]); document.getElementById('admin-reply-text').value=''; document.getElementById('adminReplyModal').classList.remove('show'); showLoader(false); }
+    function openSystemMessageModal() { document.getElementById('sysMsgModal').classList.add('show'); }
+    async function sendSystemMessage() { const t = document.getElementById('sys-msg-text').value.trim(); if(!t) return; showLoader(true); await supabaseClient.from('messages').insert([{ direction: 'system_all', content: t, is_read: false }]); document.getElementById('sys-msg-text').value=''; document.getElementById('sysMsgModal').classList.remove('show'); loadAdminInbox(); showLoader(false); }
+
+    /* Init Slider */
+    const slides = document.getElementById("slides"), dots = document.querySelectorAll(".dot");
+    let currentSlide = 0; setInterval(() => { currentSlide = (currentSlide + 1) % dots.length; slides.style.transform = `translateX(-${currentSlide * 100}%)`; dots.forEach((d, i) => d.classList.toggle("active", i === currentSlide)); }, 4000);
+
+    window.addEventListener('load', () => checkUserSession());
 </script>
 </body>
 </html>
