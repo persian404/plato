@@ -694,7 +694,7 @@
             padding: 20px 20px 80px; 
             min-height: 100vh; 
             width: 100%; 
-            background-color: var(--bg-main); /* Fix background overflow issue */
+            background-color: var(--bg-main); 
             position: absolute;
             top: 0;
             left: 0;
@@ -963,6 +963,7 @@
             display: flex; 
             align-items: center; 
             justify-content: space-between; 
+            flex-direction: row; 
             padding: 0 20px; 
             background: var(--header-bg); 
             backdrop-filter: blur(15px); 
@@ -988,28 +989,30 @@
             overflow: hidden; 
         }
 
-        /* Buy Sub Button Styles */
+        /* Buy Sub Button Styles (Perfect Center & Lighter Background) */
         .buy-sub-btn {
             position: absolute; 
-            left: 50%; 
+            left: calc(50% - 15px); /* Move slightly left in RTL */
             transform: translateX(-50%);
-            background: linear-gradient(45deg, #ef4444, #b91c1c); 
-            padding: 6px 16px; 
-            border-radius: 14px; 
+            background: linear-gradient(45deg, rgba(239, 68, 68, 0.85), rgba(185, 28, 28, 0.85)); 
+            padding: 5px 16px; 
+            border-radius: 12px; 
             font-size: 13px; 
             font-weight: bold; 
             color: white; 
             text-align: center;
             text-decoration: none; 
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); 
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25); 
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
             z-index: 10;
+            backdrop-filter: blur(8px);
         }
 
         .buy-sub-btn:hover {
             transform: translateX(-50%) scale(1.05);
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+            background: linear-gradient(45deg, #ef4444, #b91c1c); 
+            box-shadow: 0 6px 18px rgba(239, 68, 68, 0.5);
         }
         
         /* =========================
@@ -1404,11 +1407,10 @@
             justify-content: center; 
             overflow: hidden; 
             border-radius: 12px;
-            padding: 4px; /* ضخامت خطوط چرخان */
+            padding: 4px; 
             z-index: 0;
         }
 
-        /* خطوط متحرک نئونی */
         .neon-banner::before {
             content: "";
             position: absolute;
@@ -1416,7 +1418,6 @@
             left: -50%;
             width: 200%; 
             height: 200%;
-            /* دو رنگ قرمز و آبی که دنبال هم می‌دوند */
             background: conic-gradient(from 0deg, 
                 transparent 0%, transparent 20%, #ef4444 35%, 
                 transparent 45%, transparent 70%, #3b82f6 85%, transparent 95%);
@@ -1424,7 +1425,6 @@
             z-index: -2;
         }
 
-        /* لایه پوشاننده وسط */
         .neon-banner::after {
             content: "";
             position: absolute;
@@ -1660,12 +1660,9 @@
                 <svg class="btn-icon" viewBox="0 0 24 24"><path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
             </button>
             
-            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="color:var(--accent); text-decoration:none;">
-                <div style="display:flex; flex-direction:column; text-align:right;">
-                    <span style="font-size: 11.5px;">کانال تلگرام پلاتو</span>
-                    <span style="font-size: 9px; opacity:0.8;" dir="ltr">@plato_media</span>
-                </div>
-                <svg class="btn-icon" viewBox="0 0 24 24"><path d="M21.5 2L2 11l6 3 2.5 7L13 16l5 5L21.5 2z"/></svg>
+            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="color:var(--accent); text-decoration:none; display:flex; flex-direction:column; align-items:center; justify-content:center; background:var(--bg-box); border: 2px dashed var(--accent); padding: 18px; border-radius: 16px; gap: 6px; margin-top: 10px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);">
+                <span style="font-size: 15px; font-weight: 900; color: var(--text-main);">لینک کانال تلگرامی پلاتو</span>
+                <span style="font-size: 18px; font-weight: bold; color: var(--accent); letter-spacing: 1px;" dir="ltr">@plato_media</span>
             </a>
 
             <div id="admin-sidebar-btn-container"></div>
@@ -1816,7 +1813,7 @@
          MAIN APP & HEADER
     ========================= -->
     <header class="header">
-        <!-- Logo on the far right (in RTL) -->
+        <!-- Logo on the right (in RTL) -->
         <div class="logo">
             <div class="premium-logo">
                 <svg viewBox="0 0 1536 614">
@@ -1825,7 +1822,7 @@
             </div>
         </div>
         
-        <!-- Buy Button centered -->
+        <!-- Buy Button centered between logo and profile -->
         <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none;">
             خرید اشتراک
             <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
@@ -1951,6 +1948,7 @@
         <div class="modal-box">
             <button class="modal-close-x" onclick="closePlayer()">×</button>
             <div class="neon-banner" id="neonBanner">
+                <div class="neon-bg"></div>
                 <div class="neon-text" id="neonTitle">نام محتوا</div>
             </div>
             <div class="video-container" id="realPlayerContainer">
@@ -2085,13 +2083,17 @@
     const AVATARS = {
         1: `<svg viewBox="0 0 100 100">
                 <rect width="100" height="100" fill="#bae6fd"/>
-                <path d="M20 100 C20 60, 80 60, 80 100" fill="#0284c7" stroke="#0369a1" stroke-width="2"/>
+                <path d="M15 100 C15 55, 85 55, 85 100" fill="#0284c7" stroke="#0369a1" stroke-width="2"/>
                 <rect x="42" y="60" width="16" height="15" fill="#fcd34d"/>
-                <circle cx="50" cy="45" r="24" fill="#fde047"/>
-                <path d="M 28 45 C 28 15, 72 15, 72 45 C 72 30, 60 25, 50 25 C 40 25, 28 30, 28 45 Z" fill="#1e293b"/>
-                <circle cx="40" cy="45" r="3.5" fill="#0f172a"/>
-                <circle cx="60" cy="45" r="3.5" fill="#0f172a"/>
-                <path d="M42 55 Q50 62 58 55" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="50" cy="48" r="23" fill="#fde047"/>
+                <path d="M 26 48 C 24 20, 35 10, 50 10 C 65 10, 76 20, 74 48 C 76 35, 65 18, 50 18 C 35 18, 24 35, 26 48 Z" fill="#0f172a"/>
+                <path d="M 23 38 C 30 15, 50 10, 65 15 C 80 20, 75 40, 75 40 C 70 25, 55 20, 45 25 C 40 28, 30 35, 23 38 Z" fill="#1e293b"/>
+                <path d="M 40 25 C 45 15, 60 10, 70 20 C 65 20, 55 25, 45 35 Z" fill="#0f172a"/>
+                <circle cx="39" cy="48" r="3.5" fill="#0f172a"/>
+                <circle cx="61" cy="48" r="3.5" fill="#0f172a"/>
+                <path d="M33 42 Q39 39 44 42" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+                <path d="M56 42 Q61 39 67 42" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+                <path d="M42 58 Q50 65 58 58" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
             </svg>`,
             
         2: `<svg viewBox="0 0 100 100">
@@ -2459,6 +2461,7 @@
                     document.getElementById('buy-sub-btn').style.display = 'none';
                 }
 
+                // If user doesn't have avatar (0) show initial-based avatar, else show their choice in Sidebar
                 document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(currentUserProfile.avatar, currentUserProfile.username);
                 
                 if (currentUserProfile.role === 'admin') {
@@ -2531,6 +2534,7 @@
             if (authRes.error) { 
                 showCustomAlert('خطا: ' + authRes.error.message); 
             } else if (authRes.data && authRes.data.user) {
+                // Set default avatar to 6 (Golden Star)
                 await supabaseClient.from('users_data').insert([{ 
                     id: authRes.data.user.id, 
                     email: u + '@plato.com', 
@@ -2538,7 +2542,7 @@
                     phone_model: m, 
                     status: 'pending', 
                     role: 'user', 
-                    avatar: 0 
+                    avatar: 6 
                 }]);
                 
                 showCustomAlert('درخواست عضویت ارسال شد.'); 
@@ -2608,6 +2612,7 @@
         if(target === 'home') {
             document.getElementById('view-home').classList.add('active-view');
             
+            // Restart Marquee Animation Fix
             const marqueeText = document.getElementById('marqueeTextContent');
             if (marqueeText) {
                 marqueeText.style.animation = 'none';
@@ -4112,6 +4117,64 @@
         if(!text) {
             return;
         }
+
+        // --- RATE LIMITING LOGIC (Anti-Spam) ---
+        let isVip = false;
+        if(currentUserProfile.role === 'admin') {
+            isVip = true;
+        } else if(currentUserProfile.sub_end_date) {
+            if(new Date(currentUserProfile.sub_end_date) > new Date()) {
+                isVip = true;
+            }
+        }
+
+        let storageKey = 'plato_ticket_history_' + currentUserProfile.id;
+        let historyRaw = localStorage.getItem(storageKey);
+        let history = [];
+        if(historyRaw) {
+            history = JSON.parse(historyRaw);
+        }
+        
+        let now = new Date().getTime();
+        
+        // پاک کردن پیام‌های قدیمی‌تر از ۲۴ ساعت
+        let updatedHistory = [];
+        history.forEach(time => {
+            if((now - time) < (24 * 60 * 60 * 1000)) {
+                updatedHistory.push(time);
+            }
+        });
+        history = updatedHistory;
+
+        // تنظیم محدودیت‌ها
+        let maxPer24h = 3;
+        let cooldownMs = 2 * 60 * 60 * 1000; // 2 hours
+        
+        if(isVip) {
+            maxPer24h = 6;
+            cooldownMs = 10 * 60 * 1000; // 10 mins
+        }
+        
+        if(history.length >= maxPer24h) {
+            return showCustomAlert(`شما مجاز به ارسال حداکثر ${maxPer24h} پیام در ۲۴ ساعت هستید.`);
+        }
+        
+        if(history.length > 0) {
+            let lastMsgTime = history[history.length - 1];
+            let diff = now - lastMsgTime;
+            
+            if(diff < cooldownMs) {
+                let waitMins = Math.ceil((cooldownMs - diff) / (60 * 1000));
+                
+                if(waitMins > 60) {
+                    let waitHours = Math.ceil(waitMins / 60);
+                    return showCustomAlert(`لطفاً ${waitHours} ساعت دیگر برای ارسال پیام بعدی صبر کنید.`);
+                } else {
+                    return showCustomAlert(`لطفاً ${waitMins} دقیقه دیگر برای ارسال پیام بعدی صبر کنید.`);
+                }
+            }
+        }
+        // --- END RATE LIMITING ---
         
         showLoader(true); 
         
@@ -4122,6 +4185,10 @@
                 content: text, 
                 is_read: false 
             }]);
+            
+            // ثبت زمان در تاریخچه کاربر
+            history.push(now);
+            localStorage.setItem(storageKey, JSON.stringify(history));
             
             showCustomAlert('ارسال شد.'); 
             document.getElementById('support-msg-text').value = ''; 
@@ -4338,12 +4405,13 @@
         showLoader(false); 
     }
 
-    /* Init Slider */
+    /* Init Custom Timed Slider */
     const slides = document.getElementById("slides");
     const dots = document.querySelectorAll(".dot");
     let currentSlide = 0; 
+    let slideTimeout;
 
-    setInterval(() => { 
+    function nextSlide() {
         currentSlide = currentSlide + 1;
         if(currentSlide >= dots.length) {
             currentSlide = 0;
@@ -4358,7 +4426,17 @@
                 d.classList.remove("active");
             }
         }); 
-    }, 4000);
+        
+        let delay = 4000;
+        if(currentSlide === 3) { 
+            delay = 15000;
+        }
+        
+        slideTimeout = setTimeout(nextSlide, delay);
+    }
+    
+    // Start slider
+    slideTimeout = setTimeout(nextSlide, 4000);
 
     window.addEventListener('load', () => {
         checkUserSession();
