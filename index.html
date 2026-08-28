@@ -44,15 +44,7 @@
             --accent-glow: rgba(37, 99, 235, 0.2);
         }
 
-        body { 
-            background: var(--bg-main);
-            color: var(--text-main); 
-            font-family: "Vazirmatn", sans-serif; 
-            overflow-x: hidden; 
-            transition: background 0.3s ease, color 0.3s ease; 
-            min-height: 100vh;
-        }
-
+        body { background: var(--bg-main); color: var(--text-main); font-family: "Vazirmatn", sans-serif; overflow-x: hidden; transition: background 0.3s ease, color 0.3s ease; min-height: 100vh; }
         button, input, select, textarea { font-family: inherit; color: inherit; }
         button { border: none; cursor: pointer; outline: none; }
         a { color: inherit; text-decoration: none; }
@@ -75,11 +67,9 @@
         .loader-ring { position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 3px solid transparent; border-top-color: #fff; border-bottom-color: var(--red-neon); animation: spin-ring 1s cubic-bezier(0.5, 0, 0.5, 1) infinite; }
         .loader-inner { position: absolute; z-index: 2; display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(0,0,0,0.6); border-radius: 50%; backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.1); }
         .loader-text { font-weight: 900; letter-spacing: 5px; font-size: 15px; color: #fff; animation: text-pulse 1.5s infinite alternate; text-transform: uppercase; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
-        
         @keyframes spin-ring { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes pulse-glow { 0% { transform: scale(0.8); opacity: 0.2; } 100% { transform: scale(1.2); opacity: 0.7; } }
         @keyframes text-pulse { 0% { opacity: 0.5; } 100% { opacity: 1; } }
-        
         #loader { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(12px); }
 
         /* =========================
@@ -112,7 +102,7 @@
         .checkbox-container input { width: 17px; height: 17px; cursor: pointer; accent-color: var(--accent); }
 
         /* =========================
-           SIDEBAR MENU
+           SIDEBAR MENU & AVATAR
         ========================= */
         .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 4000; display: none; opacity: 0; transition: 0.3s; backdrop-filter: blur(6px); }
         .sidebar { position: fixed; top: 0; bottom: 0; left: 0; width: 280px; background: var(--bg-box); z-index: 4001; transform: translateX(-100%); transition: 0.35s ease; border-right: 1px solid var(--border-color); display: flex; flex-direction: column; }
@@ -122,13 +112,24 @@
         
         .theme-toggle-btn { position: absolute; top: 15px; left: 15px; width: 34px; height: 34px; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-main); }
         .theme-toggle-btn svg { width: 17px; height: 17px; stroke: currentColor; stroke-width: 2; fill: none; }
-        
         .lang-toggle-btn { position: absolute; top: 15px; right: 15px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 8px; font-size: 11px; font-weight: bold; color: var(--text-main); padding: 5px 8px; cursor: pointer; }
 
-        .sidebar-user { font-size: 20px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
+        /* User Avatar UI */
+        .profile-avatar-wrap { position: relative; width: 70px; height: 70px; margin: 0 auto 10px; border-radius: 50%; border: 2px solid var(--border-color); padding: 3px; cursor: pointer; transition: 0.2s; }
+        .profile-avatar-wrap:hover { border-color: var(--accent); transform: scale(1.05); }
+        .profile-avatar-svg { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; background: var(--bg-input); }
+        .avatar-edit-badge { position: absolute; bottom: 0; right: -5px; background: var(--accent); color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-box); }
+        .avatar-edit-badge svg { width: 12px; height: 12px; fill: currentColor; }
+
+        /* Avatar Selection Grid */
+        .avatar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 10px; }
+        .avatar-option { width: 100%; aspect-ratio: 1; border-radius: 50%; cursor: pointer; transition: 0.2s; border: 3px solid transparent; overflow: hidden; }
+        .avatar-option:hover { transform: scale(1.1); }
+        .avatar-option.selected { border-color: var(--accent); transform: scale(1.1); box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+
+        .sidebar-user { font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
         .sidebar-sub { font-size: 13px; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 8px; }
         
-        /* Premium Badge */
         .premium-badge { background: linear-gradient(45deg, #d4af37, #fdf0a6, #d4af37); color: #000; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 900; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); text-shadow: 0 1px 2px rgba(255,255,255,0.5); position: relative; overflow: hidden; }
         .premium-badge::after { content: ""; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: rgba(255,255,255,0.8); transform: skewX(-20deg); animation: shine 3s infinite; }
         @keyframes shine { 0% { left: -100%; } 20%, 100% { left: 200%; } }
@@ -137,7 +138,6 @@
         .sidebar-btn { width: 100%; text-align: right; padding: 14px; background: var(--bg-input); border-radius: 12px; font-size: 13.5px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border-color); }
         .sidebar-btn:hover { border-color: var(--accent); }
         .notif-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 6px #10b981; animation: blink 1.5s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
         
         .sidebar-footer { text-align: center; padding: 15px; font-size: 11px; color: rgba(142, 142, 147, 0.4); border-top: 1px solid var(--border-color); user-select: none; }
         .sidebar-footer span { display: block; margin-top: 4px; font-weight: bold; letter-spacing: 1px; }
@@ -171,29 +171,13 @@
         /* =========================
            MODERN BOTTOM NAVIGATION
         ========================= */
-        .bottom-nav { 
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-            width: calc(100% - 40px); max-width: 400px; height: 70px; 
-            background: rgba(18, 18, 22, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 35px; 
-            display: flex; justify-content: space-around; align-items: center; z-index: 1000; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding: 0 10px;
-        }
-        .nav-item { 
-            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            color: var(--text-muted); font-size: 11px; font-weight: bold; cursor: pointer; 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; height: 100%;
-        }
+        .bottom-nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: calc(100% - 40px); max-width: 400px; height: 70px; background: rgba(18, 18, 22, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 35px; display: flex; justify-content: space-around; align-items: center; z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding: 0 10px; }
+        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 11px; font-weight: bold; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; height: 100%; }
         .nav-item svg { width: 22px; height: 22px; margin-bottom: 4px; stroke: currentColor; stroke-width: 2; fill: none; transition: transform 0.3s ease; }
         .nav-item.active { color: var(--accent); }
         .nav-item.active svg { transform: translateY(-3px) scale(1.1); filter: drop-shadow(0 4px 6px rgba(59, 130, 246, 0.4)); }
-        
-        .nav-indicator {
-            position: absolute; bottom: 8px; width: 5px; height: 5px; background: var(--accent);
-            border-radius: 50%; opacity: 0; transform: scale(0); transition: all 0.3s ease;
-        }
+        .nav-indicator { position: absolute; bottom: 8px; width: 5px; height: 5px; background: var(--accent); border-radius: 50%; opacity: 0; transform: scale(0); transition: all 0.3s ease; }
         .nav-item.active .nav-indicator { opacity: 1; transform: scale(1); }
-
         .nav-notif { position: absolute; top: 12px; right: calc(50% - 15px); width: 8px; height: 8px; background: rgba(16, 185, 129, 0.8); border-radius: 50%; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); display: none; }
 
         /* VIEW TRANSITIONS */
@@ -209,12 +193,11 @@
         
         .header { position: sticky; top: 0; z-index: 1000; height: 75px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--header-bg); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color); }
         .header-actions { display: flex; align-items: center; gap: 10px; }
-        .profile-button { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); cursor: pointer; }
+        .profile-button { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); cursor: pointer; overflow: hidden; }
         
         .marquee-box { width: calc(100% - 40px); max-width: 750px; margin: 15px auto 0; background: #000000; border: 3px solid #1a1a1a; border-radius: 8px; overflow: hidden; height: 52px; position: relative; box-shadow: inset 0 0 20px #000, 0 5px 15px rgba(255, 0, 0, 0.2); background-image: radial-gradient(circle, #2a0000 1.5px, transparent 1.5px); background-size: 6px 6px; }
         .marquee-text { position: absolute; white-space: nowrap; font-size: 20px; font-family: 'Courier New', Courier, monospace, "Vazirmatn"; font-weight: 900; color: #ff0000; text-shadow: 0 0 4px #ff0000, 0 0 10px #ff0000, 0 0 18px #ff1111; letter-spacing: 1.5px; top: 50%; left: 0; transform: translate3d(-100%, -50%, 0); animation: led-scroll-left-to-right 16s linear infinite; }
-        @keyframes led-scroll-left-to-right { 0% { left: 0; transform: translate3d(-100%, -50%, 0); } 100% { left: 100%; transform: translate3d(0, -50%, 0); } }
-
+        
         .search-box { padding: 14px 20px 4px; max-width: 750px; margin: 0 auto; }
         .search-wrapper { position: relative; }
         .search-wrapper input { width: 100%; height: 50px; padding: 0 45px 0 16px; border: 1px solid var(--border-color); border-radius: 14px; outline: none; background: var(--bg-box); font-size: 14px; transition: 0.2s; }
@@ -252,7 +235,6 @@
         .fav-btn { position: absolute; top: 12px; left: 12px; z-index: 10; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; color: #fff; transition: 0.2s; border: 1px solid rgba(255,255,255,0.2); }
         .fav-btn.active { color: #ef4444; }
         .fav-btn svg { width: 16px; height: 16px; fill: currentColor; }
-        
         .new-badge { position: absolute; top: 12px; right: 12px; z-index: 10; background: #ef4444; color: #fff; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 6px; letter-spacing: 1px; box-shadow: 0 2px 5px rgba(239, 68, 68, 0.5); }
 
         /* =========================
@@ -261,7 +243,7 @@
         #news-container { padding: 20px; max-width: 600px; margin: 0 auto; padding-bottom: 90px; }
         .news-card { background: var(--bg-box); border: 1px solid var(--border-color); border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .news-header { display: flex; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border-color); }
-        .news-avatar { width: 36px; height: 36px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 10px; color: #fff; }
+        .news-avatar { width: 36px; height: 36px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 10px; color: #fff; overflow: hidden; }
         .news-author { font-weight: bold; font-size: 13px; }
         .news-date { font-size: 11px; color: var(--text-muted); }
         .news-content { padding: 16px; font-size: 14px; line-height: 1.8; color: var(--text-main); white-space: pre-wrap; }
@@ -272,21 +254,12 @@
         .news-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
         /* =========================
-           NEON PLAYER BANNER
+           NEON PLAYER BANNER 
         ========================= */
         .neon-banner { width: 100%; aspect-ratio: 16 / 9; background: #000; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
         .neon-bg { position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(239, 68, 68, 0.15) 0%, #000 70%); }
-        .neon-text { position: relative; z-index: 2; font-size: 30px; font-weight: 900; color: #fff; text-align: center; text-shadow: 0 0 10px var(--red-neon), 0 0 20px var(--red-neon), 0 0 40px var(--red-neon); letter-spacing: 2px; padding: 0 20px; margin-bottom: 25px; }
-        .neon-play-btn { 
-            position: relative; z-index: 3; width: 65px; height: 65px; 
-            background: rgba(239, 68, 68, 0.15); border: 2px solid var(--red-neon); 
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5), inset 0 0 15px rgba(239, 68, 68, 0.3); 
-            backdrop-filter: blur(5px); cursor: pointer; transition: all 0.3s ease; 
-        }
-        .neon-play-btn:hover { background: rgba(239, 68, 68, 0.3); transform: scale(1.08); box-shadow: 0 0 30px rgba(239, 68, 68, 0.8), inset 0 0 20px rgba(239, 68, 68, 0.5); }
-        .neon-play-btn svg { width: 28px; height: 28px; fill: #fff; margin-left: 4px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.8)); }
-
+        .neon-text { position: relative; z-index: 2; font-size: 26px; font-weight: 900; color: #fff; text-align: center; text-shadow: 0 0 10px var(--red-neon), 0 0 20px var(--red-neon), 0 0 40px var(--red-neon); letter-spacing: 2px; padding: 0 20px; margin-bottom: 25px; }
+        
         .video-container { width: 100%; background: #000; flex-shrink: 0; position: relative; display: none; }
         .video-container video { width: 100%; aspect-ratio: 16 / 9; display: block; }
         .quality-badge { position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; z-index: 10; }
@@ -372,11 +345,11 @@
             <div class="modal-content">
                 <h3 class="modal-title" style="text-align:center;" data-i18n="terms_title">قوانین و مقررات پلاتو</h3>
                 <ul style="font-size: 13px; line-height: 1.9; color: var(--text-muted); padding-right: 20px; text-align: justify;" id="terms-list">
-                    <li style="margin-bottom:8px; font-weight:bold; color:#ef4444;">بعد از ارسال درخواست ثبت نام،صبر کنید تا پشتیبانی سایت درخواست شمارا بپذیرد،از ارسال درخواست های متعدد و پیام های اسپم به پشتیبانی جدا پرهیز بفرمایید،درصورت انجام اینکار اکانت شما داعمی مسدود خواهد شد و هر درخواستی از سمت موبایل شما ارسال بشود تایید نخواهد شد</li>
+                    <li style="margin-bottom:8px; font-weight:bold; color:#ef4444; font-size:14px;">بعد از ارسال درخواست ثبت نام، صبر کنید تا پشتیبانی سایت درخواست شما را بپذیرد. از ارسال درخواست‌های متعدد و پیام‌های اسپم به پشتیبانی جداً پرهیز بفرمایید، درصورت انجام این‌کار اکانت شما دائمی مسدود خواهد شد و هر درخواستی از سمت موبایل شما ارسال بشود تایید نخواهد شد.</li>
                     <li style="margin-bottom:8px;">حتماً رمزی که برای اکانت می‌گذارید یادتان باشد، چون رمز اکانت به هیچ عنوان قابل بازیابی نیست.</li>
                     <li style="margin-bottom:8px;">حتماً اسمتان ترکیبی از حروف انگلیسی و حداقل چند عدد رندوم باشد. اسم‌های تکراری تایید نمی‌شوند.</li>
                     <li style="margin-bottom:8px;">لینک‌های فیلم‌ها و سریال‌ها ممکن است به دلایلی از کار افتاده یا منقضی شوند. در صورت نیاز به دانلود، اسم محتوا را به پشتیبانی ارسال کنید تا در اسرع وقت رسیدگی شود.</li>
-                    <li style="margin-bottom:8px;">سایت پلاتو فقط با اینترنت بین‌الملل کار می‌کند و با محدود شدن نت (ملی شدن) ممکن است بارگزاری نشود.</li>
+                    <li style="margin-bottom:8px; color:var(--text-main);">سایت پلاتو فقط با اینترنت بین‌الملل کار می‌کند و با محدود شدن نت (ملی شدن) ممکن است بارگزاری نشود.</li>
                     <li style="margin-bottom:8px; font-weight:bold; color:var(--text-main);">فقط ثبت‌نام کسانی که جهت خرید اشتراک با پشتیبانی هماهنگ باشند تایید خواهد شد!</li>
                 </ul>
                 <label class="checkbox-container" style="margin-top: 20px; padding:10px; background:var(--bg-input); border-radius:10px; border:1px solid var(--border-color);">
@@ -388,18 +361,22 @@
     </div>
 
     <!-- =========================
-         SIDEBAR MENU
+         SIDEBAR MENU & AVATAR
     ========================= -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <button class="theme-toggle-btn" onclick="toggleTheme()" title="تغییر حالت روز و شب">
+            <button class="theme-toggle-btn" onclick="toggleTheme()" title="تغییر تم">
                 <svg viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
             </button>
-            
             <button class="lang-toggle-btn" onclick="toggleLanguage()">EN / FA</button>
             
-            <div class="sidebar-user" id="sidebarUser" style="margin-top: 15px;">نام کاربری</div>
+            <div class="profile-avatar-wrap" onclick="openAvatarModal()">
+                <div class="profile-avatar-svg" id="sidebar-avatar-img"></div>
+                <div class="avatar-edit-badge"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></div>
+            </div>
+
+            <div class="sidebar-user" id="sidebarUser">نام کاربری</div>
             <div class="sidebar-sub">
                 <div id="sub-time-left" style="margin-bottom:5px;">در حال بررسی...</div>
                 <div class="premium-badge" id="premium-badge" style="display:none;">
@@ -432,10 +409,6 @@
                 <svg class="btn-icon" style="margin:0;" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
             </button>
         </div>
-        <div class="sidebar-footer">
-            2026©
-            <span>ساخته شده توسط H"N</span>
-        </div>
     </div>
 
     <!-- =========================
@@ -467,10 +440,10 @@
             <h3 id="form-movie-title">اضافه کردن محتوای جدید</h3>
             <div class="input-group">
                 <select id="new-movie-category" class="input-field">
-                    <option value="series">📺 دسته: سریال</option>
-                    <option value="movie">🎬 دسته: فیلم سینمایی</option>
-                    <option value="program">🎙️ دسته: برنامه‌ها</option>
-                    <option value="kids">🧸 دسته: انیمیشن/کودکانه</option>
+                    <option value="series">دسته: سریال</option>
+                    <option value="movie">دسته: فیلم سینمایی</option>
+                    <option value="program">دسته: برنامه‌ها</option>
+                    <option value="kids">دسته: انیمیشن/کودکانه</option>
                 </select>
             </div>
             <div class="input-group">
@@ -486,7 +459,6 @@
                 <input type="number" id="new-movie-timer" class="input-field" placeholder="زمان انقضای لینک به ساعت (خالی = بدون انقضا)">
             </div>
             
-            <!-- NEW Badge Toggle -->
             <label class="checkbox-container" style="margin-bottom:15px; background:var(--bg-box); padding:10px; border-radius:8px; border:1px solid var(--border-color);">
                 <input type="checkbox" id="new-movie-isnew"> نشان دادن برچسب NEW (به عنوان قسمت جدید)
             </label>
@@ -582,9 +554,8 @@
             </div>
             
             <div class="header-actions">
-                <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                    <span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>
+                <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
+                    <!-- Avatar injected here -->
                 </button>
             </div>
         </header>
@@ -675,21 +646,18 @@
     <!-- =========================
          MODALS
     ========================= -->
+    <!-- Player Modal -->
     <div class="modal" id="playerModal">
         <div class="modal-box">
             <button class="modal-close-x" onclick="closePlayer()">×</button>
-            
-            <!-- Neon Header -->
             <div class="neon-banner" id="neonBanner">
                 <div class="neon-bg"></div>
                 <div class="neon-text" id="neonTitle">نام محتوا</div>
             </div>
-
             <div class="video-container" id="realPlayerContainer">
                 <video id="videoPlayer" controls controlsList="nodownload" playsinline preload="metadata"></video>
                 <button class="quality-badge" id="qualityToggleBtn" onclick="toggleVideoQuality()" data-i18n="quality_hd">کیفیت: عادی (HD)</button>
             </div>
-            
             <div class="modal-content">
                 <h3 class="modal-title" id="modalTitle">پخش محتوا</h3>
                 <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;" data-i18n="link_expired">این لینک منقضی شده است.</div>
@@ -709,6 +677,17 @@
             <div style="display: flex; gap: 10px;">
                 <button class="btn-primary" style="flex:1;" onclick="resumePlayback(true)" data-i18n="resume_btn">ادامه پخش</button>
                 <button class="btn-primary" style="flex:1; background: var(--bg-input); color: var(--text-main); border: 1px solid var(--border-color);" onclick="resumePlayback(false)" data-i18n="start_over_btn">از اول</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Avatar Selection Modal -->
+    <div class="modal" id="avatarModal" style="z-index: 6500;">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="modal-close-x" onclick="document.getElementById('avatarModal').classList.remove('show')">×</button>
+            <div class="modal-content">
+                <h3 class="modal-title" style="text-align:center;">انتخاب آواتار</h3>
+                <div class="avatar-grid" id="avatarGrid"></div>
             </div>
         </div>
     </div>
@@ -788,6 +767,39 @@
     let currentNav = 'home';
     let lastNewsId = localStorage.getItem('plato_last_news') || 0;
 
+    /* =========================
+       AVATAR SYSTEM (SVG)
+    ========================= */
+    const AVATARS = {
+        1: '<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#0ea5e9"/><path d="M20 100 Q50 60 80 100" fill="#0284c7"/><circle cx="50" cy="45" r="22" fill="#fed7aa"/><path d="M28 45 Q50 0 72 45 Z" fill="#0f172a"/><circle cx="43" cy="47" r="2.5" fill="#0f172a"/><circle cx="57" cy="47" r="2.5" fill="#0f172a"/><path d="M46 55 Q50 59 54 55" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>',
+        2: '<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#ec4899"/><path d="M20 100 Q50 70 80 100" fill="#be185d"/><path d="M25 50 Q50 10 75 50 L80 80 Q50 100 20 80 Z" fill="#4a044e"/><circle cx="50" cy="50" r="20" fill="#ffedd5"/><circle cx="43" cy="50" r="2.5" fill="#0f172a"/><circle cx="57" cy="50" r="2.5" fill="#0f172a"/><path d="M46 58 Q50 62 54 58" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="38" cy="55" r="3" fill="#f43f5e" opacity="0.4"/><circle cx="62" cy="55" r="3" fill="#f43f5e" opacity="0.4"/></svg>',
+        3: '<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#f59e0b"/><path d="M15 100 Q50 60 85 100" fill="#b45309"/><circle cx="50" cy="50" r="22" fill="#fef3c7"/><path d="M25 45 Q50 15 75 45 Z" fill="#ea580c"/><rect x="20" y="42" width="60" height="8" rx="4" fill="#ea580c"/><circle cx="43" cy="52" r="2.5" fill="#0f172a"/><circle cx="57" cy="52" r="2.5" fill="#0f172a"/><path d="M46 60 Q50 63 54 60" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>',
+        4: '<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#8b5cf6"/><path d="M25 35 Q50 0 75 35 L85 100 Q50 110 15 100 Z" fill="#4c1d95"/><circle cx="50" cy="50" r="18" fill="#ffedd5"/><circle cx="44" cy="49" r="2.5" fill="#0f172a"/><circle cx="56" cy="49" r="2.5" fill="#0f172a"/><path d="M47 56 Q50 59 53 56" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>',
+        5: '<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#10b981"/><path d="M20 100 Q50 65 80 100" fill="#064e3b"/><circle cx="50" cy="45" r="22" fill="#fed7aa"/><path d="M28 45 Q50 -5 72 45 Z" fill="#047857"/><rect x="34" y="43" width="14" height="10" rx="3" fill="none" stroke="#0f172a" stroke-width="2.5"/><rect x="52" y="43" width="14" height="10" rx="3" fill="none" stroke="#0f172a" stroke-width="2.5"/><line x1="48" y1="48" x2="52" y2="48" stroke="#0f172a" stroke-width="2.5"/><circle cx="41" cy="48" r="2" fill="#0f172a"/><circle cx="59" cy="48" r="2" fill="#0f172a"/><path d="M47 57 Q50 60 53 57" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>',
+        6: '<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#f43f5e"/><path d="M25 100 Q50 60 75 100" fill="#9f1239"/><circle cx="30" cy="50" r="12" fill="#facc15"/><circle cx="70" cy="50" r="12" fill="#facc15"/><path d="M28 40 Q50 10 72 40 L72 65 Q50 40 28 65 Z" fill="#facc15"/><circle cx="50" cy="50" r="20" fill="#ffedd5"/><circle cx="43" cy="51" r="2.5" fill="#0f172a"/><circle cx="57" cy="51" r="2.5" fill="#0f172a"/><path d="M47 58 Q50 60 53 58" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>'
+    };
+    function getAvatar(id) { return AVATARS[id] || AVATARS[1]; }
+
+    function openAvatarModal() {
+        const grid = document.getElementById('avatarGrid'); grid.innerHTML = '';
+        const currentAv = currentUserProfile?.avatar || 1;
+        for(let i=1; i<=6; i++) {
+            grid.innerHTML += `<div class="avatar-option ${currentAv === i ? 'selected' : ''}" onclick="selectAvatar(${i})">${AVATARS[i]}</div>`;
+        }
+        document.getElementById('avatarModal').classList.add('show');
+    }
+
+    async function selectAvatar(id) {
+        if(!currentUserProfile) return;
+        showLoader(true);
+        await supabaseClient.from('users_data').update({ avatar: id }).eq('id', currentUserProfile.id);
+        currentUserProfile.avatar = id;
+        document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(id);
+        document.getElementById('header-avatar-img').innerHTML = getAvatar(id) + '<span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>';
+        document.getElementById('avatarModal').classList.remove('show');
+        showLoader(false);
+    }
+
     /* Dictionary for i18n */
     const dict = {
         'fa': {
@@ -833,25 +845,15 @@
     }
 
     /* Core Utilities */
-    function toEnglishDigits(str) {
-        if (!str) return '';
-        return str.toString().replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
-    }
+    function toEnglishDigits(str) { return str ? str.toString().replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)) : ''; }
     function showLoader(show) { document.getElementById('loader').style.display = show ? 'flex' : 'none'; }
     function showCustomAlert(msg) { const alertBox = document.getElementById('custom-alert'); alertBox.textContent = msg; alertBox.style.display = 'block'; setTimeout(() => alertBox.style.display = 'none', 3500); }
     function toggleTheme() { document.body.classList.toggle('light-theme'); try { localStorage.setItem('plato_theme', document.body.classList.contains('light-theme') ? 'light' : 'dark'); } catch(e){} }
     try { if(localStorage.getItem('plato_theme') === 'light') document.body.classList.add('light-theme'); } catch(e){}
     applyTranslations();
 
-    function toggleAuth(type) {
-        document.getElementById('login-box').style.display = type === 'register' ? 'none' : 'block';
-        document.getElementById('reg-box').style.display = type === 'register' ? 'block' : 'none';
-    }
-    function togglePassword() {
-        const logPass = document.getElementById('log-pass'), regPass = document.getElementById('reg-pass');
-        if (logPass) logPass.type = logPass.type === 'password' ? 'text' : 'password';
-        if (regPass) regPass.type = regPass.type === 'password' ? 'text' : 'password';
-    }
+    function toggleAuth(type) { document.getElementById('login-box').style.display = type === 'register' ? 'none' : 'block'; document.getElementById('reg-box').style.display = type === 'register' ? 'block' : 'none'; }
+    function togglePassword() { const logPass = document.getElementById('log-pass'), regPass = document.getElementById('reg-pass'); if (logPass) logPass.type = logPass.type === 'password' ? 'text' : 'password'; if (regPass) regPass.type = regPass.type === 'password' ? 'text' : 'password'; }
 
     /* Session & Init */
     async function checkUserSession() {
@@ -872,24 +874,23 @@
                 document.getElementById('main-app').style.display = 'block';
                 document.getElementById('bottom-nav').style.display = 'flex';
                 
+                // Set Avatars
+                document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(currentUserProfile.avatar);
+                document.getElementById('header-avatar-img').innerHTML = getAvatar(currentUserProfile.avatar) + '<span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>';
+                
                 if (currentUserProfile.role === 'admin') {
                     document.getElementById('admin-sidebar-btn-container').innerHTML = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()"><span data-i18n="admin_panel">پنل مدیریت</span><svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>`;
                 }
                 
                 await updateHeartbeat();
                 await Promise.all([fetchFavorites(), fetchMoviesFromDatabase(), loadMarquee(), checkNewsUpdates()]);
-                
                 setInterval(() => { updateHeartbeat(); checkUnreadMessages(); }, 60000);
             }
         } catch (err) { document.getElementById('auth-screen').style.display = 'flex'; }
         showLoader(false);
     }
 
-    async function updateHeartbeat() {
-        if(currentUserProfile && currentUserProfile.role !== 'admin') {
-            await supabaseClient.from('users_data').update({ last_active: new Date().toISOString() }).eq('id', currentUserProfile.id);
-        }
-    }
+    async function updateHeartbeat() { if(currentUserProfile && currentUserProfile.role !== 'admin') { await supabaseClient.from('users_data').update({ last_active: new Date().toISOString() }).eq('id', currentUserProfile.id); } }
 
     /* Auth Actions */
     function doRegister() {
@@ -902,30 +903,23 @@
     }
     async function finalizeRegistration() {
         if(!document.getElementById('acceptTermsCheck').checked) return showCustomAlert('لطفاً قوانین را تایید کنید.');
-        document.getElementById('termsModal').classList.remove('show');
-        showLoader(true);
-        let u = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase();
-        let p = toEnglishDigits(document.getElementById('reg-pass').value).trim();
-        let m = document.getElementById('reg-model').value.trim();
+        document.getElementById('termsModal').classList.remove('show'); showLoader(true);
+        let u = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase(), p = toEnglishDigits(document.getElementById('reg-pass').value).trim(), m = document.getElementById('reg-model').value.trim();
         try {
             const authRes = await supabaseClient.auth.signUp({ email: u + '@plato.com', password: p });
             if (authRes.error) { showCustomAlert('خطا: ' + authRes.error.message); } 
             else if (authRes.data && authRes.data.user) {
-                await supabaseClient.from('users_data').insert([{ id: authRes.data.user.id, email: u+'@plato.com', username: u, phone_model: m, status: 'pending', role: 'user' }]);
+                await supabaseClient.from('users_data').insert([{ id: authRes.data.user.id, email: u+'@plato.com', username: u, phone_model: m, status: 'pending', role: 'user', avatar: 1 }]);
                 showCustomAlert('درخواست عضویت ارسال شد.'); toggleAuth('login');
             }
         } catch(err) { showCustomAlert('خطا رخ داد.'); }
         showLoader(false);
     }
     async function doLogin() {
-        var u = toEnglishDigits(document.getElementById('log-user').value).trim().toLowerCase();
-        var p = toEnglishDigits(document.getElementById('log-pass').value).trim();
+        var u = toEnglishDigits(document.getElementById('log-user').value).trim().toLowerCase(), p = toEnglishDigits(document.getElementById('log-pass').value).trim();
         if(!u || !p) return showCustomAlert('اطلاعات را وارد کنید');
         showLoader(true);
-        try {
-            const { error } = await supabaseClient.auth.signInWithPassword({ email: u + '@plato.com', password: p });
-            if (error) showCustomAlert('اطلاعات اشتباه است'); else checkUserSession();
-        } catch(err) { showCustomAlert('خطا رخ داد.'); showLoader(false); }
+        try { const { error } = await supabaseClient.auth.signInWithPassword({ email: u + '@plato.com', password: p }); if (error) showCustomAlert('اطلاعات اشتباه است'); else checkUserSession(); } catch(err) { showCustomAlert('خطا رخ داد.'); showLoader(false); }
     }
     async function doLogout() { if(supabaseClient) await supabaseClient.auth.signOut(); window.location.reload(); }
 
@@ -933,14 +927,12 @@
     function switchNav(target) {
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
         document.getElementById('nav-' + target).classList.add('active');
-        
         document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active-view'));
         
         if(target === 'home') document.getElementById('view-home').classList.add('active-view');
         if(target === 'favs') { document.getElementById('view-favs').classList.add('active-view'); renderFavs(); }
         if(target === 'news') { document.getElementById('view-news').classList.add('active-view'); document.getElementById('news-notif').style.display = 'none'; loadNewsUser(); }
-        currentNav = target;
-        window.scrollTo(0,0);
+        currentNav = target; window.scrollTo(0,0);
     }
 
     /* Favorites */
@@ -950,40 +942,29 @@
         if(data) favoritesArray = data.map(f => f.movie_id);
     }
     async function toggleFav(event, movieId) {
-        event.stopPropagation();
-        if(!currentUserProfile) return;
-        const btn = event.currentTarget;
-        const isFav = favoritesArray.includes(movieId);
-        
+        event.stopPropagation(); if(!currentUserProfile) return;
+        const btn = event.currentTarget; const isFav = favoritesArray.includes(movieId);
         if(isFav) {
-            favoritesArray = favoritesArray.filter(id => id !== movieId);
-            btn.classList.remove('active');
+            favoritesArray = favoritesArray.filter(id => id !== movieId); btn.classList.remove('active');
             await supabaseClient.from('favorites').delete().eq('user_id', currentUserProfile.id).eq('movie_id', movieId);
         } else {
-            favoritesArray.push(movieId);
-            btn.classList.add('active');
+            favoritesArray.push(movieId); btn.classList.add('active');
             await supabaseClient.from('favorites').insert([{ user_id: currentUserProfile.id, movie_id: movieId }]);
         }
         if(currentNav === 'favs') renderFavs();
     }
     function renderFavs() {
-        const container = document.getElementById('favsList');
-        container.innerHTML = '';
+        const container = document.getElementById('favsList'); container.innerHTML = '';
         const favMovies = dynamicDataArray.filter(m => favoritesArray.includes(m.id));
         if(favMovies.length === 0) { container.innerHTML = '<div style="color:var(--text-muted); font-size:13px; margin-top:20px;">لیست علاقه‌مندی خالی است.</div>'; return; }
         
         favMovies.forEach(item => {
-            const card = document.createElement("article");
-            card.className = "movie-card";
+            const card = document.createElement("article"); card.className = "movie-card";
             card.innerHTML = `<div class="poster"><img src="${item.poster}" loading="lazy"><div class="poster-overlay"></div></div><div class="movie-name">${item.title}</div>`;
             card.addEventListener("click", () => openPlayer(item));
-            
-            const favBtn = document.createElement("div");
-            favBtn.className = "fav-btn active";
+            const favBtn = document.createElement("div"); favBtn.className = "fav-btn active";
             favBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
-            favBtn.onclick = (e) => toggleFav(e, item.id);
-            card.appendChild(favBtn);
-            container.appendChild(card);
+            favBtn.onclick = (e) => toggleFav(e, item.id); card.appendChild(favBtn); container.appendChild(card);
         });
     }
 
@@ -1000,43 +981,26 @@
             }
         } catch(e) {}
     }
-
     function renderDynamicList(list, containerId) {
-        const container = document.getElementById(containerId);
-        container.innerHTML = "";
-        if (list.length === 0) { container.parentElement.style.display = 'none'; return; } 
-        else { container.parentElement.style.display = 'block'; }
+        const container = document.getElementById(containerId); container.innerHTML = "";
+        if (list.length === 0) { container.parentElement.style.display = 'none'; return; } else { container.parentElement.style.display = 'block'; }
 
         list.forEach(item => {
-            const card = document.createElement("article");
-            card.className = "movie-card";
-            
+            const card = document.createElement("article"); card.className = "movie-card";
             let newBadgeHTML = "";
             if(item.updated_at) {
                 let diffDays = (new Date() - new Date(item.updated_at)) / (1000*60*60*24);
                 if(diffDays <= 3 && diffDays >= 0) newBadgeHTML = `<div class="new-badge">NEW</div>`;
             }
-
-            card.innerHTML = `
-                ${newBadgeHTML}
-                <div class="poster"><img src="${item.poster}" loading="lazy"><div class="poster-overlay"></div></div>
-                <div class="movie-name">${item.title}</div>
-            `;
-            
-            const favBtn = document.createElement("div");
-            favBtn.className = `fav-btn ${favoritesArray.includes(item.id) ? 'active' : ''}`;
+            card.innerHTML = `${newBadgeHTML}<div class="poster"><img src="${item.poster}" loading="lazy"><div class="poster-overlay"></div></div><div class="movie-name">${item.title}</div>`;
+            const favBtn = document.createElement("div"); favBtn.className = `fav-btn ${favoritesArray.includes(item.id) ? 'active' : ''}`;
             favBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
-            favBtn.onclick = (e) => toggleFav(e, item.id);
-            card.appendChild(favBtn);
-
-            card.addEventListener("click", () => openPlayer(item));
-            container.appendChild(card);
+            favBtn.onclick = (e) => toggleFav(e, item.id); card.appendChild(favBtn); card.addEventListener("click", () => openPlayer(item)); container.appendChild(card);
         });
     }
 
     document.getElementById("searchInput").addEventListener("input", function() {
-        var q = this.value.trim().toLowerCase();
-        if (!q) return fetchMoviesFromDatabase();
+        var q = this.value.trim().toLowerCase(); if (!q) return fetchMoviesFromDatabase();
         const f = dynamicDataArray.filter(i => i.title.toLowerCase().includes(q));
         renderDynamicList(f.filter(m => m.category === 'program'), 'programsList');
         renderDynamicList(f.filter(m => m.category === 'kids'), 'kidsList');
@@ -1051,9 +1015,7 @@
 
     function checkSubscription() {
         if(currentUserProfile && currentUserProfile.role === 'admin') return true; 
-        if (!currentUserProfile || !currentUserProfile.sub_end_date || new Date() > new Date(currentUserProfile.sub_end_date)) {
-            showCustomAlert('اشتراک شما فعال نیست!'); return false;
-        }
+        if (!currentUserProfile || !currentUserProfile.sub_end_date || new Date() > new Date(currentUserProfile.sub_end_date)) { showCustomAlert('اشتراک شما فعال نیست!'); return false; }
         return true;
     }
 
@@ -1066,8 +1028,7 @@
         document.getElementById("realPlayerContainer").style.display = "none";
         videoPlayer.pause(); videoPlayer.removeAttribute("src");
         
-        const linksContainer = document.getElementById("modal-links-container");
-        linksContainer.innerHTML = '';
+        const linksContainer = document.getElementById("modal-links-container"); linksContainer.innerHTML = '';
 
         if(movie.countdown_end && new Date(movie.countdown_end).getTime() <= new Date().getTime()) {
             document.getElementById("modalExpirationText").style.display = "block";
@@ -1099,11 +1060,8 @@
     window.prepareVideo = function(url) {
         pendingVideoUrl = url;
         let savedTime = localStorage.getItem('plato_prog_' + pendingVideoUrl);
-        if (savedTime && parseFloat(savedTime) > 10) {
-            document.getElementById('resumeModal').classList.add('show');
-        } else {
-            resumePlayback(false);
-        }
+        if (savedTime && parseFloat(savedTime) > 10) { document.getElementById('resumeModal').classList.add('show'); } 
+        else { resumePlayback(false); }
     }
 
     window.resumePlayback = async function(useSaved) {
@@ -1111,24 +1069,12 @@
         document.getElementById("neonBanner").style.display = "none";
         document.getElementById("realPlayerContainer").style.display = "block";
         videoPlayer.src = pendingVideoUrl;
-        
-        if (useSaved) {
-            let savedTime = localStorage.getItem('plato_prog_' + pendingVideoUrl);
-            if(savedTime) videoPlayer.currentTime = parseFloat(savedTime);
-        }
-        
+        if (useSaved) { let savedTime = localStorage.getItem('plato_prog_' + pendingVideoUrl); if(savedTime) videoPlayer.currentTime = parseFloat(savedTime); }
         try { await videoPlayer.play(); } catch(e) {}
     }
 
-    videoPlayer.addEventListener('timeupdate', function() {
-        if (videoPlayer.currentTime > 5 && !videoPlayer.ended) {
-            localStorage.setItem('plato_prog_' + pendingVideoUrl, videoPlayer.currentTime);
-        }
-    });
-
-    videoPlayer.addEventListener('ended', function() {
-        localStorage.removeItem('plato_prog_' + pendingVideoUrl);
-    });
+    videoPlayer.addEventListener('timeupdate', function() { if (videoPlayer.currentTime > 5 && !videoPlayer.ended) { localStorage.setItem('plato_prog_' + pendingVideoUrl, videoPlayer.currentTime); } });
+    videoPlayer.addEventListener('ended', function() { localStorage.removeItem('plato_prog_' + pendingVideoUrl); });
 
     window.toggleVideoQuality = function() {
         const btn = document.getElementById('qualityToggleBtn');
@@ -1140,26 +1086,19 @@
             videoPlayer.style.transform = 'scale(0.96)'; showCustomAlert('کیفیت بهینه شد.');
         }
     }
-
     window.directDownload = function(title, url) {
         if(!checkSubscription() || !url) return;
         const a = document.createElement('a'); a.href = url; a.target = '_blank';
         a.download = title.replace(/[^a-zA-Z0-9ا-ی]/g, '_') + '.mp4';
         document.body.appendChild(a); a.click(); a.remove(); showCustomAlert('دانلود آغاز شد.');
     }
-
-    function closePlayer() {
-        videoPlayer.pause(); videoPlayer.removeAttribute("src");
-        playerModal.classList.remove("show"); document.body.style.overflow = "";
-    }
+    function closePlayer() { videoPlayer.pause(); videoPlayer.removeAttribute("src"); playerModal.classList.remove("show"); document.body.style.overflow = ""; }
 
     /* Sidebar & Sub Logic */
     function openSidebar() {
-        document.getElementById('sidebar').classList.add('open');
-        document.getElementById('sidebarOverlay').classList.add('open');
+        document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebarOverlay').classList.add('open');
         document.getElementById('sidebarUser').textContent = currentUserProfile.username;
         const badge = document.getElementById('premium-badge');
-        
         if(currentUserProfile.role === 'admin') {
             document.getElementById('sub-time-left').textContent = currentLang === 'en' ? "Admin Account" : "حساب مدیریت کل";
             badge.style.display = 'inline-flex';
@@ -1179,136 +1118,78 @@
 
     /* Admin Panel Logic */
     function switchAdminTab(tabId, btn) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active')); document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
         document.getElementById(tabId).classList.add('active'); btn.classList.add('active');
         if(tabId === 'tab-messages') loadAdminInbox();
         if(tabId === 'tab-users') loadAllUsers();
         if(tabId === 'tab-files') loadAdminMovies();
         if(tabId === 'tab-news-gift') { loadAdminNews(); loadAdminGifts(); }
     }
-    function showAdminPanel() {
-        document.getElementById('main-app').style.display = 'none'; closeSidebar();
-        document.getElementById('bottom-nav').style.display = 'none'; 
-        document.getElementById('admin-screen').style.display = 'flex';
-        loadPendingRequests(); loadAdminMovies(); loadAllUsers();
-    }
-    function hideAdminPanel() {
-        document.getElementById('admin-screen').style.display = 'none';
-        document.getElementById('main-app').style.display = 'block'; 
-        document.getElementById('bottom-nav').style.display = 'flex'; 
-        fetchMoviesFromDatabase();
-    }
+    function showAdminPanel() { document.getElementById('main-app').style.display = 'none'; closeSidebar(); document.getElementById('bottom-nav').style.display = 'none'; document.getElementById('admin-screen').style.display = 'flex'; loadPendingRequests(); loadAdminMovies(); loadAllUsers(); }
+    function hideAdminPanel() { document.getElementById('admin-screen').style.display = 'none'; document.getElementById('main-app').style.display = 'block'; document.getElementById('bottom-nav').style.display = 'flex'; fetchMoviesFromDatabase(); }
 
     /* Sub Charging (Zero sets to Null) */
     async function chargeSub() {
-        var user = toEnglishDigits(document.getElementById('charge-user').value).trim().toLowerCase();
-        var days = parseInt(toEnglishDigits(document.getElementById('charge-days').value));
+        var user = toEnglishDigits(document.getElementById('charge-user').value).trim().toLowerCase(), days = parseInt(toEnglishDigits(document.getElementById('charge-days').value));
         if(!user || isNaN(days)) return showCustomAlert('اطلاعات را کامل وارد کنید');
-        
         showLoader(true);
         try {
             const { data: udata } = await supabaseClient.from('users_data').select('id, sub_end_date').eq('username', user).single();
             if (!udata) { showCustomAlert('کاربر پیدا نشد.'); showLoader(false); return; }
-            
             if(days === 0) {
-                await supabaseClient.from('users_data').update({ sub_end_date: null }).eq('id', udata.id);
-                showCustomAlert('اشتراک کاربر لغو شد.');
+                await supabaseClient.from('users_data').update({ sub_end_date: null }).eq('id', udata.id); showCustomAlert('اشتراک کاربر لغو شد.');
             } else {
-                let currentSub = udata.sub_end_date ? new Date(udata.sub_end_date) : null;
-                let now = new Date();
-                let baseDate = (currentSub && currentSub > now) ? currentSub : now;
+                let currentSub = udata.sub_end_date ? new Date(udata.sub_end_date) : null, now = new Date(), baseDate = (currentSub && currentSub > now) ? currentSub : now;
                 baseDate.setDate(baseDate.getDate() + days);
-                await supabaseClient.from('users_data').update({ sub_end_date: baseDate.toISOString() }).eq('id', udata.id);
-                showCustomAlert('اشتراک جمع و فعال شد.');
+                await supabaseClient.from('users_data').update({ sub_end_date: baseDate.toISOString() }).eq('id', udata.id); showCustomAlert('اشتراک جمع و فعال شد.');
             }
-        } catch(e) {}
-        showLoader(false);
+        } catch(e) {} showLoader(false);
     }
 
     /* Admin Movies & Drag Sort */
     let dragSourceElement = null;
     async function loadAdminMovies() {
-        const list = document.getElementById('admin-movie-list');
-        list.innerHTML = '';
+        const list = document.getElementById('admin-movie-list'); list.innerHTML = '';
         if(dynamicDataArray.length > 0) {
             dynamicDataArray.forEach(m => {
-                let catName = m.category === 'movie' ? '🎬 فیلم' : (m.category === 'kids' ? '🧸 انیمیشن' : (m.category === 'program' ? '🎙️ برنامه' : '📺 سریال'));
-                let card = document.createElement('div');
-                card.className = "req-card draggable";
-                card.draggable = true;
-                card.dataset.id = m.id;
+                let catName = m.category === 'movie' ? 'دسته: فیلم' : (m.category === 'kids' ? 'دسته: انیمیشن' : (m.category === 'program' ? 'دسته: برنامه' : 'دسته: سریال'));
+                let card = document.createElement('div'); card.className = "req-card draggable"; card.draggable = true; card.dataset.id = m.id;
                 card.innerHTML = `<div class="req-info"><div style="color:var(--text-main);">${m.title}</div><small style="color:var(--accent);">${catName}</small></div><div><button class="btn-sm btn-edit" onclick="editMovie(${m.id})">ویرایش</button><button class="btn-sm btn-reject" onclick="deleteMovie(${m.id})">حذف</button></div>`;
-                
                 card.addEventListener('dragstart', (e) => { dragSourceElement = card; e.dataTransfer.effectAllowed = 'move'; card.style.opacity = '0.5'; });
                 card.addEventListener('dragover', (e) => { e.preventDefault(); card.classList.add('drag-over'); });
                 card.addEventListener('dragleave', () => card.classList.remove('drag-over'));
                 card.addEventListener('drop', async (e) => {
                     e.stopPropagation(); card.classList.remove('drag-over');
                     if (dragSourceElement !== card) {
-                        const allCards = [...list.querySelectorAll('.draggable')];
-                        const dropIndex = allCards.indexOf(card);
-                        const dragIndex = allCards.indexOf(dragSourceElement);
+                        const allCards = [...list.querySelectorAll('.draggable')]; const dropIndex = allCards.indexOf(card); const dragIndex = allCards.indexOf(dragSourceElement);
                         if(dragIndex < dropIndex) card.after(dragSourceElement); else card.before(dragSourceElement);
-                        
                         showLoader(true);
                         const updatedCards = [...list.querySelectorAll('.draggable')];
                         const updates = updatedCards.map((c, idx) => supabaseClient.from('movies').update({ sort_order: idx }).eq('id', c.dataset.id));
-                        await Promise.all(updates);
-                        await fetchMoviesFromDatabase();
-                        showLoader(false); showCustomAlert('ترتیب ذخیره شد.');
+                        await Promise.all(updates); await fetchMoviesFromDatabase(); showLoader(false); showCustomAlert('ترتیب ذخیره شد.');
                     }
                 });
-                card.addEventListener('dragend', () => { card.style.opacity = '1'; list.querySelectorAll('.draggable').forEach(c => c.classList.remove('drag-over')); });
-                list.appendChild(card);
+                card.addEventListener('dragend', () => { card.style.opacity = '1'; list.querySelectorAll('.draggable').forEach(c => c.classList.remove('drag-over')); }); list.appendChild(card);
             });
         }
     }
-
     async function saveMovie() {
-        var cat = document.getElementById('new-movie-category').value;
-        var tit = document.getElementById('new-movie-title').value.trim();
-        var pos = document.getElementById('new-movie-poster').value.trim();
-        var url = document.getElementById('new-movie-url').value.trim();
-        var tHour = document.getElementById('new-movie-timer').value.trim();
-        var isNew = document.getElementById('new-movie-isnew').checked;
-        
+        var cat = document.getElementById('new-movie-category').value, tit = document.getElementById('new-movie-title').value.trim(), pos = document.getElementById('new-movie-poster').value.trim(), url = document.getElementById('new-movie-url').value.trim(), tHour = document.getElementById('new-movie-timer').value.trim(), isNew = document.getElementById('new-movie-isnew').checked;
         if(!tit || !pos) return showCustomAlert('عنوان و لینک عکس را وارد کنید');
-        
         var payload = { title: tit, poster: pos, download_url: url, category: cat };
-        
-        if(isNew) {
-            payload.updated_at = new Date().toISOString();
-        } else {
-            let oldDate = new Date(); oldDate.setDate(oldDate.getDate() - 10);
-            payload.updated_at = oldDate.toISOString();
-        }
-
-        if(tHour) { let d = new Date(); d.setHours(d.getHours() + parseFloat(tHour)); payload.countdown_end = d.toISOString(); } 
-        else payload.countdown_end = null;
-
+        if(isNew) { payload.updated_at = new Date().toISOString(); } else { let oldDate = new Date(); oldDate.setDate(oldDate.getDate() - 10); payload.updated_at = oldDate.toISOString(); }
+        if(tHour) { let d = new Date(); d.setHours(d.getHours() + parseFloat(tHour)); payload.countdown_end = d.toISOString(); } else payload.countdown_end = null;
         showLoader(true);
         try {
-            if(editingMovieId) await supabaseClient.from('movies').update(payload).eq('id', editingMovieId);
-            else await supabaseClient.from('movies').insert([payload]);
+            if(editingMovieId) await supabaseClient.from('movies').update(payload).eq('id', editingMovieId); else await supabaseClient.from('movies').insert([payload]);
             showCustomAlert("ذخیره شد!"); cancelEdit(); await fetchMoviesFromDatabase(); loadAdminMovies();
         } catch(e) {} showLoader(false);
     }
-
     function editMovie(id) {
         const m = dynamicDataArray.find(x => x.id === id); if(!m) return;
-        document.getElementById('new-movie-category').value = m.category || 'series'; document.getElementById('new-movie-title').value = m.title;
-        document.getElementById('new-movie-poster').value = m.poster; document.getElementById('new-movie-url').value = m.download_url || '';
-        
-        if(m.updated_at) {
-            let diffDays = (new Date() - new Date(m.updated_at)) / (1000*60*60*24);
-            document.getElementById('new-movie-isnew').checked = (diffDays <= 3 && diffDays >= 0);
-        } else {
-            document.getElementById('new-movie-isnew').checked = false;
-        }
-
-        editingMovieId = id; document.getElementById('form-movie-title').textContent = "ویرایش محتوا";
-        document.getElementById('cancel-edit-btn').style.display = "block"; window.scrollTo(0,0);
+        document.getElementById('new-movie-category').value = m.category || 'series'; document.getElementById('new-movie-title').value = m.title; document.getElementById('new-movie-poster').value = m.poster; document.getElementById('new-movie-url').value = m.download_url || '';
+        if(m.updated_at) { let diffDays = (new Date() - new Date(m.updated_at)) / (1000*60*60*24); document.getElementById('new-movie-isnew').checked = (diffDays <= 3 && diffDays >= 0); } else { document.getElementById('new-movie-isnew').checked = false; }
+        editingMovieId = id; document.getElementById('form-movie-title').textContent = "ویرایش محتوا"; document.getElementById('cancel-edit-btn').style.display = "block"; window.scrollTo(0,0);
     }
     function cancelEdit() { document.getElementById('new-movie-title').value = ''; document.getElementById('new-movie-poster').value = ''; document.getElementById('new-movie-url').value = ''; document.getElementById('new-movie-isnew').checked = false; editingMovieId = null; document.getElementById('form-movie-title').textContent = "اضافه کردن محتوای جدید"; document.getElementById('cancel-edit-btn').style.display = "none"; }
     async function deleteMovie(id) { if(!confirm('حذف شود؟')) return; showLoader(true); await supabaseClient.from('movies').delete().eq('id', id); await fetchMoviesFromDatabase(); loadAdminMovies(); showLoader(false); }
@@ -1317,28 +1198,21 @@
     async function loadAllUsers() {
         try {
             const { data } = await supabaseClient.from('users_data').select('*').order('created_at', { ascending: false });
-            const list = document.getElementById('all-users-list'); list.innerHTML = '';
-            let onlineCount = 0;
-            const nowTime = new Date().getTime();
-
+            const list = document.getElementById('all-users-list'); list.innerHTML = ''; let onlineCount = 0; const nowTime = new Date().getTime();
             if(data) {
                 data.forEach(user => {
                     if(user.last_active && (nowTime - new Date(user.last_active).getTime()) < 300000) onlineCount++;
                     if(user.role === 'admin') return;
                     let subText = "ندارد";
-                    if(user.sub_end_date) {
-                        const diff = new Date(user.sub_end_date) - new Date();
-                        if(diff > 0) subText = Math.ceil(diff / 86400000) + " روز"; else subText = "منقضی";
-                    }
-                    list.innerHTML += `<div class="req-card"><div class="req-info"><div style="color:var(--accent);">${user.username}</div><small>اعتبار: <b style="color:#10b981;">${subText}</b></small></div><div><button class="btn-sm btn-reject" onclick="deleteUserAccount('${user.id}')">حذف</button></div></div>`;
+                    if(user.sub_end_date) { const diff = new Date(user.sub_end_date) - new Date(); if(diff > 0) subText = Math.ceil(diff / 86400000) + " روز"; else subText = "منقضی"; }
+                    list.innerHTML += `<div class="req-card"><div class="req-info" style="display:flex; align-items:center; gap:10px;"><div style="width:36px;height:36px;border-radius:50%;overflow:hidden;">${getAvatar(user.avatar)}</div><div><div style="color:var(--accent);">${user.username}</div><small>اعتبار: <b style="color:#10b981;">${subText}</b></small></div></div><div><button class="btn-sm btn-reject" onclick="deleteUserAccount('${user.id}')">حذف</button></div></div>`;
                 });
                 document.getElementById('onlineUsersCount').textContent = onlineCount;
             }
         } catch(e) {}
     }
     async function loadPendingRequests() { 
-        const { data } = await supabaseClient.from('users_data').select('*').eq('status', 'pending');
-        const list = document.getElementById('pending-list'); list.innerHTML = '';
+        const { data } = await supabaseClient.from('users_data').select('*').eq('status', 'pending'); const list = document.getElementById('pending-list'); list.innerHTML = '';
         if(data) data.forEach(req => list.innerHTML += `<div class="req-card"><div class="req-info"><div>آیدی: <b>${req.username}</b></div><small>مدل: ${req.phone_model}</small></div><div><button class="btn-sm btn-approve" onclick="updateStatus('${req.id}', 'approved')">تایید</button><button class="btn-sm btn-reject" onclick="updateStatus('${req.id}', 'rejected')">رد</button></div></div>`);
     }
     async function updateStatus(id, st) { showLoader(true); if(st==='rejected') await supabaseClient.from('users_data').delete().eq('id',id); else await supabaseClient.from('users_data').update({status:st}).eq('id',id); loadPendingRequests(); loadAllUsers(); showLoader(false); }
@@ -1356,25 +1230,14 @@
     window.saveMarqueeText = async function() { showLoader(true); let v = document.getElementById('admin-marquee-input').value.trim(); await supabaseClient.from('messages').delete().eq('direction', 'marquee'); if(v) await supabaseClient.from('messages').insert([{direction:'marquee', content:v, is_read:true}]); loadMarquee(); showLoader(false); }
 
     /* News System */
-    async function checkNewsUpdates() {
-        try {
-            const { data } = await supabaseClient.from('news').select('id').order('id', {ascending: false}).limit(1);
-            if(data && data.length > 0 && data[0].id > parseInt(lastNewsId)) { document.getElementById('news-notif').style.display = 'block'; }
-        } catch(e) {}
-    }
+    async function checkNewsUpdates() { try { const { data } = await supabaseClient.from('news').select('id').order('id', {ascending: false}).limit(1); if(data && data.length > 0 && data[0].id > parseInt(lastNewsId)) { document.getElementById('news-notif').style.display = 'block'; } } catch(e) {} }
     async function loadNewsUser() {
         showLoader(true);
         try {
             const { data: news } = await supabaseClient.from('news').select('*').order('created_at', { ascending: false });
             let likedIds = [];
-            
-            try {
-                const { data: likes } = await supabaseClient.from('news_likes').select('news_id').eq('user_id', currentUserProfile.id);
-                if(likes) likedIds = likes.map(l => l.news_id);
-            } catch(likeError) {}
-            
+            try { const { data: likes } = await supabaseClient.from('news_likes').select('news_id').eq('user_id', currentUserProfile.id); if(likes) likedIds = likes.map(l => l.news_id); } catch(err) {}
             const cont = document.getElementById('news-container'); cont.innerHTML = '';
-            
             if(news && news.length > 0) {
                 lastNewsId = news[0].id; localStorage.setItem('plato_last_news', lastNewsId);
                 news.forEach(n => {
@@ -1389,12 +1252,10 @@
                     </div>`;
                 });
             }
-        } catch(e) {}
-        showLoader(false);
+        } catch(e) {} showLoader(false);
     }
     window.likeNews = async function(nid, btn) {
-        const cntEl = btn.querySelector('.like-cnt');
-        let cnt = parseInt(cntEl.textContent);
+        const cntEl = btn.querySelector('.like-cnt'); let cnt = parseInt(cntEl.textContent);
         try {
             if(btn.classList.contains('liked')) {
                 btn.classList.remove('liked'); cntEl.textContent = Math.max(0, cnt-1);
@@ -1411,139 +1272,61 @@
     }
 
     /* Admin News Management */
-    let editingNewsId = null;
-    let adminNewsArray = [];
+    let editingNewsId = null; let adminNewsArray = [];
     async function loadAdminNews() {
         const { data } = await supabaseClient.from('news').select('*').order('created_at', { ascending: false });
         const list = document.getElementById('admin-news-list'); list.innerHTML = '';
-        if(data) {
-            adminNewsArray = data;
-            data.forEach(n => {
-                list.innerHTML += `
-                <div class="req-card" style="flex-direction:column; align-items:stretch;">
-                    <div style="font-size:13px; line-height:1.6; margin-bottom:10px;">${n.content}</div>
-                    <div style="display:flex; justify-content:flex-end; gap:5px;">
-                        <button class="btn-sm btn-edit" onclick="editNews(${n.id})">ویرایش</button>
-                        <button class="btn-sm btn-reject" onclick="deleteNews(${n.id})">حذف</button>
-                    </div>
-                </div>`;
-            });
-        }
+        if(data) { adminNewsArray = data; data.forEach(n => { list.innerHTML += `<div class="req-card" style="flex-direction:column; align-items:stretch;"><div style="font-size:13px; line-height:1.6; margin-bottom:10px;">${n.content}</div><div style="display:flex; justify-content:flex-end; gap:5px;"><button class="btn-sm btn-edit" onclick="editNews(${n.id})">ویرایش</button><button class="btn-sm btn-reject" onclick="deleteNews(${n.id})">حذف</button></div></div>`; }); }
     }
-    window.editNews = function(id) {
-        const n = adminNewsArray.find(x => x.id === id); if(!n) return;
-        document.getElementById('new-news-content').value = n.content;
-        editingNewsId = id;
-        document.getElementById('form-news-title').textContent = "ویرایش خبر";
-        document.getElementById('save-news-btn').textContent = "ثبت ویرایش";
-        document.getElementById('cancel-news-btn').style.display = "block";
-    }
-    window.cancelEditNews = function() {
-        document.getElementById('new-news-content').value = '';
-        editingNewsId = null;
-        document.getElementById('form-news-title').textContent = "ایجاد خبر جدید";
-        document.getElementById('save-news-btn').textContent = "انتشار خبر";
-        document.getElementById('cancel-news-btn').style.display = "none";
-    }
+    window.editNews = function(id) { const n = adminNewsArray.find(x => x.id === id); if(!n) return; document.getElementById('new-news-content').value = n.content; editingNewsId = id; document.getElementById('form-news-title').textContent = "ویرایش خبر"; document.getElementById('save-news-btn').textContent = "ثبت ویرایش"; document.getElementById('cancel-news-btn').style.display = "block"; }
+    window.cancelEditNews = function() { document.getElementById('new-news-content').value = ''; editingNewsId = null; document.getElementById('form-news-title').textContent = "ایجاد خبر جدید"; document.getElementById('save-news-btn').textContent = "انتشار خبر"; document.getElementById('cancel-news-btn').style.display = "none"; }
     async function postNews() {
-        const val = document.getElementById('new-news-content').value.trim(); if(!val) return;
-        showLoader(true);
-        if(editingNewsId) {
-            await supabaseClient.from('news').update({content: val}).eq('id', editingNewsId);
-            showCustomAlert('خبر ویرایش شد');
-        } else {
-            await supabaseClient.from('news').insert([{content: val}]);
-            showCustomAlert('خبر منتشر شد');
-        }
-        cancelEditNews();
-        loadAdminNews();
-        showLoader(false);
+        const val = document.getElementById('new-news-content').value.trim(); if(!val) return; showLoader(true);
+        if(editingNewsId) { await supabaseClient.from('news').update({content: val}).eq('id', editingNewsId); showCustomAlert('خبر ویرایش شد'); } else { await supabaseClient.from('news').insert([{content: val}]); showCustomAlert('خبر منتشر شد'); }
+        cancelEditNews(); loadAdminNews(); showLoader(false);
     }
-    window.deleteNews = async function(id) {
-        if(!confirm('آیا از حذف این خبر اطمینان دارید؟')) return;
-        showLoader(true);
-        await supabaseClient.from('news').delete().eq('id', id);
-        loadAdminNews();
-        showLoader(false);
-    }
+    window.deleteNews = async function(id) { if(!confirm('آیا از حذف این خبر اطمینان دارید؟')) return; showLoader(true); await supabaseClient.from('news').delete().eq('id', id); loadAdminNews(); showLoader(false); }
 
     /* Gift Codes Management */
     async function createGiftCode() {
-        const code = document.getElementById('gift-code-input').value.trim().toUpperCase();
-        const days = parseInt(document.getElementById('gift-days-input').value);
-        const max = parseInt(document.getElementById('gift-uses-input').value);
-        if(!code || !days || !max) return;
-        showLoader(true);
-        await supabaseClient.from('gift_codes').insert([{code: code, days: days, max_uses: max}]);
-        showCustomAlert('کد ایجاد شد'); loadAdminGifts(); showLoader(false);
+        const code = document.getElementById('gift-code-input').value.trim().toUpperCase(), days = parseInt(document.getElementById('gift-days-input').value), max = parseInt(document.getElementById('gift-uses-input').value);
+        if(!code || !days || !max) return; showLoader(true); await supabaseClient.from('gift_codes').insert([{code: code, days: days, max_uses: max}]); showCustomAlert('کد ایجاد شد'); loadAdminGifts(); showLoader(false);
     }
     async function loadAdminGifts() {
         const { data } = await supabaseClient.from('gift_codes').select('*').order('id', {ascending: false});
         const list = document.getElementById('gift-codes-list'); list.innerHTML = '';
-        if(data) data.forEach(g => { 
-            list.innerHTML += `
-            <div class="req-card">
-                <div class="req-info">
-                    <div style="color:var(--accent); letter-spacing:2px;">${g.code}</div>
-                    <small>${g.days} روز - استفاده: ${g.current_uses}/${g.max_uses}</small>
-                </div>
-                <div>
-                    <button class="btn-sm btn-reject" onclick="deleteGiftCode(${g.id})">حذف</button>
-                </div>
-            </div>`; 
-        });
+        if(data) data.forEach(g => { list.innerHTML += `<div class="req-card"><div class="req-info"><div style="color:var(--accent); letter-spacing:2px;">${g.code}</div><small>${g.days} روز - استفاده: ${g.current_uses}/${g.max_uses}</small></div><div><button class="btn-sm btn-reject" onclick="deleteGiftCode(${g.id})">حذف</button></div></div>`; });
     }
-    window.deleteGiftCode = async function(id) {
-        if(!confirm('آیا از حذف این کد هدیه مطمئن هستید؟')) return;
-        showLoader(true);
-        await supabaseClient.from('gift_codes').delete().eq('id', id);
-        loadAdminGifts();
-        showLoader(false);
-    }
+    window.deleteGiftCode = async function(id) { if(!confirm('آیا از حذف این کد هدیه مطمئن هستید؟')) return; showLoader(true); await supabaseClient.from('gift_codes').delete().eq('id', id); loadAdminGifts(); showLoader(false); }
 
     function openGiftModal() { closeSidebar(); document.getElementById('giftModal').classList.add('show'); }
     async function applyGiftCode() {
-        const code = document.getElementById('user-gift-code').value.trim().toUpperCase(); if(!code) return;
-        showLoader(true);
+        const code = document.getElementById('user-gift-code').value.trim().toUpperCase(); if(!code) return; showLoader(true);
         try {
             const { data: used } = await supabaseClient.from('used_codes').select('*').eq('code', code).eq('user_id', currentUserProfile.id);
             if(used && used.length > 0) { showCustomAlert('شما قبلا از این کد استفاده کرده‌اید!'); showLoader(false); return; }
-            
             const { data: gc, error: gcError } = await supabaseClient.from('gift_codes').select('*').eq('code', code).single();
             if(gcError || !gc) { showCustomAlert('کد وارد شده یافت نشد یا نامعتبر است.'); showLoader(false); return; }
             if(gc.current_uses >= gc.max_uses) { showCustomAlert('ظرفیت استفاده از این کد تمام شده است.'); showLoader(false); return; }
 
-            let currentSub = currentUserProfile.sub_end_date ? new Date(currentUserProfile.sub_end_date) : null;
-            let now = new Date(); let baseDate = (currentSub && currentSub > now) ? currentSub : now;
+            let currentSub = currentUserProfile.sub_end_date ? new Date(currentUserProfile.sub_end_date) : null, now = new Date(), baseDate = (currentSub && currentSub > now) ? currentSub : now;
             baseDate.setDate(baseDate.getDate() + gc.days);
-            
             await supabaseClient.from('users_data').update({ sub_end_date: baseDate.toISOString() }).eq('id', currentUserProfile.id);
             await supabaseClient.from('gift_codes').update({ current_uses: gc.current_uses + 1 }).eq('id', gc.id);
             await supabaseClient.from('used_codes').insert([{code: code, user_id: currentUserProfile.id}]);
-            
             const { data: np } = await supabaseClient.from('users_data').select('*').eq('id', currentUserProfile.id).single();
             currentUserProfile = np;
-            
             document.getElementById('giftModal').classList.remove('show'); document.getElementById('user-gift-code').value='';
-            showLoader(false); showCustomAlert('اشتراک هدیه با موفقیت فعال شد!');
-            triggerConfetti();
+            showLoader(false); showCustomAlert('اشتراک هدیه با موفقیت فعال شد!'); triggerConfetti();
         } catch(e) { showLoader(false); }
     }
 
     /* Confetti System */
     function triggerConfetti() {
-        const canvas = document.getElementById('confetti-canvas');
-        canvas.style.display = 'block'; canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const ctx = canvas.getContext('2d');
-        const pieces = []; const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
+        const canvas = document.getElementById('confetti-canvas'); canvas.style.display = 'block'; canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const ctx = canvas.getContext('2d'), pieces = [], colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
         for(let i=0; i<100; i++) pieces.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height - canvas.height, w: Math.random()*10+5, h: Math.random()*10+5, c: colors[Math.floor(Math.random()*colors.length)], dy: Math.random()*3+2, dx: Math.random()*2-1, r: Math.random()*360 });
-        let frame = 0;
-        function animate() {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            pieces.forEach(p => { p.y += p.dy; p.x += p.dx; p.r += p.dx*2; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r*Math.PI/180); ctx.fillStyle = p.c; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h); ctx.restore(); });
-            frame++; if(frame < 200) requestAnimationFrame(animate); else canvas.style.display = 'none';
-        }
-        animate();
+        let frame = 0; function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); pieces.forEach(p => { p.y += p.dy; p.x += p.dx; p.r += p.dx*2; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r*Math.PI/180); ctx.fillStyle = p.c; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h); ctx.restore(); }); frame++; if(frame < 200) requestAnimationFrame(animate); else canvas.style.display = 'none'; } animate();
     }
 
     /* Messages (Support/Inbox) Logic */
@@ -1585,10 +1368,31 @@
         }
         showLoader(false);
     }
+    
     async function loadAdminInbox() {
+        const { data: usersData } = await supabaseClient.from('users_data').select('id, username, avatar');
+        let userMap = {}; if(usersData) usersData.forEach(u => userMap[u.id] = u);
+
         const { data: msgs } = await supabaseClient.from('messages').select('*').eq('direction', 'user_to_admin').order('created_at', { ascending: false });
         const list = document.getElementById('admin-inbox-list'); list.innerHTML = '';
-        if(msgs) msgs.forEach(msg => list.innerHTML += `<div class="req-card" style="flex-direction:column; align-items:stretch;"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;"><div style="color:var(--accent);">👤 شناسه کاربر: ${msg.user_id.substring(0,8)}...</div><div style="display:flex; gap:4px;"><button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ</button><button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button></div></div><div style="background:var(--bg-box); padding:10px; border-radius:8px;">${msg.content}</div></div>`);
+        if(msgs) msgs.forEach(msg => {
+            let sender = userMap[msg.user_id] || { username: 'کاربر', avatar: 1 };
+            list.innerHTML += `
+            <div class="req-card" style="flex-direction:column; align-items:stretch;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <div style="width:28px; height:28px; border-radius:50%; overflow:hidden;">${getAvatar(sender.avatar)}</div>
+                        <div style="color:var(--accent); font-weight:bold;">${sender.username}</div>
+                    </div>
+                    <div style="display:flex; gap:4px;">
+                        <button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ</button>
+                        <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button>
+                    </div>
+                </div>
+                <div style="background:var(--bg-box); padding:10px; border-radius:8px;">${msg.content}</div>
+            </div>`;
+        });
+        
         const { data: sysMsgs } = await supabaseClient.from('messages').select('*').eq('direction', 'system_all').order('created_at', { ascending: false });
         const sysList = document.getElementById('admin-sys-list'); sysList.innerHTML = '';
         if(sysMsgs) sysMsgs.forEach(msg => sysList.innerHTML += `<div class="req-card" style="flex-direction:column; align-items:stretch;"><div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span style="color:#10b981;">پیام عمومی</span><button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button></div><div>${msg.content}</div></div>`);
