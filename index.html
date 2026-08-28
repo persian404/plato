@@ -694,6 +694,11 @@
             padding: 20px 20px 80px; 
             min-height: 100vh; 
             width: 100%; 
+            background-color: var(--bg-main); /* رفع مشکل پس‌زمینه پنل مدیریت */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10000;
         }
 
         .tab-menu { 
@@ -958,6 +963,7 @@
             display: flex; 
             align-items: center; 
             justify-content: space-between; 
+            flex-direction: row; /* اطمینان از چیدمان صحیح در حالت راست‌چین */
             padding: 0 20px; 
             background: var(--header-bg); 
             backdrop-filter: blur(15px); 
@@ -968,6 +974,8 @@
             display: flex; 
             align-items: center; 
             gap: 10px; 
+            /* هُل دادن دکمه به منتهی‌الیه سمت چپ در چیدمان RTL */
+            margin-right: auto; 
         }
 
         .profile-button { 
@@ -1750,27 +1758,26 @@
          MAIN APP & HEADER
     ========================= -->
     <header class="header">
-        <div style="display:flex; align-items:center;">
-            <div class="logo">
-                <div class="premium-logo">
-                    <svg viewBox="0 0 1536 614">
-                        <path fill="var(--text-main)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/>
-                    </svg>
-                </div>
+        <div class="logo">
+            <div class="premium-logo">
+                <svg viewBox="0 0 1536 614">
+                    <path fill="var(--text-main)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/>
+                </svg>
             </div>
-            
-            <div class="header-actions">
-                <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
-                    <!-- Avatar injected here -->
-                </button>
-            </div>
-        </header>
+        </div>
+        
+        <div class="header-actions">
+            <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
+                <!-- Avatar injected here -->
+            </button>
+        </div>
+    </header>
 
     <div id="main-app">
         <!-- Home View -->
         <div id="view-home" class="view-section active-view">
             
-            <!-- GLOBAL MARQUEE (Fix for scrolling bug: now inside view-home so it's only here) -->
+            <!-- GLOBAL MARQUEE -->
             <div id="marqueeContainer" class="marquee-box" style="display:none;">
                 <div class="marquee-text-wrapper">
                     <div class="marquee-text" id="marqueeTextContent"></div>
@@ -1997,8 +2004,7 @@
     let lastNewsId = localStorage.getItem('plato_last_news') || 0;
 
     /* =========================
-       AVATAR SYSTEM (Precise SVG Geometries)
-       All meticulously written on separate lines.
+       AVATAR SYSTEM 
     ========================= */
     const AVATARS = {
         1: `<svg viewBox="0 0 100 100">
@@ -2006,12 +2012,9 @@
                 <path d="M20 100 C20 60, 80 60, 80 100" fill="#0284c7" stroke="#0369a1" stroke-width="2"/>
                 <rect x="42" y="60" width="16" height="15" fill="#fcd34d"/>
                 <circle cx="50" cy="45" r="24" fill="#fde047"/>
-                <path d="M22 45 C20 20, 40 5, 55 10 C70 5, 80 20, 78 45 C75 25, 60 20, 50 25 C35 20, 25 30, 22 45 Z" fill="#1e293b"/>
-                <path d="M45 12 L55 0 L60 15 Z" fill="#1e293b"/>
-                <circle cx="38" cy="45" r="3.5" fill="#0f172a"/>
-                <circle cx="62" cy="45" r="3.5" fill="#0f172a"/>
-                <path d="M33 38 Q38 35 43 38" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
-                <path d="M57 38 Q62 35 67 38" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 28 45 C 28 15, 72 15, 72 45 C 72 30, 60 25, 50 25 C 40 25, 28 30, 28 45 Z" fill="#1e293b"/>
+                <circle cx="40" cy="45" r="3.5" fill="#0f172a"/>
+                <circle cx="60" cy="45" r="3.5" fill="#0f172a"/>
                 <path d="M42 55 Q50 62 58 55" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
             </svg>`,
             
@@ -2048,40 +2051,41 @@
         5: `<svg viewBox="0 0 100 100">
                 <rect width="100" height="100" fill="#dcfce7"/>
                 <circle cx="50" cy="50" r="38" fill="#a7f3d0"/>
-                <path d="M35 55 L35 70 C35 85, 65 85, 65 70 L65 55 Z" fill="#1e293b"/>
-                <polygon points="50,30 85,45 50,60 15,45" fill="#334155"/>
-                <polygon points="50,32 82,45 50,58 18,45" fill="#475569"/>
-                <circle cx="50" cy="45" r="3.5" fill="#facc15"/>
-                <path d="M50 45 C65 45, 75 55, 75 75" fill="none" stroke="#facc15" stroke-width="3"/>
-                <polygon points="71,75 79,75 77,88 73,88" fill="#eab308"/>
+                <path d="M35 46 L35 65 C35 75, 65 75, 65 65 L65 46 Z" fill="#1e293b"/>
+                <polygon points="50,25 85,40 50,55 15,40" fill="#334155"/>
+                <polygon points="50,25 82,40 50,53 18,40" fill="#475569"/>
+                <circle cx="50" cy="40" r="3.5" fill="#facc15"/>
+                <path d="M50 40 Q 75 45 75 65" fill="none" stroke="#facc15" stroke-width="3"/>
+                <polygon points="71,65 79,65 77,80 73,80" fill="#eab308"/>
             </svg>`,
             
         6: `<svg viewBox="0 0 100 100">
-                <rect width="100" height="100" fill="#e2e8f0"/>
-                <circle cx="50" cy="50" r="40" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
-                <polygon points="38,32 62,32 70,55 50,72 30,55" fill="#1e293b"/>
-                <polygon points="38,32 62,32 50,10" fill="#f8fafc" stroke="#1e293b" stroke-width="2"/>
-                <polygon points="62,32 70,55 90,45" fill="#f8fafc" stroke="#1e293b" stroke-width="2"/>
-                <polygon points="70,55 50,72 75,85" fill="#f8fafc" stroke="#1e293b" stroke-width="2"/>
-                <polygon points="50,72 30,55 25,85" fill="#f8fafc" stroke="#1e293b" stroke-width="2"/>
-                <polygon points="30,55 38,32 10,45" fill="#f8fafc" stroke="#1e293b" stroke-width="2"/>
-                <path d="M50 10 L80 20 L90 45 L75 85 L25 85 L10 45 L20 20 Z" fill="none" stroke="#1e293b" stroke-width="2"/>
+                <rect width="100" height="100" fill="#fef08a"/>
+                <circle cx="50" cy="50" r="40" fill="#fde047"/>
+                <path d="M50 15 L61 38 L85 41 L67 58 L72 82 L50 70 L28 82 L33 58 L15 41 L39 38 Z" fill="#eab308" stroke="#ca8a04" stroke-width="2" stroke-linejoin="round"/>
             </svg>`
     };
 
-    function getAvatar(id) { 
-        if(AVATARS[id]) {
-            return AVATARS[id];
-        } else {
-            return AVATARS[1];
+    function getAvatar(id, username) { 
+        if (!id || id === 0 || !AVATARS[id]) {
+            let initial = 'U';
+            if(username && username.length > 0) {
+                initial = username.charAt(0).toUpperCase();
+            }
+            let html = `<svg viewBox="0 0 100 100">`;
+            html += `<rect width="100" height="100" fill="#e0f2fe"/>`;
+            html += `<text x="50" y="66" font-family="Arial" font-size="50" font-weight="bold" fill="#0284c7" text-anchor="middle">${initial}</text>`;
+            html += `</svg>`;
+            return html;
         }
+        return AVATARS[id];
     }
 
     function openAvatarModal() {
         const grid = document.getElementById('avatarGrid'); 
         grid.innerHTML = '';
         
-        let currentAv = 1;
+        let currentAv = 0;
         if(currentUserProfile && currentUserProfile.avatar) {
             currentAv = currentUserProfile.avatar;
         }
@@ -2106,8 +2110,8 @@
         
         currentUserProfile.avatar = id;
         
-        document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(id);
-        document.getElementById('header-avatar-img').innerHTML = getAvatar(id) + '<span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>';
+        document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(id, currentUserProfile.username);
+        document.getElementById('header-avatar-img').innerHTML = getAvatar(id, currentUserProfile.username) + '<span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>';
         
         document.getElementById('avatarModal').classList.remove('show'); 
         
@@ -2150,7 +2154,8 @@
             'resume_title': 'پخش از ادامه؟', 
             'resume_desc': 'شما قبلاً بخشی از این محتوا را تماشا کرده‌اید.', 
             'resume_btn': 'ادامه پخش', 
-            'start_over_btn': 'از اول'
+            'start_over_btn': 'از اول',
+            'new_badge': 'جدید'
         },
         'en': {
             'loading': 'PLATO', 
@@ -2186,7 +2191,8 @@
             'resume_title': 'Resume playback?', 
             'resume_desc': 'You have already watched a part of this.', 
             'resume_btn': 'Resume', 
-            'start_over_btn': 'Start Over'
+            'start_over_btn': 'Start Over',
+            'new_badge': 'NEW'
         }
     };
     
@@ -2241,6 +2247,7 @@
         }
         localStorage.setItem('plato_lang', currentLang);
         applyTranslations();
+        fetchMoviesFromDatabase(); 
     }
 
     /* Core Utilities */
@@ -2362,8 +2369,8 @@
                 document.getElementById('main-app').style.display = 'block';
                 document.getElementById('bottom-nav').style.display = 'flex';
                 
-                document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(currentUserProfile.avatar);
-                document.getElementById('header-avatar-img').innerHTML = getAvatar(currentUserProfile.avatar) + '<span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>';
+                document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(currentUserProfile.avatar, currentUserProfile.username);
+                document.getElementById('header-avatar-img').innerHTML = getAvatar(currentUserProfile.avatar, currentUserProfile.username) + '<span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>';
                 
                 if (currentUserProfile.role === 'admin') {
                     let adminBtnHtml = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()">`;
@@ -2442,7 +2449,7 @@
                     phone_model: m, 
                     status: 'pending', 
                     role: 'user', 
-                    avatar: 1 
+                    avatar: 0 
                 }]);
                 
                 showCustomAlert('درخواست عضویت ارسال شد.'); 
@@ -2512,7 +2519,6 @@
         if(target === 'home') {
             document.getElementById('view-home').classList.add('active-view');
             
-            // Restart Marquee Animation Fix
             const marqueeText = document.getElementById('marqueeTextContent');
             if (marqueeText) {
                 marqueeText.style.animation = 'none';
@@ -2674,7 +2680,11 @@
                 let diffTime = new Date() - new Date(item.updated_at);
                 let diffDays = diffTime / (1000 * 60 * 60 * 24);
                 if(diffDays <= 3 && diffDays >= 0) {
-                    newBadgeHTML = `<div class="new-badge">NEW</div>`;
+                    let badgeText = 'جدید';
+                    if(dict[currentLang] && dict[currentLang]['new_badge']) {
+                        badgeText = dict[currentLang]['new_badge'];
+                    }
+                    newBadgeHTML = `<div class="new-badge">${badgeText}</div>`;
                 }
             }
             
@@ -3356,7 +3366,7 @@
                         }
                     }
                     
-                    let avatarSvg = getAvatar(user.avatar);
+                    let avatarSvg = getAvatar(user.avatar, user.username);
                     
                     let cardHtml = `<div class="req-card">`;
                     cardHtml += `<div class="req-info" style="display:flex; align-items:center; gap:10px;">`;
@@ -3442,7 +3452,7 @@
                 if(textElem.textContent !== data[0].content) { 
                     textElem.textContent = data[0].content; 
                     textElem.style.animation = 'none'; 
-                    void textElem.offsetHeight; 
+                    void textElem.offsetWidth; 
                     textElem.style.animation = null; 
                 }
                 
@@ -3902,7 +3912,20 @@
         animate();
     }
 
-    /* Messages (Support/Inbox) Logic */
+    /* Messages (Support/Inbox) Logic & User Local Deletion */
+    window.deleteLocalMsg = function(msgId) {
+        if(!confirm('آیا از حذف این پیام اطمینان دارید؟')) {
+            return;
+        }
+        
+        let storageKey = 'plato_del_msgs_' + currentUserProfile.id;
+        let deletedMsgs = JSON.parse(localStorage.getItem(storageKey) || '[]');
+        deletedMsgs.push(msgId);
+        localStorage.setItem(storageKey, JSON.stringify(deletedMsgs));
+        
+        openInboxModal(); 
+    }
+
     async function checkUnreadMessages() {
         if(!currentUserProfile) {
             return;
@@ -3920,15 +3943,20 @@
                 document.getElementById('admin-msg-notif').style.display = show; 
                 document.getElementById('header-notif').style.display = show;
             } else {
-                const { data } = await supabaseClient.from('messages').select('direction, user_id').eq('is_read', false);
+                const { data } = await supabaseClient.from('messages').select('id, direction, user_id').eq('is_read', false);
                 
                 if(data) {
+                    let storageKey = 'plato_del_msgs_' + currentUserProfile.id;
+                    let deletedMsgs = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                    
                     let unread = 0;
                     data.forEach(m => {
-                        if(m.direction === 'system_all') {
-                            unread++;
-                        } else if (m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) {
-                            unread++;
+                        if (!deletedMsgs.includes(m.id)) {
+                            if(m.direction === 'system_all') {
+                                unread++;
+                            } else if (m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) {
+                                unread++;
+                            }
                         }
                     });
                     
@@ -3995,12 +4023,17 @@
             list.innerHTML = '';
             
             if(data) {
+                let storageKey = 'plato_del_msgs_' + currentUserProfile.id;
+                let deletedMsgs = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                
                 let myMsgs = [];
                 data.forEach(m => {
-                    if(m.direction === 'system_all') {
-                        myMsgs.push(m);
-                    } else if (m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) {
-                        myMsgs.push(m);
+                    if (!deletedMsgs.includes(m.id)) {
+                        if(m.direction === 'system_all') {
+                            myMsgs.push(m);
+                        } else if (m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) {
+                            myMsgs.push(m);
+                        }
                     }
                 });
                 
@@ -4016,8 +4049,12 @@
                             t = '<b>پیام عمومی سیستم</b>';
                         }
                         
+                        let trashIcon = `<button style="background:none; border:none; color:#ef4444; cursor:pointer;" onclick="deleteLocalMsg(${m.id})">`;
+                        trashIcon += `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`;
+                        trashIcon += `</button>`;
+                        
                         let html = `<div class="msg-bubble ${c}">`;
-                        html += `<div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px; margin-bottom:8px;">${t}</div>`;
+                        html += `<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px; margin-bottom:8px;"><span>${t}</span>${trashIcon}</div>`;
                         html += `<div style="line-height:1.6; margin-top:4px;">${m.content}</div></div>`;
                         
                         list.innerHTML += html;
@@ -4058,7 +4095,7 @@
                         sender = userMap[msg.user_id];
                     }
                     
-                    let avatarSvg = getAvatar(sender.avatar);
+                    let avatarSvg = getAvatar(sender.avatar, sender.username);
                     
                     let html = `<div class="req-card" style="flex-direction:column; align-items:stretch;">`;
                     html += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">`;
