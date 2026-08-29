@@ -272,6 +272,17 @@
             position: relative; 
         }
 
+        /* استایل اختصاصی برای مدالِ تمام‌صفحه‌ی تماشای فیلم */
+        .modal-full .modal-box {
+            max-width: 100% !important;
+            width: 100% !important;
+            height: 100vh !important;
+            max-height: 100vh !important;
+            border-radius: 0 !important;
+            border: none !important;
+            background: var(--bg-main);
+        }
+
         .modal-close-x { 
             position: absolute; 
             top: 14px; 
@@ -487,6 +498,9 @@
         .theme-toggle-btn svg { 
             width: 17px; 
             height: 17px; 
+            stroke: currentColor; 
+            stroke-width: 2; 
+            fill: none; 
         }
 
         .light-theme .icon-sun { display: block !important; }
@@ -877,6 +891,11 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
             position: relative; 
             height: 100%; 
+            border-inline-end: 1px solid rgba(255,255,255,0.08); /* جداکننده عمودی */
+        }
+        
+        .nav-item:last-child {
+            border-inline-end: none;
         }
 
         .nav-item svg { 
@@ -927,6 +946,18 @@
             display: none; 
         }
 
+        .platino-badge {
+            position: absolute;
+            top: 4px;
+            right: 15%;
+            background: #ef4444;
+            color: #fff;
+            font-size: 8px;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 900;
+        }
+
         /* VIEW TRANSITIONS */
         .view-section { 
             display: none; 
@@ -964,8 +995,7 @@
             height: 75px; 
             display: flex; 
             align-items: center; 
-            justify-content: space-between; 
-            flex-direction: row; 
+            justify-content: space-between; /* لوگو و پروفایل را به گوشه‌ها هُل می‌دهد */
             padding: 0 20px; 
             background: var(--header-bg); 
             backdrop-filter: blur(15px); 
@@ -991,12 +1021,12 @@
             overflow: hidden; 
         }
 
-        /* Buy Sub Button Styles */
+        /* Buy Sub Button Styles (Centered and Slightly Transparent) */
         .buy-sub-btn {
             position: absolute; 
-            left: calc(50% - 15px); 
+            left: 50%; 
             transform: translateX(-50%);
-            background: linear-gradient(45deg, rgba(239, 68, 68, 0.85), rgba(185, 28, 28, 0.85)); 
+            background: linear-gradient(45deg, rgba(239, 68, 68, 0.8), rgba(185, 28, 28, 0.8)); 
             padding: 5px 16px; 
             border-radius: 12px; 
             font-size: 13px; 
@@ -1411,8 +1441,10 @@
             border-radius: 12px;
             padding: 4px; 
             z-index: 0;
+            margin-bottom: 20px;
         }
 
+        /* خطوط متحرک نئونی */
         .neon-banner::before {
             content: "";
             position: absolute;
@@ -1427,6 +1459,7 @@
             z-index: -2;
         }
 
+        /* لایه پوشاننده وسط */
         .neon-banner::after {
             content: "";
             position: absolute;
@@ -1458,6 +1491,7 @@
             flex-shrink: 0; 
             position: relative; 
             display: none; 
+            margin-bottom: 20px;
         }
 
         .video-container video { 
@@ -1663,12 +1697,11 @@
                 <svg class="btn-icon" viewBox="0 0 24 24"><path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
             </button>
             
-            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="color:var(--accent); display:flex; flex-direction:column; text-decoration:none; padding: 10px 14px; border: 2px dashed var(--accent); margin-top: 15px; border-radius: 12px; background: rgba(59, 130, 246, 0.05);">
-                <div style="display:flex; align-items:center; justify-content:flex-end; gap: 8px; width: 100%;">
-                    <span style="font-weight:bold; font-size: 13.5px; color: var(--text-main);">کانال تلگرامی پلاتو</span>
-                    <svg class="btn-icon" style="margin:0; width: 22px; height: 22px; color:var(--accent);" viewBox="0 0 24 24"><path d="M21.5 2L2 11l6 3 2.5 7L13 16l5 5L21.5 2z"/></svg>
+            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="text-decoration:none;">
+                <div style="display:flex; flex-direction:column; gap:4px; width:100%;">
+                    <div style="text-align:right; font-weight:bold; font-size:13.5px; color:var(--text-main);">کانال تلگرامی پلاتو</div>
+                    <div style="text-align:left; font-weight:bold; font-size:13px; color:var(--accent);" dir="ltr">@plato_media</div>
                 </div>
-                <div style="width: 100%; text-align: left; margin-top: 6px; font-size: 16px; font-weight: 900; letter-spacing: 1px;" dir="ltr">@plato_media</div>
             </a>
 
             <div id="admin-sidebar-btn-container"></div>
@@ -1724,6 +1757,12 @@
             </div>
             <div class="input-group">
                 <input type="text" id="new-movie-poster" class="input-field" placeholder="لینک عکس پوستر">
+            </div>
+            <div class="input-group">
+                <textarea id="new-movie-desc" class="input-field" style="height:80px; padding:15px; resize:vertical; line-height:1.6;" placeholder="خلاصه داستان..."></textarea>
+            </div>
+            <div class="input-group">
+                <input type="text" id="new-movie-cast" class="input-field" placeholder="بازیگران (مثال: شهاب حسینی، ترانه علیدوستی)">
             </div>
             <div class="input-group">
                 <textarea id="new-movie-url" class="input-field" style="height:120px; padding:15px; resize:vertical; line-height:1.6;" placeholder="فرمت: نام قسمت | لینک دانلود | 30h"></textarea>
@@ -1816,7 +1855,6 @@
          MAIN APP & HEADER
     ========================= -->
     <header class="header">
-        <!-- Logo on the right (in RTL) -->
         <div class="logo">
             <div class="premium-logo">
                 <svg viewBox="0 0 1536 614">
@@ -1825,14 +1863,14 @@
             </div>
         </div>
         
-        <!-- Buy Button centered -->
-        <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none; position: absolute; left: 50%; transform: translateX(-50%);">
+        <!-- Buy Button centered exactly -->
+        <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none;">
             خرید اشتراک
             <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
         </a>
 
-        <!-- Profile button on the far left -->
-        <div class="header-actions" style="margin-right: auto;">
+        <!-- Profile button on the other side -->
+        <div class="header-actions">
             <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 <span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>
@@ -1938,6 +1976,7 @@
         <div class="nav-item" onclick="showPlatinoSoon()" id="nav-platino">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
             <span data-i18n="nav_platino">پلاتینو</span>
+            <div class="platino-badge">به زودی</div>
             <div class="nav-indicator"></div>
         </div>
         <div class="nav-item" onclick="switchNav('news')" id="nav-news">
@@ -1951,12 +1990,11 @@
     <!-- =========================
          MODALS
     ========================= -->
-    <!-- Player Modal -->
-    <div class="modal" id="playerModal">
+    <!-- Player Modal (Full Page) -->
+    <div class="modal modal-full" id="playerModal">
         <div class="modal-box">
             <button class="modal-close-x" onclick="closePlayer()">×</button>
             <div class="neon-banner" id="neonBanner">
-                <div class="neon-bg"></div>
                 <div class="neon-text" id="neonTitle">نام محتوا</div>
             </div>
             <div class="video-container" id="realPlayerContainer">
@@ -1965,6 +2003,12 @@
             </div>
             <div class="modal-content">
                 <h3 class="modal-title" id="modalTitle">پخش محتوا</h3>
+                
+                <div id="modal-movie-info" style="display:none; background:var(--bg-input); padding:15px; border-radius:12px; margin-bottom:20px; border:1px solid var(--border-color);">
+                    <div id="modal-movie-desc" style="font-size:13px; color:var(--text-muted); line-height:1.8; margin-bottom:10px;"></div>
+                    <div id="modal-movie-cast" style="font-size:12px; color:var(--accent); font-weight:bold;"></div>
+                </div>
+
                 <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;" data-i18n="link_expired">این لینک منقضی شده است.</div>
                 <div id="modal-links-container"></div>
             </div>
@@ -2560,7 +2604,7 @@
             if (authRes.error) { 
                 showCustomAlert('خطا: ' + authRes.error.message); 
             } else if (authRes.data && authRes.data.user) {
-                // Set default avatar to 6 (Golden Star)
+                // Set default avatar to 0 (Initials)
                 await supabaseClient.from('users_data').insert([{ 
                     id: authRes.data.user.id, 
                     email: u + '@plato.com', 
@@ -2568,7 +2612,7 @@
                     phone_model: m, 
                     status: 'pending', 
                     role: 'user', 
-                    avatar: 6 
+                    avatar: 0 
                 }]);
                 
                 showCustomAlert('درخواست عضویت ارسال شد.'); 
@@ -2638,7 +2682,6 @@
         if(target === 'home') {
             document.getElementById('view-home').classList.add('active-view');
             
-            // Restart Marquee Animation Fix
             const marqueeText = document.getElementById('marqueeTextContent');
             if (marqueeText) {
                 marqueeText.style.animation = 'none';
@@ -2910,6 +2953,24 @@
         document.getElementById("modalTitle").textContent = movie.title;
         document.getElementById("neonTitle").textContent = movie.title;
         
+        // Show Extra Details (Full Page Modal Update)
+        if(movie.description || movie.cast_members) {
+            document.getElementById('modal-movie-info').style.display = 'block';
+            let desc = '';
+            if(movie.description) {
+                desc = movie.description;
+            }
+            document.getElementById('modal-movie-desc').textContent = desc;
+            
+            let castStr = '';
+            if(movie.cast_members) {
+                castStr = 'بازیگران: ' + movie.cast_members;
+            }
+            document.getElementById('modal-movie-cast').textContent = castStr;
+        } else {
+            document.getElementById('modal-movie-info').style.display = 'none';
+        }
+
         document.getElementById("neonBanner").style.display = "flex";
         document.getElementById("realPlayerContainer").style.display = "none";
         
@@ -2980,7 +3041,6 @@
                 linksContainer.innerHTML += rowHtml;
             });
             
-            // Start updating all timers in the modal
             linkTimerInterval = setInterval(() => {
                 let timers = document.querySelectorAll('.link-timer');
                 timers.forEach(t => {
@@ -3373,9 +3433,9 @@
         var cat = document.getElementById('new-movie-category').value;
         var tit = document.getElementById('new-movie-title').value.trim();
         var pos = document.getElementById('new-movie-poster').value.trim();
+        var desc = document.getElementById('new-movie-desc').value.trim();
+        var cast = document.getElementById('new-movie-cast').value.trim();
         var url = document.getElementById('new-movie-url').value.trim();
-        
-        // Remove global timer handling as requested
         var isNew = document.getElementById('new-movie-isnew').checked;
         
         if(!tit || !pos) {
@@ -3385,9 +3445,11 @@
         var payload = { 
             title: tit, 
             poster: pos, 
+            description: desc,
+            cast_members: cast,
             download_url: url, 
             category: cat,
-            countdown_end: null // Global timer removed
+            countdown_end: null 
         };
         
         if(isNew) { 
@@ -3439,6 +3501,18 @@
         document.getElementById('new-movie-title').value = targetMovie.title; 
         document.getElementById('new-movie-poster').value = targetMovie.poster; 
         
+        let descValue = '';
+        if(targetMovie.description) {
+            descValue = targetMovie.description;
+        }
+        document.getElementById('new-movie-desc').value = descValue;
+        
+        let castValue = '';
+        if(targetMovie.cast_members) {
+            castValue = targetMovie.cast_members;
+        }
+        document.getElementById('new-movie-cast').value = castValue;
+        
         let urlValue = '';
         if(targetMovie.download_url) {
             urlValue = targetMovie.download_url;
@@ -3468,6 +3542,8 @@
     function cancelEdit() { 
         document.getElementById('new-movie-title').value = ''; 
         document.getElementById('new-movie-poster').value = ''; 
+        document.getElementById('new-movie-desc').value = ''; 
+        document.getElementById('new-movie-cast').value = ''; 
         document.getElementById('new-movie-url').value = ''; 
         document.getElementById('new-movie-isnew').checked = false; 
         
@@ -3716,7 +3792,7 @@
                     let cardHtml = `<div class="news-card">`;
                     cardHtml += `<div class="news-header">`;
                     cardHtml += `<div class="news-avatar">`;
-                    cardHtml += `<svg class="svg-icon" style="margin:0; width:22px; height:22px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 4.5C5 3.67 5.67 3 6.5 3H19V18.5C19 19.88 17.88 21 16.5 21H6.5C5.67 21 5 20.33 5 19.5V4.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 7H15.5M8.5 10.5H15.5M8.5 14H12.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="17" cy="6" r="2" fill="currentColor"/></svg>`;
+                    cardHtml += `<svg class="svg-icon" style="margin:0; width:22px; height:22px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline><line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line><line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line><polyline points="10 9 9 9 8 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline></svg>`;
                     cardHtml += `</div>`;
                     cardHtml += `<div><div class="news-author">PLATO News</div><div class="news-date">${dateStr}</div></div>`;
                     cardHtml += `</div>`;
@@ -4212,6 +4288,7 @@
         let nowTime = new Date().getTime();
         let updatedHistory = [];
         
+        // پاکسازی درخواست‌های قدیمی‌تر از ۲۴ ساعت
         history.forEach(time => {
             if((nowTime - time) < (24 * 60 * 60 * 1000)) {
                 updatedHistory.push(time);
