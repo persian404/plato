@@ -184,11 +184,10 @@
 
         .loader-text { 
             font-weight: 900; 
-            letter-spacing: 5px; 
-            font-size: 15px; 
+            letter-spacing: 1px; 
+            font-size: 14px; 
             color: #fff; 
             animation: text-pulse 1.5s infinite alternate; 
-            text-transform: uppercase; 
             text-shadow: 0 0 10px rgba(255,255,255,0.5); 
         }
 
@@ -272,7 +271,6 @@
             position: relative; 
         }
 
-        /* استایل اختصاصی برای مدالِ تمام‌صفحه‌ی تماشای فیلم */
         .modal-full .modal-box {
             max-width: 100% !important;
             width: 100% !important;
@@ -891,7 +889,7 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
             position: relative; 
             height: 100%; 
-            border-inline-end: 1px solid rgba(255,255,255,0.08); /* جداکننده عمودی */
+            border-inline-end: 1px solid rgba(255,255,255,0.08); 
         }
         
         .nav-item:last-child {
@@ -995,7 +993,8 @@
             height: 75px; 
             display: flex; 
             align-items: center; 
-            justify-content: space-between; /* لوگو و پروفایل را به گوشه‌ها هُل می‌دهد */
+            justify-content: space-between; 
+            flex-direction: row; 
             padding: 0 20px; 
             background: var(--header-bg); 
             backdrop-filter: blur(15px); 
@@ -1006,6 +1005,7 @@
             display: flex; 
             align-items: center; 
             gap: 10px; 
+            margin-right: auto; 
         }
 
         .profile-button { 
@@ -1021,12 +1021,11 @@
             overflow: hidden; 
         }
 
-        /* Buy Sub Button Styles (Centered and Slightly Transparent) */
         .buy-sub-btn {
             position: absolute; 
-            left: 50%; 
+            left: calc(50% - 15px); 
             transform: translateX(-50%);
-            background: linear-gradient(45deg, rgba(239, 68, 68, 0.8), rgba(185, 28, 28, 0.8)); 
+            background: linear-gradient(45deg, rgba(239, 68, 68, 0.85), rgba(185, 28, 28, 0.85)); 
             padding: 5px 16px; 
             border-radius: 12px; 
             font-size: 13px; 
@@ -1163,7 +1162,6 @@
             display: block; 
         }
 
-        /* Dots positioned Below the Hero Box */
         .slider-dots { 
             display: flex; 
             justify-content: center; 
@@ -1426,7 +1424,7 @@
         }
 
         /* =========================
-           NEON PLAYER BANNER (Chasing Lights)
+           NEON PLAYER BANNER 
         ========================= */
         .neon-banner { 
             width: 100%; 
@@ -1444,7 +1442,6 @@
             margin-bottom: 20px;
         }
 
-        /* خطوط متحرک نئونی */
         .neon-banner::before {
             content: "";
             position: absolute;
@@ -1459,7 +1456,6 @@
             z-index: -2;
         }
 
-        /* لایه پوشاننده وسط */
         .neon-banner::after {
             content: "";
             position: absolute;
@@ -1558,7 +1554,7 @@
             <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff" style="margin-left: 3px;"><path d="M8 5v14l11-7z"/></svg>
         </div>
     </div>
-    <div class="loader-text">PLATO</div>
+    <div class="loader-text" data-i18n="loading">لطفا صبر کنید...</div>
 </div>
 
 <div id="app-wrapper">
@@ -1697,11 +1693,12 @@
                 <svg class="btn-icon" viewBox="0 0 24 24"><path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
             </button>
             
-            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="text-decoration:none;">
-                <div style="display:flex; flex-direction:column; gap:4px; width:100%;">
-                    <div style="text-align:right; font-weight:bold; font-size:13.5px; color:var(--text-main);">کانال تلگرامی پلاتو</div>
-                    <div style="text-align:left; font-weight:bold; font-size:13px; color:var(--accent);" dir="ltr">@plato_media</div>
+            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="color:var(--accent); display:flex; flex-direction:column; text-decoration:none; padding: 10px 14px; border: 2px dashed var(--accent); margin-top: 15px; border-radius: 12px; background: rgba(59, 130, 246, 0.05);">
+                <div style="display:flex; align-items:center; justify-content:flex-end; gap: 8px; width: 100%;">
+                    <span style="font-weight:bold; font-size: 13.5px; color: var(--text-main);">کانال تلگرامی پلاتو</span>
+                    <svg class="btn-icon" style="margin:0; width: 22px; height: 22px; color:var(--accent);" viewBox="0 0 24 24"><path d="M21.5 2L2 11l6 3 2.5 7L13 16l5 5L21.5 2z"/></svg>
                 </div>
+                <div style="width: 100%; text-align: left; margin-top: 6px; font-size: 16px; font-weight: 900; letter-spacing: 1px;" dir="ltr">@plato_media</div>
             </a>
 
             <div id="admin-sidebar-btn-container"></div>
@@ -1759,10 +1756,7 @@
                 <input type="text" id="new-movie-poster" class="input-field" placeholder="لینک عکس پوستر">
             </div>
             <div class="input-group">
-                <textarea id="new-movie-desc" class="input-field" style="height:80px; padding:15px; resize:vertical; line-height:1.6;" placeholder="خلاصه داستان..."></textarea>
-            </div>
-            <div class="input-group">
-                <input type="text" id="new-movie-cast" class="input-field" placeholder="بازیگران (مثال: شهاب حسینی، ترانه علیدوستی)">
+                <textarea id="new-movie-info" class="input-field" style="height:100px; padding:15px; resize:vertical; line-height:1.6;" placeholder="اطلاعات فیلم (خلاصه داستان، بازیگران و ...)"></textarea>
             </div>
             <div class="input-group">
                 <textarea id="new-movie-url" class="input-field" style="height:120px; padding:15px; resize:vertical; line-height:1.6;" placeholder="فرمت: نام قسمت | لینک دانلود | 30h"></textarea>
@@ -1855,6 +1849,7 @@
          MAIN APP & HEADER
     ========================= -->
     <header class="header">
+        <!-- Logo on the right (in RTL) -->
         <div class="logo">
             <div class="premium-logo">
                 <svg viewBox="0 0 1536 614">
@@ -2005,8 +2000,7 @@
                 <h3 class="modal-title" id="modalTitle">پخش محتوا</h3>
                 
                 <div id="modal-movie-info" style="display:none; background:var(--bg-input); padding:15px; border-radius:12px; margin-bottom:20px; border:1px solid var(--border-color);">
-                    <div id="modal-movie-desc" style="font-size:13px; color:var(--text-muted); line-height:1.8; margin-bottom:10px;"></div>
-                    <div id="modal-movie-cast" style="font-size:12px; color:var(--accent); font-weight:bold;"></div>
+                    <div id="modal-movie-desc" style="font-size:13px; color:var(--text-muted); line-height:1.8; white-space: pre-wrap;"></div>
                 </div>
 
                 <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;" data-i18n="link_expired">این لینک منقضی شده است.</div>
@@ -2263,7 +2257,7 @@
     /* Dictionary for i18n */
     const dict = {
         'fa': {
-            'loading': 'PLATO', 
+            'loading': 'لطفا صبر کنید...', 
             'show_pass': 'نمایش رمز عبور', 
             'login_btn': 'ورود به حساب', 
             'no_account': 'حساب کاربری ندارید؟', 
@@ -2301,7 +2295,7 @@
             'new_badge': 'جدید'
         },
         'en': {
-            'loading': 'PLATO', 
+            'loading': 'Please wait...', 
             'show_pass': 'Show Password', 
             'login_btn': 'Login', 
             'no_account': 'No account?', 
@@ -2954,19 +2948,9 @@
         document.getElementById("neonTitle").textContent = movie.title;
         
         // Show Extra Details (Full Page Modal Update)
-        if(movie.description || movie.cast_members) {
+        if(movie.info) {
             document.getElementById('modal-movie-info').style.display = 'block';
-            let desc = '';
-            if(movie.description) {
-                desc = movie.description;
-            }
-            document.getElementById('modal-movie-desc').textContent = desc;
-            
-            let castStr = '';
-            if(movie.cast_members) {
-                castStr = 'بازیگران: ' + movie.cast_members;
-            }
-            document.getElementById('modal-movie-cast').textContent = castStr;
+            document.getElementById('modal-movie-desc').textContent = movie.info;
         } else {
             document.getElementById('modal-movie-info').style.display = 'none';
         }
@@ -3041,6 +3025,7 @@
                 linksContainer.innerHTML += rowHtml;
             });
             
+            // Start updating all timers in the modal
             linkTimerInterval = setInterval(() => {
                 let timers = document.querySelectorAll('.link-timer');
                 timers.forEach(t => {
@@ -3433,8 +3418,7 @@
         var cat = document.getElementById('new-movie-category').value;
         var tit = document.getElementById('new-movie-title').value.trim();
         var pos = document.getElementById('new-movie-poster').value.trim();
-        var desc = document.getElementById('new-movie-desc').value.trim();
-        var cast = document.getElementById('new-movie-cast').value.trim();
+        var info = document.getElementById('new-movie-info').value.trim();
         var url = document.getElementById('new-movie-url').value.trim();
         var isNew = document.getElementById('new-movie-isnew').checked;
         
@@ -3445,8 +3429,7 @@
         var payload = { 
             title: tit, 
             poster: pos, 
-            description: desc,
-            cast_members: cast,
+            info: info,
             download_url: url, 
             category: cat,
             countdown_end: null 
@@ -3501,17 +3484,11 @@
         document.getElementById('new-movie-title').value = targetMovie.title; 
         document.getElementById('new-movie-poster').value = targetMovie.poster; 
         
-        let descValue = '';
-        if(targetMovie.description) {
-            descValue = targetMovie.description;
+        let infoValue = '';
+        if(targetMovie.info) {
+            infoValue = targetMovie.info;
         }
-        document.getElementById('new-movie-desc').value = descValue;
-        
-        let castValue = '';
-        if(targetMovie.cast_members) {
-            castValue = targetMovie.cast_members;
-        }
-        document.getElementById('new-movie-cast').value = castValue;
+        document.getElementById('new-movie-info').value = infoValue;
         
         let urlValue = '';
         if(targetMovie.download_url) {
@@ -3542,8 +3519,7 @@
     function cancelEdit() { 
         document.getElementById('new-movie-title').value = ''; 
         document.getElementById('new-movie-poster').value = ''; 
-        document.getElementById('new-movie-desc').value = ''; 
-        document.getElementById('new-movie-cast').value = ''; 
+        document.getElementById('new-movie-info').value = ''; 
         document.getElementById('new-movie-url').value = ''; 
         document.getElementById('new-movie-isnew').checked = false; 
         
@@ -4288,7 +4264,6 @@
         let nowTime = new Date().getTime();
         let updatedHistory = [];
         
-        // پاکسازی درخواست‌های قدیمی‌تر از ۲۴ ساعت
         history.forEach(time => {
             if((nowTime - time) < (24 * 60 * 60 * 1000)) {
                 updatedHistory.push(time);
