@@ -991,12 +991,12 @@
             overflow: hidden; 
         }
 
-        /* Buy Sub Button Styles (Perfect Center & Lighter Background) */
+        /* Buy Sub Button Styles */
         .buy-sub-btn {
             position: absolute; 
-            left: 50%; 
+            left: calc(50% - 15px); 
             transform: translateX(-50%);
-            background: linear-gradient(45deg, rgba(239, 68, 68, 0.8), rgba(185, 28, 28, 0.8)); 
+            background: linear-gradient(45deg, rgba(239, 68, 68, 0.85), rgba(185, 28, 28, 0.85)); 
             padding: 5px 16px; 
             border-radius: 12px; 
             font-size: 13px; 
@@ -1409,11 +1409,10 @@
             justify-content: center; 
             overflow: hidden; 
             border-radius: 12px;
-            padding: 4px; /* ضخامت خطوط چرخان */
+            padding: 4px; 
             z-index: 0;
         }
 
-        /* خطوط متحرک نئونی */
         .neon-banner::before {
             content: "";
             position: absolute;
@@ -1421,7 +1420,6 @@
             left: -50%;
             width: 200%; 
             height: 200%;
-            /* دو رنگ قرمز و آبی که دنبال هم می‌دوند */
             background: conic-gradient(from 0deg, 
                 transparent 0%, transparent 20%, #ef4444 35%, 
                 transparent 45%, transparent 70%, #3b82f6 85%, transparent 95%);
@@ -1429,7 +1427,6 @@
             z-index: -2;
         }
 
-        /* لایه پوشاننده وسط */
         .neon-banner::after {
             content: "";
             position: absolute;
@@ -1666,12 +1663,12 @@
                 <svg class="btn-icon" viewBox="0 0 24 24"><path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
             </button>
             
-            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="color:var(--accent); display:block; text-align:right; text-decoration:none;">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-weight:bold;">کانال تلگرامی پلاتو</span>
-                    <svg class="btn-icon" style="margin:0;" viewBox="0 0 24 24"><path d="M21.5 2L2 11l6 3 2.5 7L13 16l5 5L21.5 2z"/></svg>
+            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="color:var(--accent); display:flex; flex-direction:column; text-decoration:none; padding: 10px 14px; border: 2px dashed var(--accent); margin-top: 15px; border-radius: 12px; background: rgba(59, 130, 246, 0.05);">
+                <div style="display:flex; align-items:center; justify-content:flex-end; gap: 8px; width: 100%;">
+                    <span style="font-weight:bold; font-size: 13.5px; color: var(--text-main);">کانال تلگرامی پلاتو</span>
+                    <svg class="btn-icon" style="margin:0; width: 22px; height: 22px; color:var(--accent);" viewBox="0 0 24 24"><path d="M21.5 2L2 11l6 3 2.5 7L13 16l5 5L21.5 2z"/></svg>
                 </div>
-                <div style="text-align: left; padding-left: 25px; margin-top: 5px; font-size: 13px;" dir="ltr">@plato_media</div>
+                <div style="width: 100%; text-align: left; margin-top: 6px; font-size: 16px; font-weight: 900; letter-spacing: 1px;" dir="ltr">@plato_media</div>
             </a>
 
             <div id="admin-sidebar-btn-container"></div>
@@ -1819,7 +1816,7 @@
          MAIN APP & HEADER
     ========================= -->
     <header class="header">
-        <!-- Logo on the far right (in RTL) -->
+        <!-- Logo on the right (in RTL) -->
         <div class="logo">
             <div class="premium-logo">
                 <svg viewBox="0 0 1536 614">
@@ -1828,16 +1825,15 @@
             </div>
         </div>
         
-        <!-- Buy Button exactly in center -->
-        <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none;">
+        <!-- Buy Button centered -->
+        <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none; position: absolute; left: 50%; transform: translateX(-50%);">
             خرید اشتراک
             <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
         </a>
 
         <!-- Profile button on the far left -->
-        <div class="header-actions">
-            <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری">
-                <!-- User requested simple icon here, not the avatar -->
+        <div class="header-actions" style="margin-right: auto;">
+            <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 <span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>
             </button>
@@ -1939,6 +1935,11 @@
             <span data-i18n="nav_favs">علاقه‌مندی‌ها</span>
             <div class="nav-indicator"></div>
         </div>
+        <div class="nav-item" onclick="showPlatinoSoon()" id="nav-platino">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+            <span data-i18n="nav_platino">پلاتینو</span>
+            <div class="nav-indicator"></div>
+        </div>
         <div class="nav-item" onclick="switchNav('news')" id="nav-news">
             <div class="nav-notif" id="news-notif"></div>
             <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
@@ -1955,6 +1956,7 @@
         <div class="modal-box">
             <button class="modal-close-x" onclick="closePlayer()">×</button>
             <div class="neon-banner" id="neonBanner">
+                <div class="neon-bg"></div>
                 <div class="neon-text" id="neonTitle">نام محتوا</div>
             </div>
             <div class="video-container" id="realPlayerContainer">
@@ -1963,6 +1965,7 @@
             </div>
             <div class="modal-content">
                 <h3 class="modal-title" id="modalTitle">پخش محتوا</h3>
+                <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;" data-i18n="link_expired">این لینک منقضی شده است.</div>
                 <div id="modal-links-container"></div>
             </div>
         </div>
@@ -2086,19 +2089,33 @@
     let linkTimerInterval = null;
 
     /* =========================
-       AVATAR SYSTEM (Precise SVG Geometries)
+       AVATAR SYSTEM 
     ========================= */
     const AVATARS = {
-        1: `<svg viewBox="0 0 100 100">
-                <rect width="100" height="100" fill="#e0f2fe"/>
-                <path d="M15 100 C15 55, 85 55, 85 100" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
-                <rect x="42" y="60" width="16" height="15" fill="#fcd34d"/>
-                <circle cx="50" cy="45" r="23" fill="#fde047"/>
-                <path d="M 27 45 C 27 15, 73 15, 73 45 C 73 35, 63 25, 50 25 C 37 25, 27 35, 27 45 Z" fill="#1e293b"/>
-                <path d="M 25 35 Q 35 15 50 15 Q 65 15 75 35 Q 65 25 50 25 Q 35 25 25 35 Z" fill="#0f172a"/>
-                <circle cx="39" cy="48" r="3.5" fill="#0f172a"/>
-                <circle cx="61" cy="48" r="3.5" fill="#0f172a"/>
-                <path d="M42 56 Q50 63 58 56" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+        1: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <clipPath id="avatarClip">
+                    <circle cx="100" cy="100" r="96"/>
+                  </clipPath>
+                </defs>
+                <circle cx="100" cy="100" r="96" fill="#EAF2FF"/>
+                <g clip-path="url(#avatarClip)">
+                  <path d="M35 205 C38 169 57 148 79 141 L100 155 L121 141 C143 148 162 169 165 205Z" fill="#3478E5"/>
+                  <path d="M79 141 L100 158 L121 141" fill="none" stroke="#245FC2" stroke-width="5" stroke-linejoin="round"/>
+                  <path d="M80 116 L80 144 L100 157 L120 144 L120 116Z" fill="#F1B08B"/>
+                  <path d="M66 82 C61 81 59 86 60 92 C60.5 97 63 99 67 97 L68 84Z" fill="#E4A07D"/>
+                  <path d="M134 82 C139 81 141 86 140 92 C139.5 97 137 99 133 97 L132 84Z" fill="#E4A07D"/>
+                  <path d="M65 61 C65 39 79 27 100 27 C121 27 135 39 135 61 V96 C135 120 120 135 100 135 C80 135 65 120 65 96Z" fill="#F1B08B"/>
+                  <path d="M63 67 C59 47 66 31 82 25 C101 17 124 24 134 40 C139 48 139 59 136 68 C128 61 122 54 117 45 C110 54 99 57 89 53 C78 49 70 57 63 67Z" fill="#27364D"/>
+                  <path d="M73 43 C82 31 96 27 108 29" fill="none" stroke="#40536F" stroke-width="6" stroke-linecap="round"/>
+                  <path d="M76 77 Q83 73 90 77" fill="none" stroke="#26344A" stroke-width="3.5" stroke-linecap="round"/>
+                  <path d="M110 77 Q117 73 124 77" fill="none" stroke="#26344A" stroke-width="3.5" stroke-linecap="round"/>
+                  <circle cx="83" cy="87" r="3.5" fill="#26344A"/>
+                  <circle cx="117" cy="87" r="3.5" fill="#26344A"/>
+                  <path d="M100 89 L97 104 L102 106" fill="none" stroke="#D38C6C" stroke-width="2.8" stroke-linecap="round"/>
+                  <path d="M90 115 Q100 121 110 115" fill="none" stroke="#9D5C52" stroke-width="3" stroke-linecap="round"/>
+                </g>
+                <circle cx="100" cy="100" r="96" fill="none" stroke="#D7E3F5" stroke-width="3"/>
             </svg>`,
             
         2: `<svg viewBox="0 0 100 100">
@@ -2144,7 +2161,6 @@
             
         6: `<svg viewBox="0 0 100 100">
                 <rect width="100" height="100" fill="#fef08a"/>
-                <circle cx="50" cy="50" r="40" fill="#fde047"/>
                 <path d="M50 15 L61 38 L85 41 L67 58 L72 82 L50 70 L28 82 L33 58 L15 41 L39 38 Z" fill="#eab308" stroke="#ca8a04" stroke-width="2" stroke-linejoin="round"/>
             </svg>`
     };
@@ -2222,6 +2238,7 @@
             'nav_home': 'خانه', 
             'nav_favs': 'علاقه‌مندی‌ها', 
             'nav_news': 'خبرها',
+            'nav_platino': 'پلاتینو',
             'cat_programs': 'برنامه‌ها', 
             'cat_kids': 'انیمیشن/کودکانه', 
             'cat_series': 'سریال‌ها', 
@@ -2259,6 +2276,7 @@
             'nav_home': 'Home', 
             'nav_favs': 'Favorites', 
             'nav_news': 'News',
+            'nav_platino': 'Platino',
             'cat_programs': 'Programs', 
             'cat_kids': 'Animation/Kids', 
             'cat_series': 'Series', 
@@ -2414,6 +2432,10 @@
         }
     }
 
+    window.showPlatinoSoon = function() {
+        showCustomAlert('بخش پلاتینو به زودی فعال خواهد شد...');
+    }
+
     /* Session & Init */
     async function checkUserSession() {
         if (!supabaseClient) {
@@ -2451,7 +2473,6 @@
                 document.getElementById('main-app').style.display = 'block';
                 document.getElementById('bottom-nav').style.display = 'flex';
                 
-                // Show Buy Sub button if user has NO active subscription
                 let hasActiveSub = false;
                 if(currentUserProfile.role === 'admin') {
                     hasActiveSub = true;
@@ -2467,7 +2488,6 @@
                     document.getElementById('buy-sub-btn').style.display = 'none';
                 }
 
-                // If user doesn't have avatar (0) show initial-based avatar, else show their choice in Sidebar
                 document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(currentUserProfile.avatar, currentUserProfile.username);
                 
                 if (currentUserProfile.role === 'admin') {
@@ -3696,7 +3716,7 @@
                     let cardHtml = `<div class="news-card">`;
                     cardHtml += `<div class="news-header">`;
                     cardHtml += `<div class="news-avatar">`;
-                    cardHtml += `<svg class="svg-icon" style="margin:0; width:20px; height:20px;" viewBox="0 0 24 24"><path d="M11 21C11 22.1 10.1 23 9 23C7.9 23 7 22.1 7 21C7 19.9 7.9 19 9 19C10.1 19 11 19.9 11 21ZM22 10.5C22 11.3 21.3 12 20.5 12H19.5V15C19.5 16.1 18.6 17 17.5 17H16.5C15.4 17 14.5 16.1 14.5 15V12H13L7 16H3V5H7L13 9H14.5C15.4 9 16.5 8.1 16.5 7H17.5C18.6 7 19.5 7.9 19.5 9V12H20.5C21.3 12 22 11.3 22 10.5Z" fill="currentColor"/></svg>`;
+                    cardHtml += `<svg class="svg-icon" style="margin:0; width:22px; height:22px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 4.5C5 3.67 5.67 3 6.5 3H19V18.5C19 19.88 17.88 21 16.5 21H6.5C5.67 21 5 20.33 5 19.5V4.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 7H15.5M8.5 10.5H15.5M8.5 14H12.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="17" cy="6" r="2" fill="currentColor"/></svg>`;
                     cardHtml += `</div>`;
                     cardHtml += `<div><div class="news-author">PLATO News</div><div class="news-date">${dateStr}</div></div>`;
                     cardHtml += `</div>`;
@@ -4192,7 +4212,6 @@
         let nowTime = new Date().getTime();
         let updatedHistory = [];
         
-        // پاکسازی درخواست‌های قدیمی‌تر از ۲۴ ساعت
         history.forEach(time => {
             if((nowTime - time) < (24 * 60 * 60 * 1000)) {
                 updatedHistory.push(time);
@@ -4200,12 +4219,12 @@
         });
         history = updatedHistory;
 
-        let maxPer24h = 2; // کاربر عادی: نهایت 2 پیام در روز
-        let cooldownMs = 30 * 60 * 1000; // کاربر عادی: 30 دقیقه توقف بین پیام‌ها
+        let maxPer24h = 2; 
+        let cooldownMs = 30 * 60 * 1000; 
         
         if(isVip) {
-            maxPer24h = 4; // کاربر VIP: نهایت 4 پیام در روز
-            cooldownMs = 10 * 60 * 1000; // کاربر VIP: 10 دقیقه توقف بین پیام‌ها
+            maxPer24h = 4; 
+            cooldownMs = 10 * 60 * 1000; 
         }
         
         if(history.length >= maxPer24h) {
