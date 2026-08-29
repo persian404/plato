@@ -487,10 +487,12 @@
         .theme-toggle-btn svg { 
             width: 17px; 
             height: 17px; 
-            stroke: currentColor; 
-            stroke-width: 2; 
-            fill: none; 
         }
+
+        .light-theme .icon-sun { display: block !important; }
+        .light-theme .icon-moon { display: none !important; }
+        body:not(.light-theme) .icon-sun { display: none !important; }
+        body:not(.light-theme) .icon-moon { display: block !important; }
 
         .lang-toggle-btn { 
             position: absolute; 
@@ -992,9 +994,9 @@
         /* Buy Sub Button Styles (Perfect Center & Lighter Background) */
         .buy-sub-btn {
             position: absolute; 
-            left: calc(50% - 15px); /* Move slightly left in RTL */
+            left: 50%; 
             transform: translateX(-50%);
-            background: linear-gradient(45deg, rgba(239, 68, 68, 0.85), rgba(185, 28, 28, 0.85)); 
+            background: linear-gradient(45deg, rgba(239, 68, 68, 0.8), rgba(185, 28, 28, 0.8)); 
             padding: 5px 16px; 
             border-radius: 12px; 
             font-size: 13px; 
@@ -1407,10 +1409,11 @@
             justify-content: center; 
             overflow: hidden; 
             border-radius: 12px;
-            padding: 4px; 
+            padding: 4px; /* ضخامت خطوط چرخان */
             z-index: 0;
         }
 
+        /* خطوط متحرک نئونی */
         .neon-banner::before {
             content: "";
             position: absolute;
@@ -1418,6 +1421,7 @@
             left: -50%;
             width: 200%; 
             height: 200%;
+            /* دو رنگ قرمز و آبی که دنبال هم می‌دوند */
             background: conic-gradient(from 0deg, 
                 transparent 0%, transparent 20%, #ef4444 35%, 
                 transparent 45%, transparent 70%, #3b82f6 85%, transparent 95%);
@@ -1425,6 +1429,7 @@
             z-index: -2;
         }
 
+        /* لایه پوشاننده وسط */
         .neon-banner::after {
             content: "";
             position: absolute;
@@ -1623,7 +1628,8 @@
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <button class="theme-toggle-btn" onclick="toggleTheme()" title="تغییر تم">
-                <svg viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
             </button>
             <button class="lang-toggle-btn" onclick="toggleLanguage()">EN / FA</button>
             
@@ -1660,9 +1666,12 @@
                 <svg class="btn-icon" viewBox="0 0 24 24"><path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
             </button>
             
-            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="color:var(--accent); text-decoration:none; display:flex; flex-direction:column; align-items:center; justify-content:center; background:var(--bg-box); border: 2px dashed var(--accent); padding: 18px; border-radius: 16px; gap: 6px; margin-top: 10px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);">
-                <span style="font-size: 15px; font-weight: 900; color: var(--text-main);">لینک کانال تلگرامی پلاتو</span>
-                <span style="font-size: 18px; font-weight: bold; color: var(--accent); letter-spacing: 1px;" dir="ltr">@plato_media</span>
+            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="color:var(--accent); display:block; text-align:right; text-decoration:none;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-weight:bold;">کانال تلگرامی پلاتو</span>
+                    <svg class="btn-icon" style="margin:0;" viewBox="0 0 24 24"><path d="M21.5 2L2 11l6 3 2.5 7L13 16l5 5L21.5 2z"/></svg>
+                </div>
+                <div style="text-align: left; padding-left: 25px; margin-top: 5px; font-size: 13px;" dir="ltr">@plato_media</div>
             </a>
 
             <div id="admin-sidebar-btn-container"></div>
@@ -1720,10 +1729,7 @@
                 <input type="text" id="new-movie-poster" class="input-field" placeholder="لینک عکس پوستر">
             </div>
             <div class="input-group">
-                <textarea id="new-movie-url" class="input-field" style="height:120px; padding:15px; resize:vertical; line-height:1.6;" placeholder="فرمت: نام قسمت | لینک دانلود&#10;(برای هر لینک یک خط جدید ایجاد کنید)"></textarea>
-            </div>
-            <div class="input-group">
-                <input type="number" id="new-movie-timer" class="input-field" placeholder="زمان انقضای لینک به ساعت (خالی = بدون انقضا)">
+                <textarea id="new-movie-url" class="input-field" style="height:120px; padding:15px; resize:vertical; line-height:1.6;" placeholder="فرمت: نام قسمت | لینک دانلود | 30h"></textarea>
             </div>
             
             <label class="checkbox-container" style="margin-bottom:15px; background:var(--bg-box); padding:10px; border-radius:8px; border:1px solid var(--border-color);">
@@ -1813,7 +1819,7 @@
          MAIN APP & HEADER
     ========================= -->
     <header class="header">
-        <!-- Logo on the right (in RTL) -->
+        <!-- Logo on the far right (in RTL) -->
         <div class="logo">
             <div class="premium-logo">
                 <svg viewBox="0 0 1536 614">
@@ -1822,7 +1828,7 @@
             </div>
         </div>
         
-        <!-- Buy Button centered between logo and profile -->
+        <!-- Buy Button exactly in center -->
         <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none;">
             خرید اشتراک
             <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
@@ -1830,7 +1836,8 @@
 
         <!-- Profile button on the far left -->
         <div class="header-actions">
-            <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
+            <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری">
+                <!-- User requested simple icon here, not the avatar -->
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 <span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>
             </button>
@@ -1948,7 +1955,6 @@
         <div class="modal-box">
             <button class="modal-close-x" onclick="closePlayer()">×</button>
             <div class="neon-banner" id="neonBanner">
-                <div class="neon-bg"></div>
                 <div class="neon-text" id="neonTitle">نام محتوا</div>
             </div>
             <div class="video-container" id="realPlayerContainer">
@@ -1957,7 +1963,6 @@
             </div>
             <div class="modal-content">
                 <h3 class="modal-title" id="modalTitle">پخش محتوا</h3>
-                <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;" data-i18n="link_expired">این لینک منقضی شده است.</div>
                 <div id="modal-links-container"></div>
             </div>
         </div>
@@ -2006,15 +2011,17 @@
 
     <div class="modal" id="inboxModal">
         <div class="modal-box" style="max-width: 500px; height: 80vh;">
-            <button class="modal-close-x" onclick="document.getElementById('inboxModal').classList.remove('show')">×</button>
-            <div class="modal-content" style="display:flex; flex-direction:column;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <div class="modal-content" style="display:flex; flex-direction:column; padding-top: 15px;">
+                
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px; margin-top:5px;">
                     <h3 class="modal-title" style="margin:0;" data-i18n="inbox_title">صندوق پیام‌ها</h3>
-                    <button class="btn-sm btn-reject" style="display:flex; align-items:center; gap:5px; padding: 6px 10px;" onclick="deleteAllMessages()">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        حذف همه
+                    <button style="background:none; border:none; color:#ef4444; cursor:pointer;" onclick="deleteAllMessages()" title="حذف همه پیام‌ها">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                     </button>
                 </div>
+                
+                <button class="modal-close-x" onclick="document.getElementById('inboxModal').classList.remove('show')" style="position:absolute; top: 14px; left: 14px; z-index:20;">×</button>
+                
                 <div id="user-messages-list" style="flex-grow:1; overflow-y:auto; padding-right:5px;"></div>
             </div>
         </div>
@@ -2076,24 +2083,22 @@
     let currentLang = localStorage.getItem('plato_lang') || 'fa';
     let currentNav = 'home';
     let lastNewsId = localStorage.getItem('plato_last_news') || 0;
+    let linkTimerInterval = null;
 
     /* =========================
        AVATAR SYSTEM (Precise SVG Geometries)
     ========================= */
     const AVATARS = {
         1: `<svg viewBox="0 0 100 100">
-                <rect width="100" height="100" fill="#bae6fd"/>
-                <path d="M15 100 C15 55, 85 55, 85 100" fill="#0284c7" stroke="#0369a1" stroke-width="2"/>
+                <rect width="100" height="100" fill="#e0f2fe"/>
+                <path d="M15 100 C15 55, 85 55, 85 100" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
                 <rect x="42" y="60" width="16" height="15" fill="#fcd34d"/>
-                <circle cx="50" cy="48" r="23" fill="#fde047"/>
-                <path d="M 26 48 C 24 20, 35 10, 50 10 C 65 10, 76 20, 74 48 C 76 35, 65 18, 50 18 C 35 18, 24 35, 26 48 Z" fill="#0f172a"/>
-                <path d="M 23 38 C 30 15, 50 10, 65 15 C 80 20, 75 40, 75 40 C 70 25, 55 20, 45 25 C 40 28, 30 35, 23 38 Z" fill="#1e293b"/>
-                <path d="M 40 25 C 45 15, 60 10, 70 20 C 65 20, 55 25, 45 35 Z" fill="#0f172a"/>
+                <circle cx="50" cy="45" r="23" fill="#fde047"/>
+                <path d="M 27 45 C 27 15, 73 15, 73 45 C 73 35, 63 25, 50 25 C 37 25, 27 35, 27 45 Z" fill="#1e293b"/>
+                <path d="M 25 35 Q 35 15 50 15 Q 65 15 75 35 Q 65 25 50 25 Q 35 25 25 35 Z" fill="#0f172a"/>
                 <circle cx="39" cy="48" r="3.5" fill="#0f172a"/>
                 <circle cx="61" cy="48" r="3.5" fill="#0f172a"/>
-                <path d="M33 42 Q39 39 44 42" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
-                <path d="M56 42 Q61 39 67 42" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
-                <path d="M42 58 Q50 65 58 58" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+                <path d="M42 56 Q50 63 58 56" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
             </svg>`,
             
         2: `<svg viewBox="0 0 100 100">
@@ -2139,6 +2144,7 @@
             
         6: `<svg viewBox="0 0 100 100">
                 <rect width="100" height="100" fill="#fef08a"/>
+                <circle cx="50" cy="50" r="40" fill="#fde047"/>
                 <path d="M50 15 L61 38 L85 41 L67 58 L72 82 L50 70 L28 82 L33 58 L15 41 L39 38 Z" fill="#eab308" stroke="#ca8a04" stroke-width="2" stroke-linejoin="round"/>
             </svg>`
     };
@@ -2850,7 +2856,7 @@
         renderDynamicList(kids, 'kidsList');
     });
 
-    /* Video Player & Autoplay / Resume Logic */
+    /* Video Player & Autoplay / Resume Logic / Per Link Timer */
     const playerModal = document.getElementById("playerModal");
     const videoPlayer = document.getElementById("videoPlayer");
     let pendingVideoUrl = "";
@@ -2893,53 +2899,102 @@
         const linksContainer = document.getElementById("modal-links-container"); 
         linksContainer.innerHTML = '';
 
-        let isExpired = false;
-        if(movie.countdown_end) {
-            let expireDate = new Date(movie.countdown_end).getTime();
-            let nowTime = new Date().getTime();
-            if(expireDate <= nowTime) {
-                isExpired = true;
-            }
+        if(linkTimerInterval) {
+            clearInterval(linkTimerInterval);
         }
 
-        if(isExpired) {
-            document.getElementById("modalExpirationText").style.display = "block";
-            document.getElementById("neonBanner").style.display = "none";
-        } else {
-            document.getElementById("modalExpirationText").style.display = "none";
+        if (movie.download_url) {
+            let lines = movie.download_url.split('\n');
             
-            if (movie.download_url) {
-                let lines = movie.download_url.split('\n');
+            lines.forEach((line, index) => {
+                if(!line.trim()) {
+                    return;
+                }
                 
-                lines.forEach(line => {
-                    if(!line.trim()) {
-                        return;
+                let parts = line.split('|');
+                let btnTitle = parts[0].trim();
+                let btnUrl = parts.length > 1 ? parts[1].trim() : parts[0].trim();
+                let timerStr = parts.length > 2 ? parts[2].trim() : null;
+                
+                let isLinkExpired = false;
+                let endTime = 0;
+                
+                if (timerStr && movie.updated_at) {
+                    let durationMs = 0;
+                    if (timerStr.endsWith('h')) {
+                        durationMs = parseFloat(timerStr) * 60 * 60 * 1000;
+                    } else if (timerStr.endsWith('m')) {
+                        durationMs = parseFloat(timerStr) * 60 * 1000;
                     }
                     
-                    let parts = line.split('|');
-                    let btnTitle = 'پخش / دانلود';
-                    let btnUrl = '';
+                    if(durationMs > 0) {
+                        endTime = new Date(movie.updated_at).getTime() + durationMs;
+                        let msLeft = endTime - new Date().getTime();
+                        if (msLeft <= 0) {
+                            isLinkExpired = true;
+                        }
+                    }
+                }
+                
+                let rowId = 'link-row-' + index;
+                let rowHtml = `<div id="${rowId}" style="display:flex; flex-direction:column; gap:6px; margin-bottom:12px; background:var(--bg-input); padding:12px 14px; border-radius:12px; border:1px solid var(--border-color);">`;
+                
+                if(timerStr && endTime > 0) {
+                    rowHtml += `<div style="font-size:11px; color:#f59e0b; text-align:left; font-family:monospace; font-weight:bold;" class="link-timer" data-endtime="${endTime}">در حال محاسبه...</div>`;
+                }
+                
+                if(!isLinkExpired) {
+                    rowHtml += `<div style="display:flex; gap:8px; align-items:center;" class="link-action-buttons">`;
+                    rowHtml += `<div style="flex:1; font-size:13.5px; font-weight:bold; color:var(--text-main);">${btnTitle}</div>`;
+                    rowHtml += `<button class="btn-sm btn-approve" style="border:none; padding:8px 14px;" onclick="prepareVideo('${btnUrl}')">پخش آنلاین</button>`;
+                    rowHtml += `<button class="btn-sm" style="background:var(--bg-box); color:var(--text-main); border:1px solid var(--border-color); padding:8px 14px;" onclick="directDownload('${btnTitle}', '${btnUrl}')">دانلود</button>`;
+                    rowHtml += `</div>`;
+                } else {
+                    rowHtml += `<div style="display:flex; gap:8px; align-items:center;">`;
+                    rowHtml += `<div style="flex:1; font-size:13.5px; font-weight:bold; color:var(--text-muted); text-decoration:line-through;">${btnTitle}</div>`;
+                    rowHtml += `<div style="font-size:12px; color:#ef4444; font-weight:bold; background:rgba(239, 68, 68, 0.1); padding:4px 10px; border-radius:8px;">منقضی شده</div>`;
+                    rowHtml += `</div>`;
+                }
+                
+                rowHtml += `</div>`;
+                linksContainer.innerHTML += rowHtml;
+            });
+            
+            // Start updating all timers in the modal
+            linkTimerInterval = setInterval(() => {
+                let timers = document.querySelectorAll('.link-timer');
+                timers.forEach(t => {
+                    let end = parseInt(t.getAttribute('data-endtime'));
+                    let diff = end - new Date().getTime();
                     
-                    if(parts.length > 1) {
-                        btnTitle = parts[0].trim();
-                        btnUrl = parts[1].trim();
+                    if(diff <= 0) {
+                        t.textContent = "لینک منقضی شده است";
+                        t.style.color = "#ef4444";
+                        
+                        let parent = t.parentElement;
+                        let actionBtns = parent.querySelector('.link-action-buttons');
+                        if(actionBtns) {
+                            let titleDiv = actionBtns.querySelector('div:first-child');
+                            actionBtns.innerHTML = `
+                                <div style="flex:1; font-size:13.5px; font-weight:bold; color:var(--text-muted); text-decoration:line-through;">${titleDiv.textContent}</div>
+                                <div style="font-size:12px; color:#ef4444; font-weight:bold; background:rgba(239, 68, 68, 0.1); padding:4px 10px; border-radius:8px;">منقضی شده</div>
+                            `;
+                        }
                     } else {
-                        btnUrl = parts[0].trim();
+                        let h = Math.floor(diff / (1000 * 60 * 60));
+                        let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                        let s = Math.floor((diff % (1000 * 60)) / 1000);
+                        
+                        let strM = m < 10 ? '0' + m : m;
+                        let strS = s < 10 ? '0' + s : s;
+                        
+                        t.textContent = `انقضا: ${h}:${strM}:${strS}`;
                     }
-                    
-                    let row = document.createElement('div');
-                    row.style.cssText = "display:flex; gap:8px; margin-bottom:8px; align-items:center; background:var(--bg-input); padding:10px 14px; border-radius:12px; border:1px solid var(--border-color);";
-                    
-                    let rowHtml = `<div style="flex:1; font-size:13px; font-weight:bold;">${btnTitle}</div>`;
-                    rowHtml += `<button class="btn-sm btn-approve" style="border:none;" onclick="prepareVideo('${btnUrl}')">پخش آنلاین</button>`;
-                    rowHtml += `<button class="btn-sm" style="background:var(--bg-box); color:var(--text-main); border:1px solid var(--border-color);" onclick="directDownload('${btnTitle}', '${btnUrl}')">دانلود</button>`;
-                    
-                    row.innerHTML = rowHtml;
-                    linksContainer.appendChild(row);
                 });
-            } else { 
-                linksContainer.innerHTML = '<div style="font-size:12px; color:var(--text-muted); text-align:center;">لینکی ثبت نشده است.</div>'; 
-            }
+            }, 1000);
+
+        } else { 
+            linksContainer.innerHTML = '<div style="font-size:12px; color:var(--text-muted); text-align:center;">لینکی ثبت نشده است.</div>'; 
         }
         
         playerModal.classList.add("show"); 
@@ -3033,6 +3088,9 @@
     }
 
     function closePlayer() { 
+        if(linkTimerInterval) {
+            clearInterval(linkTimerInterval);
+        }
         videoPlayer.pause(); 
         videoPlayer.removeAttribute("src"); 
         playerModal.classList.remove("show"); 
@@ -3296,7 +3354,8 @@
         var tit = document.getElementById('new-movie-title').value.trim();
         var pos = document.getElementById('new-movie-poster').value.trim();
         var url = document.getElementById('new-movie-url').value.trim();
-        var tHour = document.getElementById('new-movie-timer').value.trim();
+        
+        // Remove global timer handling as requested
         var isNew = document.getElementById('new-movie-isnew').checked;
         
         if(!tit || !pos) {
@@ -3307,7 +3366,8 @@
             title: tit, 
             poster: pos, 
             download_url: url, 
-            category: cat 
+            category: cat,
+            countdown_end: null // Global timer removed
         };
         
         if(isNew) { 
@@ -3316,15 +3376,6 @@
             let oldDate = new Date(); 
             oldDate.setDate(oldDate.getDate() - 10); 
             payload.updated_at = oldDate.toISOString(); 
-        }
-        
-        if(tHour) { 
-            let parsedHour = parseFloat(tHour);
-            let d = new Date(); 
-            d.setHours(d.getHours() + parsedHour); 
-            payload.countdown_end = d.toISOString(); 
-        } else {
-            payload.countdown_end = null;
         }
         
         showLoader(true);
@@ -3644,7 +3695,9 @@
                     
                     let cardHtml = `<div class="news-card">`;
                     cardHtml += `<div class="news-header">`;
-                    cardHtml += `<div class="news-avatar"><svg class="svg-icon" style="margin:0; width:20px; height:20px;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>`;
+                    cardHtml += `<div class="news-avatar">`;
+                    cardHtml += `<svg class="svg-icon" style="margin:0; width:20px; height:20px;" viewBox="0 0 24 24"><path d="M11 21C11 22.1 10.1 23 9 23C7.9 23 7 22.1 7 21C7 19.9 7.9 19 9 19C10.1 19 11 19.9 11 21ZM22 10.5C22 11.3 21.3 12 20.5 12H19.5V15C19.5 16.1 18.6 17 17.5 17H16.5C15.4 17 14.5 16.1 14.5 15V12H13L7 16H3V5H7L13 9H14.5C15.4 9 16.5 8.1 16.5 7H17.5C18.6 7 19.5 7.9 19.5 9V12H20.5C21.3 12 22 11.3 22 10.5Z" fill="currentColor"/></svg>`;
+                    cardHtml += `</div>`;
                     cardHtml += `<div><div class="news-author">PLATO News</div><div class="news-date">${dateStr}</div></div>`;
                     cardHtml += `</div>`;
                     cardHtml += `<div class="news-content" id="n-txt-${n.id}">${n.content}</div>`;
@@ -4118,7 +4171,7 @@
             return;
         }
 
-        // --- RATE LIMITING LOGIC (Anti-Spam) ---
+        /* Anti-Spam (Rate Limiting) Logic */
         let isVip = false;
         if(currentUserProfile.role === 'admin') {
             isVip = true;
@@ -4131,28 +4184,28 @@
         let storageKey = 'plato_ticket_history_' + currentUserProfile.id;
         let historyRaw = localStorage.getItem(storageKey);
         let history = [];
+        
         if(historyRaw) {
             history = JSON.parse(historyRaw);
         }
         
-        let now = new Date().getTime();
-        
-        // پاک کردن پیام‌های قدیمی‌تر از ۲۴ ساعت
+        let nowTime = new Date().getTime();
         let updatedHistory = [];
+        
+        // پاکسازی درخواست‌های قدیمی‌تر از ۲۴ ساعت
         history.forEach(time => {
-            if((now - time) < (24 * 60 * 60 * 1000)) {
+            if((nowTime - time) < (24 * 60 * 60 * 1000)) {
                 updatedHistory.push(time);
             }
         });
         history = updatedHistory;
 
-        // تنظیم محدودیت‌ها
-        let maxPer24h = 3;
-        let cooldownMs = 2 * 60 * 60 * 1000; // 2 hours
+        let maxPer24h = 2; // کاربر عادی: نهایت 2 پیام در روز
+        let cooldownMs = 30 * 60 * 1000; // کاربر عادی: 30 دقیقه توقف بین پیام‌ها
         
         if(isVip) {
-            maxPer24h = 6;
-            cooldownMs = 10 * 60 * 1000; // 10 mins
+            maxPer24h = 4; // کاربر VIP: نهایت 4 پیام در روز
+            cooldownMs = 10 * 60 * 1000; // کاربر VIP: 10 دقیقه توقف بین پیام‌ها
         }
         
         if(history.length >= maxPer24h) {
@@ -4161,12 +4214,12 @@
         
         if(history.length > 0) {
             let lastMsgTime = history[history.length - 1];
-            let diff = now - lastMsgTime;
+            let diffTime = nowTime - lastMsgTime;
             
-            if(diff < cooldownMs) {
-                let waitMins = Math.ceil((cooldownMs - diff) / (60 * 1000));
+            if(diffTime < cooldownMs) {
+                let waitMins = Math.ceil((cooldownMs - diffTime) / (60 * 1000));
                 
-                if(waitMins > 60) {
+                if(waitMins >= 60) {
                     let waitHours = Math.ceil(waitMins / 60);
                     return showCustomAlert(`لطفاً ${waitHours} ساعت دیگر برای ارسال پیام بعدی صبر کنید.`);
                 } else {
@@ -4174,7 +4227,6 @@
                 }
             }
         }
-        // --- END RATE LIMITING ---
         
         showLoader(true); 
         
@@ -4186,8 +4238,7 @@
                 is_read: false 
             }]);
             
-            // ثبت زمان در تاریخچه کاربر
-            history.push(now);
+            history.push(nowTime);
             localStorage.setItem(storageKey, JSON.stringify(history));
             
             showCustomAlert('ارسال شد.'); 
