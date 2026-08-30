@@ -271,6 +271,21 @@
             position: relative; 
         }
 
+        /* صفحه اختصاصی تماشای فیلم */
+        .modal-full {
+            padding: 0 !important;
+        }
+
+        .modal-full .modal-box {
+            max-width: 100% !important;
+            width: 100% !important;
+            height: 100vh !important;
+            max-height: 100vh !important;
+            border-radius: 0 !important;
+            border: none !important;
+            background: var(--bg-main);
+        }
+
         .modal-close-x { 
             position: absolute; 
             top: 14px; 
@@ -291,6 +306,7 @@
             transition: 0.2s; 
         }
 
+        /* دکمه خروج هوشمند بر اساس زبان */
         body[dir="rtl"] .modal-close-x {
             left: 14px;
             right: auto;
@@ -318,6 +334,94 @@
             font-weight: 800; 
             margin-bottom: 18px; 
             color: var(--text-main); 
+        }
+
+        /* استایل‌های کارت اطلاعات فیلم (طراحی جدید) */
+        .movie-info-card {
+            background: var(--bg-input);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .movie-info-title {
+            font-size: 20px; 
+            font-weight: 900; 
+            margin-bottom: 15px; 
+            color: var(--accent);
+        }
+
+        .movie-info-desc {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 2;
+            white-space: pre-wrap;
+        }
+
+        /* استایل لینک‌های پخش فیلم */
+        .movie-link-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-input);
+            padding: 14px 18px;
+            border-radius: 16px;
+            margin-bottom: 14px;
+            border: 1px solid var(--border-color);
+            transition: 0.2s;
+        }
+
+        .movie-link-row:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .movie-link-title {
+            flex: 1;
+            font-size: 14.5px;
+            font-weight: 900;
+            color: var(--text-main);
+        }
+
+        .movie-link-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn-play-online {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-play-online:hover {
+            background: rgba(16, 185, 129, 0.25);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-download {
+            background: var(--bg-box);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-download:hover {
+            background: rgba(255, 255, 255, 0.05);
         }
 
         /* =========================
@@ -446,41 +550,37 @@
             backdrop-filter: blur(6px); 
         }
 
+        /* حل مشکل جهت سایدبار */
         .sidebar { 
             position: fixed; 
             top: 0; 
             bottom: 0; 
-            left: 0; 
             width: 280px; 
             background: var(--bg-box); 
             z-index: 4001; 
-            transform: translateX(-100%); 
             transition: 0.35s ease; 
-            border-right: 1px solid var(--border-color); 
             display: flex; 
             flex-direction: column; 
         }
 
         body[dir="rtl"] .sidebar {
+            right: -280px;
             left: auto;
-            right: 0;
-            transform: translateX(100%);
             border-right: none;
             border-left: 1px solid var(--border-color);
         }
         body[dir="rtl"] .sidebar.open {
-            transform: translateX(0);
+            right: 0;
         }
 
         body[dir="ltr"] .sidebar {
+            left: -280px;
             right: auto;
-            left: 0;
-            transform: translateX(-100%);
             border-left: none;
             border-right: 1px solid var(--border-color);
         }
         body[dir="ltr"] .sidebar.open {
-            transform: translateX(0);
+            left: 0;
         }
 
         .sidebar-overlay.open { 
@@ -498,7 +598,6 @@
         .theme-toggle-btn { 
             position: absolute; 
             top: 15px; 
-            left: 15px; 
             width: 34px; 
             height: 34px; 
             border-radius: 50%; 
@@ -530,7 +629,6 @@
         .lang-toggle-btn { 
             position: absolute; 
             top: 15px; 
-            right: 15px; 
             background: var(--bg-input); 
             border: 1px solid var(--border-color); 
             border-radius: 8px; 
@@ -544,6 +642,7 @@
         body[dir="rtl"] .lang-toggle-btn { right: 15px; left: auto; }
         body[dir="ltr"] .lang-toggle-btn { left: 15px; right: auto; }
 
+        /* User Avatar UI */
         .profile-avatar-wrap { 
             position: relative; 
             width: 70px; 
@@ -590,6 +689,7 @@
             fill: currentColor; 
         }
 
+        /* Avatar Selection Grid */
         .avatar-grid { 
             display: grid; 
             grid-template-columns: repeat(3, 1fr); 
@@ -693,6 +793,7 @@
 
         body[dir="ltr"] .sidebar-btn {
             text-align: left;
+            flex-direction: row-reverse; /* Icons correctly placed */
         }
 
         .sidebar-btn:hover { 
@@ -734,7 +835,7 @@
             padding: 20px 20px 80px; 
             min-height: 100vh; 
             width: 100%; 
-            background-color: var(--bg-main); 
+            background-color: var(--bg-main); /* Fix background overflow issue */
             position: absolute;
             top: 0;
             left: 0;
@@ -915,7 +1016,7 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
             position: relative; 
             height: 100%; 
-            border-inline-end: 1px solid rgba(255,255,255,0.08); 
+            border-inline-end: 1px solid rgba(255,255,255,0.08); /* جداکننده عمودی */
         }
         
         .nav-item:last-child {
@@ -1019,15 +1120,11 @@
             height: 75px; 
             display: flex; 
             align-items: center; 
-            justify-content: space-between; 
+            justify-content: space-between; /* تنظیم فاصله تا جایگاه‌ها خودکار درست شود */
             padding: 0 20px; 
             background: var(--header-bg); 
             backdrop-filter: blur(15px); 
             border-bottom: 1px solid var(--border-color); 
-        }
-
-        body[dir="ltr"] .header {
-            flex-direction: row-reverse;
         }
 
         .header-actions { 
@@ -1076,7 +1173,7 @@
         }
         
         /* =========================
-           MARQUEE - LED TABLO
+           MARQUEE - LED TABLO (Fix lag)
         ========================= */
         .marquee-box { 
             width: calc(100% - 40px); 
@@ -1097,10 +1194,12 @@
             position: absolute;
             width: 100%;
             height: 100%;
+            display: flex;
+            align-items: center;
         }
 
         .marquee-text { 
-            position: absolute; 
+            display: inline-block;
             white-space: nowrap; 
             font-size: 20px; 
             font-family: 'Courier New', Courier, monospace, "Vazirmatn"; 
@@ -1108,21 +1207,25 @@
             color: #ff0000; 
             text-shadow: 0 0 4px #ff0000, 0 0 10px #ff0000, 0 0 18px #ff1111; 
             letter-spacing: 1.5px; 
-            top: 50%; 
-            left: 0; 
-            transform: translate3d(-100%, -50%, 0); 
-            animation: led-scroll-left-to-right 16s linear infinite; 
-            will-change: transform; 
+            padding-left: 100%; /* فاصله اولیه برای شروع خارج از کادر */
+            animation: marquee 15s linear infinite; 
+            will-change: transform; /* جلوگیری از لگ */
         }
 
-        @keyframes led-scroll-left-to-right { 
-            0% { transform: translate3d(0%, -50%, 0); left: 100%; } 
-            100% { transform: translate3d(-100%, -50%, 0); left: 0; } 
+        /* در حالت‌های مختلف زبانی جهت جابجایی تفاوت دارد */
+        @keyframes marquee { 
+            0%   { transform: translate3d(0, 0, 0); } 
+            100% { transform: translate3d(-100%, 0, 0); } 
         }
         
-        body[dir="ltr"] @keyframes led-scroll-left-to-right {
-            0% { transform: translate3d(-100%, -50%, 0); left: 0; } 
-            100% { transform: translate3d(0%, -50%, 0); left: 100%; } 
+        body[dir="ltr"] .marquee-text {
+            padding-left: 0;
+            padding-right: 100%;
+        }
+
+        body[dir="ltr"] @keyframes marquee {
+            0%   { transform: translate3d(0, 0, 0); } 
+            100% { transform: translate3d(100%, 0, 0); } 
         }
 
         .search-box { 
@@ -1929,11 +2032,18 @@
 
         <div id="tab-files" class="tab-content active admin-section">
             <div style="background:var(--bg-input); padding:15px; border-radius:14px; margin-bottom:20px; border:1px solid var(--border-color);">
-                <h3 style="margin-bottom:10px; font-size:14px;">تنظیم تابلوی LED سراسری</h3>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0; font-size:14px;">تنظیم تابلوی LED سراسری</h3>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
+                    <label style="font-size:12px; color:var(--text-muted); white-space:nowrap;">سرعت حرکت:</label>
+                    <input type="range" id="admin-marquee-speed" min="5" max="30" value="15" dir="ltr" style="width:100%; accent-color:var(--accent);" oninput="document.getElementById('speed-display').innerText = this.value + 's'">
+                    <span id="speed-display" style="font-size:12px; color:var(--accent); font-weight:bold; width:30px; text-align:left;">15s</span>
+                </div>
                 <div class="input-group" style="margin-bottom:10px;">
                     <input type="text" id="admin-marquee-input" class="input-field" placeholder="متن تابلو روان را وارد کنید...">
                 </div>
-                <button type="button" class="btn-sm btn-approve" style="padding:10px 20px;" onclick="saveMarqueeText()">ذخیره و انتشار</button>
+                <button type="button" class="btn-sm btn-approve" style="padding:10px 20px; width:100%;" onclick="saveMarqueeText()">ذخیره و انتشار</button>
             </div>
 
             <h3 id="form-movie-title">اضافه کردن محتوای جدید</h3>
@@ -2045,14 +2155,14 @@
          MAIN APP & HEADER
     ========================= -->
     <header class="header">
-        <div class="header-actions" style="margin-right: auto;">
+        <div class="header-actions">
             <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                <span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>
             </button>
+            <span class="notif-dot" id="header-notif" style="position:absolute; top:18px; display:none;"></span>
         </div>
 
-        <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none; position: absolute; left: 50%; transform: translateX(-50%);">
+        <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none;">
             خرید اشتراک
             <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
         </a>
@@ -2070,7 +2180,7 @@
         <!-- Home View -->
         <div id="view-home" class="view-section active-view">
             
-            <!-- GLOBAL MARQUEE (LAG FIXED) -->
+            <!-- GLOBAL MARQUEE -->
             <div id="marqueeContainer" class="marquee-box" style="display:none;">
                 <div class="marquee-text-wrapper">
                     <div class="marquee-text" id="marqueeTextContent"></div>
@@ -2444,17 +2554,13 @@
         
         showLoader(true);
         
-        try {
-            await supabaseClient.from('users_data').update({ avatar: id }).eq('id', currentUserProfile.id);
-            
-            currentUserProfile.avatar = id;
-            
-            document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(id, currentUserProfile.username);
-            
-            document.getElementById('avatarModal').classList.remove('show'); 
-        } catch(e) {
-            console.error(e);
-        }
+        await supabaseClient.from('users_data').update({ avatar: id }).eq('id', currentUserProfile.id);
+        
+        currentUserProfile.avatar = id;
+        
+        document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(id, currentUserProfile.username);
+        
+        document.getElementById('avatarModal').classList.remove('show'); 
         
         showLoader(false);
     }
