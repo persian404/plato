@@ -306,17 +306,6 @@
             transition: 0.2s; 
         }
 
-        /* دکمه خروج هوشمند بر اساس زبان */
-        body[dir="rtl"] .modal-close-x {
-            left: 14px;
-            right: auto;
-        }
-        
-        body[dir="ltr"] .modal-close-x {
-            right: 14px;
-            left: auto;
-        }
-
         .modal-close-x:hover { 
             background: rgba(239, 68, 68, 0.2); 
             color: #ef4444; 
@@ -334,94 +323,6 @@
             font-weight: 800; 
             margin-bottom: 18px; 
             color: var(--text-main); 
-        }
-
-        /* استایل‌های کارت اطلاعات فیلم (طراحی جدید) */
-        .movie-info-card {
-            background: var(--bg-input);
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 25px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .movie-info-title {
-            font-size: 20px; 
-            font-weight: 900; 
-            margin-bottom: 15px; 
-            color: var(--accent);
-        }
-
-        .movie-info-desc {
-            font-size: 13.5px;
-            color: var(--text-muted);
-            line-height: 2;
-            white-space: pre-wrap;
-        }
-
-        /* استایل لینک‌های پخش فیلم */
-        .movie-link-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--bg-input);
-            padding: 14px 18px;
-            border-radius: 16px;
-            margin-bottom: 14px;
-            border: 1px solid var(--border-color);
-            transition: 0.2s;
-        }
-
-        .movie-link-row:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .movie-link-title {
-            flex: 1;
-            font-size: 14.5px;
-            font-weight: 900;
-            color: var(--text-main);
-        }
-
-        .movie-link-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .btn-play-online {
-            background: rgba(16, 185, 129, 0.15);
-            color: #10b981;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: 10px;
-            padding: 8px 16px;
-            font-weight: bold;
-            font-size: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-play-online:hover {
-            background: rgba(16, 185, 129, 0.25);
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
-        }
-
-        .btn-download {
-            background: var(--bg-box);
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 8px 16px;
-            font-weight: bold;
-            font-size: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-download:hover {
-            background: rgba(255, 255, 255, 0.05);
         }
 
         /* =========================
@@ -537,7 +438,7 @@
         }
 
         /* =========================
-           SIDEBAR MENU & AVATAR
+           SIDEBAR MENU & AVATAR (FIXED ALIGNMENT)
         ========================= */
         .sidebar-overlay { 
             position: fixed; 
@@ -550,37 +451,23 @@
             backdrop-filter: blur(6px); 
         }
 
-        /* حل مشکل جهت سایدبار */
         .sidebar { 
             position: fixed; 
             top: 0; 
             bottom: 0; 
+            left: 0; /* همیشه سمت چپ قرار می‌گیرد */
             width: 280px; 
             background: var(--bg-box); 
             z-index: 4001; 
+            transform: translateX(-100%); 
             transition: 0.35s ease; 
+            border-right: 1px solid var(--border-color); 
             display: flex; 
             flex-direction: column; 
         }
 
-        body[dir="rtl"] .sidebar {
-            right: -280px;
-            left: auto;
-            border-right: none;
-            border-left: 1px solid var(--border-color);
-        }
-        body[dir="rtl"] .sidebar.open {
-            right: 0;
-        }
-
-        body[dir="ltr"] .sidebar {
-            left: -280px;
-            right: auto;
-            border-left: none;
-            border-right: 1px solid var(--border-color);
-        }
-        body[dir="ltr"] .sidebar.open {
-            left: 0;
+        .sidebar.open { 
+            transform: translateX(0); 
         }
 
         .sidebar-overlay.open { 
@@ -598,6 +485,7 @@
         .theme-toggle-btn { 
             position: absolute; 
             top: 15px; 
+            left: 15px; 
             width: 34px; 
             height: 34px; 
             border-radius: 50%; 
@@ -609,9 +497,6 @@
             cursor: pointer; 
             color: var(--text-main); 
         }
-
-        body[dir="rtl"] .theme-toggle-btn { left: 15px; right: auto; }
-        body[dir="ltr"] .theme-toggle-btn { right: 15px; left: auto; }
 
         .theme-toggle-btn svg { 
             width: 17px; 
@@ -629,6 +514,7 @@
         .lang-toggle-btn { 
             position: absolute; 
             top: 15px; 
+            right: 15px; 
             background: var(--bg-input); 
             border: 1px solid var(--border-color); 
             border-radius: 8px; 
@@ -638,9 +524,6 @@
             padding: 5px 8px; 
             cursor: pointer; 
         }
-
-        body[dir="rtl"] .lang-toggle-btn { right: 15px; left: auto; }
-        body[dir="ltr"] .lang-toggle-btn { left: 15px; right: auto; }
 
         /* User Avatar UI */
         .profile-avatar-wrap { 
@@ -791,11 +674,6 @@
             border: 1px solid var(--border-color); 
         }
 
-        body[dir="ltr"] .sidebar-btn {
-            text-align: left;
-            flex-direction: row-reverse; /* Icons correctly placed */
-        }
-
         .sidebar-btn:hover { 
             border-color: var(--accent); 
         }
@@ -835,7 +713,7 @@
             padding: 20px 20px 80px; 
             min-height: 100vh; 
             width: 100%; 
-            background-color: var(--bg-main); /* Fix background overflow issue */
+            background-color: var(--bg-main); 
             position: absolute;
             top: 0;
             left: 0;
@@ -1016,7 +894,7 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
             position: relative; 
             height: 100%; 
-            border-inline-end: 1px solid rgba(255,255,255,0.08); /* جداکننده عمودی */
+            border-inline-end: 1px solid rgba(255,255,255,0.08); 
         }
         
         .nav-item:last-child {
@@ -1099,7 +977,7 @@
         }
 
         /* =========================
-           MAIN APP & HEADER
+           MAIN APP & HEADER (FIXED ALIGNMENTS)
         ========================= */
         #app-wrapper { 
             width: 100%; 
@@ -1120,19 +998,21 @@
             height: 75px; 
             display: flex; 
             align-items: center; 
-            justify-content: space-between; /* تنظیم فاصله تا جایگاه‌ها خودکار درست شود */
+            justify-content: space-between; 
             padding: 0 20px; 
             background: var(--header-bg); 
             backdrop-filter: blur(15px); 
             border-bottom: 1px solid var(--border-color); 
         }
 
-        .header-actions { 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
+        /* Logo and Menu specific ordering for LTR and RTL */
+        .logo {
+            order: 1; /* In RTL goes to right. In LTR goes to left */
         }
-
+        .header-actions {
+            order: 3; /* In RTL goes to left. In LTR goes to right */
+        }
+        
         .profile-button { 
             width: 42px; 
             height: 42px; 
@@ -1146,7 +1026,6 @@
             overflow: hidden; 
         }
 
-        /* Buy Sub Button Styles (Perfect Center & Lighter Background) */
         .buy-sub-btn {
             position: absolute; 
             left: 50%; 
@@ -1164,6 +1043,7 @@
             transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
             z-index: 10;
             backdrop-filter: blur(8px);
+            order: 2; /* Keep it centered regardless of direction */
         }
 
         .buy-sub-btn:hover {
@@ -1173,7 +1053,7 @@
         }
         
         /* =========================
-           MARQUEE - LED TABLO (Fix lag)
+           MARQUEE - LED TABLO (Fix lag & direction)
         ========================= */
         .marquee-box { 
             width: calc(100% - 40px); 
@@ -1199,7 +1079,7 @@
         }
 
         .marquee-text { 
-            display: inline-block;
+            position: absolute; 
             white-space: nowrap; 
             font-size: 20px; 
             font-family: 'Courier New', Courier, monospace, "Vazirmatn"; 
@@ -1207,27 +1087,19 @@
             color: #ff0000; 
             text-shadow: 0 0 4px #ff0000, 0 0 10px #ff0000, 0 0 18px #ff1111; 
             letter-spacing: 1.5px; 
-            padding-left: 100%; /* فاصله اولیه برای شروع خارج از کادر */
-            animation: marquee 15s linear infinite; 
-            will-change: transform; /* جلوگیری از لگ */
+            top: 50%; 
+            transform: translateY(-50%); 
+            left: -100%; /* Start outside left */
+            animation: led-scroll-left-to-right 15s linear infinite; 
+            will-change: left;
         }
 
-        /* در حالت‌های مختلف زبانی جهت جابجایی تفاوت دارد */
-        @keyframes marquee { 
-            0%   { transform: translate3d(0, 0, 0); } 
-            100% { transform: translate3d(-100%, 0, 0); } 
+        /* حرکت از چپ به راست در حالت پیش‌فرض (فارسی) */
+        @keyframes led-scroll-left-to-right { 
+            0%   { left: -100%; } 
+            100% { left: 100%; } 
         }
         
-        body[dir="ltr"] .marquee-text {
-            padding-left: 0;
-            padding-right: 100%;
-        }
-
-        body[dir="ltr"] @keyframes marquee {
-            0%   { transform: translate3d(0, 0, 0); } 
-            100% { transform: translate3d(100%, 0, 0); } 
-        }
-
         .search-box { 
             padding: 14px 20px 4px; 
             max-width: 750px; 
@@ -1262,11 +1134,6 @@
             color: var(--text-muted); 
         }
         
-        body[dir="ltr"] .search-icon {
-            right: auto;
-            left: 16px;
-        }
-
         /* Slider Hero Container */
         .hero-container {
             margin: 14px auto 0; 
@@ -1350,6 +1217,7 @@
             font-weight: 800; 
             display: flex; 
             align-items: center; 
+            gap: 8px;
         }
 
         .section-title::before { 
@@ -1357,14 +1225,8 @@
             display: inline-block; 
             width: 4px; 
             height: 18px; 
-            margin-left: 8px; 
             border-radius: 4px; 
             background: var(--accent); 
-        }
-
-        body[dir="ltr"] .section-title::before {
-            margin-left: 0;
-            margin-right: 8px;
         }
         
         .movie-list { 
@@ -1455,11 +1317,6 @@
             border: 1px solid rgba(255,255,255,0.2); 
         }
 
-        body[dir="ltr"] .fav-btn {
-            left: auto;
-            right: 12px;
-        }
-
         .fav-btn.active { 
             color: #ef4444; 
         }
@@ -1483,11 +1340,6 @@
             border-radius: 6px; 
             letter-spacing: 1px; 
             box-shadow: 0 2px 5px rgba(239, 68, 68, 0.5); 
-        }
-
-        body[dir="ltr"] .new-badge {
-            right: auto;
-            left: 12px;
         }
 
         /* =========================
@@ -1527,11 +1379,6 @@
             margin-left: 10px; 
             color: #fff; 
             overflow: hidden; 
-        }
-
-        body[dir="ltr"] .news-avatar {
-            margin-left: 0;
-            margin-right: 10px;
         }
 
         .news-author { 
@@ -1619,7 +1466,7 @@
             padding: 20px;
         }
 
-        /* NEON PLAYER BANNER (Chasing Lights) */
+        /* NEON PLAYER BANNER (Chasing Lights - Without Blur inside) */
         .neon-banner { 
             width: 100%; 
             aspect-ratio: 16 / 9; 
@@ -1629,6 +1476,7 @@
             z-index: 0;
             margin-bottom: 20px;
             overflow: hidden;
+            background: #000;
         }
 
         /* خطوط متحرک نئونی */
@@ -1639,7 +1487,6 @@
             left: -50%;
             width: 200%; 
             height: 200%;
-            /* دو رنگ قرمز و آبی که دنبال هم می‌دوند */
             background: conic-gradient(from 0deg, 
                 transparent 0%, transparent 40%, #ef4444 50%, 
                 transparent 60%, transparent 90%, #3b82f6 100%);
@@ -1647,11 +1494,11 @@
             z-index: -2;
         }
 
-        /* لایه پوشاننده وسط */
+        /* لایه پوشاننده وسط که کادر اصلی پلیر را می‌سازد */
         .neon-banner-inner {
             width: 100%; 
             height: 100%;
-            background: #000;
+            background: #0c0c0e;
             border-radius: 9px;
             z-index: 1;
             display: flex;
@@ -1730,6 +1577,15 @@
             line-height: 2;
             white-space: pre-wrap;
         }
+        
+        .movie-info-cast {
+            font-size: 12.5px;
+            color: var(--text-main);
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+            line-height: 1.8;
+        }
 
         /* استایل لینک‌های پخش فیلم */
         .movie-link-row {
@@ -1804,25 +1660,12 @@
             border-right: 3px solid var(--accent); 
         }
 
-        body[dir="ltr"] .msg-bubble {
-            border-right: none;
-            border-left: 3px solid var(--accent);
-        }
-
         .msg-bubble.system { 
             border-right-color: #3b82f6; 
-        } 
-        
-        body[dir="ltr"] .msg-bubble.system { 
-            border-left-color: #3b82f6; 
         } 
 
         .msg-bubble.admin-reply { 
             border-right-color: #10b981; 
-        } 
-
-        body[dir="ltr"] .msg-bubble.admin-reply { 
-            border-left-color: #10b981; 
         } 
 
         #confetti-canvas { 
@@ -1990,7 +1833,7 @@
                 <svg class="btn-icon" viewBox="0 0 24 24"><path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
             </button>
             
-            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="text-decoration:none; padding: 12px 14px;">
+            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="text-decoration:none; padding: 10px 14px;">
                 <div style="display:flex; flex-direction:column; width:100%;">
                     <div style="display:flex; align-items:center; justify-content:space-between;">
                         <span style="font-weight:bold; font-size:13.5px; color:var(--text-main);">کانال تلگرامی پلاتو</span>
@@ -2155,18 +1998,6 @@
          MAIN APP & HEADER
     ========================= -->
     <header class="header">
-        <div class="header-actions">
-            <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            </button>
-            <span class="notif-dot" id="header-notif" style="position:absolute; top:18px; display:none;"></span>
-        </div>
-
-        <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none;">
-            خرید اشتراک
-            <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
-        </a>
-
         <div class="logo">
             <div class="premium-logo">
                 <svg viewBox="0 0 1536 614">
@@ -2174,13 +2005,24 @@
                 </svg>
             </div>
         </div>
+        
+        <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none;">
+            خرید اشتراک
+            <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
+        </a>
+
+        <div class="header-actions">
+            <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>
+            </button>
+        </div>
     </header>
 
     <div id="main-app">
         <!-- Home View -->
         <div id="view-home" class="view-section active-view">
             
-            <!-- GLOBAL MARQUEE -->
             <div id="marqueeContainer" class="marquee-box" style="display:none;">
                 <div class="marquee-text-wrapper">
                     <div class="marquee-text" id="marqueeTextContent"></div>
@@ -2256,7 +2098,7 @@
             <div id="news-container"></div>
         </div>
 
-        <!-- NEW: Dedicated Movie Page View -->
+        <!-- Dedicated Movie Page View -->
         <div id="view-movie" class="view-section" style="padding-bottom: 90px; background: var(--bg-main);">
             <div class="movie-detail-header">
                 <button class="btn-back" onclick="closePlayer()">
@@ -2280,6 +2122,7 @@
                 <div class="movie-info-card" id="modal-movie-info" style="display:none;">
                     <h2 class="movie-info-title" id="movie-detail-title"></h2>
                     <div id="modal-movie-desc" class="movie-info-desc"></div>
+                    <div id="modal-movie-cast" class="movie-info-cast" style="display:none;"></div>
                 </div>
 
                 <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;" data-i18n="link_expired">این لینک منقضی شده است.</div>
@@ -2438,7 +2281,7 @@
     let linkTimerInterval = null;
 
     /* =========================
-       AVATAR SYSTEM 
+       AVATAR SYSTEM (Precise SVG Geometries)
     ========================= */
     const AVATARS = {
         1: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -3278,9 +3121,19 @@
         document.getElementById("movie-detail-title").textContent = movie.title;
         document.getElementById("neonTitle").textContent = movie.title;
         
-        if(movie.info) {
+        if(movie.info || movie.description || movie.cast_members) {
             document.getElementById('modal-movie-info').style.display = 'block';
-            document.getElementById('modal-movie-desc').textContent = movie.info;
+            let finalInfo = "";
+            if(movie.info) finalInfo += movie.info;
+            if(movie.description) finalInfo += "\n" + movie.description;
+            document.getElementById('modal-movie-desc').textContent = finalInfo.trim();
+            
+            if(movie.cast_members) {
+                document.getElementById('modal-movie-cast').style.display = 'block';
+                document.getElementById('modal-movie-cast').textContent = "بازیگران: " + movie.cast_members;
+            } else {
+                document.getElementById('modal-movie-cast').style.display = 'none';
+            }
         } else {
             document.getElementById('modal-movie-info').style.display = 'none';
         }
@@ -3742,7 +3595,8 @@
         var cat = document.getElementById('new-movie-category').value;
         var tit = document.getElementById('new-movie-title').value.trim();
         var pos = document.getElementById('new-movie-poster').value.trim();
-        var info = document.getElementById('new-movie-info').value.trim();
+        var desc = document.getElementById('new-movie-desc').value.trim();
+        var cast = document.getElementById('new-movie-cast').value.trim();
         var url = document.getElementById('new-movie-url').value.trim();
         var isNew = document.getElementById('new-movie-isnew').checked;
         
@@ -3753,7 +3607,8 @@
         var payload = { 
             title: tit, 
             poster: pos, 
-            info: info,
+            description: desc,
+            cast_members: cast,
             download_url: url, 
             category: cat,
             countdown_end: null 
@@ -3808,11 +3663,19 @@
         document.getElementById('new-movie-title').value = targetMovie.title; 
         document.getElementById('new-movie-poster').value = targetMovie.poster; 
         
-        let infoValue = '';
-        if(targetMovie.info) {
-            infoValue = targetMovie.info;
+        let descValue = '';
+        if(targetMovie.description) {
+            descValue = targetMovie.description;
+        } else if(targetMovie.info) {
+            descValue = targetMovie.info;
         }
-        document.getElementById('new-movie-info').value = infoValue;
+        document.getElementById('new-movie-desc').value = descValue;
+        
+        let castValue = '';
+        if(targetMovie.cast_members) {
+            castValue = targetMovie.cast_members;
+        }
+        document.getElementById('new-movie-cast').value = castValue;
         
         let urlValue = '';
         if(targetMovie.download_url) {
@@ -3843,7 +3706,8 @@
     function cancelEdit() { 
         document.getElementById('new-movie-title').value = ''; 
         document.getElementById('new-movie-poster').value = ''; 
-        document.getElementById('new-movie-info').value = ''; 
+        document.getElementById('new-movie-desc').value = ''; 
+        document.getElementById('new-movie-cast').value = ''; 
         document.getElementById('new-movie-url').value = ''; 
         document.getElementById('new-movie-isnew').checked = false; 
         
@@ -3988,19 +3852,37 @@
             const container = document.getElementById('marqueeContainer');
             const textElem = document.getElementById('marqueeTextContent');
             const input = document.getElementById('admin-marquee-input');
+            const speedInput = document.getElementById('admin-marquee-speed');
+            const speedDisplay = document.getElementById('speed-display');
             
             if(data && data[0] && data[0].content.trim()) {
-                if(textElem.textContent !== data[0].content) { 
-                    textElem.textContent = data[0].content; 
-                    textElem.style.animation = 'none'; 
-                    void textElem.offsetWidth; 
-                    textElem.style.animation = null; 
+                let textValue = data[0].content;
+                let finalSpeed = "15s"; // default
+                
+                // Parse speed if appended with "||"
+                if(textValue.includes("||")) {
+                    let parts = textValue.split("||");
+                    textValue = parts[0];
+                    finalSpeed = parts[1] + "s";
+                    if(speedInput) {
+                        speedInput.value = parts[1];
+                        if(speedDisplay) speedDisplay.innerText = finalSpeed;
+                    }
                 }
+                
+                if(textElem.textContent !== textValue) { 
+                    textElem.textContent = textValue; 
+                }
+                
+                // Always reset animation to apply new speed
+                textElem.style.animation = 'none'; 
+                void textElem.offsetWidth; 
+                textElem.style.animation = `led-scroll-left-to-right ${finalSpeed} linear infinite`; 
                 
                 container.style.display = 'flex'; 
                 
                 if(input && !input.value) {
-                    input.value = data[0].content;
+                    input.value = textValue;
                 }
             } else { 
                 container.style.display = 'none'; 
@@ -4014,6 +3896,11 @@
         showLoader(true); 
         
         let v = document.getElementById('admin-marquee-input').value.trim(); 
+        let speed = document.getElementById('admin-marquee-speed').value;
+        
+        if(v) {
+            v = v + "||" + speed; // append speed to text
+        }
         
         try {
             await supabaseClient.from('messages').delete().eq('direction', 'marquee'); 
@@ -4092,7 +3979,7 @@
                     let cardHtml = `<div class="news-card">`;
                     cardHtml += `<div class="news-header">`;
                     cardHtml += `<div class="news-avatar">`;
-                    cardHtml += `<svg class="svg-icon" style="margin:0; width:22px; height:22px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline><line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line><line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line><polyline points="10 9 9 9 8 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline></svg>`;
+                    cardHtml += `<svg class="svg-icon" style="margin:0; width:22px; height:22px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 4.5C5 3.67 5.67 3 6.5 3H19V18.5C19 19.88 17.88 21 16.5 21H6.5C5.67 21 5 20.33 5 19.5V4.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 7H15.5M8.5 10.5H15.5M8.5 14H12.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="17" cy="6" r="2" fill="currentColor"/></svg>`;
                     cardHtml += `</div>`;
                     cardHtml += `<div><div class="news-author">PLATO News</div><div class="news-date">${dateStr}</div></div>`;
                     cardHtml += `</div>`;
