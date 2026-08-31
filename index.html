@@ -95,19 +95,6 @@
             vertical-align: middle; 
         }
 
-        /* اسکرول‌بار سفارشی و ظریف برای کادر قوانین */
-        .custom-scroll::-webkit-scrollbar {
-            width: 5px;
-        }
-        .custom-scroll::-webkit-scrollbar-track {
-            background: var(--bg-box); 
-            border-radius: 10px;
-        }
-        .custom-scroll::-webkit-scrollbar-thumb {
-            background: var(--accent); 
-            border-radius: 10px;
-        }
-
         /* =========================
            PREMIUM LOGO SHINE EFFECT
         ========================= */
@@ -451,7 +438,7 @@
         }
 
         /* =========================
-           SIDEBAR MENU & AVATAR
+           SIDEBAR MENU & AVATAR (FIXED ALIGNMENT)
         ========================= */
         .sidebar-overlay { 
             position: fixed; 
@@ -464,23 +451,23 @@
             backdrop-filter: blur(6px); 
         }
 
-        /* منوی کشویی: از سمت چپ باز می‌شود */
         .sidebar { 
             position: fixed; 
             top: 0; 
             bottom: 0; 
-            left: -280px; 
+            left: 0; /* همیشه سمت چپ قرار می‌گیرد */
             width: 280px; 
             background: var(--bg-box); 
             z-index: 4001; 
-            transition: left 0.35s ease; 
+            transform: translateX(-100%); 
+            transition: 0.35s ease; 
             border-right: 1px solid var(--border-color); 
             display: flex; 
             flex-direction: column; 
         }
 
         .sidebar.open { 
-            left: 0; 
+            transform: translateX(0); 
         }
 
         .sidebar-overlay.open { 
@@ -498,7 +485,7 @@
         .theme-toggle-btn { 
             position: absolute; 
             top: 15px; 
-            right: 15px; 
+            left: 15px; 
             width: 34px; 
             height: 34px; 
             border-radius: 50%; 
@@ -523,6 +510,20 @@
         .light-theme .icon-moon { display: none !important; }
         body:not(.light-theme) .icon-sun { display: none !important; }
         body:not(.light-theme) .icon-moon { display: block !important; }
+
+        .lang-toggle-btn { 
+            position: absolute; 
+            top: 15px; 
+            right: 15px; 
+            background: var(--bg-input); 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            font-size: 11px; 
+            font-weight: bold; 
+            color: var(--text-main); 
+            padding: 5px 8px; 
+            cursor: pointer; 
+        }
 
         /* User Avatar UI */
         .profile-avatar-wrap { 
@@ -677,18 +678,18 @@
             border-color: var(--accent); 
         }
 
-        /* چشمک‌زن استاندارد سبز */
-        @keyframes blink { 
-            0% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px #10b981; } 
-            50% { opacity: 0.4; transform: scale(1.2); box-shadow: 0 0 15px #10b981; } 
-            100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px #10b981; } 
-        }
         .notif-dot { 
-            width: 10px; 
-            height: 10px; 
+            width: 8px; 
+            height: 8px; 
             background: #10b981; 
             border-radius: 50%; 
-            animation: blink 1.5s ease-in-out infinite; 
+            box-shadow: 0 0 6px #10b981; 
+            animation: blink 1.2s infinite alternate; 
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0.3; transform: scale(0.8); }
         }
         
         .sidebar-footer { 
@@ -718,11 +719,12 @@
             min-height: 100vh; 
             width: 100%; 
             background-color: var(--bg-main); 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            z-index: 10000; 
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10000;
         }
+
         .tab-menu { 
             display: flex; 
             justify-content: center; 
@@ -736,6 +738,7 @@
             border-radius: 14px; 
             border: 1px solid var(--border-color); 
         }
+
         .tab-btn { 
             background: transparent; 
             color: var(--text-muted); 
@@ -747,17 +750,20 @@
             text-align: center; 
             font-size: 13px; 
         }
+
         .tab-btn.active { 
             background: var(--bg-input); 
             color: var(--accent); 
             border: 1px solid var(--border-color); 
         }
+
         .tab-content { 
             display: none; 
             width: 100%; 
             max-width: 650px; 
             margin: 0 auto; 
         }
+
         .tab-content.active { 
             display: block; 
         }
@@ -770,6 +776,7 @@
             border: 1px solid var(--border-color); 
             margin-bottom: 18px; 
         }
+
         .admin-section h3 { 
             margin-bottom: 16px; 
             font-size: 15px; 
@@ -778,6 +785,7 @@
             align-items: center; 
             gap: 8px; 
         }
+
         .admin-section h3::before { 
             content: ""; 
             display: inline-block; 
@@ -798,174 +806,875 @@
             border: 1px solid var(--border-color); 
             transition: 0.2s; 
         }
-        .req-card.draggable { cursor: grab; }
-        .req-card.draggable:active { cursor: grabbing; opacity: 0.7; transform: scale(0.98); }
-        .req-card.drag-over { border: 2px dashed var(--accent); }
-        
-        .req-info div { font-size: 13.5px; font-weight: bold; color: var(--text-main); }
-        .req-info small { color: var(--text-muted); font-size: 12px; display: block; margin-top: 4px; }
 
-        .btn-sm { padding: 7px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; margin-right: 4px; cursor: pointer; border: none; }
-        .btn-approve { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
-        .btn-edit { background: rgba(59, 130, 246, 0.15); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); }
-        .btn-reject { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .req-card.draggable { 
+            cursor: grab; 
+        }
+
+        .req-card.draggable:active { 
+            cursor: grabbing; 
+            opacity: 0.7; 
+            transform: scale(0.98); 
+        }
+
+        .req-card.drag-over { 
+            border: 2px dashed var(--accent); 
+        }
+        
+        .req-info div { 
+            font-size: 13.5px; 
+            font-weight: bold; 
+            color: var(--text-main); 
+        }
+
+        .req-info small { 
+            color: var(--text-muted); 
+            font-size: 12px; 
+            display: block; 
+            margin-top: 4px; 
+        }
+
+        .btn-sm { 
+            padding: 7px 12px; 
+            border-radius: 8px; 
+            font-size: 12px; 
+            font-weight: bold; 
+            margin-right: 4px; 
+            cursor: pointer; 
+            border: none; 
+        }
+
+        .btn-approve { 
+            background: rgba(16, 185, 129, 0.15); 
+            color: #10b981; 
+            border: 1px solid rgba(16, 185, 129, 0.3); 
+        }
+
+        .btn-edit { 
+            background: rgba(59, 130, 246, 0.15); 
+            color: #3b82f6; 
+            border: 1px solid rgba(59, 130, 246, 0.3); 
+        }
+
+        .btn-reject { 
+            background: rgba(239, 68, 68, 0.15); 
+            color: #ef4444; 
+            border: 1px solid rgba(239, 68, 68, 0.3); 
+        }
 
         /* =========================
            MODERN BOTTOM NAVIGATION
         ========================= */
         .bottom-nav { 
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-            width: calc(100% - 40px); max-width: 400px; height: 70px; 
-            background: rgba(18, 18, 22, 0.85); backdrop-filter: blur(20px); 
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 35px; 
-            display: flex; justify-content: space-around; align-items: center; z-index: 1000; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding: 0 10px; 
+            position: fixed; 
+            bottom: 20px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: calc(100% - 40px); 
+            max-width: 400px; 
+            height: 70px; 
+            background: rgba(18, 18, 22, 0.85); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 35px; 
+            display: flex; 
+            justify-content: space-around; 
+            align-items: center; 
+            z-index: 1000; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); 
+            padding: 0 10px; 
         }
-        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 11px; font-weight: bold; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; height: 100%; border-left: 1px solid rgba(255,255,255,0.08); }
-        .nav-item:last-child { border-left: none; }
-        .nav-item svg { width: 22px; height: 22px; margin-bottom: 4px; stroke: currentColor; stroke-width: 2; fill: none; transition: transform 0.3s ease; }
-        .nav-item.active { color: var(--accent); }
-        .nav-item.active svg { transform: translateY(-3px) scale(1.1); filter: drop-shadow(0 4px 6px rgba(59, 130, 246, 0.4)); }
 
-        .nav-indicator { position: absolute; bottom: 8px; width: 5px; height: 5px; background: var(--accent); border-radius: 50%; opacity: 0; transform: scale(0); transition: all 0.3s ease; }
-        .nav-item.active .nav-indicator { opacity: 1; transform: scale(1); }
-        .nav-notif { position: absolute; top: 12px; right: calc(50% - 15px); width: 8px; height: 8px; background: rgba(16, 185, 129, 0.8); border-radius: 50%; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); display: none; }
-        .platino-badge { position: absolute; top: 4px; right: 15%; background: #ef4444; color: #fff; font-size: 8px; padding: 2px 4px; border-radius: 4px; font-weight: 900; }
+        .nav-item { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            color: var(--text-muted); 
+            font-size: 11px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            position: relative; 
+            height: 100%; 
+            border-inline-end: 1px solid rgba(255,255,255,0.08); 
+        }
+        
+        .nav-item:last-child {
+            border-inline-end: none;
+        }
+
+        .nav-item svg { 
+            width: 22px; 
+            height: 22px; 
+            margin-bottom: 4px; 
+            stroke: currentColor; 
+            stroke-width: 2; 
+            fill: none; 
+            transition: transform 0.3s ease; 
+        }
+
+        .nav-item.active { 
+            color: var(--accent); 
+        }
+
+        .nav-item.active svg { 
+            transform: translateY(-3px) scale(1.1); 
+            filter: drop-shadow(0 4px 6px rgba(59, 130, 246, 0.4)); 
+        }
+
+        .nav-indicator { 
+            position: absolute; 
+            bottom: 8px; 
+            width: 5px; 
+            height: 5px; 
+            background: var(--accent); 
+            border-radius: 50%; 
+            opacity: 0; 
+            transform: scale(0); 
+            transition: all 0.3s ease; 
+        }
+
+        .nav-item.active .nav-indicator { 
+            opacity: 1; 
+            transform: scale(1); 
+        }
+
+        .nav-notif { 
+            position: absolute; 
+            top: 12px; 
+            right: calc(50% - 15px); 
+            width: 8px; 
+            height: 8px; 
+            background: rgba(16, 185, 129, 0.8); 
+            border-radius: 50%; 
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); 
+            display: none; 
+        }
+
+        .platino-badge {
+            position: absolute;
+            top: 4px;
+            right: 15%;
+            background: #ef4444;
+            color: #fff;
+            font-size: 8px;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 900;
+        }
 
         /* VIEW TRANSITIONS */
-        .view-section { display: none; animation: fadeSlide 0.3s ease-out forwards; }
-        .view-section.active-view { display: block; }
-        @keyframes fadeSlide { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .view-section { 
+            display: none; 
+            animation: fadeSlide 0.3s ease-out forwards; 
+        }
+
+        .view-section.active-view { 
+            display: block; 
+        }
+
+        @keyframes fadeSlide { 
+            from { opacity: 0; transform: translateY(15px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
 
         /* =========================
            MAIN APP & HEADER (FIXED ALIGNMENTS)
         ========================= */
-        #app-wrapper { width: 100%; max-width: 1400px; margin: 0 auto; position: relative; padding-bottom: var(--bottom-nav-h); }
-        #main-app { display: none; }
-        
-        .header { 
-            position: sticky; top: 0; z-index: 1000; height: 75px; 
-            display: flex; align-items: center; justify-content: space-between; 
-            padding: 0 20px; background: var(--header-bg); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color); 
+        #app-wrapper { 
+            width: 100%; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            position: relative; 
+            padding-bottom: var(--bottom-nav-h); 
         }
 
-        /* در RTL به طور طبیعی 요소ی اول (لوگو) در سمت راست و 요소ی آخر (منو) در سمت چپ قرار می‌گیرد */
-        .logo { display: flex; align-items: center; }
+        #main-app { 
+            display: none; 
+        }
         
-        .header-actions { display: flex; align-items: center; gap: 10px; position: relative; }
+        .header { 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            height: 75px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 0 20px; 
+            background: var(--header-bg); 
+            backdrop-filter: blur(15px); 
+            border-bottom: 1px solid var(--border-color); 
+        }
+        
+        .profile-button { 
+            width: 42px; 
+            height: 42px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 50%; 
+            background: var(--bg-input); 
+            border: 1px solid var(--border-color); 
+            cursor: pointer; 
+            overflow: hidden; 
+        }
 
-        .profile-button { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); cursor: pointer; overflow: hidden; }
+        .buy-sub-btn {
+            position: absolute; 
+            left: 50%; 
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, rgba(239, 68, 68, 0.7), rgba(185, 28, 28, 0.7)); 
+            padding: 5px 16px; 
+            border-radius: 12px; 
+            font-size: 13px; 
+            font-weight: bold; 
+            color: white; 
+            text-align: center;
+            text-decoration: none; 
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2); 
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+        }
 
-        /* دکمه خرید مطلق در مرکز */
-        .buy-sub-btn { position: absolute; left: 50%; transform: translateX(-50%); background: linear-gradient(45deg, rgba(239, 68, 68, 0.7), rgba(185, 28, 28, 0.7)); padding: 5px 16px; border-radius: 12px; font-size: 13px; font-weight: bold; color: white; text-align: center; text-decoration: none; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2); border: 1px solid rgba(255,255,255,0.15); transition: transform 0.2s, box-shadow 0.2s, background 0.2s; z-index: 10; backdrop-filter: blur(8px); }
-        .buy-sub-btn:hover { transform: translateX(-50%) scale(1.05); background: linear-gradient(45deg, #ef4444, #b91c1c); box-shadow: 0 6px 18px rgba(239, 68, 68, 0.5); }
+        .buy-sub-btn:hover {
+            transform: translateX(-50%) scale(1.05);
+            background: linear-gradient(45deg, #ef4444, #b91c1c); 
+            box-shadow: 0 6px 18px rgba(239, 68, 68, 0.5);
+        }
         
         /* =========================
-           MARQUEE - LED TABLO (از بیرون چپ به راست)
+           MARQUEE - LED TABLO (Fix lag & direction)
         ========================= */
-        .marquee-box { width: calc(100% - 40px); max-width: 750px; margin: 15px auto 0; background: #000000; border: 3px solid #1a1a1a; border-radius: 8px; overflow: hidden; height: 52px; position: relative; box-shadow: inset 0 0 20px #000, 0 5px 15px rgba(255, 0, 0, 0.2); background-image: radial-gradient(circle, #2a0000 1.5px, transparent 1.5px); background-size: 6px 6px; }
-        .marquee-text-wrapper { position: absolute; width: 100%; height: 100%; overflow: hidden; }
+        .marquee-box { 
+            width: calc(100% - 40px); 
+            max-width: 750px; 
+            margin: 15px auto 0; 
+            background: #000000; 
+            border: 3px solid #1a1a1a; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            height: 52px; 
+            position: relative; 
+            box-shadow: inset 0 0 20px #000, 0 5px 15px rgba(255, 0, 0, 0.2); 
+            background-image: radial-gradient(circle, #2a0000 1.5px, transparent 1.5px); 
+            background-size: 6px 6px; 
+        }
+
+        .marquee-text-wrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .marquee-text { 
+            position: absolute; 
+            white-space: nowrap; 
+            font-size: 20px; 
+            font-family: 'Courier New', Courier, monospace, "Vazirmatn"; 
+            font-weight: 900; 
+            color: #ff0000; 
+            text-shadow: 0 0 4px #ff0000, 0 0 10px #ff0000, 0 0 18px #ff1111; 
+            letter-spacing: 1.5px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            left: -100%; /* Start outside left */
+            animation: led-scroll-left-to-right 15s linear infinite; 
+            will-change: left;
+        }
+
+        /* حرکت از چپ به راست در حالت پیش‌فرض (فارسی) */
+        @keyframes led-scroll-left-to-right { 
+            0%   { left: -100%; } 
+            100% { left: 100%; } 
+        }
         
-        /* حرکت اصولی از چپِ بیرون کادر به راست */
-        .marquee-text { position: absolute; white-space: nowrap; font-size: 20px; font-family: 'Courier New', Courier, monospace, "Vazirmatn"; font-weight: 900; color: #ff0000; text-shadow: 0 0 4px #ff0000, 0 0 10px #ff0000, 0 0 18px #ff1111; letter-spacing: 1.5px; top: 50%; left: 0; transform: translate3d(-100%, -50%, 0); animation: led-scroll-left-to-right 15s linear infinite; will-change: transform, left; }
-        @keyframes led-scroll-left-to-right { 0% { left: 0%; transform: translate3d(-100%, -50%, 0); } 100% { left: 100%; transform: translate3d(0%, -50%, 0); } }
+        .search-box { 
+            padding: 14px 20px 4px; 
+            max-width: 750px; 
+            margin: 0 auto; 
+        }
+
+        .search-wrapper { 
+            position: relative; 
+        }
+
+        .search-wrapper input { 
+            width: 100%; 
+            height: 50px; 
+            padding: 0 45px 0 16px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 14px; 
+            outline: none; 
+            background: var(--bg-box); 
+            font-size: 14px; 
+            transition: 0.2s; 
+        }
+
+        .search-wrapper input:focus { 
+            border-color: var(--accent); 
+        }
+
+        .search-icon { 
+            position: absolute; 
+            right: 16px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            color: var(--text-muted); 
+        }
         
-        .search-box { padding: 14px 20px 4px; max-width: 750px; margin: 0 auto; }
-        .search-wrapper { position: relative; }
-        .search-wrapper input { width: 100%; height: 50px; padding: 0 45px 0 16px; border: 1px solid var(--border-color); border-radius: 14px; outline: none; background: var(--bg-box); font-size: 14px; transition: 0.2s; }
-        .search-wrapper input:focus { border-color: var(--accent); }
-        .search-icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-        
-        .hero-container { margin: 14px auto 0; width: calc(100% - 40px); max-width: 1400px; }
-        .hero { position: relative; width: 100%; overflow: hidden; border-radius: 20px; background: #000; margin: 0; }
-        .slides { display: flex; direction: ltr; width: 100%; transition: transform .6s cubic-bezier(.22,.61,.36,1); }
-        .slide { position: relative; min-width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .slider-dots { display: flex; justify-content: center; gap: 6px; padding-top: 12px; }
-        .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); border: none; cursor: pointer; transition: 0.2s; opacity: 0.6; }
-        .dot.active { width: 18px; border-radius: 10px; background: var(--accent); opacity: 1; }
+        /* Slider Hero Container */
+        .hero-container {
+            margin: 14px auto 0; 
+            width: calc(100% - 40px); 
+            max-width: 1400px;
+        }
+
+        .hero { 
+            position: relative; 
+            width: 100%; 
+            overflow: hidden; 
+            border-radius: 20px; 
+            background: #000; 
+            margin: 0;
+        }
+
+        .slides { 
+            display: flex; 
+            direction: ltr; 
+            width: 100%; 
+            transition: transform .6s cubic-bezier(.22,.61,.36,1); 
+        }
+
+        .slide { 
+            position: relative; 
+            min-width: 100%; 
+            aspect-ratio: 16 / 9; 
+            overflow: hidden; 
+            background: #000; 
+        }
+
+        .slide img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+        }
+
+        /* Dots positioned Below the Hero Box */
+        .slider-dots { 
+            display: flex; 
+            justify-content: center; 
+            gap: 6px; 
+            padding-top: 12px; 
+        }
+
+        .dot { 
+            width: 7px; 
+            height: 7px; 
+            border-radius: 50%; 
+            background: var(--text-muted); 
+            border: none; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            opacity: 0.6;
+        }
+
+        .dot.active { 
+            width: 18px; 
+            border-radius: 10px; 
+            background: var(--accent); 
+            opacity: 1;
+        }
 
         /* =========================
            MOVIE CARDS & BADGES
         ========================= */
-        .section { margin-top: 30px; }
-        .section-header { display: flex; align-items: center; padding: 0 20px; margin-bottom: 15px; }
-        .section-title { font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
-        .section-title::before { content: ""; display: inline-block; width: 4px; height: 18px; border-radius: 4px; background: var(--accent); }
-        
-        .movie-list { display: flex; gap: 16px; overflow-x: auto; padding: 5px 20px 25px; scrollbar-width: none; }
-        .movie-list::-webkit-scrollbar { display: none; }
-        
-        .movie-card { flex: 0 0 145px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 16px; padding: 8px; cursor: pointer; user-select: none; transition: 0.3s ease; position: relative; }
-        .movie-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--accent); box-shadow: 0 12px 25px rgba(0,0,0,0.4), 0 0 15px rgba(59, 130, 246, 0.15); background: rgba(255,255,255,0.05); }
-        
-        .poster { position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 12px; background: #000; }
-        .poster img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
-        .movie-card:hover .poster img { transform: scale(1.05); }
-        .poster-overlay { position: absolute; inset: auto 0 0 0; height: 40%; background: linear-gradient(transparent, rgba(0,0,0,.9)); pointer-events: none; }
-        .movie-name { padding: 10px 4px 2px; font-size: 13.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
+        .section { 
+            margin-top: 30px; 
+        }
 
-        .fav-btn { position: absolute; top: 12px; left: 12px; z-index: 10; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; color: #fff; transition: 0.2s; border: 1px solid rgba(255,255,255,0.2); }
-        .fav-btn.active { color: #ef4444; }
-        .fav-btn svg { width: 16px; height: 16px; fill: currentColor; }
-        .new-badge { position: absolute; top: 12px; right: 12px; z-index: 10; background: #ef4444; color: #fff; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 6px; letter-spacing: 1px; box-shadow: 0 2px 5px rgba(239, 68, 68, 0.5); }
+        .section-header { 
+            display: flex; 
+            align-items: center; 
+            padding: 0 20px; 
+            margin-bottom: 15px; 
+        }
+
+        .section-title { 
+            font-size: 18px; 
+            font-weight: 800; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
+        }
+
+        .section-title::before { 
+            content: ""; 
+            display: inline-block; 
+            width: 4px; 
+            height: 18px; 
+            border-radius: 4px; 
+            background: var(--accent); 
+        }
+        
+        .movie-list { 
+            display: flex; 
+            gap: 16px; 
+            overflow-x: auto; 
+            padding: 5px 20px 25px; 
+            scrollbar-width: none; 
+        }
+
+        .movie-list::-webkit-scrollbar { 
+            display: none; 
+        }
+        
+        .movie-card { 
+            flex: 0 0 145px; 
+            background: rgba(255,255,255,0.02); 
+            border: 1px solid var(--border-color); 
+            border-radius: 16px; 
+            padding: 8px; 
+            cursor: pointer; 
+            user-select: none; 
+            transition: 0.3s ease; 
+            position: relative; 
+        }
+
+        .movie-card:hover { 
+            transform: translateY(-8px) scale(1.02); 
+            border-color: var(--accent); 
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4), 0 0 15px rgba(59, 130, 246, 0.15); 
+            background: rgba(255,255,255,0.05); 
+        }
+        
+        .poster { 
+            position: relative; 
+            width: 100%; 
+            aspect-ratio: 2 / 3; 
+            overflow: hidden; 
+            border-radius: 12px; 
+            background: #000; 
+        }
+
+        .poster img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+            transition: transform 0.4s ease; 
+        }
+
+        .movie-card:hover .poster img { 
+            transform: scale(1.05); 
+        }
+
+        .poster-overlay { 
+            position: absolute; 
+            inset: auto 0 0 0; 
+            height: 40%; 
+            background: linear-gradient(transparent, rgba(0,0,0,.9)); 
+            pointer-events: none;
+        }
+
+        .movie-name { 
+            padding: 10px 4px 2px; 
+            font-size: 13.5px; 
+            font-weight: 700; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            text-align: center; 
+        }
+
+        .fav-btn { 
+            position: absolute; 
+            top: 12px; 
+            left: 12px; 
+            z-index: 10; 
+            background: rgba(0,0,0,0.6); 
+            backdrop-filter: blur(4px); 
+            border-radius: 50%; 
+            width: 28px; 
+            height: 28px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: #fff; 
+            transition: 0.2s; 
+            border: 1px solid rgba(255,255,255,0.2); 
+        }
+
+        .fav-btn.active { 
+            color: #ef4444; 
+        }
+
+        .fav-btn svg { 
+            width: 16px; 
+            height: 16px; 
+            fill: currentColor; 
+        }
+
+        .new-badge { 
+            position: absolute; 
+            top: 12px; 
+            right: 12px; 
+            z-index: 10; 
+            background: #ef4444; 
+            color: #fff; 
+            font-size: 10px; 
+            font-weight: 900; 
+            padding: 2px 8px; 
+            border-radius: 6px; 
+            letter-spacing: 1px; 
+            box-shadow: 0 2px 5px rgba(239, 68, 68, 0.5); 
+        }
 
         /* =========================
            NEWS SECTION 
         ========================= */
-        #news-container { padding: 20px; max-width: 600px; margin: 0 auto; padding-bottom: 90px; }
-        .news-card { background: var(--bg-box); border: 1px solid var(--border-color); border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .news-header { display: flex; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border-color); }
-        .news-avatar { width: 36px; height: 36px; background: transparent; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 10px; font-size: 18px; }
-        .news-author { font-weight: bold; font-size: 13px; }
-        .news-date { font-size: 11px; color: var(--text-muted); }
-        .news-content { padding: 16px; font-size: 14px; line-height: 1.8; color: var(--text-main); white-space: pre-wrap; }
-        .news-actions { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-top: 1px solid var(--border-color); background: rgba(0,0,0,0.02); }
-        .news-btn { background: none; color: var(--text-main); display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: bold; opacity: 0.8; transition: 0.2s; }
-        .news-btn:hover { opacity: 1; }
-        .news-btn.liked { color: #ef4444; }
-        .news-btn svg { width: 20px; height: 20px; fill: currentColor; }
+        #news-container { 
+            padding: 20px; 
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding-bottom: 90px; 
+        }
+
+        .news-card { 
+            background: var(--bg-box); 
+            border: 1px solid var(--border-color); 
+            border-radius: 16px; 
+            margin-bottom: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+        }
+
+        .news-header { 
+            display: flex; 
+            align-items: center; 
+            padding: 12px 16px; 
+            border-bottom: 1px solid var(--border-color); 
+        }
+
+        .news-avatar { 
+            width: 36px; 
+            height: 36px; 
+            background: var(--accent); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin-left: 10px; 
+            color: #fff; 
+            overflow: hidden; 
+        }
+
+        .news-author { 
+            font-weight: bold; 
+            font-size: 13px; 
+        }
+
+        .news-date { 
+            font-size: 11px; 
+            color: var(--text-muted); 
+        }
+
+        .news-content { 
+            padding: 16px; 
+            font-size: 14px; 
+            line-height: 1.8; 
+            color: var(--text-main); 
+            white-space: pre-wrap; 
+        }
+
+        .news-actions { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 12px 16px; 
+            border-top: 1px solid var(--border-color); 
+            background: rgba(0,0,0,0.02); 
+        }
+
+        .news-btn { 
+            background: none; 
+            color: var(--text-main); 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            font-size: 13px; 
+            font-weight: bold; 
+            opacity: 0.8; 
+            transition: 0.2s; 
+        }
+
+        .news-btn:hover { 
+            opacity: 1; 
+        }
+
+        .news-btn.liked { 
+            color: #ef4444; 
+        }
+
+        .news-btn svg { 
+            width: 20px; 
+            height: 20px; 
+            fill: currentColor; 
+        }
 
         /* =========================
            MOVIE DETAIL PAGE (VIEW MOVIE)
         ========================= */
-        .movie-detail-header { padding: 15px 20px 0px 20px; display: flex; align-items: center; }
-        /* دکمه بازگشت در سمت چپ (با margin-right: auto) */
-        .btn-back { background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-main); font-weight: bold; display: flex; align-items: center; gap: 8px; font-size: 14px; padding: 8px 16px; cursor: pointer; transition: 0.2s; margin-right: auto; margin-left: 0; }
-        .btn-back:hover { background: rgba(255,255,255,0.05); border-color: var(--accent); }
-        .movie-detail-content { max-width: 800px; margin: 0 auto; padding: 20px; }
-
-        /* NEON PLAYER BANNER */
-        .neon-banner { width: 100%; aspect-ratio: 16 / 9; position: relative; border-radius: 12px; padding: 3px; z-index: 0; margin-bottom: 20px; overflow: hidden; background: #000; }
-        .neon-banner::before { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, transparent 0%, transparent 40%, #ef4444 50%, transparent 60%, transparent 90%, #3b82f6 100%); animation: spin-fx 2.5s linear infinite; z-index: -2; }
-        .neon-banner-inner { width: 100%; height: 100%; background: #0c0c0e; border-radius: 9px; z-index: 1; display: flex; align-items: center; justify-content: center; }
-        .neon-text { font-size: 26px; font-weight: 900; color: #fff; text-align: center; text-shadow: 0 0 10px var(--red-neon), 0 0 20px var(--red-neon), 0 0 40px var(--red-neon); letter-spacing: 2px; padding: 0 20px; }
-        @keyframes spin-fx { 100% { transform: rotate(360deg); } }
-
-        .video-container { width: 100%; aspect-ratio: 16 / 9; position: relative; border-radius: 12px; overflow: hidden; border: 3px solid var(--accent); display: none; margin-bottom: 20px; }
-        .video-container video { width: 100%; height: 100%; display: block; object-fit: contain; background: #000; }
-        .quality-badge { position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; z-index: 10; }
-
-        .movie-info-card { background: var(--bg-input); padding: 20px; border-radius: 16px; margin-bottom: 25px; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .movie-info-title { font-size: 20px; font-weight: 900; margin-bottom: 15px; color: var(--accent); }
-        .movie-info-desc { font-size: 13.5px; color: var(--text-muted); line-height: 2; white-space: pre-wrap; }
-        .movie-info-cast { font-size: 12.5px; color: var(--text-main); margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color); line-height: 1.8; }
-
-        .movie-link-row { display: flex; align-items: center; justify-content: space-between; background: var(--bg-input); padding: 14px 18px; border-radius: 16px; margin-bottom: 14px; border: 1px solid var(--border-color); transition: 0.2s; }
-        .movie-link-row:hover { border-color: var(--accent); transform: translateY(-2px); }
-        .movie-link-title { flex: 1; font-size: 14.5px; font-weight: 900; color: var(--text-main); }
-        .movie-link-actions { display: flex; gap: 10px; align-items: center; }
-
-        .btn-play-online { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 8px 16px; font-weight: bold; font-size: 12px; cursor: pointer; transition: 0.2s; }
-        .btn-play-online:hover { background: rgba(16, 185, 129, 0.25); box-shadow: 0 0 10px rgba(16, 185, 129, 0.2); }
-        .btn-download { background: var(--bg-box); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 10px; padding: 8px 16px; font-weight: bold; font-size: 12px; cursor: pointer; transition: 0.2s; }
-        .btn-download:hover { background: rgba(255, 255, 255, 0.05); }
         
-        .msg-bubble { background: var(--bg-input); padding: 14px; border-radius: 12px; margin-bottom: 10px; font-size: 13.5px; border-right: 3px solid var(--accent); }
-        .msg-bubble.system { border-right-color: #3b82f6; } 
-        .msg-bubble.admin-reply { border-right-color: #10b981; } 
+        .movie-detail-header {
+            padding: 15px 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: flex-end; /* راست‌چین کردن دکمه بازگشت در حالت rtl یعنی قرارگیری در سمت چپ */
+            border-bottom: 1px solid var(--border-color); 
+            background: var(--bg-box); 
+            position: sticky; 
+            top: 75px; 
+            z-index: 100;
+        }
 
-        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; display: none; }
+        .btn-back {
+            background: none; 
+            color: var(--text-main); 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .movie-detail-content {
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px;
+        }
+
+        /* NEON PLAYER BANNER (Chasing Lights - Without Blur inside) */
+        .neon-banner { 
+            width: 100%; 
+            aspect-ratio: 16 / 9; 
+            position: relative; 
+            border-radius: 12px;
+            padding: 3px; /* ضخامت خطوط چرخان */
+            z-index: 0;
+            margin-bottom: 20px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        /* خطوط متحرک نئونی */
+        .neon-banner::before {
+            content: "";
+            position: absolute;
+            top: -50%; 
+            left: -50%;
+            width: 200%; 
+            height: 200%;
+            background: conic-gradient(from 0deg, 
+                transparent 0%, transparent 40%, #ef4444 50%, 
+                transparent 60%, transparent 90%, #3b82f6 100%);
+            animation: spin-fx 2.5s linear infinite;
+            z-index: -2;
+        }
+
+        /* لایه پوشاننده وسط که کادر اصلی پلیر را می‌سازد */
+        .neon-banner-inner {
+            width: 100%; 
+            height: 100%;
+            background: #0c0c0e;
+            border-radius: 9px;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .neon-text { 
+            font-size: 26px; 
+            font-weight: 900; 
+            color: #fff; 
+            text-align: center; 
+            text-shadow: 0 0 10px var(--red-neon), 0 0 20px var(--red-neon), 0 0 40px var(--red-neon); 
+            letter-spacing: 2px; 
+            padding: 0 20px; 
+        }
+
+        @keyframes spin-fx { 
+            100% { transform: rotate(360deg); } 
+        }
+
+        .video-container { 
+            width: 100%; 
+            aspect-ratio: 16 / 9; 
+            position: relative; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            border: 3px solid var(--accent);
+            display: none; 
+            margin-bottom: 20px;
+        }
+
+        .video-container video { 
+            width: 100%; 
+            height: 100%; 
+            display: block; 
+            object-fit: contain; 
+            background: #000;
+        }
+
+        .quality-badge { 
+            position: absolute; 
+            bottom: 12px; 
+            right: 12px; 
+            background: rgba(0,0,0,0.7); 
+            border: 1px solid rgba(255,255,255,0.2); 
+            color: #fff; 
+            padding: 5px 12px; 
+            border-radius: 8px; 
+            font-size: 12px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            z-index: 10; 
+        }
+
+        /* استایل‌های کارت اطلاعات فیلم (طراحی جدید) */
+        .movie-info-card {
+            background: var(--bg-input);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .movie-info-title {
+            font-size: 20px; 
+            font-weight: 900; 
+            margin-bottom: 15px; 
+            color: var(--accent);
+        }
+
+        .movie-info-desc {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 2;
+            white-space: pre-wrap;
+        }
+        
+        .movie-info-cast {
+            font-size: 12.5px;
+            color: var(--text-main);
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+            line-height: 1.8;
+        }
+
+        /* استایل لینک‌های پخش فیلم */
+        .movie-link-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-input);
+            padding: 14px 18px;
+            border-radius: 16px;
+            margin-bottom: 14px;
+            border: 1px solid var(--border-color);
+            transition: 0.2s;
+        }
+
+        .movie-link-row:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .movie-link-title {
+            flex: 1;
+            font-size: 14.5px;
+            font-weight: 900;
+            color: var(--text-main);
+        }
+
+        .movie-link-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn-play-online {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-play-online:hover {
+            background: rgba(16, 185, 129, 0.25);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-download {
+            background: var(--bg-box);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-download:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .msg-bubble { 
+            background: var(--bg-input); 
+            padding: 14px; 
+            border-radius: 12px; 
+            margin-bottom: 10px; 
+            font-size: 13.5px; 
+            border-right: 3px solid var(--accent); 
+        }
+
+        .msg-bubble.system { 
+            border-right-color: #3b82f6; 
+        } 
+
+        .msg-bubble.admin-reply { 
+            border-right-color: #10b981; 
+        } 
+
+        #confetti-canvas { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            pointer-events: none; 
+            z-index: 9999; 
+            display: none; 
+        }
     </style>
 </head>
 <body>
@@ -982,7 +1691,7 @@
             <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff" style="margin-left: 3px;"><path d="M8 5v14l11-7z"/></svg>
         </div>
     </div>
-    <div class="loader-text">لطفا صبر کنید...</div>
+    <div class="loader-text" data-i18n="loading">لطفا صبر کنید...</div>
 </div>
 
 <div id="app-wrapper">
@@ -994,559 +1703,560 @@
         <div class="box-container" id="login-box">
             <div style="text-align: center; margin-bottom: 10px;">
                 <div class="premium-logo">
-                    <svg viewBox="0 0 1536 614"><path d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/></svg>
+                    <svg viewBox="0 0 1536 614">
+                        <path fill="var(--text-main)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/>
+                    </svg>
                 </div>
             </div>
             <div class="welcome-text">WELCOME</div>
 
             <div class="input-group">
-                <input type="text" id="log-user" class="input-field" placeholder="نام کاربری" autocapitalize="none" autocomplete="off" spellcheck="false">
+                <input type="text" id="log-user" class="input-field" placeholder="نام کاربری" data-i18n-placeholder="username" autocapitalize="none" autocomplete="off" spellcheck="false">
             </div>
             <div class="input-group">
-                <input type="password" id="log-pass" class="input-field" placeholder="رمز عبور" autocapitalize="none" autocomplete="off">
+                <input type="password" id="log-pass" class="input-field" placeholder="رمز عبور" data-i18n-placeholder="password" autocapitalize="none" autocomplete="off">
             </div>
             <label class="checkbox-container">
                 <input type="checkbox" onchange="togglePassword()"> 
-                <span>نمایش رمز عبور</span>
+                <span data-i18n="show_pass">نمایش رمز عبور</span>
             </label>
-            <button type="button" class="btn-primary" onclick="doLogin()">ورود به حساب</button>
+            <button type="button" class="btn-primary" onclick="doLogin()" data-i18n="login_btn">ورود به حساب</button>
             <button type="button" class="switch-box" onclick="toggleAuth('register')">
-                <span>حساب کاربری ندارید؟</span> 
-                <span style="color:var(--accent);">ثبت‌نام کنید</span>
+                <span data-i18n="no_account">حساب کاربری ندارید؟</span> 
+                <span data-i18n="register_now" style="color:var(--accent);">ثبت‌نام کنید</span>
             </button>
         </div>
 
         <div class="box-container" id="reg-box" style="display: none;">
             <div style="text-align: center; margin-bottom: 10px;">
                 <div class="premium-logo">
-                    <svg viewBox="0 0 1536 614"><path d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/></svg>
-            </div>
-        </div>
-        <div class="welcome-text">CREATE ACCOUNT</div>
-
-        <div class="input-group">
-            <input type="text" id="reg-user" class="input-field" placeholder="نام کاربری (انگلیسی)" autocapitalize="none" autocomplete="off" spellcheck="false">
-        </div>
-        <div class="input-group">
-            <input type="password" id="reg-pass" class="input-field" placeholder="رمز عبور" autocapitalize="none" autocomplete="off">
-        </div>
-        <div class="input-group">
-            <input type="text" id="reg-model" class="input-field" placeholder="مدل دستگاه" autocomplete="off">
-        </div>
-        <label class="checkbox-container">
-            <input type="checkbox" onchange="togglePassword()"> 
-            <span>نمایش رمز عبور</span>
-        </label>
-        <button type="button" class="btn-primary" onclick="doRegister()">ارسال درخواست عضویت</button>
-        <button type="button" class="switch-box" onclick="toggleAuth('login')">
-            <span>قبلاً ثبت‌نام کردید؟</span> 
-            <span style="color:var(--accent);">وارد شوید</span>
-        </button>
-    </div>
-</div>
-
-<!-- =========================
-     TERMS MODAL
-========================= -->
-<div class="modal" id="termsModal">
-    <div class="modal-box" style="max-width: 450px;">
-        <button class="modal-close-x" onclick="document.getElementById('termsModal').classList.remove('show')">×</button>
-        <div class="modal-content" style="padding: 0;">
-            <h3 class="modal-title" style="text-align:center; padding: 25px 25px 0 25px; margin-bottom: 10px;">قوانین و مقررات پلاتو</h3>
-            
-            <div class="custom-scroll" style="max-height: 45vh; overflow-y: auto; padding: 0 15px 25px 25px; margin-left: 10px;">
-                <ul style="font-size: 13px; line-height: 1.9; color: var(--text-muted); padding-right: 20px; text-align: justify;" id="terms-list">
-                    <li style="margin-bottom:8px; font-weight:bold; color:#ef4444; font-size:14px;">
-                        بعد از ارسال درخواست ثبت نام، صبر کنید تا پشتیبانی سایت درخواست شما را بپذیرد. از ارسال درخواست‌های متعدد و پیام‌های اسپم به پشتیبانی جداً پرهیز بفرمایید، درصورت انجام این‌کار حساب کاربری شما دائمی مسدود خواهد شد و هر درخواستی از سمت موبایل شما ارسال بشود تایید نخواهد شد.
-                    </li>
-                    <li style="margin-bottom:8px; font-weight:bold; color:var(--text-main);">
-                        حساب کاربری افراد فقط یک ماه بدون اشتراک نگهداری خواهد شد، بعد از یک‌ماه و در صورت نداشتن اشتراک، حساب کاربری برای همیشه از سایت حذف خواهد شد.
-                    </li>
-                    <li style="margin-bottom:8px;">حتماً رمزی که برای حساب کاربری می‌گذارید یادتان باشد، چون رمز حساب به هیچ عنوان قابل بازیابی نیست.</li>
-                    <li style="margin-bottom:8px;">حتماً اسمتان ترکیبی از حروف انگلیسی و حداقل چند عدد رندوم باشد. اسم‌های تکراری تایید نمی‌شوند.</li>
-                    <li style="margin-bottom:8px;">لینک‌های فیلم‌ها و سریال‌ها ممکن است به دلایلی از کار افتاده یا منقضی شوند. در صورت نیاز به دانلود، اسم محتوا را به پشتیبانی ارسال کنید تا در اسرع وقت رسیدگی شود.</li>
-                    <li style="margin-bottom:8px; color:var(--text-main);">سایت پلاتو فقط با اینترنت بین‌الملل کار می‌کند و با محدود شدن نت (ملی شدن) ممکن است بارگزاری نشود.</li>
-                    <li style="margin-bottom:8px; font-weight:bold; color:var(--text-main);">فقط ثبت‌نام کسانی که جهت خرید اشتراک با پشتیبانی هماهنگ باشند تایید خواهد شد!</li>
-                </ul>
-                
-                <label class="checkbox-container" style="margin-top: 20px; padding:10px; background:var(--bg-input); border-radius:10px; border:1px solid var(--border-color);">
-                    <input type="checkbox" id="acceptTermsCheck"> 
-                    <span>پذیرفتن شرایط و قوانین فوق</span>
-                </label>
-            </div>
-        </div>
-        <div style="padding: 0 25px 25px 25px;">
-            <button class="btn-primary" onclick="finalizeRegistration()">تایید و ارسال ثبت‌نام</button>
-        </div>
-    </div>
-</div>
-
-<!-- =========================
-     SIDEBAR MENU & AVATAR
-========================= -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-<div class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-        
-        <div class="profile-avatar-wrap" onclick="openAvatarModal()" style="margin-top:10px;">
-            <div class="profile-avatar-svg" id="sidebar-avatar-img"></div>
-            <div class="avatar-edit-badge">
-                <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-            </div>
-        </div>
-
-        <div class="sidebar-user" id="sidebarUser">نام کاربری</div>
-        <div class="sidebar-sub">
-            <div id="sub-time-left" style="margin-bottom:5px;">در حال بررسی...</div>
-            <div class="premium-badge" id="premium-badge" style="display:none;">
-                <svg class="btn-icon" style="margin:0; width:14px; height:14px;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                PREMIUM
-            </div>
-        </div>
-    </div>
-    <div class="sidebar-menu">
-        <button class="sidebar-btn" onclick="openSupportModal()">
-            <span>ارتباط با پشتیبانی</span>
-            <svg class="btn-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        </button>
-        <button class="sidebar-btn" onclick="openInboxModal()">
-            <span>صندوق پیام‌ها</span>
-            <div style="display:flex; align-items:center; gap:8px;">
-                <span class="notif-dot" id="inbox-notif" style="display:none;"></span>
-                <svg class="btn-icon" style="margin:0;" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            </div>
-        </button>
-        <button class="sidebar-btn" onclick="openGiftModal()">
-            <span>کد هدیه</span>
-            <svg class="btn-icon" viewBox="0 0 24 24"><path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-        </button>
-        
-        <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="color:var(--accent); text-decoration:none; padding: 10px 14px; display: block;">
-            <div style="display:flex; flex-direction:column; width:100%;">
-                <div style="display:flex; align-items:center; justify-content:flex-start; gap:8px;">
-                    <svg class="btn-icon" style="margin:0; color:var(--accent); width:20px; height:20px;" viewBox="0 0 24 24"><path d="M21.5 2L2 11l6 3 2.5 7L13 16l5 5L21.5 2z"/></svg>
-                    <span style="font-weight:bold; font-size:14px; color:var(--text-main);">کانال تلگرامی پلاتو</span>
-                </div>
-                <div style="text-align:left; font-weight:900; font-size:14px; color:var(--accent); margin-top:6px;" dir="ltr">@plato_media</div>
-            </div>
-        </a>
-
-        <div id="admin-sidebar-btn-container"></div>
-        
-        <button class="sidebar-btn" style="color:#ef4444; margin-top:auto;" onclick="doLogout()">
-            <span>خروج از حساب</span>
-            <svg class="btn-icon" style="margin:0;" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-        </button>
-    </div>
-    <div class="sidebar-footer">
-        2026©
-        <span>ساخته شده توسط H"N</span>
-    </div>
-</div>
-
-<!-- =========================
-     ADMIN PANEL
-========================= -->
-<div id="admin-screen">
-    <div style="width:100%; max-width:650px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <h2 style="font-size: 18px;">پنل مدیریت</h2>
-        <button class="btn-sm" style="background:var(--bg-box); border:1px solid var(--border-color); padding:10px 15px;" onclick="hideAdminPanel()">بازگشت به سایت ➔</button>
-    </div>
-    
-    <div class="tab-menu">
-        <button class="tab-btn active" onclick="switchAdminTab('tab-files', this)">فایل و لینک</button>
-        <button class="tab-btn" onclick="switchAdminTab('tab-news-gift', this)">اخبار / کد هدیه</button>
-        <button class="tab-btn" onclick="switchAdminTab('tab-requests', this)">درخواست و اشتراک</button>
-        <button class="tab-btn" onclick="switchAdminTab('tab-users', this)">کاربران</button>
-        <button class="tab-btn" onclick="switchAdminTab('tab-messages', this)">پیام‌ها <span class="notif-dot" id="admin-msg-notif" style="display:none; position:relative; top:-2px;"></span></button>
-    </div>
-
-    <div id="tab-files" class="tab-content active admin-section">
-        <div style="background:var(--bg-input); padding:15px; border-radius:14px; margin-bottom:20px; border:1px solid var(--border-color);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <h3 style="margin:0; font-size:14px;">تنظیم تابلوی LED سراسری</h3>
-            </div>
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
-                <label style="font-size:12px; color:var(--text-muted); white-space:nowrap;">سرعت حرکت:</label>
-                <input type="range" id="admin-marquee-speed" min="5" max="30" value="15" dir="ltr" style="width:100%; accent-color:var(--accent);" oninput="document.getElementById('speed-display').innerText = this.value + 's'">
-                <span id="speed-display" style="font-size:12px; color:var(--accent); font-weight:bold; width:30px; text-align:left;">15s</span>
-            </div>
-            <div class="input-group" style="margin-bottom:10px;">
-                <input type="text" id="admin-marquee-input" class="input-field" placeholder="متن تابلو روان را وارد کنید...">
-            </div>
-            <button type="button" class="btn-sm btn-approve" style="padding:10px 20px; width:100%;" onclick="saveMarqueeText()">ذخیره و انتشار</button>
-        </div>
-
-        <h3 id="form-movie-title">اضافه کردن محتوای جدید</h3>
-        <div class="input-group">
-            <select id="new-movie-category" class="input-field">
-                <option value="series">دسته: سریال</option>
-                <option value="movie">دسته: فیلم سینمایی</option>
-                <option value="program">دسته: برنامه‌ها</option>
-                <option value="kids">دسته: انیمیشن/کودکانه</option>
-            </select>
-        </div>
-        <div class="input-group">
-            <input type="text" id="new-movie-title" class="input-field" placeholder="عنوان محتوا">
-        </div>
-        <div class="input-group">
-            <input type="text" id="new-movie-poster" class="input-field" placeholder="لینک عکس پوستر">
-        </div>
-        <div class="input-group">
-            <textarea id="new-movie-info" class="input-field" style="height:100px; padding:15px; resize:vertical; line-height:1.6;" placeholder="اطلاعات فیلم (خلاصه داستان، بازیگران و ...)"></textarea>
-        </div>
-        <div class="input-group">
-            <textarea id="new-movie-url" class="input-field" style="height:120px; padding:15px; resize:vertical; line-height:1.6;" placeholder="فرمت: نام قسمت | لینک دانلود | 30h"></textarea>
-        </div>
-        
-        <label class="checkbox-container" style="margin-bottom:15px; background:var(--bg-box); padding:10px; border-radius:8px; border:1px solid var(--border-color);">
-            <input type="checkbox" id="new-movie-isnew"> نشان دادن برچسب جدید (به عنوان قسمت جدید)
-        </label>
-
-        <div style="display:flex; gap:10px;">
-            <button type="button" id="save-movie-btn" class="btn-primary" onclick="saveMovie()">ذخیره در سایت</button>
-            <button type="button" id="cancel-edit-btn" class="btn-primary" style="display:none; background:#444;" onclick="cancelEdit()">انصراف</button>
-        </div>
-        
-        <h3 style="margin-top:30px; border-top:1px solid var(--border-color); padding-top:20px;">لیست محتوای سایت (برای مرتب‌سازی بکشید و رها کنید)</h3>
-        <div id="admin-movie-list"></div>
-    </div>
-
-    <div id="tab-news-gift" class="tab-content">
-        <div class="admin-section">
-            <h3 id="form-news-title">ایجاد خبر جدید</h3>
-            <textarea id="new-news-content" class="input-field" style="height:100px; padding:12px; resize:none;" placeholder="متن خبر را بنویسید..."></textarea>
-            <div style="display:flex; gap:10px;">
-                <button type="button" class="btn-primary" id="save-news-btn" onclick="postNews()">انتشار خبر</button>
-                <button type="button" class="btn-primary" id="cancel-news-btn" style="display:none; background:#444;" onclick="cancelEditNews()">انصراف</button>
-            </div>
-            
-            <h3 style="margin-top:30px; border-top:1px solid var(--border-color); padding-top:20px;">لیست اخبار سایت</h3>
-            <div id="admin-news-list"></div>
-        </div>
-
-        <div class="admin-section">
-            <h3>تولید کد هدیه اشتراک</h3>
-            <div class="input-group">
-                <input type="text" id="gift-code-input" class="input-field" placeholder="عبارت کد (مثلا NOROOZ)">
-            </div>
-            <div class="input-group">
-                <input type="number" id="gift-days-input" class="input-field" placeholder="تعداد روز هدیه">
-            </div>
-            <div class="input-group">
-                <input type="number" id="gift-uses-input" class="input-field" placeholder="ظرفیت استفاده (تعداد نفرات)">
-            </div>
-            <button class="btn-primary" onclick="createGiftCode()">ساخت کد هدیه</button>
-            <div id="gift-codes-list" style="margin-top:15px;"></div>
-        </div>
-    </div>
-
-    <div id="tab-requests" class="tab-content">
-        <div class="admin-section">
-            <h3>درخواست‌های ورود جدید</h3>
-            <div id="pending-list"></div>
-        </div>
-        <div class="admin-section">
-            <h3>شارژ اشتراک کاربری</h3>
-            <div style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">نکته: در صورت وارد کردن عدد 0 اشتراک کاربر به کل لغو می‌شود.</div>
-            <div class="input-group">
-                <input type="text" id="charge-user" class="input-field" placeholder="نام کاربری مخاطب" autocapitalize="none">
-            </div>
-            <div class="input-group">
-                <input type="number" id="charge-days" class="input-field" placeholder="تعداد روز (0 = لغو)">
-            </div>
-            <button type="button" class="btn-primary" onclick="chargeSub()">اعمال تغییرات اشتراک</button>
-        </div>
-    </div>
-
-    <div id="tab-users" class="tab-content admin-section">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h3>لیست کل کاربران</h3>
-            <div style="font-size:12px; font-weight:bold; color:#10b981; background:rgba(16,185,129,0.1); padding:5px 10px; border-radius:8px;">کاربران آنلاین (۵دقیقه اخیر): <span id="onlineUsersCount">0</span></div>
-        </div>
-        <div id="all-users-list"></div>
-    </div>
-
-    <div id="tab-messages" class="tab-content">
-        <div class="admin-section">
-            <h3>صندوق پیام‌های کاربران</h3>
-            <div id="admin-inbox-list"></div>
-        </div>
-        <div class="admin-section">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <h3>پیام‌های سیستمی (همگانی)</h3>
-                <button class="btn-sm btn-approve" onclick="openSystemMessageModal()">+ پیام جدید</button>
-            </div>
-            <div id="admin-sys-list"></div>
-        </div>
-    </div>
-</div>
-
-<!-- =========================
-     MAIN APP & HEADER (FIXED ALIGNMENT)
-========================= -->
-<header class="header">
-    
-    <!-- لوگو ثابت در راست -->
-    <div class="logo">
-        <div class="premium-logo">
-            <svg viewBox="0 0 1536 614"><path d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/></svg>
-        </div>
-    </div>
-    
-    <!-- دکمه خرید همیشه در مرکز -->
-    <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none;">
-        خرید اشتراک
-        <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
-    </a>
-
-    <!-- آیکون پروفایل/منو ثابت در چپ چپ -->
-    <div class="header-actions">
-        <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-        </button>
-        <span class="notif-dot" id="header-notif" style="position:absolute; top:-2px; left:-2px; display:none; z-index:10;"></span>
-    </div>
-</header>
-
-<div id="main-app">
-    <!-- Home View -->
-    <div id="view-home" class="view-section active-view">
-        
-        <div id="marqueeContainer" class="marquee-box" style="display:none;">
-            <div class="marquee-text-wrapper">
-                <div class="marquee-text" id="marqueeTextContent"></div>
-            </div>
-        </div>
-
-        <div class="search-box">
-            <div class="search-wrapper">
-                <span class="search-icon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="6.5"></circle>
-                        <path d="m16 16 4 4"></path>
+                    <svg viewBox="0 0 1536 614">
+                        <path fill="var(--text-main)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/>
                     </svg>
-                </span>
-                <input id="searchInput" type="search" placeholder="جستجوی فیلم، سریال یا برنامه..." autocomplete="off">
-            </div>
-        </div>
-
-        <section class="hero-container">
-            <div class="hero">
-                <div class="slides" id="slides">
-                    <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_000000004cc0822f9865a432af65b5ca-optimized.webp" alt="Banner 1"></div>
-                    <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_0000000099e481f9a07f4c9fbfd921c5-optimized.webp" alt="Banner 2"></div>
-                    <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_00000000d044820cb58364bc8e64f634-optimized.webp" alt="Banner 3"></div>
-                    <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/refs/heads/main/1000041017-optimized.webp" alt="Banner 4"></div>
                 </div>
             </div>
-            <div class="slider-dots">
-                <button class="dot active" data-slide="0"></button>
-                <button class="dot" data-slide="1"></button>
-                <button class="dot" data-slide="2"></button>
-                <button class="dot" data-slide="3"></button>
+            <div class="welcome-text">CREATE ACCOUNT</div>
+
+            <div class="input-group">
+                <input type="text" id="reg-user" class="input-field" placeholder="نام کاربری (انگلیسی)" data-i18n-placeholder="username_en" autocapitalize="none" autocomplete="off" spellcheck="false">
             </div>
-        </section>
-
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">سریال‌ها</h2>
+            <div class="input-group">
+                <input type="password" id="reg-pass" class="input-field" placeholder="رمز عبور" data-i18n-placeholder="password" autocapitalize="none" autocomplete="off">
             </div>
-            <div class="movie-list" id="seriesList"></div>
-        </section>
-        
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">فیلم‌های سینمایی</h2>
+            <div class="input-group">
+                <input type="text" id="reg-model" class="input-field" placeholder="مدل دستگاه" data-i18n-placeholder="device_model" autocomplete="off">
             </div>
-            <div class="movie-list" id="moviesList"></div>
-        </section>
-
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">برنامه‌ها</h2>
-            </div>
-            <div class="movie-list" id="programsList"></div>
-        </section>
-
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">انیمیشن/کودکانه</h2>
-            </div>
-            <div class="movie-list" id="kidsList"></div>
-        </section>
-    </div>
-
-    <!-- Favs View -->
-    <div id="view-favs" class="view-section" style="padding:20px;">
-        <h2 style="font-size: 18px; margin-bottom: 20px; border-right: 4px solid var(--accent); padding-right: 10px;">علاقه‌مندی‌ها</h2>
-        <div id="favsList" style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"></div>
-    </div>
-
-    <!-- News View -->
-    <div id="view-news" class="view-section">
-        <div id="news-container"></div>
-    </div>
-
-    <!-- Dedicated Movie Page View -->
-    <div id="view-movie" class="view-section" style="padding-bottom: 90px; background: var(--bg-main);">
-        
-        <div class="movie-detail-header" style="display: flex;">
-            <button class="btn-back" style="margin-right: auto;" onclick="closePlayer()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                بازگشت
+            <label class="checkbox-container">
+                <input type="checkbox" onchange="togglePassword()"> 
+                <span data-i18n="show_pass">نمایش رمز عبور</span>
+            </label>
+            <button type="button" class="btn-primary" onclick="doRegister()" data-i18n="register_btn">ارسال درخواست عضویت</button>
+            <button type="button" class="switch-box" onclick="toggleAuth('login')">
+                <span data-i18n="have_account">قبلاً ثبت‌نام کردید؟</span> 
+                <span data-i18n="login_now" style="color:var(--accent);">وارد شوید</span>
             </button>
         </div>
+    </div>
 
-        <div class="movie-detail-content">
-            <div class="neon-banner" id="neonBanner">
-                <div class="neon-banner-inner" id="neonBannerInner">
-                    <div class="neon-text" id="neonTitle">نام محتوا</div>
+    <!-- =========================
+         TERMS MODAL
+    ========================= -->
+    <div class="modal" id="termsModal">
+        <div class="modal-box" style="max-width: 450px; max-height: 75vh;">
+            <button class="modal-close-x" onclick="document.getElementById('termsModal').classList.remove('show')">×</button>
+            <div class="modal-content" style="display: flex; flex-direction: column; overflow: hidden; padding: 20px;">
+                <h3 class="modal-title" style="text-align:center; margin-bottom: 15px;" data-i18n="terms_title">قوانین و مقررات پلاتو</h3>
+                <div style="overflow-y: auto; padding-right: 5px; flex-grow: 1; margin-bottom: 15px;">
+                    <ul style="font-size: 13px; line-height: 1.9; color: var(--text-muted); text-align: justify; margin: 0; padding-right: 15px;" id="terms-list">
+                        <li style="margin-bottom:8px; font-weight:bold; color:#ef4444; font-size:14px;">
+                            بعد از ارسال درخواست ثبت نام، صبر کنید تا پشتیبانی سایت درخواست شما را بپذیرد. از ارسال درخواست‌های متعدد و پیام‌های اسپم به پشتیبانی جداً پرهیز بفرمایید، درصورت انجام این‌کار حساب کاربری شما دائمی مسدود خواهد شد و هر درخواستی از سمت موبایل شما ارسال بشود تایید نخواهد شد.
+                        </li>
+                        <li style="margin-bottom:8px;">حتماً رمزی که برای اکانت می‌گذارید یادتان باشد، چون رمز اکانت به هیچ عنوان قابل بازیابی نیست.</li>
+                        <li style="margin-bottom:8px;">حتماً اسمتان ترکیبی از حروف انگلیسی و حداقل چند عدد رندوم باشد. اسم‌های تکراری تایید نمی‌شوند.</li>
+                        <li style="margin-bottom:8px;">لینک‌های فیلم‌ها و سریال‌ها ممکن است به دلایلی از کار افتاده یا منقضی شوند. در صورت نیاز به دانلود، اسم محتوا را به پشتیبانی ارسال کنید تا در اسرع وقت رسیدگی شود.</li>
+                        <li style="margin-bottom:8px; color:var(--text-main);">سایت پلاتو فقط با اینترنت بین‌الملل کار می‌کند و با محدود شدن نت (ملی شدن) ممکن است بارگزاری نشود.</li>
+                        <li style="margin-bottom:8px; font-weight:bold; color:var(--text-main);">فقط ثبت‌نام کسانی که جهت خرید اشتراک با پشتیبانی هماهنگ باشند تایید خواهد شد!</li>
+                    </ul>
+                    <label class="checkbox-container" style="margin-top: 15px; padding:10px; background:var(--bg-input); border-radius:10px; border:1px solid var(--border-color);">
+                        <input type="checkbox" id="acceptTermsCheck"> 
+                        <span data-i18n="accept_terms">پذیرفتن شرایط و قوانین فوق</span>
+                    </label>
+                </div>
+                <button class="btn-primary" onclick="finalizeRegistration()" data-i18n="confirm_register" style="margin-top: 0;">تایید و ارسال ثبت‌نام</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================
+         SIDEBAR MENU & AVATAR
+    ========================= -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="theme-toggle-btn" onclick="toggleTheme()" title="تغییر تم">
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+            <button class="lang-toggle-btn" onclick="toggleLanguage()">EN / FA</button>
+            
+            <div class="profile-avatar-wrap" onclick="openAvatarModal()">
+                <div class="profile-avatar-svg" id="sidebar-avatar-img"></div>
+                <div class="avatar-edit-badge">
+                    <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
                 </div>
             </div>
+
+            <div class="sidebar-user" id="sidebarUser">نام کاربری</div>
+            <div class="sidebar-sub">
+                <div id="sub-time-left" style="margin-bottom:5px;">در حال بررسی...</div>
+                <div class="premium-badge" id="premium-badge" style="display:none;">
+                    <svg class="btn-icon" style="margin:0; width:14px; height:14px;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    PREMIUM
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <button class="sidebar-btn" onclick="openSupportModal()">
+                <span data-i18n="support_btn">ارتباط با پشتیبانی</span>
+                <svg class="btn-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </button>
+            <button class="sidebar-btn" onclick="openInboxModal()">
+                <span data-i18n="inbox_btn">صندوق پیام‌ها</span>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="notif-dot" id="inbox-notif" style="display:none;"></span>
+                    <svg class="btn-icon" style="margin:0;" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </div>
+            </button>
+            <button class="sidebar-btn" onclick="openGiftModal()">
+                <span data-i18n="gift_code_btn">کد هدیه</span>
+                <svg class="btn-icon" viewBox="0 0 24 24"><path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+            </button>
             
-            <div class="video-container" id="realPlayerContainer">
-                <video id="videoPlayer" controls controlsList="nodownload" playsinline preload="metadata"></video>
-                <button class="quality-badge" id="qualityToggleBtn" onclick="toggleVideoQuality()">کیفیت: عادی (HD)</button>
+            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="text-decoration:none; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <svg class="btn-icon" style="margin:0; color:#3b82f6; width:22px; height:22px;" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.18-.08-.05-.19-.02-.27 0-.12.03-1.96 1.25-5.54 3.67-.52.36-.99.54-1.41.53-.46-.01-1.35-.26-2.01-.48-.81-.27-1.46-.42-1.4-.88.03-.24.38-.48 1.04-.74 4.08-1.78 6.8-2.92 8.16-3.48 3.88-1.6 4.88-1.95 5.53-1.96.14 0 .47.03.65.17.15.12.19.28.21.42.02.16.03.32.01.44z"/>
+                    </svg>
+                    <span style="font-weight:bold; font-size:13.5px; color:var(--text-main);">کانال تلگرامی پلاتو</span>
+                </div>
+                <div style="font-weight:900; font-size:14px; color:var(--accent);" dir="ltr">@plato_media</div>
+            </a>
+
+            <div id="admin-sidebar-btn-container"></div>
+            
+            <button class="sidebar-btn" style="color:#ef4444; margin-top:auto;" onclick="doLogout()">
+                <span data-i18n="logout_btn">خروج از حساب</span>
+                <svg class="btn-icon" style="margin:0;" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            </button>
+        </div>
+        <div class="sidebar-footer">
+            2026©
+            <span>ساخته شده توسط H"N</span>
+        </div>
+    </div>
+
+    <!-- =========================
+         ADMIN PANEL
+    ========================= -->
+    <div id="admin-screen">
+        <div style="width:100%; max-width:650px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2 style="font-size: 18px;" data-i18n="admin_panel">پنل مدیریت</h2>
+            <button class="btn-sm" style="background:var(--bg-box); border:1px solid var(--border-color); padding:10px 15px;" onclick="hideAdminPanel()">بازگشت به سایت ➔</button>
+        </div>
+        
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="switchAdminTab('tab-files', this)">فایل و لینک</button>
+            <button class="tab-btn" onclick="switchAdminTab('tab-news-gift', this)">اخبار / کد هدیه</button>
+            <button class="tab-btn" onclick="switchAdminTab('tab-requests', this)">درخواست و اشتراک</button>
+            <button class="tab-btn" onclick="switchAdminTab('tab-users', this)">کاربران</button>
+            <button class="tab-btn" onclick="switchAdminTab('tab-messages', this)">پیام‌ها <span class="notif-dot" id="admin-msg-notif" style="display:none;"></span></button>
+        </div>
+
+        <div id="tab-files" class="tab-content active admin-section">
+            <div style="background:var(--bg-input); padding:15px; border-radius:14px; margin-bottom:20px; border:1px solid var(--border-color);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0; font-size:14px;">تنظیم تابلوی LED سراسری</h3>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
+                    <label style="font-size:12px; color:var(--text-muted); white-space:nowrap;">سرعت حرکت:</label>
+                    <input type="range" id="admin-marquee-speed" min="5" max="30" value="15" dir="ltr" style="width:100%; accent-color:var(--accent);" oninput="document.getElementById('speed-display').innerText = this.value + 's'">
+                    <span id="speed-display" style="font-size:12px; color:var(--accent); font-weight:bold; width:30px; text-align:left;">15s</span>
+                </div>
+                <div class="input-group" style="margin-bottom:10px;">
+                    <input type="text" id="admin-marquee-input" class="input-field" placeholder="متن تابلو روان را وارد کنید...">
+                </div>
+                <button type="button" class="btn-sm btn-approve" style="padding:10px 20px; width:100%;" onclick="saveMarqueeText()">ذخیره و انتشار</button>
             </div>
 
-            <div class="movie-info-card" id="modal-movie-info" style="display:none;">
-                <h2 class="movie-info-title" id="movie-detail-title"></h2>
-                <div id="modal-movie-desc" class="movie-info-desc"></div>
-                <div id="modal-movie-cast" class="movie-info-cast" style="display:none;"></div>
+            <h3 id="form-movie-title">اضافه کردن محتوای جدید</h3>
+            <div class="input-group">
+                <select id="new-movie-category" class="input-field">
+                    <option value="series">دسته: سریال</option>
+                    <option value="movie">دسته: فیلم سینمایی</option>
+                    <option value="program">دسته: برنامه‌ها</option>
+                    <option value="kids">دسته: انیمیشن/کودکانه</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <input type="text" id="new-movie-title" class="input-field" placeholder="عنوان محتوا">
+            </div>
+            <div class="input-group">
+                <input type="text" id="new-movie-poster" class="input-field" placeholder="لینک عکس پوستر">
+            </div>
+            <div class="input-group">
+                <textarea id="new-movie-info" class="input-field" style="height:100px; padding:15px; resize:vertical; line-height:1.6;" placeholder="اطلاعات فیلم (خلاصه داستان، بازیگران و ...)"></textarea>
+            </div>
+            <div class="input-group">
+                <textarea id="new-movie-url" class="input-field" style="height:120px; padding:15px; resize:vertical; line-height:1.6;" placeholder="فرمت: نام قسمت | لینک دانلود | 30h"></textarea>
+            </div>
+            
+            <label class="checkbox-container" style="margin-bottom:15px; background:var(--bg-box); padding:10px; border-radius:8px; border:1px solid var(--border-color);">
+                <input type="checkbox" id="new-movie-isnew"> نشان دادن برچسب NEW (به عنوان قسمت جدید)
+            </label>
+
+            <div style="display:flex; gap:10px;">
+                <button type="button" id="save-movie-btn" class="btn-primary" onclick="saveMovie()">ذخیره در سایت</button>
+                <button type="button" id="cancel-edit-btn" class="btn-primary" style="display:none; background:#444;" onclick="cancelEdit()">انصراف</button>
+            </div>
+            
+            <h3 style="margin-top:30px; border-top:1px solid var(--border-color); padding-top:20px;">لیست محتوای سایت (برای مرتب‌سازی بکشید و رها کنید)</h3>
+            <div id="admin-movie-list"></div>
+        </div>
+
+        <div id="tab-news-gift" class="tab-content">
+            <div class="admin-section">
+                <h3 id="form-news-title">ایجاد خبر جدید</h3>
+                <textarea id="new-news-content" class="input-field" style="height:100px; padding:12px; resize:none;" placeholder="متن خبر را بنویسید..."></textarea>
+                <div style="display:flex; gap:10px;">
+                    <button type="button" class="btn-primary" id="save-news-btn" onclick="postNews()">انتشار خبر</button>
+                    <button type="button" class="btn-primary" id="cancel-news-btn" style="display:none; background:#444;" onclick="cancelEditNews()">انصراف</button>
+                </div>
+                
+                <h3 style="margin-top:30px; border-top:1px solid var(--border-color); padding-top:20px;">لیست اخبار سایت</h3>
+                <div id="admin-news-list"></div>
             </div>
 
-            <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;">این لینک منقضی شده است.</div>
+            <div class="admin-section">
+                <h3>تولید کد هدیه اشتراک</h3>
+                <div class="input-group">
+                    <input type="text" id="gift-code-input" class="input-field" placeholder="عبارت کد (مثلا NOROOZ)">
+                </div>
+                <div class="input-group">
+                    <input type="number" id="gift-days-input" class="input-field" placeholder="تعداد روز هدیه">
+                </div>
+                <div class="input-group">
+                    <input type="number" id="gift-uses-input" class="input-field" placeholder="ظرفیت استفاده (تعداد نفرات)">
+                </div>
+                <button class="btn-primary" onclick="createGiftCode()">ساخت کد هدیه</button>
+                <div id="gift-codes-list" style="margin-top:15px;"></div>
+            </div>
+        </div>
+
+        <div id="tab-requests" class="tab-content">
+            <div class="admin-section">
+                <h3>درخواست‌های ورود جدید</h3>
+                <div id="pending-list"></div>
+            </div>
+            <div class="admin-section">
+                <h3>شارژ اشتراک کاربری</h3>
+                <div style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">نکته: در صورت وارد کردن عدد 0 اشتراک کاربر به کل حذف می‌شود.</div>
+                <div class="input-group">
+                    <input type="text" id="charge-user" class="input-field" placeholder="نام کاربری مخاطب" autocapitalize="none">
+                </div>
+                <div class="input-group">
+                    <input type="number" id="charge-days" class="input-field" placeholder="تعداد روز (0 = لغو)">
+                </div>
+                <button type="button" class="btn-primary" onclick="chargeSub()">اعمال تغییرات اشتراک</button>
+            </div>
+        </div>
+
+        <div id="tab-users" class="tab-content admin-section">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3>لیست کل کاربران</h3>
+                <div style="font-size:12px; font-weight:bold; color:#10b981; background:rgba(16,185,129,0.1); padding:5px 10px; border-radius:8px;">کاربران آنلاین (۵دقیقه اخیر): <span id="onlineUsersCount">0</span></div>
+            </div>
+            <div id="all-users-list"></div>
+        </div>
+
+        <div id="tab-messages" class="tab-content">
+            <div class="admin-section">
+                <h3>صندوق پیام‌های کاربران</h3>
+                <div id="admin-inbox-list"></div>
+            </div>
+            <div class="admin-section">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <h3>پیام‌های سیستمی (همگانی)</h3>
+                    <button class="btn-sm btn-approve" onclick="openSystemMessageModal()">+ پیام جدید</button>
+                </div>
+                <div id="admin-sys-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================
+         MAIN APP & HEADER
+    ========================= -->
+    <header class="header">
+        <div class="logo">
+            <div class="premium-logo">
+                <svg viewBox="0 0 1536 614">
+                    <path fill="var(--text-main)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/>
+                </svg>
+            </div>
+        </div>
+        
+        <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none;">
+            خرید اشتراک
+            <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
+        </a>
+
+        <div class="header-actions">
+            <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>
+            </button>
+        </div>
+    </header>
+
+    <div id="main-app">
+        <!-- Home View -->
+        <div id="view-home" class="view-section active-view">
             
-            <div id="modal-links-container"></div>
-        </div>
-    </div>
-</div>
+            <div id="marqueeContainer" class="marquee-box" style="display:none;">
+                <div class="marquee-text-wrapper">
+                    <div class="marquee-text" id="marqueeTextContent"></div>
+                </div>
+            </div>
 
-<!-- =========================
-     MODERN BOTTOM NAVIGATION
-========================= -->
-<div class="bottom-nav" id="bottom-nav" style="display:none;">
-    <div class="nav-item active" onclick="switchNav('home')" id="nav-home">
-        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-        <span>خانه</span>
-        <div class="nav-indicator"></div>
-    </div>
-    <div class="nav-item" onclick="switchNav('favs')" id="nav-favs">
-        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-        <span>علاقه‌مندی‌ها</span>
-        <div class="nav-indicator"></div>
-    </div>
-    <div class="nav-item" onclick="showPlatinoSoon()" id="nav-platino">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
-        <span>پلاتینو</span>
-        <div class="platino-badge">به زودی</div>
-        <div class="nav-indicator"></div>
-    </div>
-    <div class="nav-item" onclick="switchNav('news')" id="nav-news">
-        <div class="nav-notif" id="news-notif"></div>
-        <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-        <span>خبرها</span>
-        <div class="nav-indicator"></div>
-    </div>
-</div>
+            <div class="search-box">
+                <div class="search-wrapper">
+                    <span class="search-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="6.5"></circle>
+                            <path d="m16 16 4 4"></path>
+                        </svg>
+                    </span>
+                    <input id="searchInput" type="search" placeholder="جستجوی فیلم، سریال یا برنامه..." data-i18n-placeholder="search_ph" autocomplete="off">
+                </div>
+            </div>
 
-<!-- =========================
-     MODALS
-========================= -->
-<!-- Resume Modal -->
-<div class="modal" id="resumeModal" style="z-index: 6500;">
-    <div class="modal-box" style="max-width: 320px; padding: 25px; text-align: center;">
-        <div style="width: 50px; height: 50px; background: rgba(59, 130, 246, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: var(--accent);">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-        </div>
-        <h3 style="font-size: 16px; margin-bottom: 10px; color: var(--text-main);">پخش از ادامه؟</h3>
-        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">شما قبلاً بخشی از این محتوا را تماشا کرده‌اید.</p>
-        <div style="display: flex; gap: 10px;">
-            <button class="btn-primary" style="flex:1;" onclick="resumePlayback(true)">ادامه پخش</button>
-            <button class="btn-primary" style="flex:1; background: var(--bg-input); color: var(--text-main); border: 1px solid var(--border-color);" onclick="resumePlayback(false)">از اول</button>
-        </div>
-    </div>
-</div>
+            <section class="hero-container">
+                <div class="hero">
+                    <div class="slides" id="slides">
+                        <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_000000004cc0822f9865a432af65b5ca-optimized.webp" alt="Banner 1"></div>
+                        <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_0000000099e481f9a07f4c9fbfd921c5-optimized.webp" alt="Banner 2"></div>
+                        <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/main/file_00000000d044820cb58364bc8e64f634-optimized.webp" alt="Banner 3"></div>
+                        <div class="slide"><img src="https://raw.githubusercontent.com/persian404/plato/refs/heads/main/1000041017-optimized.webp" alt="Banner 4"></div>
+                    </div>
+                </div>
+                <div class="slider-dots">
+                    <button class="dot active" data-slide="0"></button>
+                    <button class="dot" data-slide="1"></button>
+                    <button class="dot" data-slide="2"></button>
+                    <button class="dot" data-slide="3"></button>
+                </div>
+            </section>
 
-<!-- Avatar Selection Modal -->
-<div class="modal" id="avatarModal" style="z-index: 6500;">
-    <div class="modal-box" style="max-width: 400px;">
-        <button class="modal-close-x" onclick="document.getElementById('avatarModal').classList.remove('show')">×</button>
-        <div class="modal-content">
-            <h3 class="modal-title" style="text-align:center;">انتخاب آواتار</h3>
-            <div class="avatar-grid" id="avatarGrid"></div>
-        </div>
-    </div>
-</div>
-
-<!-- Other Modals (Support, Inbox, Sys, Gift) -->
-<div class="modal" id="supportModal">
-    <div class="modal-box" style="max-width: 400px;">
-        <button class="modal-close-x" onclick="document.getElementById('supportModal').classList.remove('show')">×</button>
-        <div class="modal-content">
-            <h3 class="modal-title">ارتباط با پشتیبانی</h3>
-            <textarea id="support-msg-text" class="input-field" style="height:110px; padding:12px; resize:none;" placeholder="پیام خود را بنویسید..."></textarea>
-            <button class="btn-primary" onclick="sendSupportMessage()">ارسال پیام</button>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="inboxModal">
-    <div class="modal-box" style="max-width: 500px; height: 80vh;">
-        <div class="modal-content" style="display:flex; flex-direction:column; padding-top: 15px;">
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title" data-i18n="cat_series">سریال‌ها</h2>
+                </div>
+                <div class="movie-list" id="seriesList"></div>
+            </section>
             
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px; margin-top:5px;">
-                <h3 class="modal-title" style="margin:0;">صندوق پیام‌ها</h3>
-                <button style="background:none; border:none; color:#ef4444; cursor:pointer;" onclick="deleteAllMessages()" title="حذف همه پیام‌ها">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title" data-i18n="cat_movies">فیلم‌های سینمایی</h2>
+                </div>
+                <div class="movie-list" id="moviesList"></div>
+            </section>
+
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title" data-i18n="cat_programs">برنامه‌ها</h2>
+                </div>
+                <div class="movie-list" id="programsList"></div>
+            </section>
+
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title" data-i18n="cat_kids">انیمیشن/کودکانه</h2>
+                </div>
+                <div class="movie-list" id="kidsList"></div>
+            </section>
+        </div>
+
+        <!-- Favs View -->
+        <div id="view-favs" class="view-section" style="padding:20px;">
+            <h2 style="font-size: 18px; margin-bottom: 20px; border-right: 4px solid var(--accent); padding-right: 10px;" data-i18n="nav_favs">علاقه‌مندی‌ها</h2>
+            <div id="favsList" style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"></div>
+        </div>
+
+        <!-- News View -->
+        <div id="view-news" class="view-section">
+            <div id="news-container"></div>
+        </div>
+
+        <!-- Dedicated Movie Page View -->
+        <div id="view-movie" class="view-section" style="padding-bottom: 90px; background: var(--bg-main);">
+            <div class="movie-detail-header">
+                <button class="btn-back" onclick="closePlayer()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    بازگشت
                 </button>
             </div>
-            
-            <button class="modal-close-x" onclick="document.getElementById('inboxModal').classList.remove('show')" style="position:absolute; top: 14px; left: 14px; z-index:20;">×</button>
-            
-            <div id="user-messages-list" style="flex-grow:1; overflow-y:auto; padding-right:5px;"></div>
-        </div>
-    </div>
-</div>
 
-<div class="modal" id="giftModal">
-    <div class="modal-box" style="max-width: 400px;">
-        <button class="modal-close-x" onclick="document.getElementById('giftModal').classList.remove('show')">×</button>
-        <div class="modal-content">
-            <h3 class="modal-title">ثبت کد هدیه</h3>
-            <div class="input-group">
-                <input type="text" id="user-gift-code" class="input-field" placeholder="کد هدیه را وارد کنید..." style="text-align:center; letter-spacing:3px; text-transform:uppercase;">
+            <div class="movie-detail-content">
+                <div class="neon-banner" id="neonBanner">
+                    <div class="neon-banner-inner" id="neonBannerInner">
+                        <div class="neon-text" id="neonTitle">نام محتوا</div>
+                    </div>
+                </div>
+                
+                <div class="video-container" id="realPlayerContainer">
+                    <video id="videoPlayer" controls controlsList="nodownload" playsinline preload="metadata"></video>
+                    <button class="quality-badge" id="qualityToggleBtn" onclick="toggleVideoQuality()" data-i18n="quality_hd">کیفیت: عادی (HD)</button>
+                </div>
+
+                <div class="movie-info-card" id="modal-movie-info" style="display:none;">
+                    <h2 class="movie-info-title" id="movie-detail-title"></h2>
+                    <div id="modal-movie-desc" class="movie-info-desc"></div>
+                    <div id="modal-movie-cast" class="movie-info-cast" style="display:none;"></div>
+                </div>
+
+                <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;" data-i18n="link_expired">این لینک منقضی شده است.</div>
+                
+                <div id="modal-links-container"></div>
             </div>
-            <button class="btn-primary" style="background:#10b981;" onclick="applyGiftCode()">اعمال کد</button>
         </div>
     </div>
-</div>
 
-<div class="modal" id="adminReplyModal">
-    <div class="modal-box" style="max-width: 400px;">
-        <button class="modal-close-x" onclick="document.getElementById('adminReplyModal').classList.remove('show')">×</button>
-        <div class="modal-content">
-            <h3 class="modal-title">پاسخ به کاربر</h3>
-            <input type="hidden" id="reply-user-id">
-            <textarea id="admin-reply-text" class="input-field" style="height:100px; padding:12px; resize:none;" placeholder="متن پاسخ..."></textarea>
-            <button class="btn-primary" onclick="sendAdminReply()">ارسال پاسخ</button>
+    <!-- =========================
+         MODERN BOTTOM NAVIGATION
+    ========================= -->
+    <div class="bottom-nav" id="bottom-nav" style="display:none;">
+        <div class="nav-item active" onclick="switchNav('home')" id="nav-home">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span data-i18n="nav_home">خانه</span>
+            <div class="nav-indicator"></div>
+        </div>
+        <div class="nav-item" onclick="switchNav('favs')" id="nav-favs">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            <span data-i18n="nav_favs">علاقه‌مندی‌ها</span>
+            <div class="nav-indicator"></div>
+        </div>
+        <div class="nav-item" onclick="showPlatinoSoon()" id="nav-platino">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+            <span data-i18n="nav_platino">پلاتینو</span>
+            <div class="platino-badge">به زودی</div>
+            <div class="nav-indicator"></div>
+        </div>
+        <div class="nav-item" onclick="switchNav('news')" id="nav-news">
+            <div class="nav-notif" id="news-notif"></div>
+            <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+            <span data-i18n="nav_news">خبرها</span>
+            <div class="nav-indicator"></div>
         </div>
     </div>
-</div>
 
-<div class="modal" id="sysMsgModal">
-    <div class="modal-box" style="max-width: 400px;">
-        <button class="modal-close-x" onclick="document.getElementById('sysMsgModal').classList.remove('show')">×</button>
-        <div class="modal-content">
-            <h3 class="modal-title" style="color:#10b981;">ارسال پیام عمومی</h3>
-            <textarea id="sys-msg-text" class="input-field" style="height:100px; padding:12px; resize:none;" placeholder="متن پیام عمومی..."></textarea>
-            <button class="btn-primary" style="background:#10b981;" onclick="sendSystemMessage()">ارسال</button>
+    <!-- =========================
+         MODALS
+    ========================= -->
+    <!-- Resume Modal -->
+    <div class="modal" id="resumeModal" style="z-index: 6500;">
+        <div class="modal-box" style="max-width: 320px; padding: 25px; text-align: center;">
+            <div style="width: 50px; height: 50px; background: rgba(59, 130, 246, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: var(--accent);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+            </div>
+            <h3 style="font-size: 16px; margin-bottom: 10px; color: var(--text-main);" data-i18n="resume_title">پخش از ادامه؟</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;" data-i18n="resume_desc">شما قبلاً بخشی از این محتوا را تماشا کرده‌اید.</p>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-primary" style="flex:1;" onclick="resumePlayback(true)" data-i18n="resume_btn">ادامه پخش</button>
+                <button class="btn-primary" style="flex:1; background: var(--bg-input); color: var(--text-main); border: 1px solid var(--border-color);" onclick="resumePlayback(false)" data-i18n="start_over_btn">از اول</button>
+            </div>
         </div>
     </div>
+
+    <!-- Avatar Selection Modal -->
+    <div class="modal" id="avatarModal" style="z-index: 6500;">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="modal-close-x" onclick="document.getElementById('avatarModal').classList.remove('show')">×</button>
+            <div class="modal-content">
+                <h3 class="modal-title" style="text-align:center;">انتخاب آواتار</h3>
+                <div class="avatar-grid" id="avatarGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Other Modals (Support, Inbox, Sys, Gift) -->
+    <div class="modal" id="supportModal">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="modal-close-x" onclick="document.getElementById('supportModal').classList.remove('show')">×</button>
+            <div class="modal-content">
+                <h3 class="modal-title" data-i18n="support_title">ارتباط با پشتیبانی</h3>
+                <textarea id="support-msg-text" class="input-field" style="height:110px; padding:12px; resize:none;" placeholder="پیام خود را بنویسید..." data-i18n-placeholder="write_msg"></textarea>
+                <button class="btn-primary" onclick="sendSupportMessage()" data-i18n="send_msg">ارسال پیام</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="inboxModal">
+        <div class="modal-box" style="max-width: 500px; height: 80vh;">
+            <div class="modal-content" style="display:flex; flex-direction:column; padding-top: 15px;">
+                
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px; margin-top:5px;">
+                    <h3 class="modal-title" style="margin:0;" data-i18n="inbox_title">صندوق پیام‌ها</h3>
+                    <button style="background:none; border:none; color:#ef4444; cursor:pointer;" onclick="deleteAllMessages()" title="حذف همه پیام‌ها">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                </div>
+                
+                <button class="modal-close-x" onclick="document.getElementById('inboxModal').classList.remove('show')" style="position:absolute; top: 14px; left: 14px; z-index:20;">×</button>
+                
+                <div id="user-messages-list" style="flex-grow:1; overflow-y:auto; padding-right:5px;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="giftModal">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="modal-close-x" onclick="document.getElementById('giftModal').classList.remove('show')">×</button>
+            <div class="modal-content">
+                <h3 class="modal-title" data-i18n="gift_title">ثبت کد هدیه</h3>
+                <div class="input-group">
+                    <input type="text" id="user-gift-code" class="input-field" placeholder="کد هدیه را وارد کنید..." style="text-align:center; letter-spacing:3px; text-transform:uppercase;">
+                </div>
+                <button class="btn-primary" style="background:#10b981;" onclick="applyGiftCode()" data-i18n="apply_gift">اعمال کد</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="adminReplyModal">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="modal-close-x" onclick="document.getElementById('adminReplyModal').classList.remove('show')">×</button>
+            <div class="modal-content">
+                <h3 class="modal-title">پاسخ به کاربر</h3>
+                <input type="hidden" id="reply-user-id">
+                <textarea id="admin-reply-text" class="input-field" style="height:100px; padding:12px; resize:none;" placeholder="متن پاسخ..."></textarea>
+                <button class="btn-primary" onclick="sendAdminReply()">ارسال پاسخ</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="sysMsgModal">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="modal-close-x" onclick="document.getElementById('sysMsgModal').classList.remove('show')">×</button>
+            <div class="modal-content">
+                <h3 class="modal-title" style="color:#10b981;">ارسال پیام عمومی</h3>
+                <textarea id="sys-msg-text" class="input-field" style="height:100px; padding:12px; resize:none;" placeholder="متن پیام عمومی..."></textarea>
+                <button class="btn-primary" style="background:#10b981;" onclick="sendSystemMessage()">ارسال</button>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1564,9 +2274,87 @@
     let dynamicDataArray = []; 
     let favoritesArray = [];
     let editingMovieId = null;
+    let currentLang = localStorage.getItem('plato_lang') || 'fa';
     let currentNav = 'home';
     let lastNewsId = localStorage.getItem('plato_last_news') || 0;
     let linkTimerInterval = null;
+
+    /* =========================
+       AVATAR SYSTEM (Precise SVG Geometries)
+    ========================= */
+    const AVATARS = {
+        1: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <clipPath id="avatarClip">
+                    <circle cx="100" cy="100" r="96"/>
+                  </clipPath>
+                </defs>
+                <circle cx="100" cy="100" r="96" fill="#EAF2FF"/>
+                <g clip-path="url(#avatarClip)">
+                  <path d="M35 205 C38 169 57 148 79 141 L100 155 L121 141 C143 148 162 169 165 205Z" fill="#3478E5"/>
+                  <path d="M79 141 L100 158 L121 141" fill="none" stroke="#245FC2" stroke-width="5" stroke-linejoin="round"/>
+                  <path d="M80 116 L80 144 L100 157 L120 144 L120 116Z" fill="#F1B08B"/>
+                  <path d="M66 82 C61 81 59 86 60 92 C60.5 97 63 99 67 97 L68 84Z" fill="#E4A07D"/>
+                  <path d="M134 82 C139 81 141 86 140 92 C139.5 97 137 99 133 97 L132 84Z" fill="#E4A07D"/>
+                  <path d="M65 61 C65 39 79 27 100 27 C121 27 135 39 135 61 V96 C135 120 120 135 100 135 C80 135 65 120 65 96Z" fill="#F1B08B"/>
+                  <path d="M63 67 C59 47 66 31 82 25 C101 17 124 24 134 40 C139 48 139 59 136 68 C128 61 122 54 117 45 C110 54 99 57 89 53 C78 49 70 57 63 67Z" fill="#27364D"/>
+                  <path d="M73 43 C82 31 96 27 108 29" fill="none" stroke="#40536F" stroke-width="6" stroke-linecap="round"/>
+                  <path d="M76 77 Q83 73 90 77" fill="none" stroke="#26344A" stroke-width="3.5" stroke-linecap="round"/>
+                  <path d="M110 77 Q117 73 124 77" fill="none" stroke="#26344A" stroke-width="3.5" stroke-linecap="round"/>
+                  <circle cx="83" cy="87" r="3.5" fill="#26344A"/>
+                  <circle cx="117" cy="87" r="3.5" fill="#26344A"/>
+                  <path d="M100 89 L97 104 L102 106" fill="none" stroke="#D38C6C" stroke-width="2.8" stroke-linecap="round"/>
+                  <path d="M90 115 Q100 121 110 115" fill="none" stroke="#9D5C52" stroke-width="3" stroke-linecap="round"/>
+                </g>
+                <circle cx="100" cy="100" r="96" fill="none" stroke="#D7E3F5" stroke-width="3"/>
+            </svg>`,
+            
+        2: `<svg viewBox="0 0 100 100">
+                <rect width="100" height="100" fill="#fbcfe8"/>
+                <path d="M25 100 C25 65, 75 65, 75 100" fill="#be185d" stroke="#9f1239" stroke-width="2"/>
+                <path d="M20 70 C10 40, 30 10, 50 10 C70 10, 90 40, 80 70 Z" fill="#78350f"/>
+                <rect x="44" y="60" width="12" height="15" fill="#fcd34d"/>
+                <circle cx="50" cy="45" r="22" fill="#fde047"/>
+                <path d="M28 45 C28 20, 72 20, 72 45 C65 25, 35 25, 28 45 Z" fill="#92400e"/>
+                <path d="M36 45 A4 4 0 0 1 44 45" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+                <path d="M56 45 A4 4 0 0 1 64 45" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="35" cy="52" r="4" fill="#f43f5e" opacity="0.5"/>
+                <circle cx="65" cy="52" r="4" fill="#f43f5e" opacity="0.5"/>
+                <path d="M45 58 Q50 62 55 58" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>`,
+            
+        3: `<svg viewBox="0 0 100 100">
+                <rect width="100" height="100" fill="#1e293b"/>
+                <circle cx="50" cy="50" r="38" fill="#334155"/>
+                <path d="M56 18 L28 54 L50 54 L44 82 L72 46 L50 46 Z" fill="#facc15" stroke="#fef08a" stroke-width="2" stroke-linejoin="round"/>
+            </svg>`,
+            
+        4: `<svg viewBox="0 0 100 100">
+                <rect width="100" height="100" fill="#fef08a"/>
+                <circle cx="50" cy="50" r="38" fill="#fde047"/>
+                <path d="M50 50 C25 15, 5 30, 15 65 C22 75, 40 65, 50 50 Z" fill="#f43f5e"/>
+                <path d="M50 50 C75 15, 95 30, 85 65 C78 75, 60 65, 50 50 Z" fill="#f43f5e"/>
+                <path d="M45 50 L22 82 L40 88 L50 55 Z" fill="#e11d48"/>
+                <path d="M55 50 L78 82 L60 88 L50 55 Z" fill="#e11d48"/>
+                <circle cx="50" cy="50" r="9" fill="#fda4af"/>
+            </svg>`,
+            
+        5: `<svg viewBox="0 0 100 100">
+                <rect width="100" height="100" fill="#dcfce7"/>
+                <circle cx="50" cy="50" r="38" fill="#a7f3d0"/>
+                <path d="M35 46 L35 65 C35 75, 65 75, 65 65 L65 46 Z" fill="#1e293b"/>
+                <polygon points="50,25 85,40 50,55 15,40" fill="#334155"/>
+                <polygon points="50,25 82,40 50,53 18,40" fill="#475569"/>
+                <circle cx="50" cy="40" r="3.5" fill="#facc15"/>
+                <path d="M50 40 Q 75 45 75 65" fill="none" stroke="#facc15" stroke-width="3"/>
+                <polygon points="71,65 79,65 77,80 73,80" fill="#eab308"/>
+            </svg>`,
+            
+        6: `<svg viewBox="0 0 100 100">
+                <rect width="100" height="100" fill="#fef08a"/>
+                <path d="M50 15 L61 38 L85 41 L67 58 L72 82 L50 70 L28 82 L33 58 L15 41 L39 38 Z" fill="#eab308" stroke="#ca8a04" stroke-width="2" stroke-linejoin="round"/>
+            </svg>`
+    };
 
     function getAvatar(id, username) { 
         if (!id || id === 0 || !AVATARS[id]) {
@@ -1608,32 +2396,158 @@
         
         showLoader(true);
         
-        try {
-            await supabaseClient.from('users_data').update({ avatar: id }).eq('id', currentUserProfile.id);
-            
-            currentUserProfile.avatar = id;
-            
-            document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(id, currentUserProfile.username);
-            
-            document.getElementById('avatarModal').classList.remove('show'); 
-        } catch(e) {
-            console.error(e);
-        }
+        await supabaseClient.from('users_data').update({ avatar: id }).eq('id', currentUserProfile.id);
+        
+        currentUserProfile.avatar = id;
+        
+        document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(id, currentUserProfile.username);
+        
+        document.getElementById('avatarModal').classList.remove('show'); 
         
         showLoader(false);
     }
 
+    /* Dictionary for i18n */
+    const dict = {
+        'fa': {
+            'loading': 'لطفا صبر کنید...', 
+            'show_pass': 'نمایش رمز عبور', 
+            'login_btn': 'ورود به حساب', 
+            'no_account': 'حساب کاربری ندارید؟', 
+            'register_now': 'ثبت‌نام کنید',
+            'register_btn': 'ارسال درخواست عضویت', 
+            'have_account': 'قبلاً ثبت‌نام کردید؟', 
+            'login_now': 'وارد شوید', 
+            'terms_title': 'قوانین و مقررات پلاتو',
+            'accept_terms': 'پذیرفتن شرایط و قوانین فوق', 
+            'confirm_register': 'تایید و ارسال ثبت‌نام', 
+            'support_btn': 'ارتباط با پشتیبانی', 
+            'inbox_btn': 'صندوق پیام‌ها',
+            'gift_code_btn': 'کد هدیه', 
+            'logout_btn': 'خروج از حساب', 
+            'admin_panel': 'پنل مدیریت', 
+            'nav_home': 'خانه', 
+            'nav_favs': 'علاقه‌مندی‌ها', 
+            'nav_news': 'خبرها',
+            'nav_platino': 'پلاتینو',
+            'cat_programs': 'برنامه‌ها', 
+            'cat_kids': 'انیمیشن/کودکانه', 
+            'cat_series': 'سریال‌ها', 
+            'cat_movies': 'فیلم‌های سینمایی', 
+            'quality_hd': 'کیفیت: عادی (HD)',
+            'link_expired': 'این لینک منقضی شده است.', 
+            'support_title': 'ارتباط با پشتیبانی', 
+            'send_msg': 'ارسال پیام', 
+            'inbox_title': 'صندوق پیام‌ها', 
+            'gift_title': 'ثبت کد هدیه',
+            'apply_gift': 'اعمال کد', 
+            'resume_title': 'پخش از ادامه؟', 
+            'resume_desc': 'شما قبلاً بخشی از این محتوا را تماشا کرده‌اید.', 
+            'resume_btn': 'ادامه پخش', 
+            'start_over_btn': 'از اول',
+            'new_badge': 'جدید'
+        },
+        'en': {
+            'loading': 'Please wait...', 
+            'show_pass': 'Show Password', 
+            'login_btn': 'Login', 
+            'no_account': 'No account?', 
+            'register_now': 'Sign up',
+            'register_btn': 'Submit Request', 
+            'have_account': 'Already registered?', 
+            'login_now': 'Login now', 
+            'terms_title': 'Terms & Conditions',
+            'accept_terms': 'I accept the terms above', 
+            'confirm_register': 'Confirm Registration', 
+            'support_btn': 'Support', 
+            'inbox_btn': 'Inbox',
+            'gift_code_btn': 'Gift Code', 
+            'logout_btn': 'Logout', 
+            'admin_panel': 'Admin Panel', 
+            'nav_home': 'Home', 
+            'nav_favs': 'Favorites', 
+            'nav_news': 'News',
+            'nav_platino': 'Platino',
+            'cat_programs': 'Programs', 
+            'cat_kids': 'Animation/Kids', 
+            'cat_series': 'Series', 
+            'cat_movies': 'Movies', 
+            'quality_hd': 'Quality: Normal (HD)',
+            'link_expired': 'This link has expired.', 
+            'support_title': 'Contact Support', 
+            'send_msg': 'Send Message', 
+            'inbox_title': 'Inbox', 
+            'gift_title': 'Enter Gift Code',
+            'apply_gift': 'Apply Code', 
+            'resume_title': 'Resume playback?', 
+            'resume_desc': 'You have already watched a part of this.', 
+            'resume_btn': 'Resume', 
+            'start_over_btn': 'Start Over',
+            'new_badge': 'NEW'
+        }
+    };
+    
+    const placeholders = {
+        'fa': { 
+            'username': 'نام کاربری', 
+            'password': 'رمز عبور', 
+            'username_en': 'نام کاربری (انگلیسی)', 
+            'device_model': 'مدل دستگاه', 
+            'search_ph': 'جستجوی فیلم، سریال یا برنامه...', 
+            'write_msg': 'پیام خود را بنویسید...' 
+        },
+        'en': { 
+            'username': 'Username', 
+            'password': 'Password', 
+            'username_en': 'Username (English only)', 
+            'device_model': 'Device Model', 
+            'search_ph': 'Search movies, series...', 
+            'write_msg': 'Type your message...' 
+        }
+    };
+
+    function applyTranslations() {
+        const elements = document.querySelectorAll('[data-i18n]');
+        elements.forEach(el => { 
+            const key = el.getAttribute('data-i18n'); 
+            if(dict[currentLang][key]) {
+                el.innerHTML = dict[currentLang][key]; 
+            }
+        });
+        
+        const placeholderElements = document.querySelectorAll('[data-i18n-placeholder]');
+        placeholderElements.forEach(el => { 
+            const key = el.getAttribute('data-i18n-placeholder'); 
+            if(placeholders[currentLang][key]) {
+                el.setAttribute('placeholder', placeholders[currentLang][key]); 
+            }
+        });
+        
+        if(currentLang === 'en') {
+            document.body.style.direction = 'ltr';
+        } else {
+            document.body.style.direction = 'rtl';
+        }
+    }
+
+    function toggleLanguage() {
+        if(currentLang === 'fa') {
+            currentLang = 'en';
+        } else {
+            currentLang = 'fa';
+        }
+        localStorage.setItem('plato_lang', currentLang);
+        applyTranslations();
+        fetchMoviesFromDatabase(); 
+    }
+
     /* Core Utilities */
     function toEnglishDigits(str) { 
-        if (!str) return '';
-        if (typeof str !== 'string') return str;
-        return str.replace(/[۰-۹]/g, function (w) {
-            var persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-            return persian.indexOf(w);
-        }).replace(/[٠-٩]/g, function (w) {
-            var arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-            return arabic.indexOf(w);
-        });
+        if(str) {
+            return str.toString().replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+        } else {
+            return '';
+        }
     }
 
     function showLoader(show) { 
@@ -1676,6 +2590,8 @@
         console.log(e);
     }
     
+    applyTranslations();
+
     function toggleAuth(type) { 
         if(type === 'register') {
             document.getElementById('login-box').style.display = 'none'; 
@@ -1713,7 +2629,9 @@
 
     /* Session & Init */
     async function checkUserSession() {
-        if (!supabaseClient) return;
+        if (!supabaseClient) {
+            return;
+        }
         
         showLoader(true);
         
@@ -1738,7 +2656,7 @@
             currentUserProfile = profileRes.data;
             
             if (currentUserProfile.status === 'pending' || currentUserProfile.status === 'rejected') {
-                showCustomAlert('حساب کاربری شما هنوز تایید نشده یا مسدود است.');
+                showCustomAlert('اکانت شما هنوز تایید نشده یا مسدود است.');
                 await supabaseClient.auth.signOut(); 
                 document.getElementById('auth-screen').style.display = 'flex';
             } else {
@@ -1765,7 +2683,7 @@
                 
                 if (currentUserProfile.role === 'admin') {
                     let adminBtnHtml = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()">`;
-                    adminBtnHtml += `<span>پنل مدیریت</span>`;
+                    adminBtnHtml += `<span data-i18n="admin_panel">پنل مدیریت</span>`;
                     adminBtnHtml += `<svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>`;
                     adminBtnHtml += `</button>`;
                     
@@ -1782,8 +2700,6 @@
                     updateHeartbeat(); 
                     checkUnreadMessages(); 
                 }, 60000);
-                
-                checkUnreadMessages();
             }
         } catch (err) { 
             console.error(err);
@@ -1805,15 +2721,9 @@
 
     /* Auth Actions */
     function doRegister() {
-        var uInput = document.getElementById('reg-user');
-        var pInput = document.getElementById('reg-pass');
-        var mInput = document.getElementById('reg-model');
-        
-        if(!uInput || !pInput || !mInput) return;
-        
-        let u = toEnglishDigits(uInput.value).trim().toLowerCase();
-        let p = pInput.value.trim(); // عدم تغییر فرمت رمز عبور
-        let m = mInput.value.trim();
+        let u = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase();
+        let p = toEnglishDigits(document.getElementById('reg-pass').value).trim();
+        let m = document.getElementById('reg-model').value.trim();
         
         if(!u || !p || !m) {
             return showCustomAlert('لطفاً همه فیلدها را پر کنید');
@@ -1833,7 +2743,7 @@
         showLoader(true);
         
         let u = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase();
-        let p = document.getElementById('reg-pass').value.trim();
+        let p = toEnglishDigits(document.getElementById('reg-pass').value).trim();
         let m = document.getElementById('reg-model').value.trim();
         
         try {
@@ -1852,7 +2762,7 @@
                     phone_model: m, 
                     status: 'pending', 
                     role: 'user', 
-                    avatar: 6 
+                    avatar: 0 
                 }]);
                 
                 showCustomAlert('درخواست عضویت ارسال شد.'); 
@@ -1867,13 +2777,8 @@
     }
 
     async function doLogin() {
-        var uInput = document.getElementById('log-user');
-        var pInput = document.getElementById('log-pass');
-        
-        if(!uInput || !pInput) return;
-        
-        var u = toEnglishDigits(uInput.value).trim().toLowerCase();
-        var p = pInput.value.trim(); // رمز عبور دقیقاً همان چیزی که تایپ شده ارسال می‌شود
+        var u = toEnglishDigits(document.getElementById('log-user').value).trim().toLowerCase();
+        var p = toEnglishDigits(document.getElementById('log-pass').value).trim();
         
         if(!u || !p) {
             return showCustomAlert('اطلاعات را وارد کنید');
@@ -1891,8 +2796,7 @@
                 showCustomAlert('اطلاعات اشتباه است'); 
                 showLoader(false);
             } else {
-                // تاخیر کوتاه برای ثبت نشست در دیتابیس لوکال
-                setTimeout(() => { checkUserSession(); }, 500); 
+                checkUserSession(); 
             }
         } catch(err) { 
             console.error(err);
@@ -1936,13 +2840,7 @@
             if (marqueeText) {
                 marqueeText.style.animation = 'none';
                 void marqueeText.offsetWidth; 
-                let finalSpeed = "15s";
-                let textValue = marqueeText.textContent;
-                if(textValue.includes("||")) {
-                    let parts = textValue.split("||");
-                    finalSpeed = parts[1] + "s";
-                }
-                marqueeText.style.animation = `led-scroll-left-to-right ${finalSpeed} linear infinite`;
+                marqueeText.style.animation = null;
             }
         }
         
@@ -1992,10 +2890,10 @@
             return;
         }
         
-        const isFav = favoritesArray.includes(movieId);
+        const isFavNow = !favoritesArray.includes(movieId);
         
         try {
-            if(isFav) {
+            if(!isFavNow) {
                 favoritesArray = favoritesArray.filter(id => id !== movieId); 
                 await supabaseClient.from('favorites').delete().eq('user_id', currentUserProfile.id).eq('movie_id', movieId);
             } else {
@@ -2003,9 +2901,8 @@
                 await supabaseClient.from('favorites').insert([{ user_id: currentUserProfile.id, movie_id: movieId }]);
             }
             
-            // همگام‌سازی لحظه‌ای تمام دکمه‌های این فیلم در تمام تب‌ها
             document.querySelectorAll(`.fav-btn[data-movie-id="${movieId}"]`).forEach(btn => {
-                if (favoritesArray.includes(movieId)) {
+                if(isFavNow) {
                     btn.classList.add('active');
                 } else {
                     btn.classList.remove('active');
@@ -2118,7 +3015,11 @@
                 let diffTime = new Date() - new Date(item.updated_at);
                 let diffDays = diffTime / (1000 * 60 * 60 * 24);
                 if(diffDays <= 3 && diffDays >= 0) {
-                    newBadgeHTML = `<div class="new-badge">جدید</div>`;
+                    let badgeText = 'جدید';
+                    if(dict[currentLang] && dict[currentLang]['new_badge']) {
+                        badgeText = dict[currentLang]['new_badge'];
+                    }
+                    newBadgeHTML = `<div class="new-badge">${badgeText}</div>`;
                 }
             }
             
@@ -2226,7 +3127,6 @@
         document.getElementById("movie-detail-title").textContent = movie.title;
         document.getElementById("neonTitle").textContent = movie.title;
         
-        // Show Extra Details 
         if(movie.info || movie.description || movie.cast_members) {
             document.getElementById('modal-movie-info').style.display = 'block';
             let finalInfo = "";
@@ -2400,11 +3300,19 @@
         const btn = document.getElementById('qualityToggleBtn');
         
         if(videoPlayer.style.transform === 'scale(0.96)') {
-            btn.textContent = 'کیفیت: عادی (HD)';
+            let txt = 'کیفیت: عادی (HD)';
+            if(dict[currentLang] && dict[currentLang]['quality_hd']) {
+                txt = dict[currentLang]['quality_hd'];
+            }
+            btn.textContent = txt;
             videoPlayer.style.transform = 'scale(1)'; 
             showCustomAlert('کیفیت عادی شد.');
         } else {
-            btn.textContent = 'کیفیت: کمتر (روان)';
+            let txt = 'کیفیت: کمتر (روان)';
+            if(currentLang === 'en') {
+                txt = 'Quality: Lower (Smooth)';
+            }
+            btn.textContent = txt;
             videoPlayer.style.transform = 'scale(0.96)'; 
             showCustomAlert('کیفیت بهینه شد.');
         }
@@ -2446,7 +3354,11 @@
         const badge = document.getElementById('premium-badge');
         
         if(currentUserProfile.role === 'admin') {
-            document.getElementById('sub-time-left').textContent = "حساب مدیریت کل";
+            let txt = "حساب مدیریت کل";
+            if(currentLang === 'en') {
+                txt = "Admin Account";
+            }
+            document.getElementById('sub-time-left').textContent = txt;
             badge.style.display = 'inline-flex';
         } else {
             let isActive = false;
@@ -2457,13 +3369,25 @@
                 
                 if(diffTime > 0) {
                     let daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    document.getElementById('sub-time-left').textContent = `اعتبار اشتراک: ${daysLeft} روز`;
+                    let txt = `اعتبار اشتراک: ${daysLeft} روز`;
+                    if(currentLang === 'en') {
+                        txt = `Days left: ${daysLeft}`;
+                    }
+                    document.getElementById('sub-time-left').textContent = txt;
                     isActive = true;
                 } else { 
-                    document.getElementById('sub-time-left').textContent = "اشتراک منقضی شده"; 
+                    let txt = "اشتراک منقضی شده";
+                    if(currentLang === 'en') {
+                        txt = "Expired";
+                    }
+                    document.getElementById('sub-time-left').textContent = txt; 
                 }
             } else { 
-                document.getElementById('sub-time-left').textContent = "بدون اشتراک فعال"; 
+                let txt = "بدون اشتراک فعال";
+                if(currentLang === 'en') {
+                    txt = "No active sub";
+                }
+                document.getElementById('sub-time-left').textContent = txt; 
             }
             
             if(isActive) {
@@ -2496,10 +3420,6 @@
         
         if(tabId === 'tab-messages') {
             loadAdminInbox();
-            // خاموش کردن چراغ سبز هشدار برای ادمین
-            document.getElementById('admin-msg-notif').style.display = 'none';
-            document.getElementById('header-notif').style.display = 'none';
-            supabaseClient.from('messages').update({ is_read: true }).eq('direction', 'user_to_admin').eq('is_read', false).then();
         }
         if(tabId === 'tab-users') {
             loadAllUsers();
@@ -2557,7 +3477,7 @@
             
             if(days === 0) {
                 await supabaseClient.from('users_data').update({ sub_end_date: null }).eq('id', udata.id); 
-                showCustomAlert('اشتراک کاربر صفر شد.');
+                showCustomAlert('اشتراک کاربر لغو شد.');
             } else {
                 let currentSub = null;
                 if(udata.sub_end_date) {
@@ -2681,7 +3601,8 @@
         var cat = document.getElementById('new-movie-category').value;
         var tit = document.getElementById('new-movie-title').value.trim();
         var pos = document.getElementById('new-movie-poster').value.trim();
-        var info = document.getElementById('new-movie-info').value.trim();
+        var desc = document.getElementById('new-movie-desc').value.trim();
+        var cast = document.getElementById('new-movie-cast').value.trim();
         var url = document.getElementById('new-movie-url').value.trim();
         var isNew = document.getElementById('new-movie-isnew').checked;
         
@@ -2692,7 +3613,8 @@
         var payload = { 
             title: tit, 
             poster: pos, 
-            info: info,
+            description: desc,
+            cast_members: cast,
             download_url: url, 
             category: cat,
             countdown_end: null 
@@ -2747,11 +3669,19 @@
         document.getElementById('new-movie-title').value = targetMovie.title; 
         document.getElementById('new-movie-poster').value = targetMovie.poster; 
         
-        let infoValue = '';
-        if(targetMovie.info) {
-            infoValue = targetMovie.info;
+        let descValue = '';
+        if(targetMovie.description) {
+            descValue = targetMovie.description;
+        } else if(targetMovie.info) {
+            descValue = targetMovie.info;
         }
-        document.getElementById('new-movie-info').value = infoValue;
+        document.getElementById('new-movie-desc').value = descValue;
+        
+        let castValue = '';
+        if(targetMovie.cast_members) {
+            castValue = targetMovie.cast_members;
+        }
+        document.getElementById('new-movie-cast').value = castValue;
         
         let urlValue = '';
         if(targetMovie.download_url) {
@@ -2782,7 +3712,8 @@
     function cancelEdit() { 
         document.getElementById('new-movie-title').value = ''; 
         document.getElementById('new-movie-poster').value = ''; 
-        document.getElementById('new-movie-info').value = ''; 
+        document.getElementById('new-movie-desc').value = ''; 
+        document.getElementById('new-movie-cast').value = ''; 
         document.getElementById('new-movie-url').value = ''; 
         document.getElementById('new-movie-isnew').checked = false; 
         
@@ -2810,7 +3741,7 @@
         showLoader(false); 
     }
 
-    /* Admin Users (Shows precise disconnected days) */
+    /* Admin Users */
     async function loadAllUsers() {
         try {
             const { data } = await supabaseClient.from('users_data').select('*').order('created_at', { ascending: false });
@@ -2835,23 +3766,14 @@
                         return;
                     }
                     
-                    let subText = "بدون اشتراک";
+                    let subText = "ندارد";
                     if(user.sub_end_date) { 
-                        const diff = new Date(user.sub_end_date).getTime() - nowTime; 
+                        const diff = new Date(user.sub_end_date).getTime() - new Date().getTime(); 
                         if(diff > 0) {
                             let days = Math.ceil(diff / 86400000);
-                            subText = `<b style="color:#10b981;">${days} روز فعال</b>`; 
+                            subText = days + " روز"; 
                         } else {
-                            let pastDays = Math.floor(Math.abs(diff) / 86400000);
-                            subText = `<b style="color:#ef4444;">منقضی (${pastDays} روز)</b>`; 
-                        }
-                    } else {
-                        if(user.created_at) {
-                            let diff = nowTime - new Date(user.created_at).getTime();
-                            let pastDays = Math.floor(diff / 86400000);
-                            subText = `<b style="color:#ef4444;">بدون اشتراک (${pastDays} روز)</b>`;
-                        } else {
-                            subText = `<b style="color:var(--text-muted);">بدون اشتراک</b>`;
+                            subText = "منقضی"; 
                         }
                     }
                     
@@ -2860,7 +3782,7 @@
                     let cardHtml = `<div class="req-card">`;
                     cardHtml += `<div class="req-info" style="display:flex; align-items:center; gap:10px;">`;
                     cardHtml += `<div style="width:36px;height:36px;border-radius:50%;overflow:hidden;">${avatarSvg}</div>`;
-                    cardHtml += `<div><div style="color:var(--accent);">${user.username}</div><small>اعتبار: ${subText}</small></div>`;
+                    cardHtml += `<div><div style="color:var(--accent);">${user.username}</div><small>اعتبار: <b style="color:#10b981;">${subText}</b></small></div>`;
                     cardHtml += `</div>`;
                     cardHtml += `<div><button class="btn-sm btn-reject" onclick="deleteUserAccount('${user.id}')">حذف</button></div>`;
                     cardHtml += `</div>`;
@@ -2941,17 +3863,16 @@
             
             if(data && data[0] && data[0].content.trim()) {
                 let textValue = data[0].content;
-                let finalSpeed = "15s";
+                let finalSpeed = "15s"; // default
                 
+                // Parse speed if appended with "||"
                 if(textValue.includes("||")) {
                     let parts = textValue.split("||");
                     textValue = parts[0];
                     finalSpeed = parts[1] + "s";
                     if(speedInput) {
                         speedInput.value = parts[1];
-                        if(speedDisplay) {
-                            speedDisplay.innerText = finalSpeed;
-                        }
+                        if(speedDisplay) speedDisplay.innerText = finalSpeed;
                     }
                 }
                 
@@ -2959,6 +3880,7 @@
                     textElem.textContent = textValue; 
                 }
                 
+                // Always reset animation to apply new speed
                 textElem.style.animation = 'none'; 
                 void textElem.offsetWidth; 
                 textElem.style.animation = `led-scroll-left-to-right ${finalSpeed} linear infinite`; 
@@ -2983,7 +3905,7 @@
         let speed = document.getElementById('admin-marquee-speed').value;
         
         if(v) {
-            v = v + "||" + speed; 
+            v = v + "||" + speed; // append speed to text
         }
         
         try {
@@ -3062,7 +3984,9 @@
                     
                     let cardHtml = `<div class="news-card">`;
                     cardHtml += `<div class="news-header">`;
-                    cardHtml += `<div class="news-avatar" style="font-size: 18px; background: transparent;">📄</div>`;
+                    cardHtml += `<div class="news-avatar">`;
+                    cardHtml += `<svg class="svg-icon" style="margin:0; width:22px; height:22px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 4.5C5 3.67 5.67 3 6.5 3H19V18.5C19 19.88 17.88 21 16.5 21H6.5C5.67 21 5 20.33 5 19.5V4.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 7H15.5M8.5 10.5H15.5M8.5 14H12.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="17" cy="6" r="2" fill="currentColor"/></svg>`;
+                    cardHtml += `</div>`;
                     cardHtml += `<div><div class="news-author">PLATO News</div><div class="news-date">${dateStr}</div></div>`;
                     cardHtml += `</div>`;
                     cardHtml += `<div class="news-content" id="n-txt-${n.id}">${n.content}</div>`;
@@ -3489,375 +4413,4 @@
                     show = 'inline-block';
                 }
                 
-                document.getElementById('admin-msg-notif').style.display = show; 
-                document.getElementById('header-notif').style.display = show;
-            } else {
-                const { data } = await supabaseClient.from('messages').select('id, direction, user_id').eq('is_read', false);
-                
-                if(data) {
-                    let storageKey = 'plato_del_msgs_' + currentUserProfile.id;
-                    let deletedMsgs = JSON.parse(localStorage.getItem(storageKey) || '[]');
-                    
-                    let unread = 0;
-                    data.forEach(m => {
-                        if (!deletedMsgs.includes(m.id)) {
-                            if(m.direction === 'system_all') {
-                                unread++;
-                            } else if (m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) {
-                                unread++;
-                            }
-                        }
-                    });
-                    
-                    let show = 'none';
-                    if(unread > 0) {
-                        show = 'inline-block';
-                    }
-                    
-                    document.getElementById('inbox-notif').style.display = show; 
-                    document.getElementById('header-notif').style.display = show;
-                }
-            }
-        } catch(e) {
-            console.error(e);
-        }
-    }
-
-    function openSupportModal() { 
-        closeSidebar(); 
-        document.getElementById('supportModal').classList.add('show'); 
-    }
-
-    async function sendSupportMessage() {
-        const textInput = document.getElementById('support-msg-text').value;
-        const text = textInput.trim(); 
-        
-        if(!text) {
-            return;
-        }
-
-        /* Anti-Spam (Rate Limiting) Logic */
-        let isVip = false;
-        if(currentUserProfile.role === 'admin') {
-            isVip = true;
-        } else if(currentUserProfile.sub_end_date) {
-            if(new Date(currentUserProfile.sub_end_date) > new Date()) {
-                isVip = true;
-            }
-        }
-
-        let storageKey = 'plato_ticket_history_' + currentUserProfile.id;
-        let historyRaw = localStorage.getItem(storageKey);
-        let history = [];
-        
-        if(historyRaw) {
-            history = JSON.parse(historyRaw);
-        }
-        
-        let nowTime = new Date().getTime();
-        let updatedHistory = [];
-        
-        history.forEach(time => {
-            if((nowTime - time) < (24 * 60 * 60 * 1000)) {
-                updatedHistory.push(time);
-            }
-        });
-        history = updatedHistory;
-
-        let maxPer24h = 2; 
-        let cooldownMs = 30 * 60 * 1000; 
-        
-        if(isVip) {
-            maxPer24h = 4; 
-            cooldownMs = 10 * 60 * 1000; 
-        }
-        
-        if(history.length >= maxPer24h) {
-            return showCustomAlert(`شما مجاز به ارسال حداکثر ${maxPer24h} پیام در ۲۴ ساعت هستید.`);
-        }
-        
-        if(history.length > 0) {
-            let lastMsgTime = history[history.length - 1];
-            let diffTime = nowTime - lastMsgTime;
-            
-            if(diffTime < cooldownMs) {
-                let waitMins = Math.ceil((cooldownMs - diffTime) / (60 * 1000));
-                
-                if(waitMins >= 60) {
-                    let waitHours = Math.ceil(waitMins / 60);
-                    return showCustomAlert(`لطفاً ${waitHours} ساعت دیگر برای ارسال پیام بعدی صبر کنید.`);
-                } else {
-                    return showCustomAlert(`لطفاً ${waitMins} دقیقه دیگر برای ارسال پیام بعدی صبر کنید.`);
-                }
-            }
-        }
-        
-        showLoader(true); 
-        
-        try {
-            await supabaseClient.from('messages').insert([{ 
-                user_id: currentUserProfile.id, 
-                direction: 'user_to_admin', 
-                content: text, 
-                is_read: false 
-            }]);
-            
-            history.push(nowTime);
-            localStorage.setItem(storageKey, JSON.stringify(history));
-            
-            showCustomAlert('ارسال شد.'); 
-            document.getElementById('support-msg-text').value = ''; 
-            document.getElementById('supportModal').classList.remove('show');
-        } catch(e) {
-            console.error(e);
-        }
-        
-        showLoader(false); 
-    }
-
-    window.openInboxModal = async function() {
-        closeSidebar(); 
-        
-        // به محض باز شدن صندوق پیام، نقطه هشدار خاموش می‌شود
-        document.getElementById('inbox-notif').style.display = 'none'; 
-        document.getElementById('header-notif').style.display = 'none'; 
-        document.getElementById('inboxModal').classList.add('show'); 
-        
-        showLoader(true);
-        
-        try {
-            const { data } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: false });
-            
-            const list = document.getElementById('user-messages-list'); 
-            list.innerHTML = '';
-            
-            if(data) {
-                let storageKey = 'plato_del_msgs_' + currentUserProfile.id;
-                let deletedMsgs = JSON.parse(localStorage.getItem(storageKey) || '[]');
-                
-                let myMsgs = [];
-                data.forEach(m => {
-                    if (!deletedMsgs.includes(m.id)) {
-                        if(m.direction === 'system_all') {
-                            myMsgs.push(m);
-                        } else if (m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id) {
-                            myMsgs.push(m);
-                        }
-                    }
-                });
-                
-                if(myMsgs.length > 0) {
-                    myMsgs.forEach(m => {
-                        let c = 'admin-reply';
-                        if(m.direction === 'system_all') {
-                            c = 'system';
-                        }
-                        
-                        let t = 'پشتیبانی';
-                        if(m.direction === 'system_all') {
-                            t = 'پیام عمومی سیستم';
-                        }
-                        
-                        let trashIcon = `<button style="background:none; border:none; color:#ef4444; cursor:pointer; display:flex; align-items:center;" onclick="deleteLocalMsg(${m.id})">`;
-                        trashIcon += `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`;
-                        trashIcon += `</button>`;
-                        
-                        let html = `<div class="msg-bubble ${c}">`;
-                        html += `<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px; margin-bottom:8px;"><b style="font-size:14px; color:var(--text-main);">${t}</b>${trashIcon}</div>`;
-                        html += `<div style="line-height:1.6; margin-top:4px;">${m.content}</div></div>`;
-                        
-                        list.innerHTML += html;
-                    });
-                    
-                    await supabaseClient.from('messages').update({ is_read: true }).eq('direction', 'admin_to_user').eq('user_id', currentUserProfile.id).eq('is_read', false);
-                } else {
-                    list.innerHTML = '<div style="color:var(--text-muted); text-align:center;">خالی است.</div>';
-                }
-            }
-        } catch(e) {
-            console.error(e);
-        }
-        
-        showLoader(false);
-    }
-    
-    async function loadAdminInbox() {
-        try {
-            const { data: usersData } = await supabaseClient.from('users_data').select('id, username, avatar');
-            
-            let userMap = {}; 
-            if(usersData) {
-                usersData.forEach(u => {
-                    userMap[u.id] = u;
-                });
-            }
-
-            const { data: msgs } = await supabaseClient.from('messages').select('*').eq('direction', 'user_to_admin').order('created_at', { ascending: false });
-            
-            const list = document.getElementById('admin-inbox-list'); 
-            list.innerHTML = '';
-            
-            if(msgs) {
-                msgs.forEach(msg => {
-                    let sender = { username: 'کاربر', avatar: 1 };
-                    if(userMap[msg.user_id]) {
-                        sender = userMap[msg.user_id];
-                    }
-                    
-                    let avatarSvg = getAvatar(sender.avatar, sender.username);
-                    
-                    let html = `<div class="req-card" style="flex-direction:column; align-items:stretch;">`;
-                    html += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">`;
-                    html += `<div style="display:flex; align-items:center; gap:8px;">`;
-                    html += `<div style="width:28px; height:28px; border-radius:50%; overflow:hidden;">${avatarSvg}</div>`;
-                    html += `<div style="color:var(--accent); font-weight:bold;">${sender.username}</div></div>`;
-                    html += `<div style="display:flex; gap:4px;">`;
-                    html += `<button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ</button>`;
-                    html += `<button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button>`;
-                    html += `</div></div>`;
-                    html += `<div style="background:var(--bg-box); padding:10px; border-radius:8px;">${msg.content}</div></div>`;
-                    
-                    list.innerHTML += html;
-                });
-            }
-            
-            const { data: sysMsgs } = await supabaseClient.from('messages').select('*').eq('direction', 'system_all').order('created_at', { ascending: false });
-            
-            const sysList = document.getElementById('admin-sys-list'); 
-            sysList.innerHTML = '';
-            
-            if(sysMsgs) {
-                sysMsgs.forEach(msg => {
-                    let html = `<div class="req-card" style="flex-direction:column; align-items:stretch;">`;
-                    html += `<div style="display:flex; justify-content:space-between; margin-bottom:8px;">`;
-                    html += `<span style="color:#10b981;">پیام عمومی</span>`;
-                    html += `<button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button></div>`;
-                    html += `<div>${msg.content}</div></div>`;
-                    
-                    sysList.innerHTML += html;
-                });
-            }
-        } catch(e) {
-            console.error(e);
-        }
-    }
-
-    window.deleteAdminMsg = async function(id) { 
-        try {
-            await supabaseClient.from('messages').delete().eq('id', id); 
-            loadAdminInbox(); 
-        } catch(e) {
-            console.error(e);
-        }
-    }
-
-    async function openAdminReply(uid, mid) { 
-        document.getElementById('reply-user-id').value = uid; 
-        document.getElementById('adminReplyModal').classList.add('show'); 
-        
-        try {
-            await supabaseClient.from('messages').update({ is_read: true }).eq('id', mid); 
-        } catch(e) {
-            console.error(e);
-        }
-    }
-
-    async function sendAdminReply() { 
-        const textInput = document.getElementById('admin-reply-text').value;
-        const t = textInput.trim(); 
-        const uid = document.getElementById('reply-user-id').value; 
-        
-        if(!t) {
-            return;
-        }
-        
-        showLoader(true); 
-        
-        try {
-            await supabaseClient.from('messages').insert([{ 
-                user_id: uid, 
-                direction: 'admin_to_user', 
-                content: t, 
-                is_read: false 
-            }]); 
-            
-            document.getElementById('admin-reply-text').value = ''; 
-            document.getElementById('adminReplyModal').classList.remove('show'); 
-        } catch(e) {
-            console.error(e);
-        }
-        
-        showLoader(false); 
-    }
-
-    function openSystemMessageModal() { 
-        document.getElementById('sysMsgModal').classList.add('show'); 
-    }
-
-    async function sendSystemMessage() { 
-        const textInput = document.getElementById('sys-msg-text').value;
-        const t = textInput.trim(); 
-        
-        if(!t) {
-            return;
-        }
-        
-        showLoader(true); 
-        
-        try {
-            await supabaseClient.from('messages').insert([{ 
-                direction: 'system_all', 
-                content: t, 
-                is_read: false 
-            }]); 
-            
-            document.getElementById('sys-msg-text').value = ''; 
-            document.getElementById('sysMsgModal').classList.remove('show'); 
-            loadAdminInbox(); 
-        } catch(e) {
-            console.error(e);
-        }
-        
-        showLoader(false); 
-    }
-
-    /* Init Custom Timed Slider */
-    const slides = document.getElementById("slides");
-    const dots = document.querySelectorAll(".dot");
-    let currentSlide = 0; 
-    let slideTimeout;
-
-    function nextSlide() {
-        currentSlide = currentSlide + 1;
-        if(currentSlide >= dots.length) {
-            currentSlide = 0;
-        }
-        
-        slides.style.transform = `translateX(-${currentSlide * 100}%)`; 
-        
-        dots.forEach((d, i) => {
-            if(i === currentSlide) {
-                d.classList.add("active");
-            } else {
-                d.classList.remove("active");
-            }
-        }); 
-        
-        let delay = 4000;
-        if(currentSlide === 3) { 
-            delay = 15000;
-        }
-        
-        slideTimeout = setTimeout(nextSlide, delay);
-    }
-    
-    // Start slider
-    slideTimeout = setTimeout(nextSlide, 4000);
-
-    window.addEventListener('load', () => {
-        checkUserSession();
-    });
-
-</script>
-</body>
-</html>
+                document.getElementById('admin-msg-notif').Sorry, something went wrong. Please try your request again.
