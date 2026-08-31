@@ -202,7 +202,6 @@
 
         .input-field:focus { border-color: var(--accent); }
 
-        /* استایل اختصاصی تکست‌اریا برای جلوگیری از باگ پرش و تغییر سایز */
         textarea.input-field {
             height: auto !important;
             min-height: 120px;
@@ -633,6 +632,31 @@
     <!-- AUTH SCREEN -->
     <div id="auth-screen">
         <div class="box-container" id="login-box">
+            <div style="text-align: center; margin-bottom: 10px;">
+                <div class="premium-logo">
+                    <svg viewBox="0 0 1536 614"><path fill="var(--text-main)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/></svg>
+                </div>
+            </div>
+            <div class="welcome-text">WELCOME</div>
+
+            <div class="input-group">
+                <input type="text" id="log-user" class="input-field" placeholder="نام کاربری" data-i18n-placeholder="username" autocapitalize="none" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="input-group">
+                <input type="password" id="log-pass" class="input-field" placeholder="رمز عبور" data-i18n-placeholder="password" autocapitalize="none" autocomplete="off">
+            </div>
+            <label class="checkbox-container">
+                <input type="checkbox" onchange="togglePassword()"> 
+                <span data-i18n="show_pass">نمایش رمز عبور</span>
+            </label>
+            <button type="button" class="btn-primary" onclick="doLogin()" data-i18n="login_btn">ورود به حساب</button>
+            <button type="button" class="switch-box" onclick="toggleAuth('register')">
+                <span data-i18n="no_account">حساب کاربری ندارید؟</span> 
+                <span data-i18n="register_now" style="color:var(--accent);">ثبت‌نام کنید</span>
+            </button>
+        </div>
+
+        <div class="box-container" id="reg-box" style="display: none;">
             <div style="text-align: center; margin-bottom: 10px;">
                 <div class="premium-logo">
                     <svg viewBox="0 0 1536 614"><path fill="var(--text-main)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/></svg>
@@ -1332,42 +1356,70 @@
         try {
             const { data, error } = await supabaseClient.auth.getSession();
             if (error || !data.session) { 
-                showLoader(false); document.getElementById('auth-screen').style.display = 'flex'; return; 
+                showLoader(false); 
+                document.getElementById('auth-screen').style.display = 'flex'; 
+                return; 
             }
             const profileRes = await supabaseClient.from('users_data').select('*').eq('id', data.session.user.id).single();
             if (profileRes.error || !profileRes.data) { 
-                await supabaseClient.auth.signOut(); showLoader(false); document.getElementById('auth-screen').style.display = 'flex'; return; 
+                await supabaseClient.auth.signOut(); 
+                showLoader(false); 
+                document.getElementById('auth-screen').style.display = 'flex'; 
+                return; 
             }
             currentUserProfile = profileRes.data;
             if (currentUserProfile.status === 'pending' || currentUserProfile.status === 'rejected') {
                 showCustomAlert('اکانت شما هنوز تایید نشده یا مسدود است.');
-                await supabaseClient.auth.signOut(); document.getElementById('auth-screen').style.display = 'flex';
+                await supabaseClient.auth.signOut(); 
+                document.getElementById('auth-screen').style.display = 'flex';
             } else {
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
                 document.getElementById('bottom-nav').style.display = 'flex';
                 
                 let hasActiveSub = false;
-                if(currentUserProfile.role === 'admin') { hasActiveSub = true; }
-                else if(currentUserProfile.sub_end_date && new Date(currentUserProfile.sub_end_date) > new Date()) { hasActiveSub = true; }
+                if(currentUserProfile.role === 'admin') { 
+                    hasActiveSub = true; 
+                } else if(currentUserProfile.sub_end_date && new Date(currentUserProfile.sub_end_date) > new Date()) { 
+                    hasActiveSub = true; 
+                }
                 
                 document.getElementById('buy-sub-btn').style.display = hasActiveSub ? 'none' : 'block';
                 document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(currentUserProfile.avatar, currentUserProfile.username);
                 
                 if (currentUserProfile.role === 'admin') {
-                    document.getElementById('admin-sidebar-btn-container').innerHTML = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()"><span data-i18n="admin_panel">پنل مدیریت</span><svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>`;
+                    document.getElementById('admin-sidebar-btn-container').innerHTML = `
+                        <button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()">
+                            <span data-i18n="admin_panel">پنل مدیریت</span>
+                            <svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        </button>
+                    `;
                 }
                 
-                await updateHeartbeat(); await fetchFavorites(); await fetchMoviesFromDatabase(); await loadMarquee(); await checkNewsUpdates();
-                setInterval(() => { updateHeartbeat(); checkUnreadMessages(); }, 60000);
+                updateHeartbeat(); 
+                fetchFavorites().then(() => fetchMoviesFromDatabase());
+                loadMarquee();
+                checkNewsUpdates();
+                
+                setInterval(() => { 
+                    updateHeartbeat(); 
+                    checkUnreadMessages(); 
+                }, 60000);
             }
-        } catch (err) { document.getElementById('auth-screen').style.display = 'flex'; }
+        } catch (err) { 
+            console.error(err);
+            document.getElementById('auth-screen').style.display = 'flex'; 
+        }
         showLoader(false);
     }
 
     async function updateHeartbeat() { 
         if(currentUserProfile && currentUserProfile.role !== 'admin') { 
-            try { await supabaseClient.from('users_data').update({ last_active: new Date().toISOString() }).eq('id', currentUserProfile.id); } catch(e) {}
+            try { 
+                await supabaseClient.from('users_data').update({ last_active: new Date().toISOString() }).eq('id', currentUserProfile.id); 
+            } catch(e) {
+                console.error(e);
+            }
         } 
     }
 
@@ -1375,71 +1427,144 @@
         let u = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase();
         let p = toEnglishDigits(document.getElementById('reg-pass').value).trim();
         let m = document.getElementById('reg-model').value.trim();
-        if(!u || !p || !m) return showCustomAlert('لطفاً همه فیلدها را پر کنید');
+        
+        if(!u || !p || !m) {
+            showCustomAlert('لطفاً همه فیلدها را پر کنید');
+            return;
+        }
+        
         document.getElementById('acceptTermsCheck').checked = false; 
         document.getElementById('termsModal').classList.add('show');
     }
 
     async function finalizeRegistration() {
-        if(!document.getElementById('acceptTermsCheck').checked) return showCustomAlert('لطفاً قوانین را تایید کنید.');
+        if(!document.getElementById('acceptTermsCheck').checked) {
+            showCustomAlert('لطفاً قوانین را تایید کنید.');
+            return;
+        }
+        
         document.getElementById('termsModal').classList.remove('show'); 
         showLoader(true);
+        
         let u = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase();
         let p = toEnglishDigits(document.getElementById('reg-pass').value).trim();
         let m = document.getElementById('reg-model').value.trim();
+        
         try {
             const authRes = await supabaseClient.auth.signUp({ email: u + '@plato.com', password: p });
-            if (authRes.error) { showCustomAlert('خطا: ' + authRes.error.message); } 
-            else if (authRes.data && authRes.data.user) {
-                await supabaseClient.from('users_data').insert([{ id: authRes.data.user.id, email: u + '@plato.com', username: u, phone_model: m, status: 'pending', role: 'user', avatar: 0 }]);
-                showCustomAlert('درخواست عضویت ارسال شد.'); toggleAuth('login');
+            
+            if (authRes.error) { 
+                showCustomAlert('خطا در ثبت‌نام: ' + authRes.error.message); 
+            } else if (authRes.data && authRes.data.user) {
+                const dbRes = await supabaseClient.from('users_data').insert([{ 
+                    id: authRes.data.user.id, 
+                    email: u + '@plato.com', 
+                    username: u, 
+                    phone_model: m, 
+                    status: 'pending', 
+                    role: 'user', 
+                    avatar: 0 
+                }]);
+                
+                if(dbRes.error) {
+                    showCustomAlert('خطای دیتابیس: ' + dbRes.error.message);
+                } else {
+                    showCustomAlert('اطلاعات شما برای تایید شدن ارسال شد.'); 
+                    toggleAuth('login');
+                }
             }
-        } catch(err) { showCustomAlert('خطا رخ داد.'); }
+        } catch(err) { 
+            showCustomAlert('خطای ارتباط با سرور.'); 
+        }
         showLoader(false);
     }
 
     async function doLogin() {
         var u = toEnglishDigits(document.getElementById('log-user').value).trim().toLowerCase();
         var p = toEnglishDigits(document.getElementById('log-pass').value).trim();
-        if(!u || !p) return showCustomAlert('اطلاعات را وارد کنید');
+        
+        if(!u || !p) {
+            showCustomAlert('اطلاعات را وارد کنید');
+            return;
+        }
+        
         showLoader(true);
         try { 
             const { error } = await supabaseClient.auth.signInWithPassword({ email: u + '@plato.com', password: p }); 
-            if (error) { showCustomAlert('اطلاعات اشتباه است'); showLoader(false); } 
-            else { checkUserSession(); }
-        } catch(err) { showCustomAlert('خطا رخ داد.'); showLoader(false); }
+            if (error) { 
+                showCustomAlert('نام کاربری یا رمز عبور اشتباه است'); 
+                showLoader(false); 
+            } else { 
+                checkUserSession(); 
+            }
+        } catch(err) { 
+            showCustomAlert('خطای ارتباط با سرور.'); 
+            showLoader(false); 
+        }
     }
 
-    async function doLogout() { if(supabaseClient) { await supabaseClient.auth.signOut(); } window.location.reload(); }
+    async function doLogout() { 
+        if(supabaseClient) { 
+            await supabaseClient.auth.signOut(); 
+        } 
+        window.location.reload(); 
+    }
 
     function switchNav(target) {
-        if(linkTimerInterval) clearInterval(linkTimerInterval);
+        if(linkTimerInterval) {
+            clearInterval(linkTimerInterval);
+        }
+        
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        if(document.getElementById('nav-' + target)) document.getElementById('nav-' + target).classList.add('active');
+        if(document.getElementById('nav-' + target)) {
+            document.getElementById('nav-' + target).classList.add('active');
+        }
+        
         document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active-view'));
         
         if(target === 'home') {
             document.getElementById('view-home').classList.add('active-view');
             const marqueeText = document.getElementById('marqueeTextContent');
-            if (marqueeText) { marqueeText.style.animation = 'none'; void marqueeText.offsetWidth; marqueeText.style.animation = null; }
+            if (marqueeText) { 
+                marqueeText.style.animation = 'none'; 
+                void marqueeText.offsetWidth; 
+                marqueeText.style.animation = null; 
+            }
         }
-        if(target === 'favs') { document.getElementById('view-favs').classList.add('active-view'); renderFavs(); }
-        if(target === 'news') { document.getElementById('view-news').classList.add('active-view'); document.getElementById('news-notif').style.display = 'none'; loadNewsUser(); }
-        if(target === 'movie') { document.getElementById('view-movie').classList.add('active-view'); }
-        currentNav = target; window.scrollTo(0,0);
+        if(target === 'favs') { 
+            document.getElementById('view-favs').classList.add('active-view'); 
+            renderFavs(); 
+        }
+        if(target === 'news') { 
+            document.getElementById('view-news').classList.add('active-view'); 
+            document.getElementById('news-notif').style.display = 'none'; 
+            loadNewsUser(); 
+        }
+        if(target === 'movie') { 
+            document.getElementById('view-movie').classList.add('active-view'); 
+        }
+        
+        currentNav = target; 
+        window.scrollTo(0,0);
     }
 
     async function fetchFavorites() {
         if(!currentUserProfile) return;
         try {
             const { data } = await supabaseClient.from('favorites').select('movie_id').eq('user_id', currentUserProfile.id);
-            if(data) { favoritesArray = []; data.forEach(f => favoritesArray.push(f.movie_id)); }
-        } catch(e) {}
+            if(data) { 
+                favoritesArray = []; 
+                data.forEach(f => favoritesArray.push(f.movie_id)); 
+            }
+        } catch(e) {
+            console.error(e);
+        }
     }
 
     async function toggleFav(event, movieId) {
         event.stopPropagation(); 
         if(!currentUserProfile) return;
+        
         const isFavNow = !favoritesArray.includes(movieId);
         try {
             if(!isFavNow) {
@@ -1449,30 +1574,46 @@
                 favoritesArray.push(movieId); 
                 await supabaseClient.from('favorites').insert([{ user_id: currentUserProfile.id, movie_id: movieId }]);
             }
+            
             document.querySelectorAll(`.fav-btn[data-movie-id="${movieId}"]`).forEach(btn => {
                 if(isFavNow) btn.classList.add('active');
                 else btn.classList.remove('active');
             });
+            
             if(currentNav === 'favs') renderFavs();
-        } catch(e) {}
+        } catch(e) {
+            console.error(e);
+        }
     }
 
     function renderFavs() {
-        const container = document.getElementById('favsList'); container.innerHTML = '';
-        const favMovies = [];
-        dynamicDataArray.forEach(m => { if(favoritesArray.includes(m.id)) favMovies.push(m); });
+        const container = document.getElementById('favsList'); 
+        container.innerHTML = '';
         
-        if(favMovies.length === 0) { container.innerHTML = '<div style="color:var(--text-muted); font-size:13px; margin-top:20px;">لیست علاقه‌مندی خالی است.</div>'; return; }
+        const favMovies = [];
+        dynamicDataArray.forEach(m => { 
+            if(favoritesArray.includes(m.id)) favMovies.push(m); 
+        });
+        
+        if(favMovies.length === 0) { 
+            container.innerHTML = '<div style="color:var(--text-muted); font-size:13px; margin-top:20px;">لیست علاقه‌مندی خالی است.</div>'; 
+            return; 
+        }
         
         favMovies.forEach(item => {
-            const card = document.createElement("article"); card.className = "movie-card";
+            const card = document.createElement("article"); 
+            card.className = "movie-card";
             card.innerHTML = `<div class="poster"><img src="${item.poster}" loading="lazy"><div class="poster-overlay"></div></div><div class="movie-name">${item.title}</div>`;
             card.addEventListener("click", () => { openPlayer(item); });
+            
             const favBtn = document.createElement("div"); 
-            favBtn.className = "fav-btn active"; favBtn.setAttribute('data-movie-id', item.id);
+            favBtn.className = "fav-btn active"; 
+            favBtn.setAttribute('data-movie-id', item.id);
             favBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
             favBtn.onclick = (e) => { toggleFav(e, item.id); }; 
-            card.appendChild(favBtn); container.appendChild(card);
+            
+            card.appendChild(favBtn); 
+            container.appendChild(card);
         });
     }
 
@@ -1488,23 +1629,36 @@
                     else if(m.category === 'series' || !m.category) series.push(m);
                     else if(m.category === 'movie') movies.push(m);
                 });
-                renderDynamicList(series, 'seriesList'); renderDynamicList(movies, 'moviesList');
-                renderDynamicList(programs, 'programsList'); renderDynamicList(kids, 'kidsList');
+                renderDynamicList(series, 'seriesList'); 
+                renderDynamicList(movies, 'moviesList');
+                renderDynamicList(programs, 'programsList'); 
+                renderDynamicList(kids, 'kidsList');
             }
-        } catch(e) {}
+        } catch(e) {
+            console.error(e);
+        }
     }
 
     function renderDynamicList(list, containerId) {
-        const container = document.getElementById(containerId); container.innerHTML = "";
-        if (list.length === 0) { container.parentElement.style.display = 'none'; return; } 
-        else { container.parentElement.style.display = 'block'; }
+        const container = document.getElementById(containerId); 
+        container.innerHTML = "";
+        
+        if (list.length === 0) { 
+            container.parentElement.style.display = 'none'; 
+            return; 
+        } else { 
+            container.parentElement.style.display = 'block'; 
+        }
 
         list.forEach(item => {
-            const card = document.createElement("article"); card.className = "movie-card";
+            const card = document.createElement("article"); 
+            card.className = "movie-card";
             let newBadgeHTML = "";
             if(item.updated_at) {
                 let diffDays = (new Date() - new Date(item.updated_at)) / (1000 * 60 * 60 * 24);
-                if(diffDays <= 3 && diffDays >= 0) newBadgeHTML = `<div class="new-badge">${dict[currentLang]['new_badge'] || 'جدید'}</div>`;
+                if(diffDays <= 3 && diffDays >= 0) {
+                    newBadgeHTML = `<div class="new-badge">${dict[currentLang]['new_badge'] || 'جدید'}</div>`;
+                }
             }
             card.innerHTML = `${newBadgeHTML}<div class="poster"><img src="${item.poster}" loading="lazy"><div class="poster-overlay"></div></div><div class="movie-name">${item.title}</div>`;
             
@@ -1513,7 +1667,9 @@
             favBtn.setAttribute('data-movie-id', item.id);
             favBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
             favBtn.onclick = (e) => { toggleFav(e, item.id); }; 
-            card.appendChild(favBtn); card.addEventListener("click", () => { openPlayer(item); }); 
+            
+            card.appendChild(favBtn); 
+            card.addEventListener("click", () => { openPlayer(item); }); 
             container.appendChild(card);
         });
     }
@@ -1521,6 +1677,7 @@
     document.getElementById("searchInput").addEventListener("input", function() {
         var q = this.value.trim().toLowerCase(); 
         if (!q) return fetchMoviesFromDatabase();
+        
         const filteredArray = dynamicDataArray.filter(i => i.title.toLowerCase().includes(q));
         const programs = [], kids = [], series = [], movies = [];
         filteredArray.forEach(m => {
@@ -1529,8 +1686,11 @@
             else if(m.category === 'series' || !m.category) series.push(m);
             else if(m.category === 'movie') movies.push(m);
         });
-        renderDynamicList(series, 'seriesList'); renderDynamicList(movies, 'moviesList');
-        renderDynamicList(programs, 'programsList'); renderDynamicList(kids, 'kidsList');
+        
+        renderDynamicList(series, 'seriesList'); 
+        renderDynamicList(movies, 'moviesList');
+        renderDynamicList(programs, 'programsList'); 
+        renderDynamicList(kids, 'kidsList');
     });
 
     const videoPlayer = document.getElementById("videoPlayer");
@@ -1538,29 +1698,41 @@
 
     function checkSubscription() {
         if(currentUserProfile && currentUserProfile.role === 'admin') return true; 
-        if (!currentUserProfile || !currentUserProfile.sub_end_date) { showCustomAlert('اشتراک شما فعال نیست!'); return false; }
-        if(new Date() > new Date(currentUserProfile.sub_end_date)) { showCustomAlert('اشتراک شما منقضی شده است!'); return false; }
+        if (!currentUserProfile || !currentUserProfile.sub_end_date) { 
+            showCustomAlert('اشتراک شما فعال نیست!'); 
+            return false; 
+        }
+        if(new Date() > new Date(currentUserProfile.sub_end_date)) { 
+            showCustomAlert('اشتراک شما منقضی شده است!'); 
+            return false; 
+        }
         return true;
     }
 
     function openPlayer(movie) {
         if(!checkSubscription()) return; 
+        
         switchNav('movie');
         
         document.getElementById("movie-detail-title").textContent = movie.title;
         document.getElementById("neonTitle").textContent = movie.title;
         
-        if(movie.info || movie.description) {
+        if(movie.info) {
             document.getElementById('modal-movie-info').style.display = 'block';
-            let finalInfo = (movie.info || "") + (movie.description && !movie.info ? movie.description : "");
-            document.getElementById('modal-movie-desc').textContent = finalInfo.trim();
-        } else { document.getElementById('modal-movie-info').style.display = 'none'; }
+            document.getElementById('modal-movie-desc').textContent = movie.info;
+        } else { 
+            document.getElementById('modal-movie-info').style.display = 'none'; 
+        }
 
         document.getElementById("neonBanner").style.display = "flex";
         document.getElementById("realPlayerContainer").style.display = "none";
         
-        videoPlayer.pause(); videoPlayer.removeAttribute("src");
-        const linksContainer = document.getElementById("modal-links-container"); linksContainer.innerHTML = '';
+        videoPlayer.pause(); 
+        videoPlayer.removeAttribute("src");
+        
+        const linksContainer = document.getElementById("modal-links-container"); 
+        linksContainer.innerHTML = '';
+        
         if(linkTimerInterval) clearInterval(linkTimerInterval);
 
         if (movie.download_url) {
@@ -1586,34 +1758,47 @@
                 let rowHtml = `<div id="link-row-${index}" class="movie-link-row">`;
                 if(!isLinkExpired) {
                     rowHtml += `<div class="movie-link-title">${btnTitle}</div>`;
-                    if(timerStr && endTime > 0) rowHtml += `<div style="font-size:11px; color:#f59e0b; font-family:monospace; margin-left:10px; margin-right:10px;" class="link-timer" data-endtime="${endTime}">...</div>`;
+                    if(timerStr && endTime > 0) {
+                        rowHtml += `<div style="font-size:11px; color:#f59e0b; font-family:monospace; margin-left:10px; margin-right:10px;" class="link-timer" data-endtime="${endTime}">...</div>`;
+                    }
                     rowHtml += `<div class="movie-link-actions"><button class="btn-play-online" onclick="prepareVideo('${btnUrl}')">پخش آنلاین</button><button class="btn-download" onclick="directDownload('${btnTitle}', '${btnUrl}')">دانلود</button></div>`;
                 } else {
                     rowHtml += `<div class="movie-link-title" style="color:var(--text-muted); text-decoration:line-through;">${btnTitle}</div><div style="font-size:12px; color:#ef4444; font-weight:bold; background:rgba(239, 68, 68, 0.1); padding:4px 10px; border-radius:8px;">منقضی شده</div>`;
                 }
-                rowHtml += `</div>`; linksContainer.innerHTML += rowHtml;
+                rowHtml += `</div>`; 
+                linksContainer.innerHTML += rowHtml;
             });
             
             linkTimerInterval = setInterval(() => {
                 document.querySelectorAll('.link-timer').forEach(t => {
                     let diff = parseInt(t.getAttribute('data-endtime')) - new Date().getTime();
                     if(diff <= 0) {
-                        t.textContent = "منقضی شده"; t.style.color = "#ef4444";
+                        t.textContent = "منقضی شده"; 
+                        t.style.color = "#ef4444";
                         let titleDiv = t.parentElement.querySelector('.movie-link-title');
-                        if(titleDiv) t.parentElement.innerHTML = `<div class="movie-link-title" style="color:var(--text-muted); text-decoration:line-through;">${titleDiv.textContent}</div><div style="font-size:12px; color:#ef4444; font-weight:bold; background:rgba(239, 68, 68, 0.1); padding:4px 10px; border-radius:8px;">منقضی شده</div>`;
+                        if(titleDiv) {
+                            t.parentElement.innerHTML = `<div class="movie-link-title" style="color:var(--text-muted); text-decoration:line-through;">${titleDiv.textContent}</div><div style="font-size:12px; color:#ef4444; font-weight:bold; background:rgba(239, 68, 68, 0.1); padding:4px 10px; border-radius:8px;">منقضی شده</div>`;
+                        }
                     } else {
-                        let h = Math.floor(diff / (1000 * 60 * 60)), m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)), s = Math.floor((diff % (1000 * 60)) / 1000);
+                        let h = Math.floor(diff / (1000 * 60 * 60));
+                        let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                        let s = Math.floor((diff % (1000 * 60)) / 1000);
                         t.textContent = `${h}:${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s} مانده`;
                     }
                 });
             }, 1000);
-        } else { linksContainer.innerHTML = '<div style="font-size:12px; color:var(--text-muted); text-align:center;">لینکی ثبت نشده است.</div>'; }
+        } else { 
+            linksContainer.innerHTML = '<div style="font-size:12px; color:var(--text-muted); text-align:center;">لینکی ثبت نشده است.</div>'; 
+        }
     }
 
     window.prepareVideo = function(url) {
         pendingVideoUrl = url;
         let savedTime = localStorage.getItem('plato_prog_' + pendingVideoUrl);
-        if (savedTime && parseFloat(savedTime) > 10) { document.getElementById('resumeModal').classList.add('show'); return; }
+        if (savedTime && parseFloat(savedTime) > 10) { 
+            document.getElementById('resumeModal').classList.add('show'); 
+            return; 
+        }
         resumePlayback(false); 
     }
 
@@ -1622,36 +1807,67 @@
         document.getElementById("neonBanner").style.display = "none";
         document.getElementById("realPlayerContainer").style.display = "block";
         videoPlayer.src = pendingVideoUrl;
-        if (useSaved) { let savedTime = localStorage.getItem('plato_prog_' + pendingVideoUrl); if(savedTime) videoPlayer.currentTime = parseFloat(savedTime); }
-        try { await videoPlayer.play(); } catch(e) {}
+        
+        if (useSaved) { 
+            let savedTime = localStorage.getItem('plato_prog_' + pendingVideoUrl); 
+            if(savedTime) {
+                videoPlayer.currentTime = parseFloat(savedTime); 
+            }
+        }
+        try { 
+            await videoPlayer.play(); 
+        } catch(e) {
+            console.error(e);
+        }
     }
 
-    videoPlayer.addEventListener('timeupdate', function() { if (videoPlayer.currentTime > 5 && !videoPlayer.ended) localStorage.setItem('plato_prog_' + pendingVideoUrl, videoPlayer.currentTime); });
-    videoPlayer.addEventListener('ended', function() { localStorage.removeItem('plato_prog_' + pendingVideoUrl); });
+    videoPlayer.addEventListener('timeupdate', function() { 
+        if (videoPlayer.currentTime > 5 && !videoPlayer.ended) {
+            localStorage.setItem('plato_prog_' + pendingVideoUrl, videoPlayer.currentTime); 
+        }
+    });
+
+    videoPlayer.addEventListener('ended', function() { 
+        localStorage.removeItem('plato_prog_' + pendingVideoUrl); 
+    });
 
     window.toggleVideoQuality = function() {
         const btn = document.getElementById('qualityToggleBtn');
         if(videoPlayer.style.transform === 'scale(0.96)') {
             btn.textContent = dict[currentLang] && dict[currentLang]['quality_hd'] ? dict[currentLang]['quality_hd'] : 'کیفیت: عادی (HD)';
-            videoPlayer.style.transform = 'scale(1)'; showCustomAlert('کیفیت عادی شد.');
+            videoPlayer.style.transform = 'scale(1)'; 
+            showCustomAlert('کیفیت عادی شد.');
         } else {
             btn.textContent = currentLang === 'en' ? 'Quality: Lower (Smooth)' : 'کیفیت: کمتر (روان)';
-            videoPlayer.style.transform = 'scale(0.96)'; showCustomAlert('کیفیت بهینه شد.');
+            videoPlayer.style.transform = 'scale(0.96)'; 
+            showCustomAlert('کیفیت بهینه شد.');
         }
     }
 
     window.directDownload = function(title, url) {
         if(!checkSubscription() || !url) return;
-        const a = document.createElement('a'); a.href = url; a.target = '_blank';
+        const a = document.createElement('a'); 
+        a.href = url; 
+        a.target = '_blank';
         a.download = title.replace(/[^a-zA-Z0-9ا-ی]/g, '_') + '.mp4';
-        document.body.appendChild(a); a.click(); a.remove(); showCustomAlert('دانلود آغاز شد.');
+        document.body.appendChild(a); 
+        a.click(); 
+        a.remove(); 
+        showCustomAlert('دانلود آغاز شد.');
     }
 
-    function closePlayer() { if(linkTimerInterval) clearInterval(linkTimerInterval); videoPlayer.pause(); videoPlayer.removeAttribute("src"); switchNav('home'); }
+    function closePlayer() { 
+        if(linkTimerInterval) clearInterval(linkTimerInterval); 
+        videoPlayer.pause(); 
+        videoPlayer.removeAttribute("src"); 
+        switchNav('home'); 
+    }
 
     function openSidebar() {
-        document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebarOverlay').classList.add('open');
+        document.getElementById('sidebar').classList.add('open'); 
+        document.getElementById('sidebarOverlay').classList.add('open');
         document.getElementById('sidebarUser').textContent = currentUserProfile.username;
+        
         const badge = document.getElementById('premium-badge');
         
         if(currentUserProfile.role === 'admin') {
@@ -1665,50 +1881,85 @@
                     let daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                     document.getElementById('sub-time-left').textContent = currentLang === 'en' ? `Days left: ${daysLeft}` : `اعتبار اشتراک: ${daysLeft} روز`;
                     isActive = true;
-                } else { document.getElementById('sub-time-left').textContent = currentLang === 'en' ? "Expired" : "اشتراک منقضی شده"; }
-            } else { document.getElementById('sub-time-left').textContent = currentLang === 'en' ? "No active sub" : "بدون اشتراک فعال"; }
+                } else { 
+                    document.getElementById('sub-time-left').textContent = currentLang === 'en' ? "Expired" : "اشتراک منقضی شده"; 
+                }
+            } else { 
+                document.getElementById('sub-time-left').textContent = currentLang === 'en' ? "No active sub" : "بدون اشتراک فعال"; 
+            }
             badge.style.display = isActive ? 'inline-flex' : 'none';
         }
     }
 
-    function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('open'); }
+    function closeSidebar() { 
+        document.getElementById('sidebar').classList.remove('open'); 
+        document.getElementById('sidebarOverlay').classList.remove('open'); 
+    }
 
     function switchAdminTab(tabId, btn) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active'); btn.classList.add('active');
+        document.getElementById(tabId).classList.add('active'); 
+        btn.classList.add('active');
+        
         if(tabId === 'tab-messages') loadAdminInbox();
         if(tabId === 'tab-users') loadAllUsers();
         if(tabId === 'tab-files') loadAdminMovies();
-        if(tabId === 'tab-news-gift') { loadAdminNews(); loadAdminGifts(); }
+        if(tabId === 'tab-news-gift') { 
+            loadAdminNews(); 
+            loadAdminGifts(); 
+        }
     }
 
     function showAdminPanel() { 
-        document.getElementById('main-app').style.display = 'none'; closeSidebar(); document.getElementById('bottom-nav').style.display = 'none'; 
-        document.getElementById('admin-screen').style.display = 'flex'; loadPendingRequests(); loadAdminMovies(); loadAllUsers(); 
+        document.getElementById('main-app').style.display = 'none'; 
+        closeSidebar(); 
+        document.getElementById('bottom-nav').style.display = 'none'; 
+        document.getElementById('admin-screen').style.display = 'flex'; 
+        
+        loadPendingRequests(); 
+        loadAdminMovies(); 
+        loadAllUsers(); 
     }
 
     function hideAdminPanel() { 
-        document.getElementById('admin-screen').style.display = 'none'; document.getElementById('main-app').style.display = 'block'; 
-        document.getElementById('bottom-nav').style.display = 'flex'; fetchMoviesFromDatabase(); 
+        document.getElementById('admin-screen').style.display = 'none'; 
+        document.getElementById('main-app').style.display = 'block'; 
+        document.getElementById('bottom-nav').style.display = 'flex'; 
+        
+        fetchMoviesFromDatabase(); 
     }
 
     async function chargeSub() {
         var user = toEnglishDigits(document.getElementById('charge-user').value).trim().toLowerCase();
         var days = parseInt(toEnglishDigits(document.getElementById('charge-days').value));
-        if(!user || isNaN(days)) return showCustomAlert('اطلاعات را کامل وارد کنید');
+        
+        if(!user || isNaN(days)) {
+            showCustomAlert('اطلاعات را کامل وارد کنید');
+            return;
+        }
+        
         showLoader(true);
         try {
             const { data: udata } = await supabaseClient.from('users_data').select('id, sub_end_date').eq('username', user).single();
-            if (!udata) { showCustomAlert('کاربر پیدا نشد.'); showLoader(false); return; }
+            if (!udata) { 
+                showCustomAlert('کاربر پیدا نشد.'); 
+                showLoader(false); 
+                return; 
+            }
+            
             if(days === 0) {
-                await supabaseClient.from('users_data').update({ sub_end_date: null }).eq('id', udata.id); showCustomAlert('اشتراک کاربر لغو شد.');
+                await supabaseClient.from('users_data').update({ sub_end_date: null }).eq('id', udata.id); 
+                showCustomAlert('اشتراک کاربر لغو شد.');
             } else {
                 let baseDate = (udata.sub_end_date && new Date(udata.sub_end_date) > new Date()) ? new Date(udata.sub_end_date) : new Date();
                 baseDate.setDate(baseDate.getDate() + days);
-                await supabaseClient.from('users_data').update({ sub_end_date: baseDate.toISOString() }).eq('id', udata.id); showCustomAlert('اشتراک جمع و فعال شد.');
+                await supabaseClient.from('users_data').update({ sub_end_date: baseDate.toISOString() }).eq('id', udata.id); 
+                showCustomAlert('اشتراک جمع و فعال شد.');
             }
-        } catch(e) { showCustomAlert('خطا در ارتباط با سرور.'); } 
+        } catch(e) { 
+            showCustomAlert('خطا در ارتباط با سرور.'); 
+        } 
         showLoader(false);
     }
 
@@ -1750,6 +2001,7 @@
                         } else {
                             card.before(dragSourceElement);
                         }
+                        
                         showLoader(true);
                         const updates = Array.from(list.querySelectorAll('.draggable')).map((c, idx) => supabaseClient.from('movies').update({ sort_order: idx }).eq('id', c.dataset.id));
                         await Promise.all(updates); 
@@ -1769,19 +2021,20 @@
     }
 
     async function saveMovie() {
-        var cat = document.getElementById('new-movie-category').value;
-        var tit = document.getElementById('new-movie-title').value.trim();
-        var pos = document.getElementById('new-movie-poster').value.trim();
-        var infoText = document.getElementById('new-movie-info').value.trim();
-        var url = document.getElementById('new-movie-url').value.trim();
-        var isNew = document.getElementById('new-movie-isnew').checked;
+        const cat = document.getElementById('new-movie-category').value;
+        const tit = document.getElementById('new-movie-title').value.trim();
+        const pos = document.getElementById('new-movie-poster').value.trim();
+        const infoText = document.getElementById('new-movie-info').value.trim();
+        const url = document.getElementById('new-movie-url').value.trim();
+        const isNew = document.getElementById('new-movie-isnew').checked;
         
         if(!tit || !pos) {
-            return showCustomAlert('عنوان و لینک عکس را وارد کنید');
+            showCustomAlert('عنوان و لینک عکس را وارد کنید');
+            return;
         }
         
         // ارسال فقط و فقط فیلدهایی که در دیتابیس وجود دارند
-        var payload = { 
+        const payload = { 
             title: tit, 
             poster: pos, 
             info: infoText,
@@ -1806,7 +2059,6 @@
                 response = await supabaseClient.from('movies').insert([payload]);
             }
             
-            // بررسی دقیق ارور از سمت دیتابیس سوپابیس
             if (response && response.error) {
                 showCustomAlert("خطای دیتابیس: " + response.error.message);
                 console.error("Supabase Error:", response.error);
@@ -1830,7 +2082,7 @@
         document.getElementById('new-movie-category').value = m.category || 'series'; 
         document.getElementById('new-movie-title').value = m.title; 
         document.getElementById('new-movie-poster').value = m.poster; 
-        document.getElementById('new-movie-info').value = m.info || m.description || '';
+        document.getElementById('new-movie-info').value = m.info || '';
         document.getElementById('new-movie-url').value = m.download_url || '';
         
         if(m.updated_at && ((new Date() - new Date(m.updated_at)) / 86400000) <= 3) {
@@ -1877,14 +2129,21 @@
     async function loadAllUsers() {
         try {
             const { data } = await supabaseClient.from('users_data').select('*').order('created_at', { ascending: false });
-            const list = document.getElementById('all-users-list'); list.innerHTML = ''; 
-            let onlineCount = 0; const nowTime = new Date().getTime();
+            const list = document.getElementById('all-users-list'); 
+            list.innerHTML = ''; 
+            let onlineCount = 0; 
+            const nowTime = new Date().getTime();
+            
             if(data) {
                 data.forEach(user => {
-                    if(user.last_active && (nowTime - new Date(user.last_active).getTime()) < 300000) onlineCount++;
+                    if(user.last_active && (nowTime - new Date(user.last_active).getTime()) < 300000) {
+                        onlineCount++;
+                    }
                     if(user.role === 'admin') return;
+                    
                     let subText = "ندارد";
                     let subColor = "#8e8e93";
+                    
                     if(user.sub_end_date) { 
                         const diff = new Date(user.sub_end_date).getTime() - new Date().getTime(); 
                         if(diff > 0) {
@@ -1896,18 +2155,47 @@
                             subColor = "#ef4444";
                         }
                     }
-                    list.innerHTML += `<div class="req-card"><div class="req-info" style="display:flex; align-items:center; gap:10px;"><div style="width:36px;height:36px;border-radius:50%;overflow:hidden;">${getAvatar(user.avatar, user.username)}</div><div><div style="color:var(--accent);">${user.username}</div><small>اعتبار: <b style="color:${subColor};">${subText}</b></small></div></div><div><button class="btn-sm btn-reject" onclick="deleteUserAccount('${user.id}')">حذف</button></div></div>`;
+                    
+                    list.innerHTML += `
+                        <div class="req-card">
+                            <div class="req-info" style="display:flex; align-items:center; gap:10px;">
+                                <div style="width:36px;height:36px;border-radius:50%;overflow:hidden;">${getAvatar(user.avatar, user.username)}</div>
+                                <div>
+                                    <div style="color:var(--accent);">${user.username}</div>
+                                    <small>اعتبار: <b style="color:${subColor};">${subText}</b></small>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn-sm btn-reject" onclick="deleteUserAccount('${user.id}')">حذف</button>
+                            </div>
+                        </div>`;
                 });
                 document.getElementById('onlineUsersCount').textContent = onlineCount;
             }
-        } catch(e) {}
+        } catch(e) {
+            console.error(e);
+        }
     }
 
     async function loadPendingRequests() { 
         const { data } = await supabaseClient.from('users_data').select('*').eq('status', 'pending'); 
-        const list = document.getElementById('pending-list'); list.innerHTML = '';
+        const list = document.getElementById('pending-list'); 
+        list.innerHTML = '';
+        
         if(data) {
-            data.forEach(req => { list.innerHTML += `<div class="req-card"><div class="req-info"><div>آیدی: <b>${req.username}</b></div><small>مدل: ${req.phone_model}</small></div><div><button class="btn-sm btn-approve" onclick="updateStatus('${req.id}', 'approved')">تایید</button><button class="btn-sm btn-reject" onclick="updateStatus('${req.id}', 'rejected')">رد</button></div></div>`; });
+            data.forEach(req => { 
+                list.innerHTML += `
+                    <div class="req-card">
+                        <div class="req-info">
+                            <div>آیدی: <b>${req.username}</b></div>
+                            <small>مدل: ${req.phone_model}</small>
+                        </div>
+                        <div>
+                            <button class="btn-sm btn-approve" onclick="updateStatus('${req.id}', 'approved')">تایید</button>
+                            <button class="btn-sm btn-reject" onclick="updateStatus('${req.id}', 'rejected')">رد</button>
+                        </div>
+                    </div>`; 
+            });
         }
     }
 
@@ -1920,9 +2208,16 @@
             } else { 
                 response = await supabaseClient.from('users_data').update({ status: st }).eq('id', id); 
             }
-            if (response && response.error) showCustomAlert("خطا: " + response.error.message);
-            else { loadPendingRequests(); loadAllUsers(); }
-        } catch(e) {} 
+            
+            if (response && response.error) {
+                showCustomAlert("خطا: " + response.error.message);
+            } else { 
+                loadPendingRequests(); 
+                loadAllUsers(); 
+            }
+        } catch(e) {
+            console.error(e);
+        } 
         showLoader(false); 
     }
 
@@ -1931,133 +2226,356 @@
         showLoader(true); 
         try { 
             const { error } = await supabaseClient.from('users_data').delete().eq('id', id); 
-            if(error) showCustomAlert("خطا: " + error.message);
-            else loadAllUsers(); 
-        } catch(e) {} 
+            if(error) {
+                showCustomAlert("خطا: " + error.message);
+            } else {
+                loadAllUsers(); 
+            }
+        } catch(e) {
+            console.error(e);
+        } 
         showLoader(false); 
     }
 
     async function loadMarquee() {
         try {
             const { data } = await supabaseClient.from('messages').select('content').eq('direction', 'marquee').order('created_at', { ascending: false }).limit(1);
-            const container = document.getElementById('marqueeContainer'), textElem = document.getElementById('marqueeTextContent'), input = document.getElementById('admin-marquee-input'), speedInput = document.getElementById('admin-marquee-speed'), speedDisplay = document.getElementById('speed-display');
+            
+            const container = document.getElementById('marqueeContainer');
+            const textElem = document.getElementById('marqueeTextContent');
+            const input = document.getElementById('admin-marquee-input');
+            const speedInput = document.getElementById('admin-marquee-speed');
+            const speedDisplay = document.getElementById('speed-display');
+            
             if(data && data[0] && data[0].content.trim()) {
-                let textValue = data[0].content, finalSpeed = "15s";
-                if(textValue.includes("||")) { let parts = textValue.split("||"); textValue = parts[0]; finalSpeed = parts[1] + "s"; if(speedInput) { speedInput.value = parts[1]; if(speedDisplay) speedDisplay.innerText = finalSpeed; } }
-                if(textElem.textContent !== textValue) textElem.textContent = textValue; 
-                textElem.style.animation = 'none'; void textElem.offsetWidth; textElem.style.animation = `scroll-marquee ${finalSpeed} linear infinite`; container.style.display = 'flex'; 
-                if(input && !input.value) input.value = textValue;
-            } else { container.style.display = 'none'; }
-        } catch(e) {}
+                let textValue = data[0].content;
+                let finalSpeed = "15s";
+                
+                if(textValue.includes("||")) { 
+                    let parts = textValue.split("||"); 
+                    textValue = parts[0]; 
+                    finalSpeed = parts[1] + "s"; 
+                    if(speedInput) { 
+                        speedInput.value = parts[1]; 
+                        if(speedDisplay) speedDisplay.innerText = finalSpeed; 
+                    } 
+                }
+                
+                if(textElem.textContent !== textValue) {
+                    textElem.textContent = textValue; 
+                }
+                
+                textElem.style.animation = 'none'; 
+                void textElem.offsetWidth; 
+                textElem.style.animation = `scroll-marquee ${finalSpeed} linear infinite`; 
+                container.style.display = 'flex'; 
+                
+                if(input && !input.value) {
+                    input.value = textValue;
+                }
+            } else { 
+                container.style.display = 'none'; 
+            }
+        } catch(e) {
+            console.error(e);
+        }
     }
 
     window.saveMarqueeText = async function() { 
-        showLoader(true); let v = document.getElementById('admin-marquee-input').value.trim(); let speed = document.getElementById('admin-marquee-speed').value;
+        showLoader(true); 
+        let v = document.getElementById('admin-marquee-input').value.trim(); 
+        let speed = document.getElementById('admin-marquee-speed').value;
         if(v) v = v + "||" + speed;
+        
         try { 
             await supabaseClient.from('messages').delete().eq('direction', 'marquee'); 
             if(v) {
                 const { error } = await supabaseClient.from('messages').insert([{ direction: 'marquee', content: v, is_read: true }]); 
-                if(error) showCustomAlert('خطا: ' + error.message);
-                else { showCustomAlert('تابلو با موفقیت ذخیره شد.'); await loadMarquee(); }
+                if(error) {
+                    showCustomAlert('خطا: ' + error.message);
+                } else { 
+                    showCustomAlert('تابلو با موفقیت ذخیره شد.'); 
+                    await loadMarquee(); 
+                }
             }
-        } catch(e) { showCustomAlert('خطا در ذخیره سازی.'); } 
+        } catch(e) { 
+            showCustomAlert('خطا در ذخیره سازی.'); 
+        } 
         showLoader(false); 
     }
 
     async function checkNewsUpdates() { 
         try { 
             const { data } = await supabaseClient.from('news').select('id').order('id', {ascending: false}).limit(1); 
-            if(data && data.length > 0 && data[0].id > parseInt(lastNewsId)) document.getElementById('news-notif').style.display = 'block'; 
-        } catch(e) {} 
+            if(data && data.length > 0 && data[0].id > parseInt(lastNewsId)) {
+                document.getElementById('news-notif').style.display = 'block'; 
+            }
+        } catch(e) {
+            console.error(e);
+        } 
     }
 
     async function loadNewsUser() {
         showLoader(true);
         try {
             const { data: news } = await supabaseClient.from('news').select('*').order('created_at', { ascending: false });
+            
             let likedIds = [];
-            try { const { data: likes } = await supabaseClient.from('news_likes').select('news_id').eq('user_id', currentUserProfile.id); if(likes) likes.forEach(l => likedIds.push(l.news_id)); } catch(err) {}
-            const cont = document.getElementById('news-container'); cont.innerHTML = '';
+            try { 
+                const { data: likes } = await supabaseClient.from('news_likes').select('news_id').eq('user_id', currentUserProfile.id); 
+                if(likes) {
+                    likes.forEach(l => likedIds.push(l.news_id)); 
+                }
+            } catch(err) {
+                console.error(err);
+            }
+            
+            const cont = document.getElementById('news-container'); 
+            cont.innerHTML = '';
+            
             if(news && news.length > 0) {
-                lastNewsId = news[0].id; localStorage.setItem('plato_last_news', lastNewsId);
+                lastNewsId = news[0].id; 
+                localStorage.setItem('plato_last_news', lastNewsId);
+                
                 news.forEach(n => {
                     let btnClass = likedIds.includes(n.id) ? "news-btn liked" : "news-btn";
-                    cont.innerHTML += `<div class="news-card"><div class="news-header"><div class="news-avatar"><svg class="svg-icon" style="margin:0; width:22px; height:22px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 4.5C5 3.67 5.67 3 6.5 3H19V18.5C19 19.88 17.88 21 16.5 21H6.5C5.67 21 5 20.33 5 19.5V4.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 7H15.5M8.5 10.5H15.5M8.5 14H12.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="17" cy="6" r="2" fill="currentColor"/></svg></div><div><div class="news-author">PLATO News</div><div class="news-date">${new Date(n.created_at).toLocaleDateString('fa-IR')}</div></div></div><div class="news-content" id="n-txt-${n.id}">${n.content}</div><div class="news-actions"><button class="${btnClass}" onclick="likeNews(${n.id}, this)"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="like-cnt">${n.likes_count || 0}</span></button></div></div>`;
+                    cont.innerHTML += `
+                        <div class="news-card">
+                            <div class="news-header">
+                                <div class="news-avatar">
+                                    <svg class="svg-icon" style="margin:0; width:22px; height:22px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 4.5C5 3.67 5.67 3 6.5 3H19V18.5C19 19.88 17.88 21 16.5 21H6.5C5.67 21 5 20.33 5 19.5V4.5Z" stroke="currentColor" stroke-width="1.7"/>
+                                        <path d="M8.5 7H15.5M8.5 10.5H15.5M8.5 14H12.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                                        <circle cx="17" cy="6" r="2" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="news-author">PLATO News</div>
+                                    <div class="news-date">${new Date(n.created_at).toLocaleDateString('fa-IR')}</div>
+                                </div>
+                            </div>
+                            <div class="news-content" id="n-txt-${n.id}">${n.content}</div>
+                            <div class="news-actions">
+                                <button class="${btnClass}" onclick="likeNews(${n.id}, this)">
+                                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                    <span class="like-cnt">${n.likes_count || 0}</span>
+                                </button>
+                            </div>
+                        </div>`;
                 });
             }
-        } catch(e) {} showLoader(false);
+        } catch(e) {
+            console.error(e);
+        } 
+        showLoader(false);
     }
 
     window.likeNews = async function(nid, btn) {
-        const cntEl = btn.querySelector('.like-cnt'); let cnt = parseInt(cntEl.textContent);
+        const cntEl = btn.querySelector('.like-cnt'); 
+        let cnt = parseInt(cntEl.textContent);
+        
         try {
             if(btn.classList.contains('liked')) {
-                btn.classList.remove('liked'); cntEl.textContent = Math.max(0, cnt - 1);
+                btn.classList.remove('liked'); 
+                cntEl.textContent = Math.max(0, cnt - 1);
+                
                 await supabaseClient.from('news_likes').delete().eq('user_id', currentUserProfile.id).eq('news_id', nid);
+                
                 const {data} = await supabaseClient.from('news').select('likes_count').eq('id',nid).single();
-                if(data) await supabaseClient.from('news').update({likes_count: Math.max(0, data.likes_count - 1)}).eq('id', nid);
+                if(data) {
+                    await supabaseClient.from('news').update({likes_count: Math.max(0, data.likes_count - 1)}).eq('id', nid);
+                }
             } else {
-                btn.classList.add('liked'); cntEl.textContent = cnt + 1;
+                btn.classList.add('liked'); 
+                cntEl.textContent = cnt + 1;
+                
                 await supabaseClient.from('news_likes').insert([{user_id: currentUserProfile.id, news_id: nid}]);
+                
                 const {data} = await supabaseClient.from('news').select('likes_count').eq('id',nid).single();
-                if(data) await supabaseClient.from('news').update({likes_count: data.likes_count + 1}).eq('id', nid);
+                if(data) {
+                    await supabaseClient.from('news').update({likes_count: data.likes_count + 1}).eq('id', nid);
+                }
             }
-        } catch(e) {}
+        } catch(e) {
+            console.error(e);
+        }
     }
 
     let editingNewsId = null, adminNewsArray = [];
+    
     async function loadAdminNews() {
         try {
             const { data } = await supabaseClient.from('news').select('*').order('created_at', { ascending: false });
-            const list = document.getElementById('admin-news-list'); list.innerHTML = '';
-            if(data) { adminNewsArray = data; data.forEach(n => { list.innerHTML += `<div class="req-card" style="flex-direction:column; align-items:stretch;"><div style="font-size:13px; line-height:1.6; margin-bottom:10px;">${n.content}</div><div style="display:flex; justify-content:flex-end; gap:5px;"><button class="btn-sm btn-edit" onclick="editNews(${n.id})">ویرایش</button><button class="btn-sm btn-reject" onclick="deleteNews(${n.id})">حذف</button></div></div>`; }); }
-        } catch (e) {}
+            const list = document.getElementById('admin-news-list'); 
+            list.innerHTML = '';
+            
+            if(data) { 
+                adminNewsArray = data; 
+                data.forEach(n => { 
+                    list.innerHTML += `
+                        <div class="req-card" style="flex-direction:column; align-items:stretch;">
+                            <div style="font-size:13px; line-height:1.6; margin-bottom:10px;">${n.content}</div>
+                            <div style="display:flex; justify-content:flex-end; gap:5px;">
+                                <button class="btn-sm btn-edit" onclick="editNews(${n.id})">ویرایش</button>
+                                <button class="btn-sm btn-reject" onclick="deleteNews(${n.id})">حذف</button>
+                            </div>
+                        </div>`; 
+                }); 
+            }
+        } catch (e) {
+            console.error(e);
+        }
     }
 
-    window.editNews = function(id) { let targetNews = adminNewsArray.find(x => x.id === id); if(!targetNews) return; document.getElementById('new-news-content').value = targetNews.content; editingNewsId = id; document.getElementById('form-news-title').textContent = "ویرایش خبر"; document.getElementById('save-news-btn').textContent = "ثبت ویرایش"; document.getElementById('cancel-news-btn').style.display = "block"; }
-    window.cancelEditNews = function() { document.getElementById('new-news-content').value = ''; editingNewsId = null; document.getElementById('form-news-title').textContent = "ایجاد خبر جدید"; document.getElementById('save-news-btn').textContent = "انتشار خبر"; document.getElementById('cancel-news-btn').style.display = "none"; }
+    window.editNews = function(id) { 
+        let targetNews = adminNewsArray.find(x => x.id === id); 
+        if(!targetNews) return; 
+        
+        document.getElementById('new-news-content').value = targetNews.content; 
+        editingNewsId = id; 
+        document.getElementById('form-news-title').textContent = "ویرایش خبر"; 
+        document.getElementById('save-news-btn').textContent = "ثبت ویرایش"; 
+        document.getElementById('cancel-news-btn').style.display = "block"; 
+    }
+    
+    window.cancelEditNews = function() { 
+        document.getElementById('new-news-content').value = ''; 
+        editingNewsId = null; 
+        document.getElementById('form-news-title').textContent = "ایجاد خبر جدید"; 
+        document.getElementById('save-news-btn').textContent = "انتشار خبر"; 
+        document.getElementById('cancel-news-btn').style.display = "none"; 
+    }
+    
     async function postNews() { 
-        const val = document.getElementById('new-news-content').value.trim(); if(!val) return; showLoader(true); 
+        const val = document.getElementById('new-news-content').value.trim(); 
+        if(!val) return; 
+        
+        showLoader(true); 
         try { 
             let res;
-            if(editingNewsId) { res = await supabaseClient.from('news').update({content: val}).eq('id', editingNewsId); if(!res.error) showCustomAlert('خبر ویرایش شد'); } 
-            else { res = await supabaseClient.from('news').insert([{content: val}]); if(!res.error) showCustomAlert('خبر منتشر شد'); } 
-            if(res.error) showCustomAlert('خطا: ' + res.error.message);
-            else { cancelEditNews(); loadAdminNews(); }
-        } catch(e) {} showLoader(false); 
+            if(editingNewsId) { 
+                res = await supabaseClient.from('news').update({content: val}).eq('id', editingNewsId); 
+                if(!res.error) showCustomAlert('خبر ویرایش شد'); 
+            } else { 
+                res = await supabaseClient.from('news').insert([{content: val}]); 
+                if(!res.error) showCustomAlert('خبر منتشر شد'); 
+            } 
+            
+            if(res.error) {
+                showCustomAlert('خطا: ' + res.error.message);
+            } else { 
+                cancelEditNews(); 
+                loadAdminNews(); 
+            }
+        } catch(e) {
+            console.error(e);
+        } 
+        showLoader(false); 
     }
-    window.deleteNews = async function(id) { if(!confirm('حذف خبر؟')) return; showLoader(true); try { await supabaseClient.from('news').delete().eq('id', id); loadAdminNews(); } catch(e) {} showLoader(false); }
+    
+    window.deleteNews = async function(id) { 
+        if(!confirm('حذف خبر؟')) return; 
+        
+        showLoader(true); 
+        try { 
+            await supabaseClient.from('news').delete().eq('id', id); 
+            loadAdminNews(); 
+        } catch(e) {
+            console.error(e);
+        } 
+        showLoader(false); 
+    }
 
     async function createGiftCode() {
-        const code = document.getElementById('gift-code-input').value.trim().toUpperCase(), days = parseInt(document.getElementById('gift-days-input').value), max = parseInt(document.getElementById('gift-uses-input').value);
-        if(!code || isNaN(days) || isNaN(max)) return; showLoader(true); 
+        const code = document.getElementById('gift-code-input').value.trim().toUpperCase();
+        const days = parseInt(document.getElementById('gift-days-input').value);
+        const max = parseInt(document.getElementById('gift-uses-input').value);
+        
+        if(!code || isNaN(days) || isNaN(max)) return; 
+        
+        showLoader(true); 
         try { 
             const { error } = await supabaseClient.from('gift_codes').insert([{code: code, days: days, max_uses: max}]); 
-            if(error) showCustomAlert('خطا: ' + error.message);
-            else { showCustomAlert('کد ایجاد شد'); loadAdminGifts(); }
-        } catch(e) {} showLoader(false);
+            if(error) {
+                showCustomAlert('خطا: ' + error.message);
+            } else { 
+                showCustomAlert('کد ایجاد شد'); 
+                loadAdminGifts(); 
+            }
+        } catch(e) {
+            console.error(e);
+        } 
+        showLoader(false);
     }
 
     async function loadAdminGifts() {
         try {
             const { data } = await supabaseClient.from('gift_codes').select('*').order('id', {ascending: false});
-            const list = document.getElementById('gift-codes-list'); list.innerHTML = '';
-            if(data) { data.forEach(g => { list.innerHTML += `<div class="req-card"><div class="req-info"><div style="color:var(--accent); letter-spacing:2px;">${g.code}</div><small>${g.days} روز - استفاده: ${g.current_uses}/${g.max_uses}</small></div><div><button class="btn-sm btn-reject" onclick="deleteGiftCode(${g.id})">حذف</button></div></div>`; }); }
-        } catch(e) {}
+            const list = document.getElementById('gift-codes-list'); 
+            list.innerHTML = '';
+            
+            if(data) { 
+                data.forEach(g => { 
+                    list.innerHTML += `
+                        <div class="req-card">
+                            <div class="req-info">
+                                <div style="color:var(--accent); letter-spacing:2px;">${g.code}</div>
+                                <small>${g.days} روز - استفاده: ${g.current_uses}/${g.max_uses}</small>
+                            </div>
+                            <div>
+                                <button class="btn-sm btn-reject" onclick="deleteGiftCode(${g.id})">حذف</button>
+                            </div>
+                        </div>`; 
+                }); 
+            }
+        } catch(e) {
+            console.error(e);
+        }
     }
 
-    window.deleteGiftCode = async function(id) { if(!confirm('حذف کد هدیه؟')) return; showLoader(true); try { await supabaseClient.from('gift_codes').delete().eq('id', id); loadAdminGifts(); } catch(e) {} showLoader(false); }
-    function openGiftModal() { closeSidebar(); document.getElementById('giftModal').classList.add('show'); }
+    window.deleteGiftCode = async function(id) { 
+        if(!confirm('حذف کد هدیه؟')) return; 
+        
+        showLoader(true); 
+        try { 
+            await supabaseClient.from('gift_codes').delete().eq('id', id); 
+            loadAdminGifts(); 
+        } catch(e) {
+            console.error(e);
+        } 
+        showLoader(false); 
+    }
+    
+    function openGiftModal() { 
+        closeSidebar(); 
+        document.getElementById('giftModal').classList.add('show'); 
+    }
 
     async function applyGiftCode() {
-        const code = document.getElementById('user-gift-code').value.trim().toUpperCase(); if(!code) return; showLoader(true);
+        const code = document.getElementById('user-gift-code').value.trim().toUpperCase(); 
+        if(!code) return; 
+        
+        showLoader(true);
         try {
             const { data: used } = await supabaseClient.from('used_codes').select('*').eq('code', code).eq('user_id', currentUserProfile.id);
-            if(used && used.length > 0) { showCustomAlert('شما قبلا از این کد استفاده کرده‌اید!'); showLoader(false); return; }
+            if(used && used.length > 0) { 
+                showCustomAlert('شما قبلا از این کد استفاده کرده‌اید!'); 
+                showLoader(false); 
+                return; 
+            }
+            
             const { data: gc, error: gcError } = await supabaseClient.from('gift_codes').select('*').eq('code', code).single();
-            if(gcError || !gc) { showCustomAlert('کد وارد شده یافت نشد یا نامعتبر است.'); showLoader(false); return; }
-            if(gc.current_uses >= gc.max_uses) { showCustomAlert('ظرفیت استفاده از این کد تمام شده است.'); showLoader(false); return; }
+            if(gcError || !gc) { 
+                showCustomAlert('کد وارد شده یافت نشد یا نامعتبر است.'); 
+                showLoader(false); 
+                return; 
+            }
+            
+            if(gc.current_uses >= gc.max_uses) { 
+                showCustomAlert('ظرفیت استفاده از این کد تمام شده است.'); 
+                showLoader(false); 
+                return; 
+            }
 
             let baseDate = (currentUserProfile.sub_end_date && new Date(currentUserProfile.sub_end_date) > new Date()) ? new Date(currentUserProfile.sub_end_date) : new Date();
             baseDate.setDate(baseDate.getDate() + gc.days);
@@ -2067,42 +2585,104 @@
             await supabaseClient.from('used_codes').insert([{code: code, user_id: currentUserProfile.id}]);
             
             const { data: np } = await supabaseClient.from('users_data').select('*').eq('id', currentUserProfile.id).single();
-            currentUserProfile = np; document.getElementById('giftModal').classList.remove('show'); document.getElementById('user-gift-code').value = '';
-            showLoader(false); showCustomAlert('اشتراک هدیه با موفقیت فعال شد!'); triggerConfetti();
-        } catch(e) { showLoader(false); }
+            currentUserProfile = np; 
+            
+            document.getElementById('giftModal').classList.remove('show'); 
+            document.getElementById('user-gift-code').value = '';
+            
+            showLoader(false); 
+            showCustomAlert('اشتراک هدیه با موفقیت فعال شد!'); 
+            triggerConfetti();
+        } catch(e) { 
+            console.error(e);
+            showLoader(false); 
+        }
     }
 
     function triggerConfetti() {
-        const canvas = document.getElementById('confetti-canvas'); canvas.style.display = 'block'; canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const ctx = canvas.getContext('2d'); const pieces = []; const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
-        for(let i=0; i<100; i++) pieces.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height, w: Math.random() * 10 + 5, h: Math.random() * 10 + 5, c: colors[Math.floor(Math.random() * colors.length)], dy: Math.random() * 3 + 2, dx: Math.random() * 2 - 1, r: Math.random() * 360 });
+        const canvas = document.getElementById('confetti-canvas'); 
+        canvas.style.display = 'block'; 
+        canvas.width = window.innerWidth; 
+        canvas.height = window.innerHeight;
+        
+        const ctx = canvas.getContext('2d'); 
+        const pieces = []; 
+        const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
+        
+        for(let i=0; i<100; i++) {
+            pieces.push({ 
+                x: Math.random() * canvas.width, 
+                y: Math.random() * canvas.height - canvas.height, 
+                w: Math.random() * 10 + 5, 
+                h: Math.random() * 10 + 5, 
+                c: colors[Math.floor(Math.random() * colors.length)], 
+                dy: Math.random() * 3 + 2, 
+                dx: Math.random() * 2 - 1, 
+                r: Math.random() * 360 
+            });
+        }
+        
         let frame = 0; 
         function animate() { 
             ctx.clearRect(0, 0, canvas.width, canvas.height); 
-            pieces.forEach(p => { p.y += p.dy; p.x += p.dx; p.r += p.dx * 2; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r * Math.PI / 180); ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore(); }); 
-            if(++frame < 200) requestAnimationFrame(animate); else canvas.style.display = 'none'; 
+            pieces.forEach(p => { 
+                p.y += p.dy; 
+                p.x += p.dx; 
+                p.r += p.dx * 2; 
+                
+                ctx.save(); 
+                ctx.translate(p.x, p.y); 
+                ctx.rotate(p.r * Math.PI / 180); 
+                ctx.fillStyle = p.c; 
+                ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); 
+                ctx.restore(); 
+            }); 
+            
+            if(++frame < 200) {
+                requestAnimationFrame(animate); 
+            } else {
+                canvas.style.display = 'none'; 
+            }
         } 
         animate();
     }
 
     window.deleteAllMessages = async function() {
-        if(!confirm('حذف تمام پیام‌ها؟')) return; showLoader(true);
+        if(!confirm('حذف تمام پیام‌ها؟')) return; 
+        showLoader(true);
+        
         try {
             await supabaseClient.from('messages').delete().eq('user_id', currentUserProfile.id);
             const { data } = await supabaseClient.from('messages').select('id').eq('direction', 'system_all');
+            
             if(data) {
-                let storageKey = 'plato_del_msgs_' + currentUserProfile.id; let deletedMsgs = JSON.parse(localStorage.getItem(storageKey) || '[]');
-                data.forEach(m => { if(!deletedMsgs.includes(m.id)) deletedMsgs.push(m.id); });
+                let storageKey = 'plato_del_msgs_' + currentUserProfile.id; 
+                let deletedMsgs = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                
+                data.forEach(m => { 
+                    if(!deletedMsgs.includes(m.id)) deletedMsgs.push(m.id); 
+                });
                 localStorage.setItem(storageKey, JSON.stringify(deletedMsgs));
             }
-            await openInboxModal(); checkUnreadMessages();
-        } catch(e) {} showLoader(false);
+            
+            await openInboxModal(); 
+            checkUnreadMessages();
+        } catch(e) {
+            console.error(e);
+        } 
+        showLoader(false);
     }
 
     window.deleteLocalMsg = function(msgId) {
         if(!confirm('حذف پیام؟')) return;
-        let storageKey = 'plato_del_msgs_' + currentUserProfile.id; let deletedMsgs = JSON.parse(localStorage.getItem(storageKey) || '[]');
-        deletedMsgs.push(msgId); localStorage.setItem(storageKey, JSON.stringify(deletedMsgs)); openInboxModal(); checkUnreadMessages();
+        
+        let storageKey = 'plato_del_msgs_' + currentUserProfile.id; 
+        let deletedMsgs = JSON.parse(localStorage.getItem(storageKey) || '[]');
+        deletedMsgs.push(msgId); 
+        localStorage.setItem(storageKey, JSON.stringify(deletedMsgs)); 
+        
+        openInboxModal(); 
+        checkUnreadMessages();
     }
 
     async function checkUnreadMessages() {
@@ -2111,107 +2691,248 @@
             if(currentUserProfile.role === 'admin') {
                 const { data } = await supabaseClient.from('messages').select('id').eq('direction', 'user_to_admin').eq('is_read', false);
                 let show = (data && data.length > 0) ? 'inline-block' : 'none';
-                document.getElementById('admin-msg-notif').style.display = show; document.getElementById('header-notif').style.display = show;
+                document.getElementById('admin-msg-notif').style.display = show; 
+                document.getElementById('header-notif').style.display = show;
             } else {
                 const { data } = await supabaseClient.from('messages').select('id, direction, user_id').eq('is_read', false);
                 if(data) {
                     let deletedMsgs = JSON.parse(localStorage.getItem('plato_del_msgs_' + currentUserProfile.id) || '[]');
                     let unread = 0;
-                    data.forEach(m => { if (!deletedMsgs.includes(m.id) && (m.direction === 'system_all' || (m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id))) unread++; });
+                    data.forEach(m => { 
+                        if (!deletedMsgs.includes(m.id) && (m.direction === 'system_all' || (m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id))) {
+                            unread++; 
+                        }
+                    });
+                    
                     let show = unread > 0 ? 'inline-block' : 'none';
-                    document.getElementById('inbox-notif').style.display = show; document.getElementById('header-notif').style.display = show;
+                    document.getElementById('inbox-notif').style.display = show; 
+                    document.getElementById('header-notif').style.display = show;
                 }
             }
-        } catch(e) {}
+        } catch(e) {
+            console.error(e);
+        }
     }
 
-    function openSupportModal() { closeSidebar(); document.getElementById('supportModal').classList.add('show'); }
+    function openSupportModal() { 
+        closeSidebar(); 
+        document.getElementById('supportModal').classList.add('show'); 
+    }
 
     async function sendSupportMessage() {
-        const text = document.getElementById('support-msg-text').value.trim(); if(!text) return;
+        const text = document.getElementById('support-msg-text').value.trim(); 
+        if(!text) return;
+        
         let isVip = currentUserProfile.role === 'admin' || (currentUserProfile.sub_end_date && new Date(currentUserProfile.sub_end_date) > new Date());
         let storageKey = 'plato_ticket_history_' + currentUserProfile.id;
         let history = JSON.parse(localStorage.getItem(storageKey) || '[]');
-        let nowTime = new Date().getTime(), updatedHistory = [];
-        history.forEach(time => { if((nowTime - time) < (24 * 60 * 60 * 1000)) updatedHistory.push(time); }); history = updatedHistory;
-        let maxPer24h = isVip ? 4 : 2, cooldownMs = isVip ? 10 * 60 * 1000 : 30 * 60 * 1000; 
-        if(history.length >= maxPer24h) return showCustomAlert(`حداکثر ${maxPer24h} پیام در ۲۴ ساعت مجاز است.`);
+        let nowTime = new Date().getTime();
+        let updatedHistory = [];
+        
+        history.forEach(time => { 
+            if((nowTime - time) < (24 * 60 * 60 * 1000)) {
+                updatedHistory.push(time); 
+            }
+        }); 
+        history = updatedHistory;
+        
+        let maxPer24h = isVip ? 4 : 2;
+        let cooldownMs = isVip ? 10 * 60 * 1000 : 30 * 60 * 1000; 
+        
+        if(history.length >= maxPer24h) {
+            return showCustomAlert(`حداکثر ${maxPer24h} پیام در ۲۴ ساعت مجاز است.`);
+        }
+        
         if(history.length > 0) {
             let diffTime = nowTime - history[history.length - 1];
-            if(diffTime < cooldownMs) { let waitMins = Math.ceil((cooldownMs - diffTime) / 60000); return showCustomAlert(`لطفاً ${waitMins} دقیقه دیگر صبر کنید.`); }
+            if(diffTime < cooldownMs) { 
+                let waitMins = Math.ceil((cooldownMs - diffTime) / 60000); 
+                return showCustomAlert(`لطفاً ${waitMins} دقیقه دیگر صبر کنید.`); 
+            }
         }
+        
         showLoader(true); 
         try {
             const { error } = await supabaseClient.from('messages').insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text, is_read: false }]);
-            if(error) showCustomAlert('خطا: ' + error.message);
-            else {
-                history.push(nowTime); localStorage.setItem(storageKey, JSON.stringify(history));
-                showCustomAlert('ارسال شد.'); document.getElementById('support-msg-text').value = ''; document.getElementById('supportModal').classList.remove('show');
+            if(error) {
+                showCustomAlert('خطا: ' + error.message);
+            } else {
+                history.push(nowTime); 
+                localStorage.setItem(storageKey, JSON.stringify(history));
+                showCustomAlert('ارسال شد.'); 
+                document.getElementById('support-msg-text').value = ''; 
+                document.getElementById('supportModal').classList.remove('show');
             }
-        } catch(e) {} showLoader(false); 
+        } catch(e) {
+            console.error(e);
+        } 
+        showLoader(false); 
     }
 
     window.openInboxModal = async function() {
-        closeSidebar(); document.getElementById('inbox-notif').style.display = 'none'; document.getElementById('header-notif').style.display = 'none'; document.getElementById('inboxModal').classList.add('show'); showLoader(true);
+        closeSidebar(); 
+        document.getElementById('inbox-notif').style.display = 'none'; 
+        document.getElementById('header-notif').style.display = 'none'; 
+        document.getElementById('inboxModal').classList.add('show'); 
+        showLoader(true);
+        
         try {
             const { data } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: false });
-            const list = document.getElementById('user-messages-list'); list.innerHTML = '';
+            const list = document.getElementById('user-messages-list'); 
+            list.innerHTML = '';
+            
             if(data) {
-                let deletedMsgs = JSON.parse(localStorage.getItem('plato_del_msgs_' + currentUserProfile.id) || '[]'); let myMsgs = [];
-                data.forEach(m => { if (!deletedMsgs.includes(m.id) && (m.direction === 'system_all' || (m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id))) myMsgs.push(m); });
+                let deletedMsgs = JSON.parse(localStorage.getItem('plato_del_msgs_' + currentUserProfile.id) || '[]'); 
+                let myMsgs = [];
+                
+                data.forEach(m => { 
+                    if (!deletedMsgs.includes(m.id) && (m.direction === 'system_all' || (m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id))) {
+                        myMsgs.push(m); 
+                    }
+                });
+                
                 if(myMsgs.length > 0) {
                     myMsgs.forEach(m => {
                         let c = m.direction === 'system_all' ? 'system' : 'admin-reply';
                         let t = m.direction === 'system_all' ? '<b>پیام عمومی سیستم</b>' : '<b>پشتیبانی</b>';
-                        list.innerHTML += `<div class="msg-bubble ${c}"><div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px; margin-bottom:8px;"><span>${t}</span><button style="background:none; border:none; color:#ef4444; cursor:pointer; display:flex; align-items:center;" onclick="deleteLocalMsg(${m.id})"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button></div><div style="line-height:1.6; margin-top:4px;">${m.content}</div></div>`;
+                        
+                        list.innerHTML += `
+                            <div class="msg-bubble ${c}">
+                                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px; margin-bottom:8px;">
+                                    <span>${t}</span>
+                                    <button style="background:none; border:none; color:#ef4444; cursor:pointer; display:flex; align-items:center;" onclick="deleteLocalMsg(${m.id})">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    </button>
+                                </div>
+                                <div style="line-height:1.6; margin-top:4px;">${m.content}</div>
+                            </div>`;
                     });
+                    
                     await supabaseClient.from('messages').update({ is_read: true }).eq('direction', 'admin_to_user').eq('user_id', currentUserProfile.id).eq('is_read', false);
-                } else { list.innerHTML = '<div style="color:var(--text-muted); text-align:center;">خالی است.</div>'; }
+                } else { 
+                    list.innerHTML = '<div style="color:var(--text-muted); text-align:center;">خالی است.</div>'; 
+                }
             }
-        } catch(e) {} showLoader(false);
+        } catch(e) {
+            console.error(e);
+        } 
+        showLoader(false);
     }
     
     async function loadAdminInbox() {
         try {
             const { data: usersData } = await supabaseClient.from('users_data').select('id, username, avatar');
-            let userMap = {}; if(usersData) usersData.forEach(u => userMap[u.id] = u);
+            let userMap = {}; 
+            if(usersData) {
+                usersData.forEach(u => userMap[u.id] = u);
+            }
+            
             const { data: msgs } = await supabaseClient.from('messages').select('*').eq('direction', 'user_to_admin').order('created_at', { ascending: false });
-            const list = document.getElementById('admin-inbox-list'); list.innerHTML = '';
+            const list = document.getElementById('admin-inbox-list'); 
+            list.innerHTML = '';
+            
             if(msgs) {
                 msgs.forEach(msg => {
                     let sender = userMap[msg.user_id] || { username: 'کاربر', avatar: 1 };
-                    list.innerHTML += `<div class="req-card" style="flex-direction:column; align-items:stretch;"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;"><div style="display:flex; align-items:center; gap:8px;"><div style="width:28px; height:28px; border-radius:50%; overflow:hidden;">${getAvatar(sender.avatar, sender.username)}</div><div style="color:var(--accent); font-weight:bold;">${sender.username}</div></div><div style="display:flex; gap:4px;"><button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ</button><button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button></div></div><div style="background:var(--bg-box); padding:10px; border-radius:8px;">${msg.content}</div></div>`;
+                    list.innerHTML += `
+                        <div class="req-card" style="flex-direction:column; align-items:stretch;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                    <div style="width:28px; height:28px; border-radius:50%; overflow:hidden;">${getAvatar(sender.avatar, sender.username)}</div>
+                                    <div style="color:var(--accent); font-weight:bold;">${sender.username}</div>
+                                </div>
+                                <div style="display:flex; gap:4px;">
+                                    <button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ</button>
+                                    <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button>
+                                </div>
+                            </div>
+                            <div style="background:var(--bg-box); padding:10px; border-radius:8px;">${msg.content}</div>
+                        </div>`;
                 });
             }
+            
             const { data: sysMsgs } = await supabaseClient.from('messages').select('*').eq('direction', 'system_all').order('created_at', { ascending: false });
-            const sysList = document.getElementById('admin-sys-list'); sysList.innerHTML = '';
-            if(sysMsgs) { sysMsgs.forEach(msg => { sysList.innerHTML += `<div class="req-card" style="flex-direction:column; align-items:stretch;"><div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span style="color:#10b981;">پیام عمومی</span><button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button></div><div>${msg.content}</div></div>`; }); }
-        } catch(e) {}
+            const sysList = document.getElementById('admin-sys-list'); 
+            sysList.innerHTML = '';
+            
+            if(sysMsgs) { 
+                sysMsgs.forEach(msg => { 
+                    sysList.innerHTML += `
+                        <div class="req-card" style="flex-direction:column; align-items:stretch;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                                <span style="color:#10b981;">پیام عمومی</span>
+                                <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button>
+                            </div>
+                            <div>${msg.content}</div>
+                        </div>`; 
+                }); 
+            }
+        } catch(e) {
+            console.error(e);
+        }
     }
 
-    window.deleteAdminMsg = async function(id) { try { await supabaseClient.from('messages').delete().eq('id', id); loadAdminInbox(); } catch(e) {} }
+    window.deleteAdminMsg = async function(id) { 
+        try { 
+            await supabaseClient.from('messages').delete().eq('id', id); 
+            loadAdminInbox(); 
+        } catch(e) {
+            console.error(e);
+        } 
+    }
 
-    async function openAdminReply(uid, mid) { document.getElementById('reply-user-id').value = uid; document.getElementById('adminReplyModal').classList.add('show'); try { await supabaseClient.from('messages').update({ is_read: true }).eq('id', mid); } catch(e) {} }
+    async function openAdminReply(uid, mid) { 
+        document.getElementById('reply-user-id').value = uid; 
+        document.getElementById('adminReplyModal').classList.add('show'); 
+        try { 
+            await supabaseClient.from('messages').update({ is_read: true }).eq('id', mid); 
+        } catch(e) {
+            console.error(e);
+        } 
+    }
 
     async function sendAdminReply() { 
-        const t = document.getElementById('admin-reply-text').value.trim(); const uid = document.getElementById('reply-user-id').value; 
-        if(!t) return; showLoader(true); 
+        const t = document.getElementById('admin-reply-text').value.trim(); 
+        const uid = document.getElementById('reply-user-id').value; 
+        if(!t) return; 
+        
+        showLoader(true); 
         try { 
             const { error } = await supabaseClient.from('messages').insert([{ user_id: uid, direction: 'admin_to_user', content: t, is_read: false }]); 
-            if(error) showCustomAlert('خطا: ' + error.message);
-            else { document.getElementById('admin-reply-text').value = ''; document.getElementById('adminReplyModal').classList.remove('show'); }
-        } catch(e) {} showLoader(false); 
+            if(error) {
+                showCustomAlert('خطا: ' + error.message);
+            } else { 
+                document.getElementById('admin-reply-text').value = ''; 
+                document.getElementById('adminReplyModal').classList.remove('show'); 
+            }
+        } catch(e) {
+            console.error(e);
+        } 
+        showLoader(false); 
     }
 
-    function openSystemMessageModal() { document.getElementById('sysMsgModal').classList.add('show'); }
+    function openSystemMessageModal() { 
+        document.getElementById('sysMsgModal').classList.add('show'); 
+    }
 
     async function sendSystemMessage() { 
-        const t = document.getElementById('sys-msg-text').value.trim(); if(!t) return; showLoader(true); 
+        const t = document.getElementById('sys-msg-text').value.trim(); 
+        if(!t) return; 
+        
+        showLoader(true); 
         try { 
             const { error } = await supabaseClient.from('messages').insert([{ direction: 'system_all', content: t, is_read: false }]); 
-            if(error) showCustomAlert('خطا: ' + error.message);
-            else { document.getElementById('sys-msg-text').value = ''; document.getElementById('sysMsgModal').classList.remove('show'); loadAdminInbox(); }
-        } catch(e) {} showLoader(false); 
+            if(error) {
+                showCustomAlert('خطا: ' + error.message);
+            } else { 
+                document.getElementById('sys-msg-text').value = ''; 
+                document.getElementById('sysMsgModal').classList.remove('show'); 
+                loadAdminInbox(); 
+            }
+        } catch(e) {
+            console.error(e);
+        } 
+        showLoader(false); 
     }
 
     const slides = document.getElementById("slides"), dots = document.querySelectorAll(".dot");
@@ -2224,7 +2945,9 @@
     }
     slideTimeout = setTimeout(nextSlide, 4000);
 
-    window.addEventListener('load', () => { checkUserSession(); });
+    window.addEventListener('load', () => { 
+        checkUserSession(); 
+    });
 </script>
 </body>
 </html>
