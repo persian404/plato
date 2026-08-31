@@ -271,6 +271,16 @@
             position: relative; 
         }
 
+        .modal-full .modal-box {
+            max-width: 100% !important;
+            width: 100% !important;
+            height: 100vh !important;
+            max-height: 100vh !important;
+            border-radius: 0 !important;
+            border: none !important;
+            background: var(--bg-main);
+        }
+
         .modal-close-x { 
             position: absolute; 
             top: 14px; 
@@ -436,21 +446,19 @@
             backdrop-filter: blur(6px); 
         }
 
+        /* منوی کشویی: از سمت چپ باز می‌شود */
         .sidebar { 
             position: fixed; 
             top: 0; 
             bottom: 0; 
-            right: -280px; /* از سمت راست مخفی می‌شود ولی ما می‌خواهیم از چپ باشد */
+            left: -280px; 
             width: 280px; 
             background: var(--bg-box); 
             z-index: 4001; 
-            transition: 0.35s ease; 
+            transition: left 0.35s ease; 
+            border-right: 1px solid var(--border-color); 
             display: flex; 
             flex-direction: column; 
-            /* اصلاح باز شدن از سمت چپ در حالت راست‌چین */
-            left: -280px;
-            right: auto;
-            border-right: 1px solid var(--border-color);
         }
 
         .sidebar.open { 
@@ -651,13 +659,20 @@
             border-color: var(--accent); 
         }
 
+        /* چشمک‌زن استاندارد و نرم برای نوتیفیکیشن‌ها */
+        @keyframes blink {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.3); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
         .notif-dot { 
             width: 8px; 
             height: 8px; 
             background: #10b981; 
             border-radius: 50%; 
-            box-shadow: 0 0 6px #10b981; 
-            animation: blink 1.5s infinite; 
+            box-shadow: 0 0 8px #10b981; 
+            animation: blink 1.5s ease-in-out infinite; 
         }
         
         .sidebar-footer { 
@@ -978,17 +993,16 @@
             border-bottom: 1px solid var(--border-color); 
         }
 
+        /* با ساختار HTML جدید لوگو همیشه راست و دکمه پروفایل همیشه چپ می‌ایستد */
         .logo {
-            order: 2; /* در فارسی میره سمت راست */
-            margin-right: auto;
+            display: flex;
+            align-items: center;
         }
 
         .header-actions { 
-            order: 1; /* در فارسی میره سمت چپ */
             display: flex; 
             align-items: center; 
             gap: 10px; 
-            margin-left: auto; 
         }
 
         .profile-button { 
@@ -1022,7 +1036,6 @@
             transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
             z-index: 10;
             backdrop-filter: blur(8px);
-            order: 3; /* مرکز به صورت مطلق مهم است، نه فلکس */
         }
 
         .buy-sub-btn:hover {
@@ -1067,7 +1080,7 @@
             text-shadow: 0 0 4px #ff0000, 0 0 10px #ff0000, 0 0 18px #ff1111; 
             letter-spacing: 1.5px; 
             top: 50%; 
-            /* از سمت چپ بیرون کادر شروع می‌شود */
+            /* شروع از سمت چپ بیرون کادر */
             left: -100%; 
             transform: translateY(-50%); 
             animation: led-scroll-left-to-right 15s linear infinite; 
@@ -1116,7 +1129,7 @@
             transform: translateY(-50%); 
             color: var(--text-muted); 
         }
-        
+
         /* Slider Hero Container */
         .hero-container {
             margin: 14px auto 0; 
@@ -1422,16 +1435,32 @@
            MOVIE DETAIL PAGE (VIEW MOVIE)
         ========================= */
         
+        .movie-detail-header {
+            padding: 15px 20px 0px 20px; 
+            display: flex; 
+            align-items: center; 
+            /* استفاده از flex-end باعث می‌شود در RTL دکمه به منتهی‌الیه چپ برود */
+            justify-content: flex-end; 
+        }
+
         .btn-back {
-            background: none; 
+            background: var(--bg-input); 
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             color: var(--text-main); 
             font-weight: bold; 
             display: flex; 
             align-items: center; 
             gap: 8px; 
-            font-size: 15px;
+            font-size: 14px;
+            padding: 8px 16px;
             cursor: pointer;
-            margin-bottom: 20px; /* فاصله از کادر پلیر */
+            transition: 0.2s;
+        }
+
+        .btn-back:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--accent);
         }
 
         .movie-detail-content {
@@ -1742,25 +1771,32 @@
     <div class="modal" id="termsModal">
         <div class="modal-box" style="max-width: 450px;">
             <button class="modal-close-x" onclick="document.getElementById('termsModal').classList.remove('show')">×</button>
-            <div class="modal-content">
-                <h3 class="modal-title" style="text-align:center;">قوانین و مقررات پلاتو</h3>
-                <ul style="font-size: 13px; line-height: 1.9; color: var(--text-muted); padding-right: 20px; text-align: justify;" id="terms-list">
-                    <li style="margin-bottom:8px; font-weight:bold; color:#ef4444; font-size:14px;">
-                        بعد از ارسال درخواست ثبت نام، صبر کنید تا پشتیبانی سایت درخواست شما را بپذیرد. از ارسال درخواست‌های متعدد و پیام‌های اسپم به پشتیبانی جداً پرهیز بفرمایید، درصورت انجام این‌کار اکانت شما دائمی مسدود خواهد شد و هر درخواستی از سمت موبایل شما ارسال بشود تایید نخواهد شد.
-                    </li>
-                    <li style="margin-bottom:8px; font-weight:bold; color:var(--text-main);">
-                        حساب کاربری افراد فقط یک ماه بدون اشتراک نگهداری خواهد شد، بعد از یک‌ماه و در صورت نداشتن اشتراک، حساب کاربری برای همیشه از سایت حذف خواهد شد.
-                    </li>
-                    <li style="margin-bottom:8px;">حتماً رمزی که برای اکانت می‌گذارید یادتان باشد، چون رمز اکانت به هیچ عنوان قابل بازیابی نیست.</li>
-                    <li style="margin-bottom:8px;">حتماً اسمتان ترکیبی از حروف انگلیسی و حداقل چند عدد رندوم باشد. اسم‌های تکراری تایید نمی‌شوند.</li>
-                    <li style="margin-bottom:8px;">لینک‌های فیلم‌ها و سریال‌ها ممکن است به دلایلی از کار افتاده یا منقضی شوند. در صورت نیاز به دانلود، اسم محتوا را به پشتیبانی ارسال کنید تا در اسرع وقت رسیدگی شود.</li>
-                    <li style="margin-bottom:8px; color:var(--text-main);">سایت پلاتو فقط با اینترنت بین‌الملل کار می‌کند و با محدود شدن نت (ملی شدن) ممکن است بارگزاری نشود.</li>
-                    <li style="margin-bottom:8px; font-weight:bold; color:var(--text-main);">فقط ثبت‌نام کسانی که جهت خرید اشتراک با پشتیبانی هماهنگ باشند تایید خواهد شد!</li>
-                </ul>
-                <label class="checkbox-container" style="margin-top: 20px; padding:10px; background:var(--bg-input); border-radius:10px; border:1px solid var(--border-color);">
-                    <input type="checkbox" id="acceptTermsCheck"> 
-                    <span>پذیرفتن شرایط و قوانین فوق</span>
-                </label>
+            <div class="modal-content" style="padding: 0;">
+                <h3 class="modal-title" style="text-align:center; padding: 25px 25px 0 25px; margin-bottom: 10px;">قوانین و مقررات پلاتو</h3>
+                
+                <div style="max-height: 45vh; overflow-y: auto; padding: 0 25px 25px 25px;">
+                    <ul style="font-size: 13px; line-height: 1.9; color: var(--text-muted); padding-right: 20px; text-align: justify;" id="terms-list">
+                        <li style="margin-bottom:8px; font-weight:bold; color:#ef4444; font-size:14px;">
+                            بعد از ارسال درخواست ثبت نام، صبر کنید تا پشتیبانی سایت درخواست شما را بپذیرد. از ارسال درخواست‌های متعدد و پیام‌های اسپم به پشتیبانی جداً پرهیز بفرمایید، درصورت انجام این‌کار حساب کاربری شما دائمی مسدود خواهد شد و هر درخواستی از سمت موبایل شما ارسال بشود تایید نخواهد شد.
+                        </li>
+                        <li style="margin-bottom:8px; font-weight:bold; color:var(--text-main);">
+                            حساب کاربری افراد فقط یک ماه بدون اشتراک نگهداری خواهد شد، بعد از یک‌ماه و در صورت نداشتن اشتراک، حساب کاربری برای همیشه از سایت حذف خواهد شد.
+                        </li>
+                        <li style="margin-bottom:8px;">حتماً رمزی که برای حساب کاربری می‌گذارید یادتان باشد، چون رمز حساب به هیچ عنوان قابل بازیابی نیست.</li>
+                        <li style="margin-bottom:8px;">حتماً اسمتان ترکیبی از حروف انگلیسی و حداقل چند عدد رندوم باشد. اسم‌های تکراری تایید نمی‌شوند.</li>
+                        <li style="margin-bottom:8px;">لینک‌های فیلم‌ها و سریال‌ها ممکن است به دلایلی از کار افتاده یا منقضی شوند. در صورت نیاز به دانلود، اسم محتوا را به پشتیبانی ارسال کنید تا در اسرع وقت رسیدگی شود.</li>
+                        <li style="margin-bottom:8px; color:var(--text-main);">سایت پلاتو فقط با اینترنت بین‌الملل کار می‌کند و با محدود شدن نت (ملی شدن) ممکن است بارگزاری نشود.</li>
+                        <li style="margin-bottom:8px; font-weight:bold; color:var(--text-main);">فقط ثبت‌نام کسانی که جهت خرید اشتراک با پشتیبانی هماهنگ باشند تایید خواهد شد!</li>
+                    </ul>
+                    
+                    <label class="checkbox-container" style="margin-top: 20px; padding:10px; background:var(--bg-input); border-radius:10px; border:1px solid var(--border-color);">
+                        <input type="checkbox" id="acceptTermsCheck"> 
+                        <span>پذیرفتن شرایط و قوانین فوق</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div style="padding: 0 25px 25px 25px;">
                 <button class="btn-primary" onclick="finalizeRegistration()">تایید و ارسال ثبت‌نام</button>
             </div>
         </div>
@@ -1772,12 +1808,8 @@
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <button class="theme-toggle-btn" onclick="toggleTheme()" title="تغییر تم">
-                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-            </button>
-            
-            <div class="profile-avatar-wrap" onclick="openAvatarModal()">
+            <!-- پروفایل -->
+            <div class="profile-avatar-wrap" onclick="openAvatarModal()" style="margin-top:10px;">
                 <div class="profile-avatar-svg" id="sidebar-avatar-img"></div>
                 <div class="avatar-edit-badge">
                     <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
@@ -1810,12 +1842,14 @@
                 <svg class="btn-icon" viewBox="0 0 24 24"><path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
             </button>
             
-            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="text-decoration:none; padding: 10px 14px; display: block;">
-                <div style="display:flex; align-items:center; gap:6px; justify-content: flex-end;">
-                    <span style="font-weight:bold; font-size:13.5px; color:var(--text-main);">کانال تلگرامی پلاتو</span>
-                    <svg class="btn-icon" style="margin:0; color:var(--accent);" viewBox="0 0 24 24"><path d="M21.5 2L2 11l6 3 2.5 7L13 16l5 5L21.5 2z"/></svg>
+            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="color:var(--accent); text-decoration:none; padding: 10px 14px;">
+                <div style="display:flex; flex-direction:column; width:100%;">
+                    <div style="display:flex; align-items:center; justify-content:flex-start; gap:6px;">
+                        <svg class="btn-icon" style="margin:0; color:var(--accent);" viewBox="0 0 24 24"><path d="M21.5 2L2 11l6 3 2.5 7L13 16l5 5L21.5 2z"/></svg>
+                        <span style="font-weight:bold; font-size:13.5px; color:var(--text-main);">کانال تلگرامی پلاتو</span>
+                    </div>
+                    <div style="text-align:left; font-weight:900; font-size:14px; color:var(--accent); margin-top:4px;" dir="ltr">@plato_media</div>
                 </div>
-                <div style="text-align:left; font-weight:900; font-size:14px; color:var(--accent); margin-top:4px;" dir="ltr">@plato_media</div>
             </a>
 
             <div id="admin-sidebar-btn-container"></div>
@@ -1850,7 +1884,9 @@
 
         <div id="tab-files" class="tab-content active admin-section">
             <div style="background:var(--bg-input); padding:15px; border-radius:14px; margin-bottom:20px; border:1px solid var(--border-color);">
-                <h3 style="margin-bottom:10px; font-size:14px;">تنظیم تابلوی LED سراسری</h3>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0; font-size:14px;">تنظیم تابلوی LED سراسری</h3>
+                </div>
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
                     <label style="font-size:12px; color:var(--text-muted); white-space:nowrap;">سرعت حرکت:</label>
                     <input type="range" id="admin-marquee-speed" min="5" max="30" value="15" dir="ltr" style="width:100%; accent-color:var(--accent);" oninput="document.getElementById('speed-display').innerText = this.value + 's'">
@@ -1968,9 +2004,17 @@
     </div>
 
     <!-- =========================
-         MAIN APP & HEADER
+         MAIN APP & HEADER (FIXED ALIGNMENT)
     ========================= -->
     <header class="header">
+        
+        <!-- دکمه خرید همیشه در مرکز -->
+        <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none;">
+            خرید اشتراک
+            <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
+        </a>
+
+        <!-- لوگو همیشه در راست -->
         <div class="logo">
             <div class="premium-logo">
                 <svg viewBox="0 0 1536 614">
@@ -1978,17 +2022,13 @@
                 </svg>
             </div>
         </div>
-        
-        <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none;">
-            خرید اشتراک
-            <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
-        </a>
 
+        <!-- آیکون پروفایل/منو همیشه در چپ -->
         <div class="header-actions">
             <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             </button>
-            <span class="notif-dot" id="header-notif" style="position:absolute; top:18px; display:none;"></span>
+            <span class="notif-dot" id="header-notif" style="position:absolute; top:18px; left:18px; display:none; z-index:10;"></span>
         </div>
     </header>
 
@@ -1996,7 +2036,6 @@
         <!-- Home View -->
         <div id="view-home" class="view-section active-view">
             
-            <!-- GLOBAL MARQUEE -->
             <div id="marqueeContainer" class="marquee-box" style="display:none;">
                 <div class="marquee-text-wrapper">
                     <div class="marquee-text" id="marqueeTextContent"></div>
@@ -2075,12 +2114,14 @@
         <!-- Dedicated Movie Page View -->
         <div id="view-movie" class="view-section" style="padding-bottom: 90px; background: var(--bg-main);">
             
-            <div class="movie-detail-content">
+            <div class="movie-detail-header" style="justify-content: flex-end;">
                 <button class="btn-back" onclick="closePlayer()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
                     بازگشت
                 </button>
-                
+            </div>
+
+            <div class="movie-detail-content">
                 <div class="neon-banner" id="neonBanner">
                     <div class="neon-banner-inner" id="neonBannerInner">
                         <div class="neon-text" id="neonTitle">نام محتوا</div>
@@ -2252,83 +2293,6 @@
     let lastNewsId = localStorage.getItem('plato_last_news') || 0;
     let linkTimerInterval = null;
 
-    /* =========================
-       AVATAR SYSTEM (Precise SVG Geometries)
-    ========================= */
-    const AVATARS = {
-        1: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <clipPath id="avatarClip">
-                    <circle cx="100" cy="100" r="96"/>
-                  </clipPath>
-                </defs>
-                <circle cx="100" cy="100" r="96" fill="#EAF2FF"/>
-                <g clip-path="url(#avatarClip)">
-                  <path d="M35 205 C38 169 57 148 79 141 L100 155 L121 141 C143 148 162 169 165 205Z" fill="#3478E5"/>
-                  <path d="M79 141 L100 158 L121 141" fill="none" stroke="#245FC2" stroke-width="5" stroke-linejoin="round"/>
-                  <path d="M80 116 L80 144 L100 157 L120 144 L120 116Z" fill="#F1B08B"/>
-                  <path d="M66 82 C61 81 59 86 60 92 C60.5 97 63 99 67 97 L68 84Z" fill="#E4A07D"/>
-                  <path d="M134 82 C139 81 141 86 140 92 C139.5 97 137 99 133 97 L132 84Z" fill="#E4A07D"/>
-                  <path d="M65 61 C65 39 79 27 100 27 C121 27 135 39 135 61 V96 C135 120 120 135 100 135 C80 135 65 120 65 96Z" fill="#F1B08B"/>
-                  <path d="M63 67 C59 47 66 31 82 25 C101 17 124 24 134 40 C139 48 139 59 136 68 C128 61 122 54 117 45 C110 54 99 57 89 53 C78 49 70 57 63 67Z" fill="#27364D"/>
-                  <path d="M73 43 C82 31 96 27 108 29" fill="none" stroke="#40536F" stroke-width="6" stroke-linecap="round"/>
-                  <path d="M76 77 Q83 73 90 77" fill="none" stroke="#26344A" stroke-width="3.5" stroke-linecap="round"/>
-                  <path d="M110 77 Q117 73 124 77" fill="none" stroke="#26344A" stroke-width="3.5" stroke-linecap="round"/>
-                  <circle cx="83" cy="87" r="3.5" fill="#26344A"/>
-                  <circle cx="117" cy="87" r="3.5" fill="#26344A"/>
-                  <path d="M100 89 L97 104 L102 106" fill="none" stroke="#D38C6C" stroke-width="2.8" stroke-linecap="round"/>
-                  <path d="M90 115 Q100 121 110 115" fill="none" stroke="#9D5C52" stroke-width="3" stroke-linecap="round"/>
-                </g>
-                <circle cx="100" cy="100" r="96" fill="none" stroke="#D7E3F5" stroke-width="3"/>
-            </svg>`,
-            
-        2: `<svg viewBox="0 0 100 100">
-                <rect width="100" height="100" fill="#fbcfe8"/>
-                <path d="M25 100 C25 65, 75 65, 75 100" fill="#be185d" stroke="#9f1239" stroke-width="2"/>
-                <path d="M20 70 C10 40, 30 10, 50 10 C70 10, 90 40, 80 70 Z" fill="#78350f"/>
-                <rect x="44" y="60" width="12" height="15" fill="#fcd34d"/>
-                <circle cx="50" cy="45" r="22" fill="#fde047"/>
-                <path d="M28 45 C28 20, 72 20, 72 45 C65 25, 35 25, 28 45 Z" fill="#92400e"/>
-                <path d="M36 45 A4 4 0 0 1 44 45" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
-                <path d="M56 45 A4 4 0 0 1 64 45" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
-                <circle cx="35" cy="52" r="4" fill="#f43f5e" opacity="0.5"/>
-                <circle cx="65" cy="52" r="4" fill="#f43f5e" opacity="0.5"/>
-                <path d="M45 58 Q50 62 55 58" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>`,
-            
-        3: `<svg viewBox="0 0 100 100">
-                <rect width="100" height="100" fill="#1e293b"/>
-                <circle cx="50" cy="50" r="38" fill="#334155"/>
-                <path d="M56 18 L28 54 L50 54 L44 82 L72 46 L50 46 Z" fill="#facc15" stroke="#fef08a" stroke-width="2" stroke-linejoin="round"/>
-            </svg>`,
-            
-        4: `<svg viewBox="0 0 100 100">
-                <rect width="100" height="100" fill="#fef08a"/>
-                <circle cx="50" cy="50" r="38" fill="#fde047"/>
-                <path d="M50 50 C25 15, 5 30, 15 65 C22 75, 40 65, 50 50 Z" fill="#f43f5e"/>
-                <path d="M50 50 C75 15, 95 30, 85 65 C78 75, 60 65, 50 50 Z" fill="#f43f5e"/>
-                <path d="M45 50 L22 82 L40 88 L50 55 Z" fill="#e11d48"/>
-                <path d="M55 50 L78 82 L60 88 L50 55 Z" fill="#e11d48"/>
-                <circle cx="50" cy="50" r="9" fill="#fda4af"/>
-            </svg>`,
-            
-        5: `<svg viewBox="0 0 100 100">
-                <rect width="100" height="100" fill="#dcfce7"/>
-                <circle cx="50" cy="50" r="38" fill="#a7f3d0"/>
-                <path d="M35 46 L35 65 C35 75, 65 75, 65 65 L65 46 Z" fill="#1e293b"/>
-                <polygon points="50,25 85,40 50,55 15,40" fill="#334155"/>
-                <polygon points="50,25 82,40 50,53 18,40" fill="#475569"/>
-                <circle cx="50" cy="40" r="3.5" fill="#facc15"/>
-                <path d="M50 40 Q 75 45 75 65" fill="none" stroke="#facc15" stroke-width="3"/>
-                <polygon points="71,65 79,65 77,80 73,80" fill="#eab308"/>
-            </svg>`,
-            
-        6: `<svg viewBox="0 0 100 100">
-                <rect width="100" height="100" fill="#fef08a"/>
-                <path d="M50 15 L61 38 L85 41 L67 58 L72 82 L50 70 L28 82 L33 58 L15 41 L39 38 Z" fill="#eab308" stroke="#ca8a04" stroke-width="2" stroke-linejoin="round"/>
-            </svg>`
-    };
-
     function getAvatar(id, username) { 
         if (!id || id === 0 || !AVATARS[id]) {
             let initial = 'U';
@@ -2493,7 +2457,7 @@
             currentUserProfile = profileRes.data;
             
             if (currentUserProfile.status === 'pending' || currentUserProfile.status === 'rejected') {
-                showCustomAlert('اکانت شما هنوز تایید نشده یا مسدود است.');
+                showCustomAlert('حساب کاربری شما هنوز تایید نشده یا مسدود است.');
                 await supabaseClient.auth.signOut(); 
                 document.getElementById('auth-screen').style.display = 'flex';
             } else {
@@ -2537,6 +2501,9 @@
                     updateHeartbeat(); 
                     checkUnreadMessages(); 
                 }, 60000);
+                
+                // چک کردن اولیه پیام‌ها
+                checkUnreadMessages();
             }
         } catch (err) { 
             console.error(err);
@@ -2727,19 +2694,25 @@
             return;
         }
         
-        const btn = event.currentTarget; 
         const isFav = favoritesArray.includes(movieId);
         
         try {
             if(isFav) {
                 favoritesArray = favoritesArray.filter(id => id !== movieId); 
-                btn.classList.remove('active');
                 await supabaseClient.from('favorites').delete().eq('user_id', currentUserProfile.id).eq('movie_id', movieId);
             } else {
                 favoritesArray.push(movieId); 
-                btn.classList.add('active');
                 await supabaseClient.from('favorites').insert([{ user_id: currentUserProfile.id, movie_id: movieId }]);
             }
+            
+            // همگام‌سازی لحظه‌ای تمام دکمه‌های این فیلم در تمام تب‌ها
+            document.querySelectorAll(`.fav-btn[data-movie-id="${movieId}"]`).forEach(btn => {
+                if (favoritesArray.includes(movieId)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
             
             if(currentNav === 'favs') {
                 renderFavs();
@@ -2781,6 +2754,7 @@
             
             const favBtn = document.createElement("div"); 
             favBtn.className = "fav-btn active";
+            favBtn.setAttribute('data-movie-id', item.id);
             favBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
             favBtn.onclick = (e) => {
                 toggleFav(e, item.id);
@@ -2865,6 +2839,7 @@
                 favBtn.className = "fav-btn";
             }
             
+            favBtn.setAttribute('data-movie-id', item.id);
             favBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
             
             favBtn.onclick = (e) => {
@@ -2919,7 +2894,6 @@
     });
 
     /* Video Player & Autoplay / Resume Logic / Per Link Timer */
-    const playerModal = document.getElementById("playerModal");
     const videoPlayer = document.getElementById("videoPlayer");
     let pendingVideoUrl = "";
 
@@ -3223,6 +3197,10 @@
         
         if(tabId === 'tab-messages') {
             loadAdminInbox();
+            // با رفتن به بخش پیام‌های ادمین، نوتیفیکیشن‌ها خوانده می‌شوند
+            document.getElementById('admin-msg-notif').style.display = 'none';
+            document.getElementById('header-notif').style.display = 'none';
+            supabaseClient.from('messages').update({ is_read: true }).eq('direction', 'user_to_admin').eq('is_read', false).then();
         }
         if(tabId === 'tab-users') {
             loadAllUsers();
@@ -3785,7 +3763,7 @@
                     
                     let cardHtml = `<div class="news-card">`;
                     cardHtml += `<div class="news-header">`;
-                    cardHtml += `<div class="news-avatar" style="font-size: 18px;">📄</div>`;
+                    cardHtml += `<div class="news-avatar" style="font-size: 18px; background: transparent;">📄</div>`;
                     cardHtml += `<div><div class="news-author">PLATO News</div><div class="news-date">${dateStr}</div></div>`;
                     cardHtml += `</div>`;
                     cardHtml += `<div class="news-content" id="n-txt-${n.id}">${n.content}</div>`;
@@ -4280,7 +4258,6 @@
         let nowTime = new Date().getTime();
         let updatedHistory = [];
         
-        // پاکسازی درخواست‌های قدیمی‌تر از ۲۴ ساعت
         history.forEach(time => {
             if((nowTime - time) < (24 * 60 * 60 * 1000)) {
                 updatedHistory.push(time);
@@ -4342,6 +4319,7 @@
     window.openInboxModal = async function() {
         closeSidebar(); 
         
+        // به محض باز شدن صندوق پیام، نقطه هشدار خاموش می‌شود
         document.getElementById('inbox-notif').style.display = 'none'; 
         document.getElementById('header-notif').style.display = 'none'; 
         document.getElementById('inboxModal').classList.add('show'); 
