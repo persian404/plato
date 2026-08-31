@@ -95,6 +95,19 @@
             vertical-align: middle; 
         }
 
+        /* اسکرول‌بار سفارشی و ظریف */
+        .custom-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: var(--bg-input); 
+            border-radius: 8px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: var(--accent); 
+            border-radius: 8px;
+        }
+
         /* =========================
            PREMIUM LOGO SHINE EFFECT
         ========================= */
@@ -446,7 +459,6 @@
             backdrop-filter: blur(6px); 
         }
 
-        /* منوی کشویی: از سمت چپ باز می‌شود */
         .sidebar { 
             position: fixed; 
             top: 0; 
@@ -659,19 +671,18 @@
             border-color: var(--accent); 
         }
 
-        /* چشمک‌زن استاندارد و نرم برای نوتیفیکیشن‌ها */
+        /* انیمیشن چشمک زن برای نوتیفیکیشن پیام‌ها */
         @keyframes blink {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(1.3); }
-            100% { opacity: 1; transform: scale(1); }
+            0% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px #10b981; }
+            50% { opacity: 0.4; transform: scale(1.2); box-shadow: 0 0 15px #10b981; }
+            100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px #10b981; }
         }
 
         .notif-dot { 
-            width: 8px; 
-            height: 8px; 
+            width: 10px; 
+            height: 10px; 
             background: #10b981; 
             border-radius: 50%; 
-            box-shadow: 0 0 8px #10b981; 
             animation: blink 1.5s ease-in-out infinite; 
         }
         
@@ -965,7 +976,7 @@
         }
 
         /* =========================
-           MAIN APP & HEADER (FIXED ALIGNMENTS)
+           MAIN APP & HEADER (ثابت و دقیق)
         ========================= */
         #app-wrapper { 
             width: 100%; 
@@ -993,16 +1004,19 @@
             border-bottom: 1px solid var(--border-color); 
         }
 
-        /* با ساختار HTML جدید لوگو همیشه راست و دکمه پروفایل همیشه چپ می‌ایستد */
         .logo {
             display: flex;
             align-items: center;
+            order: 2; /* سمت راست */
+            margin-right: auto;
         }
 
         .header-actions { 
             display: flex; 
             align-items: center; 
             gap: 10px; 
+            order: 1; /* سمت چپ */
+            margin-left: auto;
         }
 
         .profile-button { 
@@ -1018,7 +1032,6 @@
             overflow: hidden; 
         }
 
-        /* دکمه خرید در مرکز هدر */
         .buy-sub-btn {
             position: absolute; 
             left: 50%; 
@@ -1045,7 +1058,7 @@
         }
         
         /* =========================
-           MARQUEE - LED TABLO (از چپ به راست)
+           MARQUEE - LED TABLO 
         ========================= */
         .marquee-box { 
             width: calc(100% - 40px); 
@@ -1080,7 +1093,7 @@
             text-shadow: 0 0 4px #ff0000, 0 0 10px #ff0000, 0 0 18px #ff1111; 
             letter-spacing: 1.5px; 
             top: 50%; 
-            /* شروع از سمت چپ بیرون کادر */
+            /* شروع از سمت چپ (بیرون کادر) به راست */
             left: -100%; 
             transform: translateY(-50%); 
             animation: led-scroll-left-to-right 15s linear infinite; 
@@ -1088,12 +1101,8 @@
         }
 
         @keyframes led-scroll-left-to-right { 
-            0% { 
-                left: -100%; 
-            } 
-            100% { 
-                left: 100%; 
-            } 
+            0% { left: -100%; } 
+            100% { left: 100%; } 
         }
         
         .search-box { 
@@ -1129,7 +1138,7 @@
             transform: translateY(-50%); 
             color: var(--text-muted); 
         }
-
+        
         /* Slider Hero Container */
         .hero-container {
             margin: 14px auto 0; 
@@ -1375,7 +1384,7 @@
             margin-left: 10px; 
             color: #fff; 
             overflow: hidden; 
-            font-size: 18px; /* For Emoji */
+            font-size: 18px; 
         }
 
         .news-author { 
@@ -1439,8 +1448,6 @@
             padding: 15px 20px 0px 20px; 
             display: flex; 
             align-items: center; 
-            /* استفاده از flex-end باعث می‌شود در RTL دکمه به منتهی‌الیه چپ برود */
-            justify-content: flex-end; 
         }
 
         .btn-back {
@@ -1456,6 +1463,7 @@
             padding: 8px 16px;
             cursor: pointer;
             transition: 0.2s;
+            margin-left: auto; /* در فارسی دکمه بازگشت در سمت چپِ چپ قرار می‌گیرد */
         }
 
         .btn-back:hover {
@@ -1469,20 +1477,19 @@
             padding: 20px;
         }
 
-        /* NEON PLAYER BANNER (Chasing Lights - Without Blur inside) */
+        /* NEON PLAYER BANNER */
         .neon-banner { 
             width: 100%; 
             aspect-ratio: 16 / 9; 
             position: relative; 
             border-radius: 12px;
-            padding: 3px; /* ضخامت خطوط چرخان */
+            padding: 3px; 
             z-index: 0;
             margin-bottom: 20px;
             overflow: hidden;
             background: #000;
         }
 
-        /* خطوط متحرک نئونی */
         .neon-banner::before {
             content: "";
             position: absolute;
@@ -1490,7 +1497,6 @@
             left: -50%;
             width: 200%; 
             height: 200%;
-            /* دو رنگ قرمز و آبی که دنبال هم می‌دوند */
             background: conic-gradient(from 0deg, 
                 transparent 0%, transparent 40%, #ef4444 50%, 
                 transparent 60%, transparent 90%, #3b82f6 100%);
@@ -1498,7 +1504,6 @@
             z-index: -2;
         }
 
-        /* لایه پوشاننده وسط که کادر اصلی پلیر را می‌سازد */
         .neon-banner-inner {
             width: 100%; 
             height: 100%;
@@ -1558,7 +1563,7 @@
             z-index: 10; 
         }
 
-        /* استایل‌های کارت اطلاعات فیلم (طراحی جدید) */
+        /* استایل‌های کارت اطلاعات فیلم */
         .movie-info-card {
             background: var(--bg-input);
             padding: 20px;
@@ -1774,7 +1779,7 @@
             <div class="modal-content" style="padding: 0;">
                 <h3 class="modal-title" style="text-align:center; padding: 25px 25px 0 25px; margin-bottom: 10px;">قوانین و مقررات پلاتو</h3>
                 
-                <div style="max-height: 45vh; overflow-y: auto; padding: 0 25px 25px 25px;">
+                <div class="custom-scroll" style="max-height: 45vh; overflow-y: auto; padding: 0 15px 25px 25px; margin-left: 10px;">
                     <ul style="font-size: 13px; line-height: 1.9; color: var(--text-muted); padding-right: 20px; text-align: justify;" id="terms-list">
                         <li style="margin-bottom:8px; font-weight:bold; color:#ef4444; font-size:14px;">
                             بعد از ارسال درخواست ثبت نام، صبر کنید تا پشتیبانی سایت درخواست شما را بپذیرد. از ارسال درخواست‌های متعدد و پیام‌های اسپم به پشتیبانی جداً پرهیز بفرمایید، درصورت انجام این‌کار حساب کاربری شما دائمی مسدود خواهد شد و هر درخواستی از سمت موبایل شما ارسال بشود تایید نخواهد شد.
@@ -1808,7 +1813,7 @@
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <!-- پروفایل -->
+            
             <div class="profile-avatar-wrap" onclick="openAvatarModal()" style="margin-top:10px;">
                 <div class="profile-avatar-svg" id="sidebar-avatar-img"></div>
                 <div class="avatar-edit-badge">
@@ -2014,7 +2019,7 @@
             <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
         </a>
 
-        <!-- لوگو همیشه در راست -->
+        <!-- لوگو ثابت در راست -->
         <div class="logo">
             <div class="premium-logo">
                 <svg viewBox="0 0 1536 614">
@@ -2023,7 +2028,7 @@
             </div>
         </div>
 
-        <!-- آیکون پروفایل/منو همیشه در چپ -->
+        <!-- آیکون پروفایل/منو ثابت در چپ چپ -->
         <div class="header-actions">
             <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -2114,7 +2119,8 @@
         <!-- Dedicated Movie Page View -->
         <div id="view-movie" class="view-section" style="padding-bottom: 90px; background: var(--bg-main);">
             
-            <div class="movie-detail-header" style="justify-content: flex-end;">
+            <!-- دکمه بازگشت فقط در سمت چپ چپ -->
+            <div class="movie-detail-header">
                 <button class="btn-back" onclick="closePlayer()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
                     بازگشت
@@ -2333,13 +2339,17 @@
         
         showLoader(true);
         
-        await supabaseClient.from('users_data').update({ avatar: id }).eq('id', currentUserProfile.id);
-        
-        currentUserProfile.avatar = id;
-        
-        document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(id, currentUserProfile.username);
-        
-        document.getElementById('avatarModal').classList.remove('show'); 
+        try {
+            await supabaseClient.from('users_data').update({ avatar: id }).eq('id', currentUserProfile.id);
+            
+            currentUserProfile.avatar = id;
+            
+            document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(id, currentUserProfile.username);
+            
+            document.getElementById('avatarModal').classList.remove('show'); 
+        } catch(e) {
+            console.error(e);
+        }
         
         showLoader(false);
     }
@@ -2502,7 +2512,6 @@
                     checkUnreadMessages(); 
                 }, 60000);
                 
-                // چک کردن اولیه پیام‌ها
                 checkUnreadMessages();
             }
         } catch (err) { 
@@ -3197,7 +3206,6 @@
         
         if(tabId === 'tab-messages') {
             loadAdminInbox();
-            // با رفتن به بخش پیام‌های ادمین، نوتیفیکیشن‌ها خوانده می‌شوند
             document.getElementById('admin-msg-notif').style.display = 'none';
             document.getElementById('header-notif').style.display = 'none';
             supabaseClient.from('messages').update({ is_read: true }).eq('direction', 'user_to_admin').eq('is_read', false).then();
@@ -3233,7 +3241,7 @@
         fetchMoviesFromDatabase(); 
     }
 
-    /* Sub Charging (Zero sets to Now) */
+    /* Sub Charging (Zero sets to Null) */
     async function chargeSub() {
         var userRaw = document.getElementById('charge-user').value;
         var user = toEnglishDigits(userRaw).trim().toLowerCase();
@@ -3257,8 +3265,8 @@
             }
             
             if(days === 0) {
-                await supabaseClient.from('users_data').update({ sub_end_date: new Date().toISOString() }).eq('id', udata.id); 
-                showCustomAlert('اشتراک کاربر لغو شد.');
+                await supabaseClient.from('users_data').update({ sub_end_date: null }).eq('id', udata.id); 
+                showCustomAlert('اشتراک کاربر صفر شد.');
             } else {
                 let currentSub = null;
                 if(udata.sub_end_date) {
@@ -4258,6 +4266,7 @@
         let nowTime = new Date().getTime();
         let updatedHistory = [];
         
+        // پاکسازی درخواست‌های قدیمی‌تر از ۲۴ ساعت
         history.forEach(time => {
             if((nowTime - time) < (24 * 60 * 60 * 1000)) {
                 updatedHistory.push(time);
