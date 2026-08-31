@@ -202,7 +202,6 @@
 
         .input-field:focus { border-color: var(--accent); }
 
-        /* استایل اختصاصی تکست‌اریا برای جلوگیری از باگ پرش و تغییر سایز */
         textarea.input-field {
             height: auto !important;
             min-height: 120px;
@@ -329,10 +328,13 @@
 
         .notif-dot { 
             width: 8px; height: 8px; background: #10b981; border-radius: 50%; 
-            box-shadow: 0 0 6px #10b981; animation: blink 1s infinite alternate; 
+            box-shadow: 0 0 6px #10b981; animation: blink 1.2s infinite alternate; 
         }
-        
-        @keyframes blink { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0.3; transform: scale(0.8); } }
+
+        @keyframes blink {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0.3; transform: scale(0.8); }
+        }
         
         .sidebar-footer { 
             text-align: center; padding: 15px; font-size: 11px; color: rgba(142, 142, 147, 0.4); 
@@ -345,7 +347,8 @@
         ========================= */
         #admin-screen { 
             display: none; flex-direction: column; align-items: center; padding: 20px 20px 80px; 
-            min-height: 100vh; width: 100%; background-color: var(--bg-main); position: absolute; top: 0; left: 0; z-index: 10000; 
+            min-height: 100vh; width: 100%; background-color: var(--bg-main); position: absolute;
+            top: 0; left: 0; z-index: 10000;
         }
 
         .tab-menu { 
@@ -404,10 +407,11 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; height: 100%; border-inline-end: 1px solid rgba(255,255,255,0.08); 
         }
         .nav-item:last-child { border-inline-end: none; }
+
         .nav-item svg { width: 22px; height: 22px; margin-bottom: 4px; stroke: currentColor; stroke-width: 2; fill: none; transition: transform 0.3s ease; }
         .nav-item.active { color: var(--accent); }
         .nav-item.active svg { transform: translateY(-3px) scale(1.1); filter: drop-shadow(0 4px 6px rgba(59, 130, 246, 0.4)); }
-        
+
         .nav-indicator { 
             position: absolute; bottom: 8px; width: 5px; height: 5px; background: var(--accent); 
             border-radius: 50%; opacity: 0; transform: scale(0); transition: all 0.3s ease; 
@@ -429,7 +433,7 @@
         @keyframes fadeSlide { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         /* =========================
-           MAIN APP & HEADER (FIXED ALIGNMENTS)
+           MAIN APP & HEADER
         ========================= */
         #app-wrapper { width: 100%; max-width: 1400px; margin: 0 auto; position: relative; padding-bottom: var(--bottom-nav-h); }
         #main-app { display: none; }
@@ -475,13 +479,13 @@
         .marquee-text { 
             position: absolute; white-space: nowrap; font-size: 20px; font-family: 'Courier New', Courier, monospace, "Vazirmatn"; 
             font-weight: 900; color: #ff0000; text-shadow: 0 0 4px #ff0000, 0 0 10px #ff0000, 0 0 18px #ff1111; 
-            letter-spacing: 1.5px; top: 50%; transform: translateY(-50%) translateX(-100%); left: 0; 
-            animation: led-scroll-left-to-right 15s linear infinite; will-change: transform, left;
+            letter-spacing: 1.5px; top: 50%; left: 0; transform: translate(-100%, -50%); 
+            animation: scroll-marquee 15s linear infinite; will-change: left, transform;
         }
 
-        @keyframes led-scroll-left-to-right { 
-            0%   { left: 0; transform: translateY(-50%) translateX(-100%); } 
-            100% { left: 100%; transform: translateY(-50%) translateX(0); } 
+        @keyframes scroll-marquee { 
+            0%   { left: 0; transform: translate(-100%, -50%); } 
+            100% { left: 100%; transform: translate(0, -50%); } 
         }
         
         .search-box { padding: 14px 20px 4px; max-width: 750px; margin: 0 auto; }
@@ -681,7 +685,7 @@
         </div>
     </div>
 
-    <!-- TERMS MODAL (با قابلیت اسکرول و کادر داخلی) -->
+    <!-- TERMS MODAL -->
     <div class="modal" id="termsModal">
         <div class="modal-box" style="max-width: 450px; max-height: 80vh;">
             <button class="modal-close-x" onclick="document.getElementById('termsModal').classList.remove('show')">×</button>
@@ -1222,110 +1226,237 @@
     function getAvatar(id, username) { 
         if (!id || id === 0 || !AVATARS[id]) {
             let initial = 'U';
-            if(username && username.length > 0) initial = username.charAt(0).toUpperCase();
-            return `<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#e0f2fe"/><text x="50" y="66" font-family="Arial" font-size="50" font-weight="bold" fill="#0284c7" text-anchor="middle">${initial}</text></svg>`;
+            if(username && username.length > 0) {
+                initial = username.charAt(0).toUpperCase();
+            }
+            let html = `<svg viewBox="0 0 100 100">`;
+            html += `<rect width="100" height="100" fill="#e0f2fe"/>`;
+            html += `<text x="50" y="66" font-family="Arial" font-size="50" font-weight="bold" fill="#0284c7" text-anchor="middle">${initial}</text>`;
+            html += `</svg>`;
+            return html;
         }
         return AVATARS[id];
     }
 
     function openAvatarModal() {
-        const grid = document.getElementById('avatarGrid'); grid.innerHTML = '';
-        let currentAv = (currentUserProfile && currentUserProfile.avatar) ? currentUserProfile.avatar : 0;
+        const grid = document.getElementById('avatarGrid'); 
+        grid.innerHTML = '';
+        
+        let currentAv = 0;
+        if(currentUserProfile && currentUserProfile.avatar) {
+            currentAv = currentUserProfile.avatar;
+        }
+
         for(let i=1; i<=6; i++) {
-            let cssClass = "avatar-option" + (currentAv === i ? " selected" : "");
+            let cssClass = "avatar-option";
+            if(currentAv === i) {
+                cssClass += " selected";
+            }
             grid.innerHTML += `<div class="${cssClass}" onclick="selectAvatar(${i})">${AVATARS[i]}</div>`;
         }
+        
         document.getElementById('avatarModal').classList.add('show');
     }
 
     async function selectAvatar(id) {
         if(!currentUserProfile) return; 
+        
         showLoader(true);
+        
         await supabaseClient.from('users_data').update({ avatar: id }).eq('id', currentUserProfile.id);
+        
         currentUserProfile.avatar = id;
+        
         document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(id, currentUserProfile.username);
+        
         document.getElementById('avatarModal').classList.remove('show'); 
+        
         showLoader(false);
     }
 
+    /* Dictionary for i18n */
     const dict = {
         'fa': {
-            'loading': 'لطفا صبر کنید...', 'show_pass': 'نمایش رمز عبور', 'login_btn': 'ورود به حساب', 
-            'no_account': 'حساب کاربری ندارید؟', 'register_now': 'ثبت‌نام کنید', 'register_btn': 'ارسال درخواست عضویت', 
-            'have_account': 'قبلاً ثبت‌نام کردید؟', 'login_now': 'وارد شوید', 'terms_title': 'قوانین و مقررات پلاتو',
-            'accept_terms': 'پذیرفتن شرایط و قوانین فوق', 'confirm_register': 'تایید و ارسال ثبت‌نام', 
-            'support_btn': 'ارتباط با پشتیبانی', 'inbox_btn': 'صندوق پیام‌ها', 'gift_code_btn': 'کد هدیه', 
-            'logout_btn': 'خروج از حساب', 'admin_panel': 'پنل مدیریت', 'nav_home': 'خانه', 
-            'nav_favs': 'علاقه‌مندی‌ها', 'nav_news': 'خبرها', 'nav_platino': 'پلاتینو', 'cat_programs': 'برنامه‌ها', 
-            'cat_kids': 'انیمیشن/کودکانه', 'cat_series': 'سریال‌ها', 'cat_movies': 'فیلم‌های سینمایی', 
-            'quality_hd': 'کیفیت: عادی (HD)', 'link_expired': 'این لینک منقضی شده است.', 
-            'support_title': 'ارتباط با پشتیبانی', 'send_msg': 'ارسال پیام', 'inbox_title': 'صندوق پیام‌ها', 
-            'gift_title': 'ثبت کد هدیه', 'apply_gift': 'اعمال کد', 'resume_title': 'پخش از ادامه؟', 
-            'resume_desc': 'شما قبلاً بخشی از این محتوا را تماشا کرده‌اید.', 'resume_btn': 'ادامه پخش', 
-            'start_over_btn': 'از اول', 'new_badge': 'جدید'
+            'loading': 'لطفا صبر کنید...', 
+            'show_pass': 'نمایش رمز عبور', 
+            'login_btn': 'ورود به حساب', 
+            'no_account': 'حساب کاربری ندارید؟', 
+            'register_now': 'ثبت‌نام کنید',
+            'register_btn': 'ارسال درخواست عضویت', 
+            'have_account': 'قبلاً ثبت‌نام کردید؟', 
+            'login_now': 'وارد شوید', 
+            'terms_title': 'قوانین و مقررات پلاتو',
+            'accept_terms': 'پذیرفتن شرایط و قوانین فوق', 
+            'confirm_register': 'تایید و ارسال ثبت‌نام', 
+            'support_btn': 'ارتباط با پشتیبانی', 
+            'inbox_btn': 'صندوق پیام‌ها',
+            'gift_code_btn': 'کد هدیه', 
+            'logout_btn': 'خروج از حساب', 
+            'admin_panel': 'پنل مدیریت', 
+            'nav_home': 'خانه', 
+            'nav_favs': 'علاقه‌مندی‌ها', 
+            'nav_news': 'خبرها',
+            'nav_platino': 'پلاتینو',
+            'cat_programs': 'برنامه‌ها', 
+            'cat_kids': 'انیمیشن/کودکانه', 
+            'cat_series': 'سریال‌ها', 
+            'cat_movies': 'فیلم‌های سینمایی', 
+            'quality_hd': 'کیفیت: عادی (HD)',
+            'link_expired': 'این لینک منقضی شده است.', 
+            'support_title': 'ارتباط با پشتیبانی', 
+            'send_msg': 'ارسال پیام', 
+            'inbox_title': 'صندوق پیام‌ها', 
+            'gift_title': 'ثبت کد هدیه',
+            'apply_gift': 'اعمال کد', 
+            'resume_title': 'پخش از ادامه؟', 
+            'resume_desc': 'شما قبلاً بخشی از این محتوا را تماشا کرده‌اید.', 
+            'resume_btn': 'ادامه پخش', 
+            'start_over_btn': 'از اول',
+            'new_badge': 'جدید'
         },
         'en': {
-            'loading': 'Please wait...', 'show_pass': 'Show Password', 'login_btn': 'Login', 
-            'no_account': 'No account?', 'register_now': 'Sign up', 'register_btn': 'Submit Request', 
-            'have_account': 'Already registered?', 'login_now': 'Login now', 'terms_title': 'Terms & Conditions',
-            'accept_terms': 'I accept the terms above', 'confirm_register': 'Confirm Registration', 
-            'support_btn': 'Support', 'inbox_btn': 'Inbox', 'gift_code_btn': 'Gift Code', 
-            'logout_btn': 'Logout', 'admin_panel': 'Admin Panel', 'nav_home': 'Home', 
-            'nav_favs': 'Favorites', 'nav_news': 'News', 'nav_platino': 'Platino', 'cat_programs': 'Programs', 
-            'cat_kids': 'Animation/Kids', 'cat_series': 'Series', 'cat_movies': 'Movies', 
-            'quality_hd': 'Quality: Normal (HD)', 'link_expired': 'This link has expired.', 
-            'support_title': 'Contact Support', 'send_msg': 'Send Message', 'inbox_title': 'Inbox', 
-            'gift_title': 'Enter Gift Code', 'apply_gift': 'Apply Code', 'resume_title': 'Resume playback?', 
-            'resume_desc': 'You have already watched a part of this.', 'resume_btn': 'Resume', 
-            'start_over_btn': 'Start Over', 'new_badge': 'NEW'
+            'loading': 'Please wait...', 
+            'show_pass': 'Show Password', 
+            'login_btn': 'Login', 
+            'no_account': 'No account?', 
+            'register_now': 'Sign up',
+            'register_btn': 'Submit Request', 
+            'have_account': 'Already registered?', 
+            'login_now': 'Login now', 
+            'terms_title': 'Terms & Conditions',
+            'accept_terms': 'I accept the terms above', 
+            'confirm_register': 'Confirm Registration', 
+            'support_btn': 'Support', 
+            'inbox_btn': 'Inbox',
+            'gift_code_btn': 'Gift Code', 
+            'logout_btn': 'Logout', 
+            'admin_panel': 'Admin Panel', 
+            'nav_home': 'Home', 
+            'nav_favs': 'Favorites', 
+            'nav_news': 'News',
+            'nav_platino': 'Platino',
+            'cat_programs': 'Programs', 
+            'cat_kids': 'Animation/Kids', 
+            'cat_series': 'Series', 
+            'cat_movies': 'Movies', 
+            'quality_hd': 'Quality: Normal (HD)',
+            'link_expired': 'This link has expired.', 
+            'support_title': 'Contact Support', 
+            'send_msg': 'Send Message', 
+            'inbox_title': 'Inbox', 
+            'gift_title': 'Enter Gift Code',
+            'apply_gift': 'Apply Code', 
+            'resume_title': 'Resume playback?', 
+            'resume_desc': 'You have already watched a part of this.', 
+            'resume_btn': 'Resume', 
+            'start_over_btn': 'Start Over',
+            'new_badge': 'NEW'
         }
     };
     
     const placeholders = {
-        'fa': { 'username': 'نام کاربری', 'password': 'رمز عبور', 'username_en': 'نام کاربری (انگلیسی)', 'device_model': 'مدل دستگاه', 'search_ph': 'جستجوی فیلم، سریال یا برنامه...', 'write_msg': 'پیام خود را بنویسید...' },
-        'en': { 'username': 'Username', 'password': 'Password', 'username_en': 'Username (English only)', 'device_model': 'Device Model', 'search_ph': 'Search movies, series...', 'write_msg': 'Type your message...' }
+        'fa': { 
+            'username': 'نام کاربری', 
+            'password': 'رمز عبور', 
+            'username_en': 'نام کاربری (انگلیسی)', 
+            'device_model': 'مدل دستگاه', 
+            'search_ph': 'جستجوی فیلم، سریال یا برنامه...', 
+            'write_msg': 'پیام خود را بنویسید...' 
+        },
+        'en': { 
+            'username': 'Username', 
+            'password': 'Password', 
+            'username_en': 'Username (English only)', 
+            'device_model': 'Device Model', 
+            'search_ph': 'Search movies, series...', 
+            'write_msg': 'Type your message...' 
+        }
     };
 
     function applyTranslations() {
-        document.querySelectorAll('[data-i18n]').forEach(el => { 
+        const elements = document.querySelectorAll('[data-i18n]');
+        elements.forEach(el => { 
             const key = el.getAttribute('data-i18n'); 
-            if(dict[currentLang][key]) el.innerHTML = dict[currentLang][key]; 
+            if(dict[currentLang][key]) {
+                el.innerHTML = dict[currentLang][key]; 
+            }
         });
-        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { 
+        
+        const placeholderElements = document.querySelectorAll('[data-i18n-placeholder]');
+        placeholderElements.forEach(el => { 
             const key = el.getAttribute('data-i18n-placeholder'); 
-            if(placeholders[currentLang][key]) el.setAttribute('placeholder', placeholders[currentLang][key]); 
+            if(placeholders[currentLang][key]) {
+                el.setAttribute('placeholder', placeholders[currentLang][key]); 
+            }
         });
-        document.body.style.direction = currentLang === 'en' ? 'ltr' : 'rtl';
+        
+        if(currentLang === 'en') {
+            document.body.style.direction = 'ltr';
+        } else {
+            document.body.style.direction = 'rtl';
+        }
     }
 
     function toggleLanguage() {
-        currentLang = currentLang === 'fa' ? 'en' : 'fa';
+        if(currentLang === 'fa') {
+            currentLang = 'en';
+        } else {
+            currentLang = 'fa';
+        }
         localStorage.setItem('plato_lang', currentLang);
         applyTranslations();
         fetchMoviesFromDatabase(); 
     }
 
+    /* Core Utilities */
     function toEnglishDigits(str) { 
-        if(str) return str.toString().replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
-        return '';
+        if(str) {
+            return str.toString().replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+        } else {
+            return '';
+        }
     }
 
     function showLoader(show) { 
-        document.getElementById('loader').style.display = show ? 'flex' : 'none';
+        const loader = document.getElementById('loader');
+        if(show) {
+            loader.style.display = 'flex';
+        } else {
+            loader.style.display = 'none';
+        }
     }
 
     function showCustomAlert(msg) { 
         const alertBox = document.getElementById('custom-alert'); 
-        alertBox.textContent = msg; alertBox.style.display = 'block'; 
-        setTimeout(() => { alertBox.style.display = 'none'; }, 3500); 
+        alertBox.textContent = msg; 
+        alertBox.style.display = 'block'; 
+        
+        setTimeout(() => {
+            alertBox.style.display = 'none';
+        }, 3500); 
     }
 
     function toggleTheme() { 
         document.body.classList.toggle('light-theme'); 
-        try { localStorage.setItem('plato_theme', document.body.classList.contains('light-theme') ? 'light' : 'dark'); } catch(e) {} 
+        try { 
+            if(document.body.classList.contains('light-theme')) {
+                localStorage.setItem('plato_theme', 'light');
+            } else {
+                localStorage.setItem('plato_theme', 'dark');
+            }
+        } catch(e) {
+            console.log(e);
+        } 
     }
 
-    try { if(localStorage.getItem('plato_theme') === 'light') document.body.classList.add('light-theme'); } catch(e) {}
+    try { 
+        if(localStorage.getItem('plato_theme') === 'light') {
+            document.body.classList.add('light-theme'); 
+        }
+    } catch(e) {
+        console.log(e);
+    }
+    
     applyTranslations();
 
     function toggleAuth(type) { 
@@ -1339,128 +1470,295 @@
     }
 
     function togglePassword() { 
-        const logPass = document.getElementById('log-pass'); const regPass = document.getElementById('reg-pass'); 
-        if (logPass) logPass.type = logPass.type === 'password' ? 'text' : 'password';
-        if (regPass) regPass.type = regPass.type === 'password' ? 'text' : 'password';
+        const logPass = document.getElementById('log-pass');
+        const regPass = document.getElementById('reg-pass'); 
+        
+        if (logPass) {
+            if(logPass.type === 'password') {
+                logPass.type = 'text';
+            } else {
+                logPass.type = 'password';
+            }
+        }
+        
+        if (regPass) {
+            if(regPass.type === 'password') {
+                regPass.type = 'text';
+            } else {
+                regPass.type = 'password';
+            }
+        }
     }
 
-    window.showPlatinoSoon = function() { showCustomAlert('بخش پلاتینو به زودی فعال خواهد شد...'); }
+    window.showPlatinoSoon = function() {
+        showCustomAlert('بخش پلاتینو به زودی فعال خواهد شد...');
+    }
 
+    /* Session & Init */
     async function checkUserSession() {
-        if (!supabaseClient) return;
+        if (!supabaseClient) {
+            return;
+        }
+        
         showLoader(true);
+        
         try {
             const { data, error } = await supabaseClient.auth.getSession();
+            
             if (error || !data.session) { 
-                showLoader(false); document.getElementById('auth-screen').style.display = 'flex'; return; 
+                showLoader(false); 
+                document.getElementById('auth-screen').style.display = 'flex'; 
+                return; 
             }
+            
             const profileRes = await supabaseClient.from('users_data').select('*').eq('id', data.session.user.id).single();
+            
             if (profileRes.error || !profileRes.data) { 
-                await supabaseClient.auth.signOut(); showLoader(false); document.getElementById('auth-screen').style.display = 'flex'; return; 
+                await supabaseClient.auth.signOut(); 
+                showLoader(false); 
+                document.getElementById('auth-screen').style.display = 'flex'; 
+                return; 
             }
+            
             currentUserProfile = profileRes.data;
+            
             if (currentUserProfile.status === 'pending' || currentUserProfile.status === 'rejected') {
                 showCustomAlert('اکانت شما هنوز تایید نشده یا مسدود است.');
-                await supabaseClient.auth.signOut(); document.getElementById('auth-screen').style.display = 'flex';
+                await supabaseClient.auth.signOut(); 
+                document.getElementById('auth-screen').style.display = 'flex';
             } else {
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
                 document.getElementById('bottom-nav').style.display = 'flex';
                 
                 let hasActiveSub = false;
-                if(currentUserProfile.role === 'admin') { hasActiveSub = true; }
-                else if(currentUserProfile.sub_end_date && new Date(currentUserProfile.sub_end_date) > new Date()) { hasActiveSub = true; }
+                if(currentUserProfile.role === 'admin') {
+                    hasActiveSub = true;
+                } else if(currentUserProfile.sub_end_date) {
+                    if(new Date(currentUserProfile.sub_end_date) > new Date()) {
+                        hasActiveSub = true;
+                    }
+                }
                 
-                document.getElementById('buy-sub-btn').style.display = hasActiveSub ? 'none' : 'block';
+                if(!hasActiveSub) {
+                    document.getElementById('buy-sub-btn').style.display = 'block';
+                } else {
+                    document.getElementById('buy-sub-btn').style.display = 'none';
+                }
+
                 document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(currentUserProfile.avatar, currentUserProfile.username);
                 
                 if (currentUserProfile.role === 'admin') {
-                    document.getElementById('admin-sidebar-btn-container').innerHTML = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()"><span data-i18n="admin_panel">پنل مدیریت</span><svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>`;
+                    let adminBtnHtml = `<button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()">`;
+                    adminBtnHtml += `<span data-i18n="admin_panel">پنل مدیریت</span>`;
+                    adminBtnHtml += `<svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>`;
+                    adminBtnHtml += `</button>`;
+                    
+                    document.getElementById('admin-sidebar-btn-container').innerHTML = adminBtnHtml;
                 }
                 
-                await updateHeartbeat(); await fetchFavorites(); await fetchMoviesFromDatabase(); await loadMarquee(); await checkNewsUpdates();
-                setInterval(() => { updateHeartbeat(); checkUnreadMessages(); }, 60000);
+                await updateHeartbeat();
+                await fetchFavorites();
+                await fetchMoviesFromDatabase();
+                await loadMarquee();
+                await checkNewsUpdates();
+                
+                setInterval(() => { 
+                    updateHeartbeat(); 
+                    checkUnreadMessages(); 
+                }, 60000);
             }
-        } catch (err) { document.getElementById('auth-screen').style.display = 'flex'; }
+        } catch (err) { 
+            console.error(err);
+            document.getElementById('auth-screen').style.display = 'flex'; 
+        }
+        
         showLoader(false);
     }
 
     async function updateHeartbeat() { 
         if(currentUserProfile && currentUserProfile.role !== 'admin') { 
-            try { await supabaseClient.from('users_data').update({ last_active: new Date().toISOString() }).eq('id', currentUserProfile.id); } catch(e) {}
+            try {
+                await supabaseClient.from('users_data').update({ last_active: new Date().toISOString() }).eq('id', currentUserProfile.id); 
+            } catch(e) {
+                console.error(e);
+            }
         } 
     }
 
+    /* Auth Actions */
     function doRegister() {
         let u = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase();
         let p = toEnglishDigits(document.getElementById('reg-pass').value).trim();
         let m = document.getElementById('reg-model').value.trim();
-        if(!u || !p || !m) return showCustomAlert('لطفاً همه فیلدها را پر کنید');
+        
+        if(!u || !p || !m) {
+            return showCustomAlert('لطفاً همه فیلدها را پر کنید');
+        }
+        
         document.getElementById('acceptTermsCheck').checked = false; 
         document.getElementById('termsModal').classList.add('show');
     }
 
     async function finalizeRegistration() {
-        if(!document.getElementById('acceptTermsCheck').checked) return showCustomAlert('لطفاً قوانین را تایید کنید.');
+        let isChecked = document.getElementById('acceptTermsCheck').checked;
+        if(!isChecked) {
+            return showCustomAlert('لطفاً قوانین را تایید کنید.');
+        }
+        
         document.getElementById('termsModal').classList.remove('show'); 
         showLoader(true);
+        
         let u = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase();
         let p = toEnglishDigits(document.getElementById('reg-pass').value).trim();
         let m = document.getElementById('reg-model').value.trim();
+        
         try {
-            const authRes = await supabaseClient.auth.signUp({ email: u + '@plato.com', password: p });
-            if (authRes.error) { showCustomAlert('خطا: ' + authRes.error.message); } 
-            else if (authRes.data && authRes.data.user) {
-                await supabaseClient.from('users_data').insert([{ id: authRes.data.user.id, email: u + '@plato.com', username: u, phone_model: m, status: 'pending', role: 'user', avatar: 0 }]);
-                showCustomAlert('درخواست عضویت ارسال شد.'); toggleAuth('login');
+            const authRes = await supabaseClient.auth.signUp({ 
+                email: u + '@plato.com', 
+                password: p 
+            });
+            
+            if (authRes.error) { 
+                showCustomAlert('خطا: ' + authRes.error.message); 
+            } else if (authRes.data && authRes.data.user) {
+                await supabaseClient.from('users_data').insert([{ 
+                    id: authRes.data.user.id, 
+                    email: u + '@plato.com', 
+                    username: u, 
+                    phone_model: m, 
+                    status: 'pending', 
+                    role: 'user', 
+                    avatar: 0 
+                }]);
+                
+                showCustomAlert('درخواست عضویت ارسال شد.'); 
+                toggleAuth('login');
             }
-        } catch(err) { showCustomAlert('خطا رخ داد.'); }
+        } catch(err) { 
+            console.error(err);
+            showCustomAlert('خطا رخ داد.'); 
+        }
+        
         showLoader(false);
     }
 
     async function doLogin() {
         var u = toEnglishDigits(document.getElementById('log-user').value).trim().toLowerCase();
         var p = toEnglishDigits(document.getElementById('log-pass').value).trim();
-        if(!u || !p) return showCustomAlert('اطلاعات را وارد کنید');
+        
+        if(!u || !p) {
+            return showCustomAlert('اطلاعات را وارد کنید');
+        }
+        
         showLoader(true);
+        
         try { 
-            const { error } = await supabaseClient.auth.signInWithPassword({ email: u + '@plato.com', password: p }); 
-            if (error) { showCustomAlert('اطلاعات اشتباه است'); showLoader(false); } 
-            else { checkUserSession(); }
-        } catch(err) { showCustomAlert('خطا رخ داد.'); showLoader(false); }
+            const { error } = await supabaseClient.auth.signInWithPassword({ 
+                email: u + '@plato.com', 
+                password: p 
+            }); 
+            
+            if (error) {
+                showCustomAlert('اطلاعات اشتباه است'); 
+                showLoader(false);
+            } else {
+                checkUserSession(); 
+            }
+        } catch(err) { 
+            console.error(err);
+            showCustomAlert('خطا رخ داد.'); 
+            showLoader(false); 
+        }
     }
 
-    async function doLogout() { if(supabaseClient) { await supabaseClient.auth.signOut(); } window.location.reload(); }
+    async function doLogout() { 
+        if(supabaseClient) {
+            await supabaseClient.auth.signOut(); 
+        }
+        window.location.reload(); 
+    }
 
+    /* Modern Bottom Nav Switches */
     function switchNav(target) {
-        if(linkTimerInterval) clearInterval(linkTimerInterval);
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        if(document.getElementById('nav-' + target)) document.getElementById('nav-' + target).classList.add('active');
-        document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active-view'));
+        if(linkTimerInterval) {
+            clearInterval(linkTimerInterval);
+        }
+        
+        const allNavItems = document.querySelectorAll('.nav-item');
+        allNavItems.forEach(el => {
+            el.classList.remove('active');
+        });
+        
+        const targetNav = document.getElementById('nav-' + target);
+        if(targetNav) {
+            targetNav.classList.add('active');
+        }
+        
+        const allViews = document.querySelectorAll('.view-section');
+        allViews.forEach(el => {
+            el.classList.remove('active-view');
+        });
         
         if(target === 'home') {
             document.getElementById('view-home').classList.add('active-view');
+            
             const marqueeText = document.getElementById('marqueeTextContent');
-            if (marqueeText) { marqueeText.style.animation = 'none'; void marqueeText.offsetWidth; marqueeText.style.animation = null; }
+            if (marqueeText) {
+                marqueeText.style.animation = 'none';
+                void marqueeText.offsetWidth; 
+                marqueeText.style.animation = null;
+            }
         }
-        if(target === 'favs') { document.getElementById('view-favs').classList.add('active-view'); renderFavs(); }
-        if(target === 'news') { document.getElementById('view-news').classList.add('active-view'); document.getElementById('news-notif').style.display = 'none'; loadNewsUser(); }
-        if(target === 'movie') { document.getElementById('view-movie').classList.add('active-view'); }
-        currentNav = target; window.scrollTo(0,0);
+        
+        if(target === 'favs') { 
+            document.getElementById('view-favs').classList.add('active-view'); 
+            renderFavs(); 
+        }
+        
+        if(target === 'news') { 
+            document.getElementById('view-news').classList.add('active-view'); 
+            document.getElementById('news-notif').style.display = 'none'; 
+            loadNewsUser(); 
+        }
+        
+        if(target === 'movie') {
+            document.getElementById('view-movie').classList.add('active-view');
+        }
+        
+        currentNav = target; 
+        window.scrollTo(0,0);
     }
 
+    /* Favorites */
     async function fetchFavorites() {
-        if(!currentUserProfile) return;
+        if(!currentUserProfile) {
+            return;
+        }
+        
         try {
             const { data } = await supabaseClient.from('favorites').select('movie_id').eq('user_id', currentUserProfile.id);
-            if(data) { favoritesArray = []; data.forEach(f => favoritesArray.push(f.movie_id)); }
-        } catch(e) {}
+            
+            if(data) {
+                favoritesArray = [];
+                data.forEach(f => {
+                    favoritesArray.push(f.movie_id);
+                });
+            }
+        } catch(e) {
+            console.error(e);
+        }
     }
 
     async function toggleFav(event, movieId) {
         event.stopPropagation(); 
-        if(!currentUserProfile) return;
+        
+        if(!currentUserProfile) {
+            return;
+        }
+        
         const isFavNow = !favoritesArray.includes(movieId);
+        
         try {
             if(!isFavNow) {
                 favoritesArray = favoritesArray.filter(id => id !== movieId); 
@@ -1469,102 +1767,228 @@
                 favoritesArray.push(movieId); 
                 await supabaseClient.from('favorites').insert([{ user_id: currentUserProfile.id, movie_id: movieId }]);
             }
+            
             document.querySelectorAll(`.fav-btn[data-movie-id="${movieId}"]`).forEach(btn => {
-                if(isFavNow) btn.classList.add('active');
-                else btn.classList.remove('active');
+                if(isFavNow) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
             });
-            if(currentNav === 'favs') renderFavs();
-        } catch(e) {}
+            
+            if(currentNav === 'favs') {
+                renderFavs();
+            }
+        } catch(e) {
+            console.error(e);
+        }
     }
 
     function renderFavs() {
-        const container = document.getElementById('favsList'); container.innerHTML = '';
-        const favMovies = [];
-        dynamicDataArray.forEach(m => { if(favoritesArray.includes(m.id)) favMovies.push(m); });
+        const container = document.getElementById('favsList'); 
+        container.innerHTML = '';
         
-        if(favMovies.length === 0) { container.innerHTML = '<div style="color:var(--text-muted); font-size:13px; margin-top:20px;">لیست علاقه‌مندی خالی است.</div>'; return; }
+        const favMovies = [];
+        dynamicDataArray.forEach(m => {
+            if(favoritesArray.includes(m.id)) {
+                favMovies.push(m);
+            }
+        });
+        
+        if(favMovies.length === 0) { 
+            container.innerHTML = '<div style="color:var(--text-muted); font-size:13px; margin-top:20px;">لیست علاقه‌مندی خالی است.</div>'; 
+            return; 
+        }
         
         favMovies.forEach(item => {
-            const card = document.createElement("article"); card.className = "movie-card";
-            card.innerHTML = `<div class="poster"><img src="${item.poster}" loading="lazy"><div class="poster-overlay"></div></div><div class="movie-name">${item.title}</div>`;
-            card.addEventListener("click", () => { openPlayer(item); });
+            const card = document.createElement("article"); 
+            card.className = "movie-card";
+            
+            let cardHtml = `<div class="poster">`;
+            cardHtml += `<img src="${item.poster}" loading="lazy">`;
+            cardHtml += `<div class="poster-overlay"></div></div>`;
+            cardHtml += `<div class="movie-name">${item.title}</div>`;
+            
+            card.innerHTML = cardHtml;
+            card.addEventListener("click", () => {
+                openPlayer(item);
+            });
+            
             const favBtn = document.createElement("div"); 
-            favBtn.className = "fav-btn active"; favBtn.setAttribute('data-movie-id', item.id);
+            favBtn.className = "fav-btn active";
+            favBtn.setAttribute('data-movie-id', item.id);
             favBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
-            favBtn.onclick = (e) => { toggleFav(e, item.id); }; 
-            card.appendChild(favBtn); container.appendChild(card);
+            favBtn.onclick = (e) => {
+                toggleFav(e, item.id);
+            }; 
+            
+            card.appendChild(favBtn); 
+            container.appendChild(card);
         });
     }
 
+    /* Movies & UI Render */
     async function fetchMoviesFromDatabase() {
         try {
             const { data } = await supabaseClient.from('movies').select('*').order('sort_order', { ascending: true }).order('id', { ascending: false });
+            
             if(data) {
                 dynamicDataArray = data;
-                const programs = [], kids = [], series = [], movies = [];
+                
+                const programs = [];
+                const kids = [];
+                const series = [];
+                const movies = [];
+                
                 data.forEach(m => {
-                    if(m.category === 'program') programs.push(m);
-                    else if(m.category === 'kids') kids.push(m);
-                    else if(m.category === 'series' || !m.category) series.push(m);
-                    else if(m.category === 'movie') movies.push(m);
+                    if(m.category === 'program') {
+                        programs.push(m);
+                    } else if(m.category === 'kids') {
+                        kids.push(m);
+                    } else if(m.category === 'series' || !m.category) {
+                        series.push(m);
+                    } else if(m.category === 'movie') {
+                        movies.push(m);
+                    }
                 });
-                renderDynamicList(series, 'seriesList'); renderDynamicList(movies, 'moviesList');
-                renderDynamicList(programs, 'programsList'); renderDynamicList(kids, 'kidsList');
+                
+                renderDynamicList(series, 'seriesList');
+                renderDynamicList(movies, 'moviesList');
+                renderDynamicList(programs, 'programsList');
+                renderDynamicList(kids, 'kidsList');
             }
-        } catch(e) {}
+        } catch(e) {
+            console.error(e);
+        }
     }
 
     function renderDynamicList(list, containerId) {
-        const container = document.getElementById(containerId); container.innerHTML = "";
-        if (list.length === 0) { container.parentElement.style.display = 'none'; return; } 
-        else { container.parentElement.style.display = 'block'; }
+        const container = document.getElementById(containerId); 
+        container.innerHTML = "";
+        
+        if (list.length === 0) { 
+            container.parentElement.style.display = 'none'; 
+            return; 
+        } else { 
+            container.parentElement.style.display = 'block'; 
+        }
 
         list.forEach(item => {
-            const card = document.createElement("article"); card.className = "movie-card";
+            const card = document.createElement("article"); 
+            card.className = "movie-card";
+            
             let newBadgeHTML = "";
             if(item.updated_at) {
-                let diffDays = (new Date() - new Date(item.updated_at)) / (1000 * 60 * 60 * 24);
-                if(diffDays <= 3 && diffDays >= 0) newBadgeHTML = `<div class="new-badge">${dict[currentLang]['new_badge'] || 'جدید'}</div>`;
+                let diffTime = new Date() - new Date(item.updated_at);
+                let diffDays = diffTime / (1000 * 60 * 60 * 24);
+                if(diffDays <= 3 && diffDays >= 0) {
+                    let badgeText = 'جدید';
+                    if(dict[currentLang] && dict[currentLang]['new_badge']) {
+                        badgeText = dict[currentLang]['new_badge'];
+                    }
+                    newBadgeHTML = `<div class="new-badge">${badgeText}</div>`;
+                }
             }
-            card.innerHTML = `${newBadgeHTML}<div class="poster"><img src="${item.poster}" loading="lazy"><div class="poster-overlay"></div></div><div class="movie-name">${item.title}</div>`;
+            
+            let cardHtml = `${newBadgeHTML}`;
+            cardHtml += `<div class="poster">`;
+            cardHtml += `<img src="${item.poster}" loading="lazy">`;
+            cardHtml += `<div class="poster-overlay"></div></div>`;
+            cardHtml += `<div class="movie-name">${item.title}</div>`;
+            
+            card.innerHTML = cardHtml;
             
             const favBtn = document.createElement("div"); 
-            favBtn.className = favoritesArray.includes(item.id) ? "fav-btn active" : "fav-btn";
+            if(favoritesArray.includes(item.id)) {
+                favBtn.className = "fav-btn active";
+            } else {
+                favBtn.className = "fav-btn";
+            }
+            
             favBtn.setAttribute('data-movie-id', item.id);
             favBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
-            favBtn.onclick = (e) => { toggleFav(e, item.id); }; 
-            card.appendChild(favBtn); card.addEventListener("click", () => { openPlayer(item); }); 
+            
+            favBtn.onclick = (e) => {
+                toggleFav(e, item.id);
+            }; 
+            
+            card.appendChild(favBtn); 
+            
+            card.addEventListener("click", () => {
+                openPlayer(item);
+            }); 
+            
             container.appendChild(card);
         });
     }
 
     document.getElementById("searchInput").addEventListener("input", function() {
         var q = this.value.trim().toLowerCase(); 
-        if (!q) return fetchMoviesFromDatabase();
-        const filteredArray = dynamicDataArray.filter(i => i.title.toLowerCase().includes(q));
-        const programs = [], kids = [], series = [], movies = [];
-        filteredArray.forEach(m => {
-            if(m.category === 'program') programs.push(m);
-            else if(m.category === 'kids') kids.push(m);
-            else if(m.category === 'series' || !m.category) series.push(m);
-            else if(m.category === 'movie') movies.push(m);
+        
+        if (!q) {
+            return fetchMoviesFromDatabase();
+        }
+        
+        const filteredArray = [];
+        dynamicDataArray.forEach(i => {
+            if(i.title.toLowerCase().includes(q)) {
+                filteredArray.push(i);
+            }
         });
-        renderDynamicList(series, 'seriesList'); renderDynamicList(movies, 'moviesList');
-        renderDynamicList(programs, 'programsList'); renderDynamicList(kids, 'kidsList');
+        
+        const programs = [];
+        const kids = [];
+        const series = [];
+        const movies = [];
+        
+        filteredArray.forEach(m => {
+            if(m.category === 'program') {
+                programs.push(m);
+            } else if(m.category === 'kids') {
+                kids.push(m);
+            } else if(m.category === 'series' || !m.category) {
+                series.push(m);
+            } else if(m.category === 'movie') {
+                movies.push(m);
+            }
+        });
+        
+        renderDynamicList(series, 'seriesList');
+        renderDynamicList(movies, 'moviesList');
+        renderDynamicList(programs, 'programsList');
+        renderDynamicList(kids, 'kidsList');
     });
 
+    /* Video Player & Autoplay / Resume Logic / Per Link Timer */
     const videoPlayer = document.getElementById("videoPlayer");
     let pendingVideoUrl = "";
 
     function checkSubscription() {
-        if(currentUserProfile && currentUserProfile.role === 'admin') return true; 
-        if (!currentUserProfile || !currentUserProfile.sub_end_date) { showCustomAlert('اشتراک شما فعال نیست!'); return false; }
-        if(new Date() > new Date(currentUserProfile.sub_end_date)) { showCustomAlert('اشتراک شما منقضی شده است!'); return false; }
+        if(currentUserProfile && currentUserProfile.role === 'admin') {
+            return true; 
+        }
+        
+        if (!currentUserProfile || !currentUserProfile.sub_end_date) { 
+            showCustomAlert('اشتراک شما فعال نیست!'); 
+            return false; 
+        }
+        
+        let subDate = new Date(currentUserProfile.sub_end_date);
+        let nowDate = new Date();
+        
+        if(nowDate > subDate) {
+            showCustomAlert('اشتراک شما منقضی شده است!'); 
+            return false;
+        }
+        
         return true;
     }
 
     function openPlayer(movie) {
-        if(!checkSubscription()) return; 
+        if(!checkSubscription()) {
+            return; 
+        }
+        
         switchNav('movie');
         
         document.getElementById("movie-detail-title").textContent = movie.title;
@@ -1572,68 +1996,132 @@
         
         if(movie.info || movie.description) {
             document.getElementById('modal-movie-info').style.display = 'block';
-            let finalInfo = movie.info || movie.description || "";
+            let finalInfo = "";
+            if(movie.info) finalInfo += movie.info;
+            if(movie.description) finalInfo += "\n" + movie.description;
             document.getElementById('modal-movie-desc').textContent = finalInfo.trim();
-        } else { document.getElementById('modal-movie-info').style.display = 'none'; }
+        } else {
+            document.getElementById('modal-movie-info').style.display = 'none';
+        }
 
         document.getElementById("neonBanner").style.display = "flex";
         document.getElementById("realPlayerContainer").style.display = "none";
         
-        videoPlayer.pause(); videoPlayer.removeAttribute("src");
-        const linksContainer = document.getElementById("modal-links-container"); linksContainer.innerHTML = '';
-        if(linkTimerInterval) clearInterval(linkTimerInterval);
+        videoPlayer.pause(); 
+        videoPlayer.removeAttribute("src");
+        
+        const linksContainer = document.getElementById("modal-links-container"); 
+        linksContainer.innerHTML = '';
+
+        if(linkTimerInterval) {
+            clearInterval(linkTimerInterval);
+        }
 
         if (movie.download_url) {
             let lines = movie.download_url.split('\n');
+            
             lines.forEach((line, index) => {
-                if(!line.trim()) return;
+                if(!line.trim()) {
+                    return;
+                }
+                
                 let parts = line.split('|');
                 let btnTitle = parts[0].trim();
                 let btnUrl = parts.length > 1 ? parts[1].trim() : parts[0].trim();
                 let timerStr = parts.length > 2 ? parts[2].trim() : null;
-                let isLinkExpired = false, endTime = 0;
+                
+                let isLinkExpired = false;
+                let endTime = 0;
                 
                 if (timerStr && movie.updated_at) {
                     let durationMs = 0;
-                    if (timerStr.endsWith('h')) durationMs = parseFloat(timerStr) * 60 * 60 * 1000;
-                    else if (timerStr.endsWith('m')) durationMs = parseFloat(timerStr) * 60 * 1000;
+                    if (timerStr.endsWith('h')) {
+                        durationMs = parseFloat(timerStr) * 60 * 60 * 1000;
+                    } else if (timerStr.endsWith('m')) {
+                        durationMs = parseFloat(timerStr) * 60 * 1000;
+                    }
+                    
                     if(durationMs > 0) {
                         endTime = new Date(movie.updated_at).getTime() + durationMs;
-                        if ((endTime - new Date().getTime()) <= 0) isLinkExpired = true;
+                        let msLeft = endTime - new Date().getTime();
+                        if (msLeft <= 0) {
+                            isLinkExpired = true;
+                        }
                     }
                 }
                 
-                let rowHtml = `<div id="link-row-${index}" class="movie-link-row">`;
+                let rowId = 'link-row-' + index;
+                let rowHtml = `<div id="${rowId}" class="movie-link-row">`;
+                
                 if(!isLinkExpired) {
                     rowHtml += `<div class="movie-link-title">${btnTitle}</div>`;
-                    if(timerStr && endTime > 0) rowHtml += `<div style="font-size:11px; color:#f59e0b; font-family:monospace; margin-left:10px; margin-right:10px;" class="link-timer" data-endtime="${endTime}">...</div>`;
-                    rowHtml += `<div class="movie-link-actions"><button class="btn-play-online" onclick="prepareVideo('${btnUrl}')">پخش آنلاین</button><button class="btn-download" onclick="directDownload('${btnTitle}', '${btnUrl}')">دانلود</button></div>`;
+                    
+                    if(timerStr && endTime > 0) {
+                        rowHtml += `<div style="font-size:11px; color:#f59e0b; font-family:monospace; margin-left:10px; margin-right:10px;" class="link-timer" data-endtime="${endTime}">...</div>`;
+                    }
+                    
+                    rowHtml += `<div class="movie-link-actions">`;
+                    rowHtml += `<button class="btn-play-online" onclick="prepareVideo('${btnUrl}')">پخش آنلاین</button>`;
+                    rowHtml += `<button class="btn-download" onclick="directDownload('${btnTitle}', '${btnUrl}')">دانلود</button>`;
+                    rowHtml += `</div>`;
                 } else {
-                    rowHtml += `<div class="movie-link-title" style="color:var(--text-muted); text-decoration:line-through;">${btnTitle}</div><div style="font-size:12px; color:#ef4444; font-weight:bold; background:rgba(239, 68, 68, 0.1); padding:4px 10px; border-radius:8px;">منقضی شده</div>`;
+                    rowHtml += `<div class="movie-link-title" style="color:var(--text-muted); text-decoration:line-through;">${btnTitle}</div>`;
+                    rowHtml += `<div style="font-size:12px; color:#ef4444; font-weight:bold; background:rgba(239, 68, 68, 0.1); padding:4px 10px; border-radius:8px;">منقضی شده</div>`;
                 }
-                rowHtml += `</div>`; linksContainer.innerHTML += rowHtml;
+                
+                rowHtml += `</div>`;
+                linksContainer.innerHTML += rowHtml;
             });
             
             linkTimerInterval = setInterval(() => {
-                document.querySelectorAll('.link-timer').forEach(t => {
-                    let diff = parseInt(t.getAttribute('data-endtime')) - new Date().getTime();
+                let timers = document.querySelectorAll('.link-timer');
+                timers.forEach(t => {
+                    let end = parseInt(t.getAttribute('data-endtime'));
+                    let diff = end - new Date().getTime();
+                    
                     if(diff <= 0) {
-                        t.textContent = "منقضی شده"; t.style.color = "#ef4444";
-                        let titleDiv = t.parentElement.querySelector('.movie-link-title');
-                        if(titleDiv) t.parentElement.innerHTML = `<div class="movie-link-title" style="color:var(--text-muted); text-decoration:line-through;">${titleDiv.textContent}</div><div style="font-size:12px; color:#ef4444; font-weight:bold; background:rgba(239, 68, 68, 0.1); padding:4px 10px; border-radius:8px;">منقضی شده</div>`;
+                        t.textContent = "منقضی شده";
+                        t.style.color = "#ef4444";
+                        
+                        let parentRow = t.parentElement;
+                        let titleDiv = parentRow.querySelector('.movie-link-title');
+                        
+                        if(titleDiv) {
+                            parentRow.innerHTML = `
+                                <div class="movie-link-title" style="color:var(--text-muted); text-decoration:line-through;">${titleDiv.textContent}</div>
+                                <div style="font-size:12px; color:#ef4444; font-weight:bold; background:rgba(239, 68, 68, 0.1); padding:4px 10px; border-radius:8px;">منقضی شده</div>
+                            `;
+                        }
                     } else {
-                        let h = Math.floor(diff / (1000 * 60 * 60)), m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)), s = Math.floor((diff % (1000 * 60)) / 1000);
-                        t.textContent = `${h}:${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s} مانده`;
+                        let h = Math.floor(diff / (1000 * 60 * 60));
+                        let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                        let s = Math.floor((diff % (1000 * 60)) / 1000);
+                        
+                        let strM = m < 10 ? '0' + m : m;
+                        let strS = s < 10 ? '0' + s : s;
+                        
+                        t.textContent = `${h}:${strM}:${strS} مانده`;
                     }
                 });
             }, 1000);
-        } else { linksContainer.innerHTML = '<div style="font-size:12px; color:var(--text-muted); text-align:center;">لینکی ثبت نشده است.</div>'; }
+
+        } else { 
+            linksContainer.innerHTML = '<div style="font-size:12px; color:var(--text-muted); text-align:center;">لینکی ثبت نشده است.</div>'; 
+        }
     }
 
     window.prepareVideo = function(url) {
         pendingVideoUrl = url;
         let savedTime = localStorage.getItem('plato_prog_' + pendingVideoUrl);
-        if (savedTime && parseFloat(savedTime) > 10) { document.getElementById('resumeModal').classList.add('show'); return; }
+        
+        if (savedTime) {
+            let parsedTime = parseFloat(savedTime);
+            if(parsedTime > 10) {
+                document.getElementById('resumeModal').classList.add('show'); 
+                return;
+            }
+        }
+        
         resumePlayback(false); 
     }
 
@@ -1641,97 +2129,242 @@
         document.getElementById('resumeModal').classList.remove('show');
         document.getElementById("neonBanner").style.display = "none";
         document.getElementById("realPlayerContainer").style.display = "block";
+        
         videoPlayer.src = pendingVideoUrl;
-        if (useSaved) { let savedTime = localStorage.getItem('plato_prog_' + pendingVideoUrl); if(savedTime) videoPlayer.currentTime = parseFloat(savedTime); }
-        try { await videoPlayer.play(); } catch(e) {}
+        
+        if (useSaved) { 
+            let savedTime = localStorage.getItem('plato_prog_' + pendingVideoUrl); 
+            if(savedTime) {
+                videoPlayer.currentTime = parseFloat(savedTime); 
+            }
+        }
+        
+        try { 
+            await videoPlayer.play(); 
+        } catch(e) {
+            console.error(e);
+        }
     }
 
-    videoPlayer.addEventListener('timeupdate', function() { if (videoPlayer.currentTime > 5 && !videoPlayer.ended) localStorage.setItem('plato_prog_' + pendingVideoUrl, videoPlayer.currentTime); });
-    videoPlayer.addEventListener('ended', function() { localStorage.removeItem('plato_prog_' + pendingVideoUrl); });
+    videoPlayer.addEventListener('timeupdate', function() { 
+        if (videoPlayer.currentTime > 5 && !videoPlayer.ended) { 
+            localStorage.setItem('plato_prog_' + pendingVideoUrl, videoPlayer.currentTime); 
+        } 
+    });
+
+    videoPlayer.addEventListener('ended', function() { 
+        localStorage.removeItem('plato_prog_' + pendingVideoUrl); 
+    });
 
     window.toggleVideoQuality = function() {
         const btn = document.getElementById('qualityToggleBtn');
+        
         if(videoPlayer.style.transform === 'scale(0.96)') {
-            btn.textContent = dict[currentLang] && dict[currentLang]['quality_hd'] ? dict[currentLang]['quality_hd'] : 'کیفیت: عادی (HD)';
-            videoPlayer.style.transform = 'scale(1)'; showCustomAlert('کیفیت عادی شد.');
+            let txt = 'کیفیت: عادی (HD)';
+            if(dict[currentLang] && dict[currentLang]['quality_hd']) {
+                txt = dict[currentLang]['quality_hd'];
+            }
+            btn.textContent = txt;
+            videoPlayer.style.transform = 'scale(1)'; 
+            showCustomAlert('کیفیت عادی شد.');
         } else {
-            btn.textContent = currentLang === 'en' ? 'Quality: Lower (Smooth)' : 'کیفیت: کمتر (روان)';
-            videoPlayer.style.transform = 'scale(0.96)'; showCustomAlert('کیفیت بهینه شد.');
+            let txt = 'کیفیت: کمتر (روان)';
+            if(currentLang === 'en') {
+                txt = 'Quality: Lower (Smooth)';
+            }
+            btn.textContent = txt;
+            videoPlayer.style.transform = 'scale(0.96)'; 
+            showCustomAlert('کیفیت بهینه شد.');
         }
     }
 
     window.directDownload = function(title, url) {
-        if(!checkSubscription() || !url) return;
-        const a = document.createElement('a'); a.href = url; a.target = '_blank';
-        a.download = title.replace(/[^a-zA-Z0-9ا-ی]/g, '_') + '.mp4';
-        document.body.appendChild(a); a.click(); a.remove(); showCustomAlert('دانلود آغاز شد.');
+        if(!checkSubscription() || !url) {
+            return;
+        }
+        
+        const a = document.createElement('a'); 
+        a.href = url; 
+        a.target = '_blank';
+        
+        let safeTitle = title.replace(/[^a-zA-Z0-9ا-ی]/g, '_');
+        a.download = safeTitle + '.mp4';
+        
+        document.body.appendChild(a); 
+        a.click(); 
+        a.remove(); 
+        showCustomAlert('دانلود آغاز شد.');
     }
 
-    function closePlayer() { if(linkTimerInterval) clearInterval(linkTimerInterval); videoPlayer.pause(); videoPlayer.removeAttribute("src"); switchNav('home'); }
+    function closePlayer() { 
+        if(linkTimerInterval) {
+            clearInterval(linkTimerInterval);
+        }
+        videoPlayer.pause(); 
+        videoPlayer.removeAttribute("src"); 
+        switchNav('home');
+    }
 
+    /* Sidebar & Sub Logic */
     function openSidebar() {
-        document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebarOverlay').classList.add('open');
+        document.getElementById('sidebar').classList.add('open'); 
+        document.getElementById('sidebarOverlay').classList.add('open');
         document.getElementById('sidebarUser').textContent = currentUserProfile.username;
+        
         const badge = document.getElementById('premium-badge');
         
         if(currentUserProfile.role === 'admin') {
-            document.getElementById('sub-time-left').textContent = currentLang === 'en' ? "Admin Account" : "حساب مدیریت کل";
+            let txt = "حساب مدیریت کل";
+            if(currentLang === 'en') {
+                txt = "Admin Account";
+            }
+            document.getElementById('sub-time-left').textContent = txt;
             badge.style.display = 'inline-flex';
         } else {
             let isActive = false;
             if(currentUserProfile.sub_end_date) {
-                const diffTime = new Date(currentUserProfile.sub_end_date).getTime() - new Date().getTime();
+                const nowTime = new Date().getTime();
+                const endTime = new Date(currentUserProfile.sub_end_date).getTime();
+                const diffTime = endTime - nowTime;
+                
                 if(diffTime > 0) {
                     let daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    document.getElementById('sub-time-left').textContent = currentLang === 'en' ? `Days left: ${daysLeft}` : `اعتبار اشتراک: ${daysLeft} روز`;
+                    let txt = `اعتبار اشتراک: ${daysLeft} روز`;
+                    if(currentLang === 'en') {
+                        txt = `Days left: ${daysLeft}`;
+                    }
+                    document.getElementById('sub-time-left').textContent = txt;
                     isActive = true;
-                } else { document.getElementById('sub-time-left').textContent = currentLang === 'en' ? "Expired" : "اشتراک منقضی شده"; }
-            } else { document.getElementById('sub-time-left').textContent = currentLang === 'en' ? "No active sub" : "بدون اشتراک فعال"; }
-            badge.style.display = isActive ? 'inline-flex' : 'none';
+                } else { 
+                    let txt = "اشتراک منقضی شده";
+                    if(currentLang === 'en') {
+                        txt = "Expired";
+                    }
+                    document.getElementById('sub-time-left').textContent = txt; 
+                }
+            } else { 
+                let txt = "بدون اشتراک فعال";
+                if(currentLang === 'en') {
+                    txt = "No active sub";
+                }
+                document.getElementById('sub-time-left').textContent = txt; 
+            }
+            
+            if(isActive) {
+                badge.style.display = 'inline-flex';
+            } else {
+                badge.style.display = 'none';
+            }
         }
     }
 
-    function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('open'); }
+    function closeSidebar() { 
+        document.getElementById('sidebar').classList.remove('open'); 
+        document.getElementById('sidebarOverlay').classList.remove('open'); 
+    }
 
+    /* Admin Panel Logic */
     function switchAdminTab(tabId, btn) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active'); btn.classList.add('active');
-        if(tabId === 'tab-messages') loadAdminInbox();
-        if(tabId === 'tab-users') loadAllUsers();
-        if(tabId === 'tab-files') loadAdminMovies();
-        if(tabId === 'tab-news-gift') { loadAdminNews(); loadAdminGifts(); }
+        const allContents = document.querySelectorAll('.tab-content');
+        allContents.forEach(el => {
+            el.classList.remove('active');
+        });
+        
+        const allBtns = document.querySelectorAll('.tab-btn');
+        allBtns.forEach(el => {
+            el.classList.remove('active');
+        });
+        
+        document.getElementById(tabId).classList.add('active'); 
+        btn.classList.add('active');
+        
+        if(tabId === 'tab-messages') {
+            loadAdminInbox();
+        }
+        if(tabId === 'tab-users') {
+            loadAllUsers();
+        }
+        if(tabId === 'tab-files') {
+            loadAdminMovies();
+        }
+        if(tabId === 'tab-news-gift') { 
+            loadAdminNews(); 
+            loadAdminGifts(); 
+        }
     }
 
     function showAdminPanel() { 
-        document.getElementById('main-app').style.display = 'none'; closeSidebar(); document.getElementById('bottom-nav').style.display = 'none'; 
-        document.getElementById('admin-screen').style.display = 'flex'; loadPendingRequests(); loadAdminMovies(); loadAllUsers(); 
+        document.getElementById('main-app').style.display = 'none'; 
+        closeSidebar(); 
+        document.getElementById('bottom-nav').style.display = 'none'; 
+        document.getElementById('admin-screen').style.display = 'flex'; 
+        
+        loadPendingRequests(); 
+        loadAdminMovies(); 
+        loadAllUsers(); 
     }
 
     function hideAdminPanel() { 
-        document.getElementById('admin-screen').style.display = 'none'; document.getElementById('main-app').style.display = 'block'; 
-        document.getElementById('bottom-nav').style.display = 'flex'; fetchMoviesFromDatabase(); 
+        document.getElementById('admin-screen').style.display = 'none'; 
+        document.getElementById('main-app').style.display = 'block'; 
+        document.getElementById('bottom-nav').style.display = 'flex'; 
+        
+        fetchMoviesFromDatabase(); 
     }
 
+    /* Sub Charging (Zero sets to Null) */
     async function chargeSub() {
-        var user = toEnglishDigits(document.getElementById('charge-user').value).trim().toLowerCase();
-        var days = parseInt(toEnglishDigits(document.getElementById('charge-days').value));
-        if(!user || isNaN(days)) return showCustomAlert('اطلاعات را کامل وارد کنید');
+        var userRaw = document.getElementById('charge-user').value;
+        var user = toEnglishDigits(userRaw).trim().toLowerCase();
+        
+        var daysRaw = document.getElementById('charge-days').value;
+        var days = parseInt(toEnglishDigits(daysRaw));
+        
+        if(!user || isNaN(days)) {
+            return showCustomAlert('اطلاعات را کامل وارد کنید');
+        }
+        
         showLoader(true);
+        
         try {
             const { data: udata } = await supabaseClient.from('users_data').select('id, sub_end_date').eq('username', user).single();
-            if (!udata) { showCustomAlert('کاربر پیدا نشد.'); showLoader(false); return; }
-            if(days === 0) {
-                await supabaseClient.from('users_data').update({ sub_end_date: null }).eq('id', udata.id); showCustomAlert('اشتراک کاربر لغو شد.');
-            } else {
-                let baseDate = (udata.sub_end_date && new Date(udata.sub_end_date) > new Date()) ? new Date(udata.sub_end_date) : new Date();
-                baseDate.setDate(baseDate.getDate() + days);
-                await supabaseClient.from('users_data').update({ sub_end_date: baseDate.toISOString() }).eq('id', udata.id); showCustomAlert('اشتراک جمع و فعال شد.');
+            
+            if (!udata) { 
+                showCustomAlert('کاربر پیدا نشد.'); 
+                showLoader(false); 
+                return; 
             }
-        } catch(e) { showCustomAlert('خطا در ارتباط با سرور.'); } 
+            
+            if(days === 0) {
+                await supabaseClient.from('users_data').update({ sub_end_date: null }).eq('id', udata.id); 
+                showCustomAlert('اشتراک کاربر لغو شد.');
+            } else {
+                let currentSub = null;
+                if(udata.sub_end_date) {
+                    currentSub = new Date(udata.sub_end_date);
+                }
+                
+                let now = new Date(); 
+                let baseDate = now;
+                
+                if (currentSub && currentSub > now) {
+                    baseDate = currentSub;
+                }
+                
+                baseDate.setDate(baseDate.getDate() + days);
+                
+                await supabaseClient.from('users_data').update({ sub_end_date: baseDate.toISOString() }).eq('id', udata.id); 
+                showCustomAlert('اشتراک جمع و فعال شد.');
+            }
+        } catch(e) {
+            console.error(e);
+            showCustomAlert('خطا در ارتباط با سرور.');
+        } 
+        
         showLoader(false);
     }
 
+    /* Admin Movies & Drag Sort */
     let dragSourceElement = null;
     
     async function loadAdminMovies() {
@@ -1928,7 +2561,7 @@
                 let textValue = data[0].content, finalSpeed = "15s";
                 if(textValue.includes("||")) { let parts = textValue.split("||"); textValue = parts[0]; finalSpeed = parts[1] + "s"; if(speedInput) { speedInput.value = parts[1]; if(speedDisplay) speedDisplay.innerText = finalSpeed; } }
                 if(textElem.textContent !== textValue) textElem.textContent = textValue; 
-                textElem.style.animation = 'none'; void textElem.offsetWidth; textElem.style.animation = `led-scroll-left-to-right ${finalSpeed} linear infinite`; container.style.display = 'flex'; 
+                textElem.style.animation = 'none'; void textElem.offsetWidth; textElem.style.animation = `scroll-marquee ${finalSpeed} linear infinite`; container.style.display = 'flex'; 
                 if(input && !input.value) input.value = textValue;
             } else { container.style.display = 'none'; }
         } catch(e) {}
