@@ -202,6 +202,16 @@
 
         .input-field:focus { border-color: var(--accent); }
 
+        /* استایل اختصاصی تکست‌اریا برای جلوگیری از باگ پرش و تغییر سایز */
+        textarea.input-field {
+            height: auto !important;
+            min-height: 120px;
+            padding: 15px !important;
+            resize: vertical;
+            line-height: 1.7;
+            font-family: inherit;
+        }
+
         .btn-primary { 
             width: 100%; height: 50px; background: var(--accent); border-radius: 12px; 
             color: #fff; font-weight: 700; font-size: 14.5px; margin-top: 10px; transition: 0.2s; 
@@ -580,7 +590,6 @@
         .movie-info-card { background: var(--bg-input); padding: 20px; border-radius: 16px; margin-bottom: 25px; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .movie-info-title { font-size: 20px; font-weight: 900; margin-bottom: 15px; color: var(--accent); }
         .movie-info-desc { font-size: 13.5px; color: var(--text-muted); line-height: 2; white-space: pre-wrap; }
-        .movie-info-cast { font-size: 12.5px; color: var(--text-main); margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color); line-height: 1.8; }
 
         .movie-link-row { display: flex; align-items: center; justify-content: space-between; background: var(--bg-input); padding: 14px 18px; border-radius: 16px; margin-bottom: 14px; border: 1px solid var(--border-color); transition: 0.2s; }
         .movie-link-row:hover { border-color: var(--accent); transform: translateY(-2px); }
@@ -816,13 +825,10 @@
                 <input type="text" id="new-movie-poster" class="input-field" placeholder="لینک عکس پوستر">
             </div>
             <div class="input-group">
-                <textarea id="new-movie-desc" class="input-field" style="height:100px; padding:15px; resize:vertical; line-height:1.6;" placeholder="اطلاعات فیلم (خلاصه داستان و ...)"></textarea>
+                <textarea id="new-movie-info" class="input-field" placeholder="اطلاعات فیلم (خلاصه داستان و ...)"></textarea>
             </div>
             <div class="input-group">
-                <input type="text" id="new-movie-cast" class="input-field" placeholder="بازیگران">
-            </div>
-            <div class="input-group">
-                <textarea id="new-movie-url" class="input-field" style="height:120px; padding:15px; resize:vertical; line-height:1.6;" placeholder="فرمت: نام قسمت | لینک دانلود | 30h"></textarea>
+                <textarea id="new-movie-url" class="input-field" placeholder="فرمت: نام قسمت | لینک دانلود | 30h"></textarea>
             </div>
             
             <label class="checkbox-container" style="margin-bottom:15px; background:var(--bg-box); padding:10px; border-radius:8px; border:1px solid var(--border-color);">
@@ -841,7 +847,7 @@
         <div id="tab-news-gift" class="tab-content">
             <div class="admin-section">
                 <h3 id="form-news-title">ایجاد خبر جدید</h3>
-                <textarea id="new-news-content" class="input-field" style="height:100px; padding:12px; resize:none;" placeholder="متن خبر را بنویسید..."></textarea>
+                <textarea id="new-news-content" class="input-field" placeholder="متن خبر را بنویسید..."></textarea>
                 <div style="display:flex; gap:10px;">
                     <button type="button" class="btn-primary" id="save-news-btn" onclick="postNews()">انتشار خبر</button>
                     <button type="button" class="btn-primary" id="cancel-news-btn" style="display:none; background:#444;" onclick="cancelEditNews()">انصراف</button>
@@ -1032,7 +1038,6 @@
                 <div class="movie-info-card" id="modal-movie-info" style="display:none;">
                     <h2 class="movie-info-title" id="movie-detail-title"></h2>
                     <div id="modal-movie-desc" class="movie-info-desc"></div>
-                    <div id="modal-movie-cast" class="movie-info-cast" style="display:none;"></div>
                 </div>
 
                 <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;" data-i18n="link_expired">این لینک منقضی شده است.</div>
@@ -1103,7 +1108,7 @@
             <button class="modal-close-x" onclick="document.getElementById('supportModal').classList.remove('show')">×</button>
             <div class="modal-content">
                 <h3 class="modal-title" data-i18n="support_title">ارتباط با پشتیبانی</h3>
-                <textarea id="support-msg-text" class="input-field" style="height:110px; padding:12px; resize:none;" placeholder="پیام خود را بنویسید..." data-i18n-placeholder="write_msg"></textarea>
+                <textarea id="support-msg-text" class="input-field" placeholder="پیام خود را بنویسید..." data-i18n-placeholder="write_msg"></textarea>
                 <button class="btn-primary" onclick="sendSupportMessage()" data-i18n="send_msg">ارسال پیام</button>
             </div>
         </div>
@@ -1143,7 +1148,7 @@
             <div class="modal-content">
                 <h3 class="modal-title">پاسخ به کاربر</h3>
                 <input type="hidden" id="reply-user-id">
-                <textarea id="admin-reply-text" class="input-field" style="height:100px; padding:12px; resize:none;" placeholder="متن پاسخ..."></textarea>
+                <textarea id="admin-reply-text" class="input-field" placeholder="متن پاسخ..."></textarea>
                 <button class="btn-primary" onclick="sendAdminReply()">ارسال پاسخ</button>
             </div>
         </div>
@@ -1154,7 +1159,7 @@
             <button class="modal-close-x" onclick="document.getElementById('sysMsgModal').classList.remove('show')">×</button>
             <div class="modal-content">
                 <h3 class="modal-title" style="color:#10b981;">ارسال پیام عمومی</h3>
-                <textarea id="sys-msg-text" class="input-field" style="height:100px; padding:12px; resize:none;" placeholder="متن پیام عمومی..."></textarea>
+                <textarea id="sys-msg-text" class="input-field" placeholder="متن پیام عمومی..."></textarea>
                 <button class="btn-primary" style="background:#10b981;" onclick="sendSystemMessage()">ارسال</button>
             </div>
         </div>
@@ -1565,14 +1570,10 @@
         document.getElementById("movie-detail-title").textContent = movie.title;
         document.getElementById("neonTitle").textContent = movie.title;
         
-        if(movie.info || movie.description || movie.cast_members) {
+        if(movie.info || movie.description) {
             document.getElementById('modal-movie-info').style.display = 'block';
-            let finalInfo = (movie.info || "") + (movie.description ? "\n" + movie.description : "");
+            let finalInfo = movie.info || movie.description || "";
             document.getElementById('modal-movie-desc').textContent = finalInfo.trim();
-            if(movie.cast_members) {
-                document.getElementById('modal-movie-cast').style.display = 'block';
-                document.getElementById('modal-movie-cast').textContent = "بازیگران: " + movie.cast_members;
-            } else { document.getElementById('modal-movie-cast').style.display = 'none'; }
         } else { document.getElementById('modal-movie-info').style.display = 'none'; }
 
         document.getElementById("neonBanner").style.display = "flex";
@@ -1732,71 +1733,152 @@
     }
 
     let dragSourceElement = null;
+    
     async function loadAdminMovies() {
-        const list = document.getElementById('admin-movie-list'); list.innerHTML = '';
+        const list = document.getElementById('admin-movie-list'); 
+        list.innerHTML = '';
+        
         if(dynamicDataArray.length > 0) {
             dynamicDataArray.forEach(m => {
                 let catName = m.category === 'movie' ? 'دسته: فیلم' : m.category === 'kids' ? 'دسته: انیمیشن' : m.category === 'program' ? 'دسته: برنامه' : 'دسته: سریال';
-                let card = document.createElement('div'); card.className = "req-card draggable"; card.draggable = true; card.dataset.id = m.id;
+                let card = document.createElement('div'); 
+                card.className = "req-card draggable"; 
+                card.draggable = true; 
+                card.dataset.id = m.id;
+                
                 card.innerHTML = `<div class="req-info"><div style="color:var(--text-main);">${m.title}</div><small style="color:var(--accent);">${catName}</small></div><div><button class="btn-sm btn-edit" onclick="editMovie(${m.id})">ویرایش</button><button class="btn-sm btn-reject" onclick="deleteMovie(${m.id})">حذف</button></div>`;
                 
-                card.addEventListener('dragstart', (e) => { dragSourceElement = card; e.dataTransfer.effectAllowed = 'move'; card.style.opacity = '0.5'; });
-                card.addEventListener('dragover', (e) => { e.preventDefault(); card.classList.add('drag-over'); });
-                card.addEventListener('dragleave', () => { card.classList.remove('drag-over'); });
+                card.addEventListener('dragstart', (e) => { 
+                    dragSourceElement = card; 
+                    e.dataTransfer.effectAllowed = 'move'; 
+                    card.style.opacity = '0.5'; 
+                });
+                card.addEventListener('dragover', (e) => { 
+                    e.preventDefault(); 
+                    card.classList.add('drag-over'); 
+                });
+                card.addEventListener('dragleave', () => { 
+                    card.classList.remove('drag-over'); 
+                });
                 card.addEventListener('drop', async (e) => {
-                    e.stopPropagation(); card.classList.remove('drag-over');
+                    e.stopPropagation(); 
+                    card.classList.remove('drag-over');
                     if (dragSourceElement !== card) {
                         const allCards = Array.from(list.querySelectorAll('.draggable'));
-                        if(allCards.indexOf(dragSourceElement) < allCards.indexOf(card)) card.after(dragSourceElement); else card.before(dragSourceElement);
+                        if(allCards.indexOf(dragSourceElement) < allCards.indexOf(card)) {
+                            card.after(dragSourceElement); 
+                        } else {
+                            card.before(dragSourceElement);
+                        }
                         showLoader(true);
                         const updates = Array.from(list.querySelectorAll('.draggable')).map((c, idx) => supabaseClient.from('movies').update({ sort_order: idx }).eq('id', c.dataset.id));
-                        await Promise.all(updates); await fetchMoviesFromDatabase(); showLoader(false); showCustomAlert('ترتیب ذخیره شد.');
+                        await Promise.all(updates); 
+                        await fetchMoviesFromDatabase(); 
+                        showLoader(false); 
+                        showCustomAlert('ترتیب ذخیره شد.');
                     }
                 });
-                card.addEventListener('dragend', () => { card.style.opacity = '1'; list.querySelectorAll('.draggable').forEach(c => c.classList.remove('drag-over')); }); 
+                card.addEventListener('dragend', () => { 
+                    card.style.opacity = '1'; 
+                    list.querySelectorAll('.draggable').forEach(c => c.classList.remove('drag-over')); 
+                }); 
+                
                 list.appendChild(card);
             });
         }
     }
 
     async function saveMovie() {
-        var cat = document.getElementById('new-movie-category').value, tit = document.getElementById('new-movie-title').value.trim();
-        var pos = document.getElementById('new-movie-poster').value.trim(), desc = document.getElementById('new-movie-desc').value.trim();
-        var cast = document.getElementById('new-movie-cast').value.trim(), url = document.getElementById('new-movie-url').value.trim();
+        var cat = document.getElementById('new-movie-category').value;
+        var tit = document.getElementById('new-movie-title').value.trim();
+        var pos = document.getElementById('new-movie-poster').value.trim();
+        var infoText = document.getElementById('new-movie-info').value.trim();
+        var url = document.getElementById('new-movie-url').value.trim();
         var isNew = document.getElementById('new-movie-isnew').checked;
-        if(!tit || !pos) return showCustomAlert('عنوان و لینک عکس را وارد کنید');
-        var payload = { title: tit, poster: pos, description: desc, cast_members: cast, download_url: url, category: cat, countdown_end: null };
-        if(isNew) { payload.updated_at = new Date().toISOString(); } else { let d = new Date(); d.setDate(d.getDate() - 10); payload.updated_at = d.toISOString(); }
+        
+        if(!tit || !pos) {
+            return showCustomAlert('عنوان و لینک عکس را وارد کنید');
+        }
+        
+        var payload = { 
+            title: tit, 
+            poster: pos, 
+            info: infoText,
+            description: infoText,
+            download_url: url, 
+            category: cat, 
+            countdown_end: null 
+        };
+        
+        if(isNew) { 
+            payload.updated_at = new Date().toISOString(); 
+        } else { 
+            let d = new Date(); 
+            d.setDate(d.getDate() - 10); 
+            payload.updated_at = d.toISOString(); 
+        }
+        
         showLoader(true);
         try {
-            if(editingMovieId) await supabaseClient.from('movies').update(payload).eq('id', editingMovieId); 
-            else await supabaseClient.from('movies').insert([payload]);
-            showCustomAlert("ذخیره شد!"); cancelEdit(); await fetchMoviesFromDatabase(); loadAdminMovies();
-        } catch(e) {} 
+            if(editingMovieId) {
+                await supabaseClient.from('movies').update(payload).eq('id', editingMovieId); 
+            } else {
+                await supabaseClient.from('movies').insert([payload]);
+            }
+            showCustomAlert("ذخیره شد!"); 
+            cancelEdit(); 
+            await fetchMoviesFromDatabase(); 
+            loadAdminMovies();
+        } catch(e) {
+            console.error(e);
+        } 
         showLoader(false);
     }
 
     function editMovie(id) {
-        let m = dynamicDataArray.find(x => x.id === id); if(!m) return;
+        let m = dynamicDataArray.find(x => x.id === id); 
+        if(!m) return;
+        
         document.getElementById('new-movie-category').value = m.category || 'series'; 
         document.getElementById('new-movie-title').value = m.title; 
         document.getElementById('new-movie-poster').value = m.poster; 
-        document.getElementById('new-movie-desc').value = m.description || m.info || '';
-        document.getElementById('new-movie-cast').value = m.cast_members || '';
+        document.getElementById('new-movie-info').value = m.description || m.info || '';
         document.getElementById('new-movie-url').value = m.download_url || '';
-        if(m.updated_at && ((new Date() - new Date(m.updated_at)) / 86400000) <= 3) document.getElementById('new-movie-isnew').checked = true;
-        else document.getElementById('new-movie-isnew').checked = false; 
-        editingMovieId = id; document.getElementById('form-movie-title').textContent = "ویرایش محتوا"; document.getElementById('cancel-edit-btn').style.display = "block"; window.scrollTo(0,0);
+        
+        if(m.updated_at && ((new Date() - new Date(m.updated_at)) / 86400000) <= 3) {
+            document.getElementById('new-movie-isnew').checked = true;
+        } else {
+            document.getElementById('new-movie-isnew').checked = false; 
+        }
+        
+        editingMovieId = id; 
+        document.getElementById('form-movie-title').textContent = "ویرایش محتوا"; 
+        document.getElementById('cancel-edit-btn').style.display = "block"; 
+        window.scrollTo(0,0);
     }
 
     function cancelEdit() { 
-        document.getElementById('new-movie-title').value = ''; document.getElementById('new-movie-poster').value = ''; 
-        document.getElementById('new-movie-desc').value = ''; document.getElementById('new-movie-cast').value = ''; 
-        document.getElementById('new-movie-url').value = ''; document.getElementById('new-movie-isnew').checked = false; 
-        editingMovieId = null; document.getElementById('form-movie-title').textContent = "اضافه کردن محتوای جدید"; document.getElementById('cancel-edit-btn').style.display = "none"; 
+        document.getElementById('new-movie-title').value = ''; 
+        document.getElementById('new-movie-poster').value = ''; 
+        document.getElementById('new-movie-info').value = ''; 
+        document.getElementById('new-movie-url').value = ''; 
+        document.getElementById('new-movie-isnew').checked = false; 
+        
+        editingMovieId = null; 
+        document.getElementById('form-movie-title').textContent = "اضافه کردن محتوای جدید"; 
+        document.getElementById('cancel-edit-btn').style.display = "none"; 
     }
 
-    async function deleteMovie(id) { if(!confirm('حذف شود؟')) return; showLoader(true); try { await supabaseClient.from('movies').delete().eq('id', id); await fetchMoviesFromDatabase(); loadAdminMovies(); } catch(e) {} showLoader(false); }
+    async function deleteMovie(id) { 
+        if(!confirm('حذف شود؟')) return; 
+        showLoader(true); 
+        try { 
+            await supabaseClient.from('movies').delete().eq('id', id); 
+            await fetchMoviesFromDatabase(); 
+            loadAdminMovies(); 
+        } catch(e) {} 
+        showLoader(false); 
+    }
 
     async function loadAllUsers() {
         try {
