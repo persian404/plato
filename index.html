@@ -155,12 +155,6 @@
             display: flex; flex-direction: column; max-height: 90vh; position: relative; 
         }
 
-        .modal-full { padding: 0 !important; }
-        .modal-full .modal-box {
-            max-width: 100% !important; width: 100% !important; height: 100vh !important; 
-            max-height: 100vh !important; border-radius: 0 !important; border: none !important; background: var(--bg-main);
-        }
-
         .modal-close-x { 
             position: absolute; top: 14px; left: 14px; width: 36px; height: 36px; 
             background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 50%; 
@@ -265,12 +259,6 @@
         .light-theme .icon-moon { display: none !important; }
         body:not(.light-theme) .icon-sun { display: none !important; }
         body:not(.light-theme) .icon-moon { display: block !important; }
-
-        .lang-toggle-btn { 
-            position: absolute; top: 15px; right: 15px; background: var(--bg-input); 
-            border: 1px solid var(--border-color); border-radius: 8px; font-size: 11px; 
-            font-weight: bold; color: var(--text-main); padding: 5px 8px; cursor: pointer; 
-        }
 
         .profile-avatar-wrap { 
             position: relative; width: 70px; height: 70px; margin: 0 auto 10px; border-radius: 50%; 
@@ -433,7 +421,7 @@
         @keyframes fadeSlide { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         /* =========================
-           MAIN APP & HEADER (FIXED ALIGNMENTS)
+           MAIN APP & HEADER
         ========================= */
         #app-wrapper { width: 100%; max-width: 1400px; margin: 0 auto; position: relative; padding-bottom: var(--bottom-nav-h); }
         #main-app { display: none; }
@@ -480,10 +468,10 @@
             position: absolute; white-space: nowrap; font-size: 20px; font-family: 'Courier New', Courier, monospace, "Vazirmatn"; 
             font-weight: 900; color: #ff0000; text-shadow: 0 0 4px #ff0000, 0 0 10px #ff0000, 0 0 18px #ff1111; 
             letter-spacing: 1.5px; top: 50%; transform: translateY(-50%) translateX(-100%); left: 0; 
-            animation: led-scroll-left-to-right 15s linear infinite; will-change: transform, left;
+            animation: scroll-marquee 15s linear infinite; will-change: transform, left;
         }
 
-        @keyframes led-scroll-left-to-right { 
+        @keyframes scroll-marquee { 
             0%   { left: 0; transform: translateY(-50%) translateX(-100%); } 
             100% { left: 100%; transform: translateY(-50%) translateX(0); } 
         }
@@ -553,17 +541,7 @@
         .news-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
         /* MOVIE DETAIL PAGE */
-        .movie-detail-header {
-            padding: 15px 20px; display: flex; align-items: center; justify-content: flex-end; 
-            border-bottom: 1px solid var(--border-color); background: var(--bg-box); position: sticky; top: 75px; z-index: 100;
-        }
-
-        .btn-back {
-            background: none; color: var(--text-main); font-weight: bold; display: flex; 
-            align-items: center; gap: 8px; font-size: 15px; cursor: pointer; margin-right: auto; 
-        }
-
-        .movie-detail-content { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .movie-detail-content { max-width: 800px; margin: 0 auto; padding: 20px 20px 90px; }
 
         .neon-banner { 
             width: 100%; aspect-ratio: 16 / 9; position: relative; border-radius: 12px; padding: 3px; z-index: 0; margin-bottom: 20px; overflow: hidden; background: #000;
@@ -625,7 +603,7 @@
             <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff" style="margin-left: 3px;"><path d="M8 5v14l11-7z"/></svg>
         </div>
     </div>
-    <div class="loader-text" data-i18n="loading">لطفا صبر کنید...</div>
+    <div class="loader-text">لطفا صبر کنید...</div>
 </div>
 
 <div id="app-wrapper">
@@ -640,19 +618,19 @@
             <div class="welcome-text">WELCOME</div>
 
             <div class="input-group">
-                <input type="text" id="log-user" class="input-field" placeholder="نام کاربری" data-i18n-placeholder="username" autocapitalize="none" autocomplete="off" spellcheck="false">
+                <input type="text" id="log-user" class="input-field" placeholder="نام کاربری" autocapitalize="none" autocomplete="off" spellcheck="false">
             </div>
             <div class="input-group">
-                <input type="password" id="log-pass" class="input-field" placeholder="رمز عبور" data-i18n-placeholder="password" autocapitalize="none" autocomplete="off">
+                <input type="password" id="log-pass" class="input-field" placeholder="رمز عبور" autocapitalize="none" autocomplete="off">
             </div>
             <label class="checkbox-container">
                 <input type="checkbox" onchange="togglePassword()"> 
-                <span data-i18n="show_pass">نمایش رمز عبور</span>
+                <span>نمایش رمز عبور</span>
             </label>
-            <button type="button" class="btn-primary" onclick="doLogin()" data-i18n="login_btn">ورود به حساب</button>
+            <button type="button" class="btn-primary" onclick="doLogin()">ورود به حساب</button>
             <button type="button" class="switch-box" onclick="toggleAuth('register')">
-                <span data-i18n="no_account">حساب کاربری ندارید؟</span> 
-                <span data-i18n="register_now" style="color:var(--accent);">ثبت‌نام کنید</span>
+                <span>حساب کاربری ندارید؟</span> 
+                <span style="color:var(--accent);">ثبت‌نام کنید</span>
             </button>
         </div>
 
@@ -665,22 +643,22 @@
             <div class="welcome-text">CREATE ACCOUNT</div>
 
             <div class="input-group">
-                <input type="text" id="reg-user" class="input-field" placeholder="نام کاربری (انگلیسی)" data-i18n-placeholder="username_en" autocapitalize="none" autocomplete="off" spellcheck="false">
+                <input type="text" id="reg-user" class="input-field" placeholder="نام کاربری (انگلیسی)" autocapitalize="none" autocomplete="off" spellcheck="false">
             </div>
             <div class="input-group">
-                <input type="password" id="reg-pass" class="input-field" placeholder="رمز عبور" data-i18n-placeholder="password" autocapitalize="none" autocomplete="off">
+                <input type="password" id="reg-pass" class="input-field" placeholder="رمز عبور" autocapitalize="none" autocomplete="off">
             </div>
             <div class="input-group">
-                <input type="text" id="reg-model" class="input-field" placeholder="مدل دستگاه" data-i18n-placeholder="device_model" autocomplete="off">
+                <input type="text" id="reg-model" class="input-field" placeholder="مدل دستگاه" autocomplete="off">
             </div>
             <label class="checkbox-container">
                 <input type="checkbox" onchange="togglePassword()"> 
-                <span data-i18n="show_pass">نمایش رمز عبور</span>
+                <span>نمایش رمز عبور</span>
             </label>
-            <button type="button" class="btn-primary" onclick="doRegister()" data-i18n="register_btn">ارسال درخواست عضویت</button>
+            <button type="button" class="btn-primary" onclick="doRegister()">ارسال درخواست عضویت</button>
             <button type="button" class="switch-box" onclick="toggleAuth('login')">
-                <span data-i18n="have_account">قبلاً ثبت‌نام کردید؟</span> 
-                <span data-i18n="login_now" style="color:var(--accent);">وارد شوید</span>
+                <span>قبلاً ثبت‌نام کردید؟</span> 
+                <span style="color:var(--accent);">وارد شوید</span>
             </button>
         </div>
     </div>
@@ -690,7 +668,7 @@
         <div class="modal-box" style="max-width: 450px; max-height: 80vh;">
             <button class="modal-close-x" onclick="document.getElementById('termsModal').classList.remove('show')">×</button>
             <div class="modal-content" style="display: flex; flex-direction: column; overflow: hidden; padding: 20px;">
-                <h3 class="modal-title" style="text-align:center; margin-bottom: 15px;" data-i18n="terms_title">قوانین و مقررات پلاتو</h3>
+                <h3 class="modal-title" style="text-align:center; margin-bottom: 15px;">قوانین و مقررات پلاتو</h3>
                 
                 <div style="overflow-y: auto; padding-right: 5px; flex-grow: 1; margin-bottom: 15px;">
                     <ul style="font-size: 13px; line-height: 1.9; color: var(--text-muted); text-align: justify; margin: 0; padding-right: 15px;" id="terms-list">
@@ -706,11 +684,11 @@
                     
                     <label class="checkbox-container" style="margin-top: 20px; margin-bottom: 10px; padding:10px; background:var(--bg-input); border-radius:10px; border:1px solid var(--border-color);">
                         <input type="checkbox" id="acceptTermsCheck"> 
-                        <span data-i18n="accept_terms">پذیرفتن شرایط و قوانین فوق</span>
+                        <span>پذیرفتن شرایط و قوانین فوق</span>
                     </label>
                 </div>
                 
-                <button class="btn-primary" onclick="finalizeRegistration()" data-i18n="confirm_register" style="margin-top: 0;">تایید و ارسال ثبت‌نام</button>
+                <button class="btn-primary" onclick="finalizeRegistration()" style="margin-top: 0;">تایید و ارسال ثبت‌نام</button>
             </div>
         </div>
     </div>
@@ -723,7 +701,6 @@
                 <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
                 <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
             </button>
-            <button class="lang-toggle-btn" onclick="toggleLanguage()">EN / FA</button>
             
             <div class="profile-avatar-wrap" onclick="openAvatarModal()">
                 <div class="profile-avatar-svg" id="sidebar-avatar-img"></div>
@@ -743,36 +720,36 @@
         </div>
         <div class="sidebar-menu">
             <button class="sidebar-btn" onclick="openSupportModal()">
-                <span data-i18n="support_btn">ارتباط با پشتیبانی</span>
+                <span>ارتباط با پشتیبانی</span>
                 <svg class="btn-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
             </button>
             <button class="sidebar-btn" onclick="openInboxModal()">
-                <span data-i18n="inbox_btn">صندوق پیام‌ها</span>
+                <span>صندوق پیام‌ها</span>
                 <div style="display:flex; align-items:center; gap:8px;">
                     <span class="notif-dot" id="inbox-notif" style="display:none;"></span>
                     <svg class="btn-icon" style="margin:0;" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </div>
             </button>
             <button class="sidebar-btn" onclick="openGiftModal()">
-                <span data-i18n="gift_code_btn">کد هدیه</span>
+                <span>کد هدیه</span>
                 <svg class="btn-icon" viewBox="0 0 24 24"><path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
             </button>
             
-            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="text-decoration:none; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;">
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <svg style="margin:0; width:22px; height:22px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <a href="https://t.me/plato_media" target="_blank" class="sidebar-btn" style="text-decoration:none; padding: 12px 14px;">
+                <div style="display:flex; align-items:center; width: 100%; gap: 6px;">
+                    <svg style="width:22px; height:22px; flex-shrink: 0;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="12" cy="12" r="12" fill="#229ED9"/>
                         <path d="M17.9 6.7L15.3 18.1C15.1 18.9 14.6 19.1 13.9 18.7L10.3 16L8.55 17.7C8.35 17.9 8.2 18.05 7.8 18.05L8.05 14.3L14.9 8.05C15.2 7.8 14.85 7.65 14.45 7.9L6 13.25L2.35 12.1C1.55 11.85 1.55 11.3 2.5 10.95L16.75 5.45C17.4 5.2 18 5.6 17.9 6.7Z" fill="white"/>
                     </svg>
                     <span style="font-weight:bold; font-size:13.5px; color:var(--text-main);">کانال تلگرامی پلاتو</span>
+                    <span style="font-weight:900; font-size:14px; color:var(--accent); margin-right: 4px;" dir="ltr">@plato_media</span>
                 </div>
-                <div style="font-weight:900; font-size:14px; color:var(--accent);" dir="ltr">@plato_media</div>
             </a>
 
             <div id="admin-sidebar-btn-container"></div>
             
             <button class="sidebar-btn" style="color:#ef4444; margin-top:auto;" onclick="doLogout()">
-                <span data-i18n="logout_btn">خروج از حساب</span>
+                <span>خروج از حساب</span>
                 <svg class="btn-icon" style="margin:0;" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
             </button>
         </div>
@@ -785,7 +762,7 @@
     <!-- ADMIN PANEL -->
     <div id="admin-screen">
         <div style="width:100%; max-width:650px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h2 style="font-size: 18px;" data-i18n="admin_panel">پنل مدیریت</h2>
+            <h2 style="font-size: 18px;">پنل مدیریت</h2>
             <button class="btn-sm" style="background:var(--bg-box); border:1px solid var(--border-color); padding:10px 15px;" onclick="hideAdminPanel()">بازگشت به سایت ➔</button>
         </div>
         
@@ -957,7 +934,7 @@
                             <path d="m16 16 4 4"></path>
                         </svg>
                     </span>
-                    <input id="searchInput" type="search" placeholder="جستجوی فیلم، سریال یا برنامه..." data-i18n-placeholder="search_ph" autocomplete="off">
+                    <input id="searchInput" type="search" placeholder="جستجوی فیلم، سریال یا برنامه..." autocomplete="off">
                 </div>
             </div>
 
@@ -980,28 +957,28 @@
 
             <section class="section">
                 <div class="section-header">
-                    <h2 class="section-title" data-i18n="cat_series">سریال‌ها</h2>
+                    <h2 class="section-title">سریال‌ها</h2>
                 </div>
                 <div class="movie-list" id="seriesList"></div>
             </section>
             
             <section class="section">
                 <div class="section-header">
-                    <h2 class="section-title" data-i18n="cat_movies">فیلم‌های سینمایی</h2>
+                    <h2 class="section-title">فیلم‌های سینمایی</h2>
                 </div>
                 <div class="movie-list" id="moviesList"></div>
             </section>
 
             <section class="section">
                 <div class="section-header">
-                    <h2 class="section-title" data-i18n="cat_programs">برنامه‌ها</h2>
+                    <h2 class="section-title">برنامه‌ها</h2>
                 </div>
                 <div class="movie-list" id="programsList"></div>
             </section>
 
             <section class="section">
                 <div class="section-header">
-                    <h2 class="section-title" data-i18n="cat_kids">انیمیشن/کودکانه</h2>
+                    <h2 class="section-title">انیمیشن/کودکانه</h2>
                 </div>
                 <div class="movie-list" id="kidsList"></div>
             </section>
@@ -1009,7 +986,7 @@
 
         <!-- Favs View -->
         <div id="view-favs" class="view-section" style="padding:20px;">
-            <h2 style="font-size: 18px; margin-bottom: 20px; border-right: 4px solid var(--accent); padding-right: 10px;" data-i18n="nav_favs">علاقه‌مندی‌ها</h2>
+            <h2 style="font-size: 18px; margin-bottom: 20px; border-right: 4px solid var(--accent); padding-right: 10px;">علاقه‌مندی‌ها</h2>
             <div id="favsList" style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"></div>
         </div>
 
@@ -1020,14 +997,12 @@
 
         <!-- Dedicated Movie Page View -->
         <div id="view-movie" class="view-section" style="padding-bottom: 90px; background: var(--bg-main);">
-            <div class="movie-detail-header">
-                <button class="btn-back" onclick="closePlayer()">
+            <div class="movie-detail-content" style="padding-top: 15px;">
+                <button class="btn-back" onclick="closePlayer()" style="margin-bottom: 15px; background: none; color: var(--text-main); font-weight: bold; display: flex; align-items: center; gap: 8px; font-size: 15px; cursor: pointer;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
                     بازگشت
                 </button>
-            </div>
-
-            <div class="movie-detail-content">
+                
                 <div class="neon-banner" id="neonBanner">
                     <div class="neon-banner-inner" id="neonBannerInner">
                         <div class="neon-text" id="neonTitle">نام محتوا</div>
@@ -1036,7 +1011,7 @@
                 
                 <div class="video-container" id="realPlayerContainer">
                     <video id="videoPlayer" controls controlsList="nodownload" playsinline preload="metadata"></video>
-                    <button class="quality-badge" id="qualityToggleBtn" onclick="toggleVideoQuality()" data-i18n="quality_hd">کیفیت: عادی (HD)</button>
+                    <button class="quality-badge" id="qualityToggleBtn" onclick="toggleVideoQuality()">کیفیت: عادی (HD)</button>
                 </div>
 
                 <div class="movie-info-card" id="modal-movie-info" style="display:none;">
@@ -1044,7 +1019,7 @@
                     <div id="modal-movie-desc" class="movie-info-desc"></div>
                 </div>
 
-                <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;" data-i18n="link_expired">این لینک منقضی شده است.</div>
+                <div id="modalExpirationText" style="color:#ef4444; font-size:13px; margin-bottom:12px; font-weight:bold; display:none; background:rgba(239, 68, 68, 0.1); padding:8px; border-radius:8px; text-align:center;">این لینک منقضی شده است.</div>
                 
                 <div id="modal-links-container"></div>
             </div>
@@ -1055,24 +1030,24 @@
     <div class="bottom-nav" id="bottom-nav" style="display:none;">
         <div class="nav-item active" onclick="switchNav('home')" id="nav-home">
             <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            <span data-i18n="nav_home">خانه</span>
+            <span>خانه</span>
             <div class="nav-indicator"></div>
         </div>
         <div class="nav-item" onclick="switchNav('favs')" id="nav-favs">
             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            <span data-i18n="nav_favs">علاقه‌مندی‌ها</span>
+            <span>علاقه‌مندی‌ها</span>
             <div class="nav-indicator"></div>
         </div>
         <div class="nav-item" onclick="showPlatinoSoon()" id="nav-platino">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
-            <span data-i18n="nav_platino">پلاتینو</span>
+            <span>پلاتینو</span>
             <div class="platino-badge">به زودی</div>
             <div class="nav-indicator"></div>
         </div>
         <div class="nav-item" onclick="switchNav('news')" id="nav-news">
             <div class="nav-notif" id="news-notif"></div>
             <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-            <span data-i18n="nav_news">خبرها</span>
+            <span>خبرها</span>
             <div class="nav-indicator"></div>
         </div>
     </div>
@@ -1087,11 +1062,11 @@
                     <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
             </div>
-            <h3 style="font-size: 16px; margin-bottom: 10px; color: var(--text-main);" data-i18n="resume_title">پخش از ادامه؟</h3>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;" data-i18n="resume_desc">شما قبلاً بخشی از این محتوا را تماشا کرده‌اید.</p>
+            <h3 style="font-size: 16px; margin-bottom: 10px; color: var(--text-main);">پخش از ادامه؟</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">شما قبلاً بخشی از این محتوا را تماشا کرده‌اید.</p>
             <div style="display: flex; gap: 10px;">
-                <button class="btn-primary" style="flex:1;" onclick="resumePlayback(true)" data-i18n="resume_btn">ادامه پخش</button>
-                <button class="btn-primary" style="flex:1; background: var(--bg-input); color: var(--text-main); border: 1px solid var(--border-color);" onclick="resumePlayback(false)" data-i18n="start_over_btn">از اول</button>
+                <button class="btn-primary" style="flex:1;" onclick="resumePlayback(true)">ادامه پخش</button>
+                <button class="btn-primary" style="flex:1; background: var(--bg-input); color: var(--text-main); border: 1px solid var(--border-color);" onclick="resumePlayback(false)">از اول</button>
             </div>
         </div>
     </div>
@@ -1107,13 +1082,52 @@
         </div>
     </div>
 
+    <!-- User Detail Admin Modal -->
+    <div class="modal" id="userDetailModal" style="z-index: 10500;">
+        <div class="modal-box" style="max-width: 400px; padding: 25px;">
+            <button class="modal-close-x" onclick="document.getElementById('userDetailModal').classList.remove('show')">×</button>
+            <h3 class="modal-title" style="text-align:center; color: var(--accent); margin-bottom: 20px;">اطلاعات دقیق کاربر</h3>
+            
+            <div style="display:flex; flex-direction:column; gap: 12px; font-size: 13.5px; color: var(--text-main);">
+                <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+                    <span style="color:var(--text-muted);">نام کاربری:</span>
+                    <b id="ud-username"></b>
+                </div>
+                <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+                    <span style="color:var(--text-muted);">مدل دستگاه:</span>
+                    <b id="ud-model"></b>
+                </div>
+                <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+                    <span style="color:var(--text-muted);">وضعیت اشتراک:</span>
+                    <b id="ud-sub"></b>
+                </div>
+                <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+                    <span style="color:var(--text-muted);">آخرین ورود:</span>
+                    <b id="ud-last-active" dir="ltr"></b>
+                </div>
+                <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+                    <span style="color:var(--text-muted);">تیکت‌های باقیمانده امروز:</span>
+                    <b id="ud-tickets">در حال محاسبه...</b>
+                </div>
+                <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+                    <span style="color:var(--text-muted);">حضور در سایت:</span>
+                    <b id="ud-time"></b>
+                </div>
+                <div style="display:flex; justify-content:space-between; padding-bottom:8px;">
+                    <span style="color:var(--text-muted);">آخرین بازدید/دانلود:</span>
+                    <b id="ud-last-movie"></b>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal" id="supportModal">
         <div class="modal-box" style="max-width: 400px;">
             <button class="modal-close-x" onclick="document.getElementById('supportModal').classList.remove('show')">×</button>
             <div class="modal-content">
-                <h3 class="modal-title" data-i18n="support_title">ارتباط با پشتیبانی</h3>
-                <textarea id="support-msg-text" class="input-field" placeholder="پیام خود را بنویسید..." data-i18n-placeholder="write_msg"></textarea>
-                <button class="btn-primary" onclick="sendSupportMessage()" data-i18n="send_msg">ارسال پیام</button>
+                <h3 class="modal-title">ارتباط با پشتیبانی</h3>
+                <textarea id="support-msg-text" class="input-field" placeholder="پیام خود را بنویسید..."></textarea>
+                <button class="btn-primary" onclick="sendSupportMessage()">ارسال پیام</button>
             </div>
         </div>
     </div>
@@ -1122,7 +1136,7 @@
         <div class="modal-box" style="max-width: 500px; height: 80vh;">
             <div class="modal-content" style="display:flex; flex-direction:column; padding-top: 15px;">
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px; margin-top:5px;">
-                    <h3 class="modal-title" style="margin:0;" data-i18n="inbox_title">صندوق پیام‌ها</h3>
+                    <h3 class="modal-title" style="margin:0;">صندوق پیام‌ها</h3>
                     <button style="background:none; border:none; color:#ef4444; cursor:pointer;" onclick="deleteAllMessages()" title="حذف همه پیام‌ها">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                     </button>
@@ -1137,11 +1151,11 @@
         <div class="modal-box" style="max-width: 400px;">
             <button class="modal-close-x" onclick="document.getElementById('giftModal').classList.remove('show')">×</button>
             <div class="modal-content">
-                <h3 class="modal-title" data-i18n="gift_title">ثبت کد هدیه</h3>
+                <h3 class="modal-title">ثبت کد هدیه</h3>
                 <div class="input-group">
                     <input type="text" id="user-gift-code" class="input-field" placeholder="کد هدیه را وارد کنید..." style="text-align:center; letter-spacing:3px; text-transform:uppercase;">
                 </div>
-                <button class="btn-primary" style="background:#10b981;" onclick="applyGiftCode()" data-i18n="apply_gift">اعمال کد</button>
+                <button class="btn-primary" style="background:#10b981;" onclick="applyGiftCode()">اعمال کد</button>
             </div>
         </div>
     </div>
@@ -1186,10 +1200,10 @@
     let dynamicDataArray = []; 
     let favoritesArray = [];
     let editingMovieId = null;
-    let currentLang = localStorage.getItem('plato_lang') || 'fa';
     let currentNav = 'home';
     let lastNewsId = localStorage.getItem('plato_last_news') || 0;
     let linkTimerInterval = null;
+    let allUsersArray = []; // دیتابیس لوکال برای کاربران در پنل ادمین
 
     /* =========================
        AVATAR SYSTEM
@@ -1233,7 +1247,8 @@
     }
 
     function openAvatarModal() {
-        const grid = document.getElementById('avatarGrid'); grid.innerHTML = '';
+        const grid = document.getElementById('avatarGrid'); 
+        grid.innerHTML = '';
         let currentAv = (currentUserProfile && currentUserProfile.avatar) ? currentUserProfile.avatar : 0;
         for(let i=1; i<=6; i++) {
             let cssClass = "avatar-option" + (currentAv === i ? " selected" : "");
@@ -1252,63 +1267,6 @@
         showLoader(false);
     }
 
-    const dict = {
-        'fa': {
-            'loading': 'لطفا صبر کنید...', 'show_pass': 'نمایش رمز عبور', 'login_btn': 'ورود به حساب', 
-            'no_account': 'حساب کاربری ندارید؟', 'register_now': 'ثبت‌نام کنید', 'register_btn': 'ارسال درخواست عضویت', 
-            'have_account': 'قبلاً ثبت‌نام کردید؟', 'login_now': 'وارد شوید', 'terms_title': 'قوانین و مقررات پلاتو',
-            'accept_terms': 'پذیرفتن شرایط و قوانین فوق', 'confirm_register': 'تایید و ارسال ثبت‌نام', 
-            'support_btn': 'ارتباط با پشتیبانی', 'inbox_btn': 'صندوق پیام‌ها', 'gift_code_btn': 'کد هدیه', 
-            'logout_btn': 'خروج از حساب', 'admin_panel': 'پنل مدیریت', 'nav_home': 'خانه', 
-            'nav_favs': 'علاقه‌مندی‌ها', 'nav_news': 'خبرها', 'nav_platino': 'پلاتینو', 'cat_programs': 'برنامه‌ها', 
-            'cat_kids': 'انیمیشن/کودکانه', 'cat_series': 'سریال‌ها', 'cat_movies': 'فیلم‌های سینمایی', 
-            'quality_hd': 'کیفیت: عادی (HD)', 'link_expired': 'این لینک منقضی شده است.', 
-            'support_title': 'ارتباط با پشتیبانی', 'send_msg': 'ارسال پیام', 'inbox_title': 'صندوق پیام‌ها', 
-            'gift_title': 'ثبت کد هدیه', 'apply_gift': 'اعمال کد', 'resume_title': 'پخش از ادامه؟', 
-            'resume_desc': 'شما قبلاً بخشی از این محتوا را تماشا کرده‌اید.', 'resume_btn': 'ادامه پخش', 
-            'start_over_btn': 'از اول', 'new_badge': 'جدید'
-        },
-        'en': {
-            'loading': 'Please wait...', 'show_pass': 'Show Password', 'login_btn': 'Login', 
-            'no_account': 'No account?', 'register_now': 'Sign up', 'register_btn': 'Submit Request', 
-            'have_account': 'Already registered?', 'login_now': 'Login now', 'terms_title': 'Terms & Conditions',
-            'accept_terms': 'I accept the terms above', 'confirm_register': 'Confirm Registration', 
-            'support_btn': 'Support', 'inbox_btn': 'Inbox', 'gift_code_btn': 'Gift Code', 
-            'logout_btn': 'Logout', 'admin_panel': 'Admin Panel', 'nav_home': 'Home', 
-            'nav_favs': 'Favorites', 'nav_news': 'News', 'nav_platino': 'Platino', 'cat_programs': 'Programs', 
-            'cat_kids': 'Animation/Kids', 'cat_series': 'Series', 'cat_movies': 'Movies', 
-            'quality_hd': 'Quality: Normal (HD)', 'link_expired': 'This link has expired.', 
-            'support_title': 'Contact Support', 'send_msg': 'Send Message', 'inbox_title': 'Inbox', 
-            'gift_title': 'Enter Gift Code', 'apply_gift': 'Apply Code', 'resume_title': 'Resume playback?', 
-            'resume_desc': 'You have already watched a part of this.', 'resume_btn': 'Resume', 
-            'start_over_btn': 'Start Over', 'new_badge': 'NEW'
-        }
-    };
-    
-    const placeholders = {
-        'fa': { 'username': 'نام کاربری', 'password': 'رمز عبور', 'username_en': 'نام کاربری (انگلیسی)', 'device_model': 'مدل دستگاه', 'search_ph': 'جستجوی فیلم، سریال یا برنامه...', 'write_msg': 'پیام خود را بنویسید...' },
-        'en': { 'username': 'Username', 'password': 'Password', 'username_en': 'Username (English only)', 'device_model': 'Device Model', 'search_ph': 'Search movies, series...', 'write_msg': 'Type your message...' }
-    };
-
-    function applyTranslations() {
-        document.querySelectorAll('[data-i18n]').forEach(el => { 
-            const key = el.getAttribute('data-i18n'); 
-            if(dict[currentLang][key]) el.innerHTML = dict[currentLang][key]; 
-        });
-        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { 
-            const key = el.getAttribute('data-i18n-placeholder'); 
-            if(placeholders[currentLang][key]) el.setAttribute('placeholder', placeholders[currentLang][key]); 
-        });
-        document.body.style.direction = currentLang === 'en' ? 'ltr' : 'rtl';
-    }
-
-    function toggleLanguage() {
-        currentLang = currentLang === 'fa' ? 'en' : 'fa';
-        localStorage.setItem('plato_lang', currentLang);
-        applyTranslations();
-        fetchMoviesFromDatabase(); 
-    }
-
     function toEnglishDigits(str) { 
         if(str) return str.toString().replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
         return '';
@@ -1320,7 +1278,8 @@
 
     function showCustomAlert(msg) { 
         const alertBox = document.getElementById('custom-alert'); 
-        alertBox.textContent = msg; alertBox.style.display = 'block'; 
+        alertBox.textContent = msg; 
+        alertBox.style.display = 'block'; 
         setTimeout(() => { alertBox.style.display = 'none'; }, 3500); 
     }
 
@@ -1330,7 +1289,6 @@
     }
 
     try { if(localStorage.getItem('plato_theme') === 'light') document.body.classList.add('light-theme'); } catch(e) {}
-    applyTranslations();
 
     function toggleAuth(type) { 
         if(type === 'register') {
@@ -1343,12 +1301,15 @@
     }
 
     function togglePassword() { 
-        const logPass = document.getElementById('log-pass'); const regPass = document.getElementById('reg-pass'); 
+        const logPass = document.getElementById('log-pass'); 
+        const regPass = document.getElementById('reg-pass'); 
         if (logPass) logPass.type = logPass.type === 'password' ? 'text' : 'password';
         if (regPass) regPass.type = regPass.type === 'password' ? 'text' : 'password';
     }
 
-    window.showPlatinoSoon = function() { showCustomAlert('بخش پلاتینو به زودی فعال خواهد شد...'); }
+    window.showPlatinoSoon = function() { 
+        showCustomAlert('بخش پلاتینو به زودی فعال خواهد شد...'); 
+    }
 
     async function checkUserSession() {
         if (!supabaseClient) return;
@@ -1390,7 +1351,7 @@
                 if (currentUserProfile.role === 'admin') {
                     document.getElementById('admin-sidebar-btn-container').innerHTML = `
                         <button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()">
-                            <span data-i18n="admin_panel">پنل مدیریت</span>
+                            <span>پنل مدیریت</span>
                             <svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                         </button>
                     `;
@@ -1417,13 +1378,24 @@
         if(currentUserProfile && currentUserProfile.role !== 'admin') { 
             try { 
                 await supabaseClient.from('users_data').update({ last_active: new Date().toISOString() }).eq('id', currentUserProfile.id); 
+                let newTimeSpent = (currentUserProfile.time_spent || 0) + 1;
+                await supabaseClient.from('users_data').update({ time_spent: newTimeSpent }).eq('id', currentUserProfile.id);
+                currentUserProfile.time_spent = newTimeSpent;
             } catch(e) {
-                console.error(e);
+                // اگر ستون وجود نداشت ارور نده
             }
         } 
     }
 
-    function doRegister() {
+    async function saveLastWatched(title) {
+         try {
+             await supabaseClient.from('users_data').update({ last_watched: title }).eq('id', currentUserProfile.id);
+         } catch(e) {
+             // در صورت نبود ستون ارور نده
+         }
+    }
+
+    window.doRegister = function() {
         let u = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase();
         let p = toEnglishDigits(document.getElementById('reg-pass').value).trim();
         let m = document.getElementById('reg-model').value.trim();
@@ -1437,7 +1409,7 @@
         document.getElementById('termsModal').classList.add('show');
     }
 
-    async function finalizeRegistration() {
+    window.finalizeRegistration = async function() {
         if(!document.getElementById('acceptTermsCheck').checked) {
             showCustomAlert('لطفاً قوانین را تایید کنید.');
             return;
@@ -1479,7 +1451,7 @@
         showLoader(false);
     }
 
-    async function doLogin() {
+    window.doLogin = async function() {
         var u = toEnglishDigits(document.getElementById('log-user').value).trim().toLowerCase();
         var p = toEnglishDigits(document.getElementById('log-pass').value).trim();
         
@@ -1503,7 +1475,7 @@
         }
     }
 
-    async function doLogout() { 
+    window.doLogout = async function() { 
         if(supabaseClient) { 
             await supabaseClient.auth.signOut(); 
         } 
@@ -1526,9 +1498,11 @@
             document.getElementById('view-home').classList.add('active-view');
             const marqueeText = document.getElementById('marqueeTextContent');
             if (marqueeText) { 
+                // اجرای مجدد ال ای دی بلافاصله بعد از بازگشت به صفحه اصلی
+                const currentAnim = marqueeText.style.animation;
                 marqueeText.style.animation = 'none'; 
                 void marqueeText.offsetWidth; 
-                marqueeText.style.animation = null; 
+                marqueeText.style.animation = currentAnim; 
             }
         }
         if(target === 'favs') { 
@@ -1576,8 +1550,11 @@
             }
             
             document.querySelectorAll(`.fav-btn[data-movie-id="${movieId}"]`).forEach(btn => {
-                if(isFavNow) btn.classList.add('active');
-                else btn.classList.remove('active');
+                if(isFavNow) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
             });
             
             if(currentNav === 'favs') renderFavs();
@@ -1657,7 +1634,7 @@
             if(item.updated_at) {
                 let diffDays = (new Date() - new Date(item.updated_at)) / (1000 * 60 * 60 * 24);
                 if(diffDays <= 3 && diffDays >= 0) {
-                    newBadgeHTML = `<div class="new-badge">${dict[currentLang]['new_badge'] || 'جدید'}</div>`;
+                    newBadgeHTML = `<div class="new-badge">جدید</div>`;
                 }
             }
             card.innerHTML = `${newBadgeHTML}<div class="poster"><img src="${item.poster}" loading="lazy"><div class="poster-overlay"></div></div><div class="movie-name">${item.title}</div>`;
@@ -1709,7 +1686,7 @@
         return true;
     }
 
-    function openPlayer(movie) {
+    window.openPlayer = function(movie) {
         if(!checkSubscription()) return; 
         
         switchNav('movie');
@@ -1717,9 +1694,10 @@
         document.getElementById("movie-detail-title").textContent = movie.title;
         document.getElementById("neonTitle").textContent = movie.title;
         
-        if(movie.info) {
+        if(movie.info || movie.description) {
             document.getElementById('modal-movie-info').style.display = 'block';
-            document.getElementById('modal-movie-desc').textContent = movie.info;
+            let finalInfo = (movie.info || "") + (movie.description && !movie.info ? movie.description : "");
+            document.getElementById('modal-movie-desc').textContent = finalInfo.trim();
         } else { 
             document.getElementById('modal-movie-info').style.display = 'none'; 
         }
@@ -1761,7 +1739,7 @@
                     if(timerStr && endTime > 0) {
                         rowHtml += `<div style="font-size:11px; color:#f59e0b; font-family:monospace; margin-left:10px; margin-right:10px;" class="link-timer" data-endtime="${endTime}">...</div>`;
                     }
-                    rowHtml += `<div class="movie-link-actions"><button class="btn-play-online" onclick="prepareVideo('${btnUrl}')">پخش آنلاین</button><button class="btn-download" onclick="directDownload('${btnTitle}', '${btnUrl}')">دانلود</button></div>`;
+                    rowHtml += `<div class="movie-link-actions"><button class="btn-play-online" onclick="prepareVideo('${btnUrl}', '${movie.title}')">پخش آنلاین</button><button class="btn-download" onclick="directDownload('${btnTitle}', '${btnUrl}', '${movie.title}')">دانلود</button></div>`;
                 } else {
                     rowHtml += `<div class="movie-link-title" style="color:var(--text-muted); text-decoration:line-through;">${btnTitle}</div><div style="font-size:12px; color:#ef4444; font-weight:bold; background:rgba(239, 68, 68, 0.1); padding:4px 10px; border-radius:8px;">منقضی شده</div>`;
                 }
@@ -1792,8 +1770,10 @@
         }
     }
 
-    window.prepareVideo = function(url) {
+    window.prepareVideo = function(url, title) {
         pendingVideoUrl = url;
+        saveLastWatched(title);
+        
         let savedTime = localStorage.getItem('plato_prog_' + pendingVideoUrl);
         if (savedTime && parseFloat(savedTime) > 10) { 
             document.getElementById('resumeModal').classList.add('show'); 
@@ -1834,18 +1814,20 @@
     window.toggleVideoQuality = function() {
         const btn = document.getElementById('qualityToggleBtn');
         if(videoPlayer.style.transform === 'scale(0.96)') {
-            btn.textContent = dict[currentLang] && dict[currentLang]['quality_hd'] ? dict[currentLang]['quality_hd'] : 'کیفیت: عادی (HD)';
+            btn.textContent = 'کیفیت: عادی (HD)';
             videoPlayer.style.transform = 'scale(1)'; 
             showCustomAlert('کیفیت عادی شد.');
         } else {
-            btn.textContent = currentLang === 'en' ? 'Quality: Lower (Smooth)' : 'کیفیت: کمتر (روان)';
+            btn.textContent = 'کیفیت: کمتر (روان)';
             videoPlayer.style.transform = 'scale(0.96)'; 
             showCustomAlert('کیفیت بهینه شد.');
         }
     }
 
-    window.directDownload = function(title, url) {
+    window.directDownload = function(title, url, movieTitle) {
         if(!checkSubscription() || !url) return;
+        saveLastWatched(movieTitle);
+        
         const a = document.createElement('a'); 
         a.href = url; 
         a.target = '_blank';
@@ -1856,14 +1838,14 @@
         showCustomAlert('دانلود آغاز شد.');
     }
 
-    function closePlayer() { 
+    window.closePlayer = function() { 
         if(linkTimerInterval) clearInterval(linkTimerInterval); 
         videoPlayer.pause(); 
         videoPlayer.removeAttribute("src"); 
         switchNav('home'); 
     }
 
-    function openSidebar() {
+    window.openSidebar = function() {
         document.getElementById('sidebar').classList.add('open'); 
         document.getElementById('sidebarOverlay').classList.add('open');
         document.getElementById('sidebarUser').textContent = currentUserProfile.username;
@@ -1871,32 +1853,35 @@
         const badge = document.getElementById('premium-badge');
         
         if(currentUserProfile.role === 'admin') {
-            document.getElementById('sub-time-left').textContent = currentLang === 'en' ? "Admin Account" : "حساب مدیریت کل";
+            document.getElementById('sub-time-left').textContent = "حساب مدیریت کل";
             badge.style.display = 'inline-flex';
         } else {
             let isActive = false;
             if(currentUserProfile.sub_end_date) {
-                const diffTime = new Date(currentUserProfile.sub_end_date).getTime() - new Date().getTime();
+                const nowTime = new Date().getTime();
+                const endTime = new Date(currentUserProfile.sub_end_date).getTime();
+                const diffTime = endTime - nowTime;
+                
                 if(diffTime > 0) {
                     let daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    document.getElementById('sub-time-left').textContent = currentLang === 'en' ? `Days left: ${daysLeft}` : `اعتبار اشتراک: ${daysLeft} روز`;
+                    document.getElementById('sub-time-left').textContent = `اعتبار اشتراک: ${daysLeft} روز`;
                     isActive = true;
                 } else { 
-                    document.getElementById('sub-time-left').textContent = currentLang === 'en' ? "Expired" : "اشتراک منقضی شده"; 
+                    document.getElementById('sub-time-left').textContent = "اشتراک منقضی شده"; 
                 }
             } else { 
-                document.getElementById('sub-time-left').textContent = currentLang === 'en' ? "No active sub" : "بدون اشتراک فعال"; 
+                document.getElementById('sub-time-left').textContent = "بدون اشتراک فعال"; 
             }
             badge.style.display = isActive ? 'inline-flex' : 'none';
         }
     }
 
-    function closeSidebar() { 
+    window.closeSidebar = function() { 
         document.getElementById('sidebar').classList.remove('open'); 
         document.getElementById('sidebarOverlay').classList.remove('open'); 
     }
 
-    function switchAdminTab(tabId, btn) {
+    window.switchAdminTab = function(tabId, btn) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
         document.getElementById(tabId).classList.add('active'); 
@@ -1911,7 +1896,7 @@
         }
     }
 
-    function showAdminPanel() { 
+    window.showAdminPanel = function() { 
         document.getElementById('main-app').style.display = 'none'; 
         closeSidebar(); 
         document.getElementById('bottom-nav').style.display = 'none'; 
@@ -1922,7 +1907,7 @@
         loadAllUsers(); 
     }
 
-    function hideAdminPanel() { 
+    window.hideAdminPanel = function() { 
         document.getElementById('admin-screen').style.display = 'none'; 
         document.getElementById('main-app').style.display = 'block'; 
         document.getElementById('bottom-nav').style.display = 'flex'; 
@@ -1930,9 +1915,11 @@
         fetchMoviesFromDatabase(); 
     }
 
-    async function chargeSub() {
-        var user = toEnglishDigits(document.getElementById('charge-user').value).trim().toLowerCase();
-        var days = parseInt(toEnglishDigits(document.getElementById('charge-days').value));
+    window.chargeSub = async function() {
+        var userRaw = document.getElementById('charge-user').value;
+        var user = toEnglishDigits(userRaw).trim().toLowerCase();
+        var daysRaw = document.getElementById('charge-days').value;
+        var days = parseInt(toEnglishDigits(daysRaw));
         
         if(!user || isNaN(days)) {
             showCustomAlert('اطلاعات را کامل وارد کنید');
@@ -2020,7 +2007,7 @@
         }
     }
 
-    async function saveMovie() {
+    window.saveMovie = async function() {
         const cat = document.getElementById('new-movie-category').value;
         const tit = document.getElementById('new-movie-title').value.trim();
         const pos = document.getElementById('new-movie-poster').value.trim();
@@ -2075,7 +2062,7 @@
         showLoader(false);
     }
 
-    function editMovie(id) {
+    window.editMovie = function(id) {
         let m = dynamicDataArray.find(x => x.id === id); 
         if(!m) return;
         
@@ -2097,7 +2084,7 @@
         window.scrollTo(0,0);
     }
 
-    function cancelEdit() { 
+    window.cancelEdit = function() { 
         document.getElementById('new-movie-title').value = ''; 
         document.getElementById('new-movie-poster').value = ''; 
         document.getElementById('new-movie-info').value = ''; 
@@ -2109,7 +2096,7 @@
         document.getElementById('cancel-edit-btn').style.display = "none"; 
     }
 
-    async function deleteMovie(id) { 
+    window.deleteMovie = async function(id) { 
         if(!confirm('حذف شود؟')) return; 
         showLoader(true); 
         try { 
@@ -2135,38 +2122,24 @@
             const nowTime = new Date().getTime();
             
             if(data) {
+                allUsersArray = data; // ذخیره در دیتابیس لوکال جاوااسکریپت
                 data.forEach(user => {
                     if(user.last_active && (nowTime - new Date(user.last_active).getTime()) < 300000) {
                         onlineCount++;
                     }
                     if(user.role === 'admin') return;
                     
-                    let subText = "ندارد";
-                    let subColor = "#8e8e93";
-                    
-                    if(user.sub_end_date) { 
-                        const diff = new Date(user.sub_end_date).getTime() - new Date().getTime(); 
-                        if(diff > 0) {
-                            subText = Math.ceil(diff / 86400000) + " روز مانده";
-                            subColor = "#10b981";
-                        } else {
-                            let expiredDays = Math.floor(Math.abs(diff) / 86400000);
-                            subText = "منقضی (" + expiredDays + " روز پیش)"; 
-                            subColor = "#ef4444";
-                        }
-                    }
-                    
                     list.innerHTML += `
-                        <div class="req-card">
+                        <div class="req-card" style="cursor:pointer;" onclick="openUserDetailModal('${user.id}')">
                             <div class="req-info" style="display:flex; align-items:center; gap:10px;">
                                 <div style="width:36px;height:36px;border-radius:50%;overflow:hidden;">${getAvatar(user.avatar, user.username)}</div>
                                 <div>
-                                    <div style="color:var(--accent);">${user.username}</div>
-                                    <small>اعتبار: <b style="color:${subColor};">${subText}</b></small>
+                                    <div style="color:var(--accent); font-size:14px;">${user.username}</div>
+                                    <small style="color:var(--text-muted); font-weight:normal; margin-top:2px;">مدل: ${user.phone_model || 'نامشخص'}</small>
                                 </div>
                             </div>
                             <div>
-                                <button class="btn-sm btn-reject" onclick="deleteUserAccount('${user.id}')">حذف</button>
+                                <button class="btn-sm btn-reject" onclick="event.stopPropagation(); deleteUserAccount('${user.id}')">حذف</button>
                             </div>
                         </div>`;
                 });
@@ -2177,29 +2150,58 @@
         }
     }
 
-    async function loadPendingRequests() { 
-        const { data } = await supabaseClient.from('users_data').select('*').eq('status', 'pending'); 
-        const list = document.getElementById('pending-list'); 
-        list.innerHTML = '';
-        
-        if(data) {
-            data.forEach(req => { 
-                list.innerHTML += `
-                    <div class="req-card">
-                        <div class="req-info">
-                            <div>آیدی: <b>${req.username}</b></div>
-                            <small>مدل: ${req.phone_model}</small>
-                        </div>
-                        <div>
-                            <button class="btn-sm btn-approve" onclick="updateStatus('${req.id}', 'approved')">تایید</button>
-                            <button class="btn-sm btn-reject" onclick="updateStatus('${req.id}', 'rejected')">رد</button>
-                        </div>
-                    </div>`; 
-            });
+    window.openUserDetailModal = async function(userId) {
+        const user = allUsersArray.find(u => u.id === userId);
+        if(!user) return;
+
+        document.getElementById('ud-username').textContent = user.username;
+        document.getElementById('ud-model').textContent = user.phone_model || 'نامشخص';
+
+        let subStatus = "ندارد";
+        let maxTickets = 2;
+        if(user.sub_end_date) {
+            const diff = new Date(user.sub_end_date).getTime() - new Date().getTime();
+            if(diff > 0) {
+                subStatus = Math.ceil(diff / 86400000) + " روز مانده";
+                maxTickets = 4;
+            } else {
+                subStatus = "منقضی (" + Math.floor(Math.abs(diff) / 86400000) + " روز پیش)";
+            }
+        }
+        document.getElementById('ud-sub').textContent = subStatus;
+
+        let lastActive = user.last_active ? new Date(user.last_active).toLocaleString('fa-IR') : "ثبت نشده";
+        document.getElementById('ud-last-active').textContent = lastActive;
+
+        let timeSpent = user.time_spent ? user.time_spent + " دقیقه" : "ثبت نشده";
+        document.getElementById('ud-time').textContent = timeSpent;
+
+        let lastWatched = user.last_watched ? user.last_watched : "ثبت نشده";
+        document.getElementById('ud-last-movie').textContent = lastWatched;
+
+        document.getElementById('ud-tickets').textContent = "در حال محاسبه...";
+        document.getElementById('userDetailModal').classList.add('show');
+
+        try {
+            const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+            const { count, error } = await supabaseClient
+                .from('messages')
+                .select('*', { count: 'exact', head: true })
+                .eq('user_id', userId)
+                .eq('direction', 'user_to_admin')
+                .gte('created_at', twentyFourHoursAgo);
+
+            if(error) throw error;
+
+            let remaining = maxTickets - (count || 0);
+            if(remaining < 0) remaining = 0;
+            document.getElementById('ud-tickets').textContent = remaining;
+        } catch(e) {
+            document.getElementById('ud-tickets').textContent = "خطا در دریافت";
         }
     }
 
-    async function updateStatus(id, st) { 
+    window.updateStatus = async function(id, st) { 
         showLoader(true); 
         try { 
             let response;
@@ -2221,8 +2223,8 @@
         showLoader(false); 
     }
 
-    async function deleteUserAccount(id) { 
-        if(!confirm('حذف؟')) return; 
+    window.deleteUserAccount = async function(id) { 
+        if(!confirm('حذف شود؟')) return; 
         showLoader(true); 
         try { 
             const { error } = await supabaseClient.from('users_data').delete().eq('id', id); 
@@ -2265,9 +2267,12 @@
                     textElem.textContent = textValue; 
                 }
                 
+                // ترفند اجبار برای لود شدن سریع انیمیشن
                 textElem.style.animation = 'none'; 
-                void textElem.offsetWidth; 
-                textElem.style.animation = `scroll-marquee ${finalSpeed} linear infinite`; 
+                setTimeout(() => {
+                    textElem.style.animation = `scroll-marquee ${finalSpeed} linear infinite`; 
+                }, 50);
+                
                 container.style.display = 'flex'; 
                 
                 if(input && !input.value) {
@@ -2446,7 +2451,7 @@
         document.getElementById('cancel-news-btn').style.display = "none"; 
     }
     
-    async function postNews() { 
+    window.postNews = async function() { 
         const val = document.getElementById('new-news-content').value.trim(); 
         if(!val) return; 
         
@@ -2486,7 +2491,7 @@
         showLoader(false); 
     }
 
-    async function createGiftCode() {
+    window.createGiftCode = async function() {
         const code = document.getElementById('gift-code-input').value.trim().toUpperCase();
         const days = parseInt(document.getElementById('gift-days-input').value);
         const max = parseInt(document.getElementById('gift-uses-input').value);
@@ -2546,12 +2551,12 @@
         showLoader(false); 
     }
     
-    function openGiftModal() { 
+    window.openGiftModal = function() { 
         closeSidebar(); 
         document.getElementById('giftModal').classList.add('show'); 
     }
 
-    async function applyGiftCode() {
+    window.applyGiftCode = async function() {
         const code = document.getElementById('user-gift-code').value.trim().toUpperCase(); 
         if(!code) return; 
         
@@ -2714,12 +2719,12 @@
         }
     }
 
-    function openSupportModal() { 
+    window.openSupportModal = function() { 
         closeSidebar(); 
         document.getElementById('supportModal').classList.add('show'); 
     }
 
-    async function sendSupportMessage() {
+    window.sendSupportMessage = async function() {
         const text = document.getElementById('support-msg-text').value.trim(); 
         if(!text) return;
         
@@ -2881,7 +2886,7 @@
         } 
     }
 
-    async function openAdminReply(uid, mid) { 
+    window.openAdminReply = async function(uid, mid) { 
         document.getElementById('reply-user-id').value = uid; 
         document.getElementById('adminReplyModal').classList.add('show'); 
         try { 
@@ -2891,7 +2896,7 @@
         } 
     }
 
-    async function sendAdminReply() { 
+    window.sendAdminReply = async function() { 
         const t = document.getElementById('admin-reply-text').value.trim(); 
         const uid = document.getElementById('reply-user-id').value; 
         if(!t) return; 
@@ -2911,11 +2916,11 @@
         showLoader(false); 
     }
 
-    function openSystemMessageModal() { 
+    window.openSystemMessageModal = function() { 
         document.getElementById('sysMsgModal').classList.add('show'); 
     }
 
-    async function sendSystemMessage() { 
+    window.sendSystemMessage = async function() { 
         const t = document.getElementById('sys-msg-text').value.trim(); 
         if(!t) return; 
         
