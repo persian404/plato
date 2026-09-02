@@ -632,14 +632,14 @@
     <div id="auth-screen">
         
         <!-- Maintenance Modal Box (Inside Auth Screen) -->
-        <div class="box-container" id="maintenance-box" style="display: none; text-align: center;">
+        <div class="box-container" id="maintenance-box" style="display: none; text-align: center; position: relative;">
+            <button class="modal-close-x" style="top: 14px; right: 14px; left: auto; border: none; font-size: 24px; color: var(--text-muted); background: transparent; cursor: pointer;" onclick="closeMaintenanceBox()">×</button>
             <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 20px;">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
             <h2 style="color: var(--text-main); margin-bottom: 15px; font-size: 18px;">سایت در حال بروزرسانی است</h2>
             <p style="color: var(--text-muted); font-size: 14px; line-height: 1.8;">کاربر عزیز، سایت در دست تعمیر و به روزرسانی میباشد، از صبر و شکیبایی شما متشکریم، به زودی برخواهیم گشت🙏</p>
-            <button class="btn-primary" style="margin-top: 25px; width: auto; padding: 0 20px;" onclick="window.location.reload()">تلاش مجدد</button>
         </div>
 
         <div class="box-container" id="login-box">
@@ -1049,7 +1049,7 @@
         <!-- Dedicated Movie Page View -->
         <div id="view-movie" class="view-section" style="padding-bottom: 90px; background: var(--bg-main);">
             <div class="movie-detail-content" style="padding-top: 15px;">
-                <button class="btn-back" onclick="closePlayer()" style="margin-bottom: 15px; background: none; color: var(--text-main); font-weight: bold; display: flex; align-items: center; gap: 8px; font-size: 15px; cursor: pointer;">
+                <button class="btn-back" onclick="closePlayer()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
                     بازگشت
                 </button>
@@ -1417,6 +1417,11 @@
         }
     }
 
+    window.closeMaintenanceBox = function() {
+        document.getElementById('maintenance-box').style.display = 'none';
+        document.getElementById('login-box').style.display = 'block';
+    }
+
     window.showPlatinoSoon = function() {
         showCustomAlert('بخش پلاتینو به زودی فعال خواهد شد...');
     }
@@ -1455,39 +1460,45 @@
 
         try {
             await supabaseClient.from('messages').delete().eq('direction', 'site_settings');
-            await supabaseClient.from('messages').insert([{
+            const { error } = await supabaseClient.from('messages').insert([{
                 direction: 'site_settings',
                 content: JSON.stringify(newSettings),
                 is_read: true
             }]);
-            siteSettings = newSettings;
-            showCustomAlert('تنظیمات سایت با موفقیت ذخیره شد.');
+            
+            if(error) {
+                showCustomAlert('خطا در ذخیره تنظیمات: ' + error.message);
+            } else {
+                siteSettings = newSettings;
+                showCustomAlert('تنظیمات سایت با موفقیت ذخیره شد.');
+            }
         } catch (e) {
             console.error(e);
-            showCustomAlert('ارور در ذخیره تنظیمات');
+            showCustomAlert('ارور در ارتباط با سرور');
+        } finally {
+            showLoader(false);
         }
-        showLoader(false);
     }
 
     async function checkUserSession() {
-        if (!supabaseClient) {
-            return;
-        }
+        if (!supabaseClient) return;
         
         showLoader(true);
         
         try {
-            // موازی کردن درخواست‌ها برای جلوگیری از کندی و گیر کردن ورود
-            const [settingsData, sessionData] = await Promise.all([
-                fetchSiteSettings(),
-                supabaseClient.auth.getSession()
+            // ایجاد یک محدودیت زمانی 15 ثانیه‌ای برای جلوگیری از گیر کردن در لودینگ
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 15000));
+            
+            const results = await Promise.race([
+                Promise.all([fetchSiteSettings(), supabaseClient.auth.getSession()]),
+                timeoutPromise
             ]);
             
-            siteSettings = settingsData;
+            siteSettings = results[0];
+            const sessionData = results[1];
             const { data, error } = sessionData;
             
             if (error || !data.session) { 
-                showLoader(false); 
                 document.getElementById('auth-screen').style.display = 'flex'; 
                 return; 
             }
@@ -1496,14 +1507,12 @@
             
             if (profileRes.error || !profileRes.data) { 
                 await supabaseClient.auth.signOut(); 
-                showLoader(false); 
                 document.getElementById('auth-screen').style.display = 'flex'; 
                 return; 
             }
             
             currentUserProfile = profileRes.data;
 
-            // نمایش حالت تعمیرات فقط برای کاربرانی که ادمین نیستند
             if (siteSettings.maintenance && currentUserProfile.role !== 'admin') {
                 document.getElementById('auth-screen').style.display = 'flex';
                 document.getElementById('login-box').style.display = 'none';
@@ -1512,8 +1521,6 @@
                 
                 document.getElementById('main-app').style.display = 'none';
                 document.getElementById('bottom-nav').style.display = 'none';
-                
-                showLoader(false);
                 return;
             }
             
@@ -1553,7 +1560,8 @@
                 }
                 
                 updateHeartbeat(); 
-                fetchFavorites().then(() => fetchMoviesFromDatabase());
+                fetchFavorites();
+                fetchMoviesFromDatabase();
                 loadMarquee();
                 checkNewsUpdates();
                 
@@ -1564,10 +1572,13 @@
             }
         } catch (err) { 
             console.error(err);
+            if (err.message === 'TIMEOUT') {
+                showCustomAlert('ارتباط با سرور کند است. در حال تلاش مجدد...');
+            }
             document.getElementById('auth-screen').style.display = 'flex'; 
+        } finally {
+            showLoader(false);
         }
-        
-        showLoader(false);
     }
 
     async function updateHeartbeat() { 
@@ -1620,10 +1631,10 @@
         document.getElementById('termsModal').classList.remove('show'); 
         showLoader(true);
 
-        siteSettings = await fetchSiteSettings();
-        
         try {
+            siteSettings = await fetchSiteSettings();
             const { count } = await supabaseClient.from('users_data').select('*', { count: 'exact', head: true });
+            
             if (count >= siteSettings.reg_limit) {
                 showCustomAlert('ظرفیت سایت فعلا تکمیل میباشد');
                 showLoader(false);
@@ -1662,8 +1673,9 @@
             }
         } catch(err) { 
             showCustomAlert('فرمت وارد کردن اطلاعات شما برای ساخت حساب کاربری اشتباه است، مجدد تلاش کنید'); 
+        } finally {
+            showLoader(false);
         }
-        showLoader(false);
     }
 
     window.doLogin = async function() {
@@ -1677,19 +1689,27 @@
         
         showLoader(true);
         try { 
-            const { error } = await supabaseClient.auth.signInWithPassword({ email: u + '@plato.com', password: p }); 
+            const authPromise = supabaseClient.auth.signInWithPassword({ email: u + '@plato.com', password: p });
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 15000));
+            
+            const { data, error } = await Promise.race([authPromise, timeoutPromise]);
+            
             if (error) { 
                 if(error.message.includes('rate limit') || error.status === 429) {
                     showCustomAlert('درخواست‌های زیاد! چند دقیقه دیگر تلاش کنید.');
                 } else {
                     showCustomAlert('نام کاربری یا رمز عبور اشتباه است'); 
                 }
-                showLoader(false); 
             } else { 
                 await checkUserSession(); 
             }
         } catch(err) { 
-            showCustomAlert('خطای ارتباط با سرور.'); 
+            if (err.message === 'TIMEOUT') {
+                showCustomAlert('اینترنت شما یا سرور کند است. لطفاً فیلترشکن را بررسی کنید.');
+            } else {
+                showCustomAlert('خطای ارتباط با سرور.'); 
+            }
+        } finally {
             showLoader(false); 
         }
     }
@@ -2173,8 +2193,9 @@
             }
         } catch(e) { 
             showCustomAlert('خطا در ارتباط با سرور.'); 
-        } 
-        showLoader(false);
+        } finally {
+            showLoader(false);
+        }
     }
 
     let dragSourceElement = null;
@@ -2215,6 +2236,7 @@
                         } else {
                             card.before(dragSourceElement);
                         }
+                        
                         showLoader(true);
                         const updates = Array.from(list.querySelectorAll('.draggable')).map((c, idx) => supabaseClient.from('movies').update({ sort_order: idx }).eq('id', c.dataset.id));
                         await Promise.all(updates); 
@@ -2246,10 +2268,12 @@
             return;
         }
         
+        // افزودن description: infoText برای اطمینان از سینک بودن با دیتابیس
         const payload = { 
             title: tit, 
             poster: pos, 
             info: infoText,
+            description: infoText, 
             download_url: url, 
             category: cat
         };
@@ -2266,9 +2290,9 @@
         try {
             let response;
             if(editingMovieId) {
-                response = await supabaseClient.from('movies').update(payload).eq('id', editingMovieId); 
+                response = await supabaseClient.from('movies').update(payload).eq('id', editingMovieId).select(); 
             } else {
-                response = await supabaseClient.from('movies').insert([payload]);
+                response = await supabaseClient.from('movies').insert([payload]).select();
             }
             
             if (response && response.error) {
@@ -2283,8 +2307,9 @@
         } catch(e) {
             console.error(e);
             showCustomAlert("ارور ارتباط با سرور");
-        } 
-        showLoader(false);
+        } finally {
+            showLoader(false);
+        }
     }
 
     window.editMovie = function(id) {
@@ -2294,7 +2319,7 @@
         document.getElementById('new-movie-category').value = m.category || 'series'; 
         document.getElementById('new-movie-title').value = m.title; 
         document.getElementById('new-movie-poster').value = m.poster; 
-        document.getElementById('new-movie-info').value = m.info || '';
+        document.getElementById('new-movie-info').value = m.info || m.description || '';
         document.getElementById('new-movie-url').value = m.download_url || '';
         
         if(m.updated_at && ((new Date() - new Date(m.updated_at)) / 86400000) <= 3) {
@@ -2334,8 +2359,9 @@
             }
         } catch(e) {
             console.error(e);
-        } 
-        showLoader(false); 
+        } finally {
+            showLoader(false); 
+        }
     }
 
     async function loadAllUsers() {
@@ -2347,27 +2373,12 @@
             const nowTime = new Date().getTime();
             
             if(data) {
-                allUsersArray = data; // ذخیره در دیتابیس لوکال جاوااسکریپت
+                allUsersArray = data;
                 data.forEach(user => {
                     if(user.last_active && (nowTime - new Date(user.last_active).getTime()) < 300000) {
                         onlineCount++;
                     }
                     if(user.role === 'admin' || user.status === 'pending') return;
-                    
-                    let subText = "ندارد";
-                    let subColor = "#8e8e93";
-                    
-                    if(user.sub_end_date) { 
-                        const diff = new Date(user.sub_end_date).getTime() - new Date().getTime(); 
-                        if(diff > 0) {
-                            subText = Math.ceil(diff / 86400000) + " روز مانده";
-                            subColor = "#10b981";
-                        } else {
-                            let expiredDays = Math.floor(Math.abs(diff) / 86400000);
-                            subText = "منقضی (" + expiredDays + " روز پیش)"; 
-                            subColor = "#ef4444";
-                        }
-                    }
                     
                     list.innerHTML += `
                         <div class="req-card" style="cursor:pointer;" onclick="openUserDetailModal('${user.id}')">
@@ -2481,8 +2492,9 @@
             }
         } catch(e) {
             console.error(e);
-        } 
-        showLoader(false); 
+        } finally {
+            showLoader(false); 
+        }
     }
 
     window.deleteUserAccount = async function(id) { 
@@ -2497,8 +2509,9 @@
             }
         } catch(e) {
             console.error(e);
-        } 
-        showLoader(false); 
+        } finally {
+            showLoader(false); 
+        }
     }
 
     async function loadMarquee() {
@@ -2529,7 +2542,6 @@
                     textElem.textContent = textValue; 
                 }
                 
-                // ترفند اجبار برای لود شدن سریع انیمیشن
                 textElem.style.animation = 'none'; 
                 setTimeout(() => {
                     textElem.style.animation = `scroll-marquee ${finalSpeed} linear infinite`; 
@@ -2567,8 +2579,9 @@
             }
         } catch(e) { 
             showCustomAlert('خطا در ذخیره سازی.'); 
-        } 
-        showLoader(false); 
+        } finally {
+            showLoader(false); 
+        }
     }
 
     async function checkNewsUpdates() { 
@@ -2633,8 +2646,9 @@
             }
         } catch(e) {
             console.error(e);
-        } 
-        showLoader(false);
+        } finally {
+            showLoader(false);
+        }
     }
 
     window.likeNews = async function(nid, btn) {
@@ -2736,8 +2750,9 @@
             }
         } catch(e) {
             console.error(e);
-        } 
-        showLoader(false); 
+        } finally {
+            showLoader(false); 
+        }
     }
     
     window.deleteNews = async function(id) { 
@@ -2749,8 +2764,9 @@
             loadAdminNews(); 
         } catch(e) {
             console.error(e);
-        } 
-        showLoader(false); 
+        } finally {
+            showLoader(false); 
+        }
     }
 
     window.createGiftCode = async function() {
@@ -2771,8 +2787,9 @@
             }
         } catch(e) {
             console.error(e);
-        } 
-        showLoader(false);
+        } finally {
+            showLoader(false);
+        }
     }
 
     async function loadAdminGifts() {
@@ -2809,8 +2826,9 @@
             loadAdminGifts(); 
         } catch(e) {
             console.error(e);
-        } 
-        showLoader(false); 
+        } finally {
+            showLoader(false); 
+        }
     }
     
     window.openGiftModal = function() { 
@@ -2857,11 +2875,11 @@
             document.getElementById('giftModal').classList.remove('show'); 
             document.getElementById('user-gift-code').value = '';
             
-            showLoader(false); 
             showCustomAlert('اشتراک هدیه با موفقیت فعال شد!'); 
             triggerConfetti();
         } catch(e) { 
             console.error(e);
+        } finally {
             showLoader(false); 
         }
     }
@@ -2936,8 +2954,9 @@
             checkUnreadMessages();
         } catch(e) {
             console.error(e);
-        } 
-        showLoader(false);
+        } finally {
+            showLoader(false);
+        }
     }
 
     window.deleteLocalMsg = function(msgId) {
@@ -3032,8 +3051,9 @@
             }
         } catch(e) {
             console.error(e);
-        } 
-        showLoader(false); 
+        } finally {
+            showLoader(false); 
+        }
     }
 
     window.openInboxModal = async function() {
@@ -3082,8 +3102,9 @@
             }
         } catch(e) {
             console.error(e);
-        } 
-        showLoader(false);
+        } finally {
+            showLoader(false);
+        }
     }
     
     async function loadAdminInbox() {
@@ -3174,8 +3195,9 @@
             }
         } catch(e) {
             console.error(e);
-        } 
-        showLoader(false); 
+        } finally {
+            showLoader(false); 
+        }
     }
 
     window.openSystemMessageModal = function() { 
@@ -3198,8 +3220,9 @@
             }
         } catch(e) {
             console.error(e);
-        } 
-        showLoader(false); 
+        } finally {
+            showLoader(false); 
+        }
     }
 
     const slides = document.getElementById("slides"), dots = document.querySelectorAll(".dot");
