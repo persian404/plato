@@ -194,7 +194,7 @@
         }
 
         .input-group { margin-bottom: 15px; }
-        
+
         .input-label {
             display: block;
             text-align: right;
@@ -701,7 +701,7 @@
         </div>
     </div>
 
-    <!-- TERMS MODAL -->
+    <!-- TERMS MODAL (با قابلیت اسکرول و کادر داخلی) -->
     <div class="modal" id="termsModal">
         <div class="modal-box" style="max-width: 450px; max-height: 80vh;">
             <button class="modal-close-x" onclick="document.getElementById('termsModal').classList.remove('show')">×</button>
@@ -1477,9 +1477,14 @@
         showLoader(true);
         
         try {
-            siteSettings = await fetchSiteSettings();
-
-            const { data, error } = await supabaseClient.auth.getSession();
+            // موازی کردن درخواست‌ها برای جلوگیری از کندی و گیر کردن ورود
+            const [settingsData, sessionData] = await Promise.all([
+                fetchSiteSettings(),
+                supabaseClient.auth.getSession()
+            ]);
+            
+            siteSettings = settingsData;
+            const { data, error } = sessionData;
             
             if (error || !data.session) { 
                 showLoader(false); 
@@ -1498,12 +1503,16 @@
             
             currentUserProfile = profileRes.data;
 
+            // نمایش حالت تعمیرات فقط برای کاربرانی که ادمین نیستند
             if (siteSettings.maintenance && currentUserProfile.role !== 'admin') {
                 document.getElementById('auth-screen').style.display = 'flex';
                 document.getElementById('login-box').style.display = 'none';
                 document.getElementById('reg-box').style.display = 'none';
                 document.getElementById('maintenance-box').style.display = 'block';
-                document.getElementById('app-wrapper').style.display = 'none';
+                
+                document.getElementById('main-app').style.display = 'none';
+                document.getElementById('bottom-nav').style.display = 'none';
+                
                 showLoader(false);
                 return;
             }
@@ -1568,18 +1577,14 @@
                 let newTimeSpent = (currentUserProfile.time_spent || 0) + 1;
                 await supabaseClient.from('users_data').update({ time_spent: newTimeSpent }).eq('id', currentUserProfile.id);
                 currentUserProfile.time_spent = newTimeSpent;
-            } catch(e) {
-                // اگر ستون وجود نداشت ارور نده
-            }
+            } catch(e) {}
         } 
     }
 
     async function saveLastWatched(title) {
          try {
              await supabaseClient.from('users_data').update({ last_watched: title }).eq('id', currentUserProfile.id);
-         } catch(e) {
-             // در صورت نبود ستون ارور نده
-         }
+         } catch(e) {}
     }
 
     window.doRegister = function() {
@@ -1598,7 +1603,7 @@
         }
 
         if (!/^[a-zA-Z0-9]+$/.test(u) || !/^[a-zA-Z0-9]+$/.test(p)) {
-            showCustomAlert('فرمت وارد کردن اطلاعات شما برای ساخت حساب کاربری اشتباه است،مجدد تلاش کنید');
+            showCustomAlert('فرمت وارد کردن اطلاعات شما برای ساخت حساب کاربری اشتباه است، مجدد تلاش کنید');
             return;
         }
         
@@ -1636,7 +1641,7 @@
             const authRes = await supabaseClient.auth.signUp({ email: u + '@plato.com', password: p });
             
             if (authRes.error) { 
-                showCustomAlert('فرمت وارد کردن اطلاعات شما برای ساخت حساب کاربری اشتباه است،مجدد تلاش کنید'); 
+                showCustomAlert('فرمت وارد کردن اطلاعات شما برای ساخت حساب کاربری اشتباه است، مجدد تلاش کنید'); 
             } else if (authRes.data && authRes.data.user) {
                 const dbRes = await supabaseClient.from('users_data').insert([{ 
                     id: authRes.data.user.id, 
@@ -1656,7 +1661,7 @@
                 }
             }
         } catch(err) { 
-            showCustomAlert('فرمت وارد کردن اطلاعات شما برای ساخت حساب کاربری اشتباه است،مجدد تلاش کنید'); 
+            showCustomAlert('فرمت وارد کردن اطلاعات شما برای ساخت حساب کاربری اشتباه است، مجدد تلاش کنید'); 
         }
         showLoader(false);
     }
@@ -1674,10 +1679,14 @@
         try { 
             const { error } = await supabaseClient.auth.signInWithPassword({ email: u + '@plato.com', password: p }); 
             if (error) { 
-                showCustomAlert('نام کاربری یا رمز عبور اشتباه است'); 
+                if(error.message.includes('rate limit') || error.status === 429) {
+                    showCustomAlert('درخواست‌های زیاد! چند دقیقه دیگر تلاش کنید.');
+                } else {
+                    showCustomAlert('نام کاربری یا رمز عبور اشتباه است'); 
+                }
                 showLoader(false); 
             } else { 
-                checkUserSession(); 
+                await checkUserSession(); 
             }
         } catch(err) { 
             showCustomAlert('خطای ارتباط با سرور.'); 
@@ -2338,7 +2347,7 @@
             const nowTime = new Date().getTime();
             
             if(data) {
-                allUsersArray = data;
+                allUsersArray = data; // ذخیره در دیتابیس لوکال جاوااسکریپت
                 data.forEach(user => {
                     if(user.last_active && (nowTime - new Date(user.last_active).getTime()) < 300000) {
                         onlineCount++;
@@ -2520,6 +2529,7 @@
                     textElem.textContent = textValue; 
                 }
                 
+                // ترفند اجبار برای لود شدن سریع انیمیشن
                 textElem.style.animation = 'none'; 
                 setTimeout(() => {
                     textElem.style.animation = `scroll-marquee ${finalSpeed} linear infinite`; 
