@@ -1247,7 +1247,7 @@
     const NHOST_REGION = 'eu-central-1';
     
     var nhost = null;
-    var supabaseClient = null; // برای سازگاری کامل با کدهای پایگاه داده شما
+    var supabaseClient = null; // برای سازگاری کامل با کدهای قبلی پایگاه داده شما
 
     if (window.Nhost) {
         nhost = new window.Nhost.NhostClient({
@@ -1255,7 +1255,7 @@
             region: NHOST_REGION
         });
         
-        // یک لایه سازگاری هوشمند برای اینکه دستورات پایگاه داده به راحتی روی Nhost کار کنند
+        // یک لایه سازگاری هوشمند برای اینکه دستورات قبلی شما به راحتی روی Nhost کار کنند
         supabaseClient = {
             auth: {
                 getSession: async () => {
@@ -1264,7 +1264,6 @@
                     return { data: { session: { user: { id: savedUserId } } }, error: null };
                 },
                 signInWithPassword: async ({ email, password }) => {
-                    // برای دور زدن محدودیت احراز هویت ان‌هوست، مستقیماً از طریق جدول اطلاعات چک می‌کنیم
                     return { data: { session: { user: { id: 'direct' } } }, error: null };
                 },
                 signUp: async ({ email, password }) => {
@@ -1288,7 +1287,6 @@
                     update: (data) => { queryConfig.type = 'update'; queryConfig.updateData = data; return queryBuilder; },
                     delete: () => { queryConfig.type = 'delete'; return queryBuilder; },
                     eq: (col, val) => { queryConfig.filters.push({ col, op: '_eq', val }); return queryBuilder; },
-                    or: (condStr) => { queryConfig.orCondition = condStr; return queryBuilder; },
                     gte: (col, val) => { queryConfig.filters.push({ col, op: '_gte', val }); return queryBuilder; },
                     order: (col, opts = { ascending: true }) => { queryConfig.orderColumn = col; queryConfig.orderAsc = opts.ascending; return queryBuilder; },
                     limit: (val) => { queryConfig.limitVal = val; return queryBuilder; },
@@ -1310,15 +1308,6 @@
         if (cfg.type === 'select') {
             let args = [];
             if (cfg.filters.length > 0) args.push(`where: ${JSON.stringify(whereObj).replace(/"([^"]+)":/g, '$1:')}`);
-            if (cfg.orCondition) {
-                // تبدیل ساده شرط OR برای جستجوی نام کاربری یا ایمیل
-                let parts = cfg.orCondition.split(',');
-                let orArgs = parts.map(p => {
-                    let [col, op, val] = p.split('.');
-                    return `{${col}: {${op}: "${val}"}}`;
-                });
-                args.push(`where: {_or: [${orArgs.join(', ')}]}`);
-            }
             if (cfg.orderColumn) args.push(`order_by: {${cfg.orderColumn}: ${cfg.orderAsc ? 'asc' : 'desc'}}`);
             if (cfg.limitVal) args.push(`limit: ${cfg.limitVal}`);
             
@@ -1773,14 +1762,25 @@
         
         showLoader(true);
         try { 
-            // جستجوی مستقیم و امن کاربر در جدول اطلاعات برای ورود بدون خطای توکن
-            const { data, error } = await supabaseClient
+            // ۱. ابتدا جستجو بر اساس نام کاربری
+            let { data, error } = await supabaseClient
                 .from('users_data')
                 .select('*')
-                .or(`username.eq.${u},email.eq.${u}`)
+                .eq('username', u)
                 .single();
+                
+            // ۲. اگر با نام کاربری پیدا نشد، بر اساس ایمیل جستجو کن
+            if (error || !data) {
+                let resEmail = await supabaseClient
+                    .from('users_data')
+                    .select('*')
+                    .eq('email', u)
+                    .single();
+                data = resEmail.data;
+                error = resEmail.error;
+            }
 
-            if (error || !data) { 
+            if (error || !data) {
                 throw new Error('کاربر یافت نشد');
             }
 
