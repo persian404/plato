@@ -128,7 +128,7 @@
         @keyframes text-pulse { 0% { opacity: 0.5; } 100% { opacity: 1; } }
 
         #loader { 
-            position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 99999; 
+            position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 9999; 
             display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(12px); 
         }
 
@@ -137,13 +137,13 @@
         ========================= */
         #custom-alert { 
             position: fixed; top: 24px; left: 50%; transform: translateX(-50%); 
-            z-index: 99999; background: #1e293b; color: #fff; padding: 14px 28px; 
+            z-index: 9999; background: #1e293b; color: #fff; padding: 14px 28px; 
             border-radius: 12px; display: none; text-align: center; box-shadow: 0 12px 35px rgba(0,0,0,0.5); 
             font-weight: 700; min-width: 280px; font-size: 13.5px; border: 1px solid var(--border-color); transition: 0.3s; 
         }
         
         .modal { 
-            position: fixed; inset: 0; z-index: 25000; display: none; align-items: center; 
+            position: fixed; inset: 0; z-index: 6000; display: none; align-items: center; 
             justify-content: center; padding: 20px; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); 
         }
 
@@ -153,6 +153,12 @@
             width: 100%; max-width: 760px; overflow: hidden; border-radius: 20px; 
             background: var(--bg-box); border: 1px solid var(--border-color); box-shadow: 0 25px 60px rgba(0,0,0,0.6); 
             display: flex; flex-direction: column; max-height: 90vh; position: relative; 
+        }
+
+        .modal-full { padding: 0 !important; }
+        .modal-full .modal-box {
+            max-width: 100% !important; width: 100% !important; height: 100vh !important; 
+            max-height: 100vh !important; border-radius: 0 !important; border: none !important; background: var(--bg-main);
         }
 
         .modal-close-x { 
@@ -553,9 +559,9 @@
         .movie-detail-content { max-width: 800px; margin: 0 auto; padding: 20px 20px 90px; }
 
         .btn-back {
-            background: none; color: var(--text-main); font-weight: bold; display: inline-flex; 
+            background: none; color: var(--text-main); font-weight: bold; display: flex; 
             align-items: center; gap: 8px; font-size: 15px; cursor: pointer; margin-bottom: 15px;
-            padding: 0; border: none;
+            margin-right: auto; padding: 0; border: none;
         }
 
         .neon-banner { 
@@ -695,7 +701,7 @@
         </div>
     </div>
 
-    <!-- TERMS MODAL -->
+    <!-- TERMS MODAL (با قابلیت اسکرول و کادر داخلی) -->
     <div class="modal" id="termsModal">
         <div class="modal-box" style="max-width: 450px; max-height: 80vh;">
             <button class="modal-close-x" onclick="document.getElementById('termsModal').classList.remove('show')">×</button>
@@ -753,12 +759,7 @@
         <div class="sidebar-menu">
             <button class="sidebar-btn" onclick="openSupportModal()">
                 <span>ارتباط با پشتیبانی</span>
-                <svg class="btn-icon" style="margin:0;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="پشتیبانی">
-                    <path d="M6 17V14.5C6 9.25 10.48 5 16 5C21.52 5 26 9.25 26 14.5V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M6 16H9V22H6C5.45 22 5 21.55 5 21V17C5 16.45 5.45 16 6 16Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                    <path d="M26 16H23V22H26C26.55 22 27 21.55 27 21V17C27 16.45 26.55 16 26 16Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                    <path d="M23 22C23 24.8 20.8 26 18 26H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
+                <svg class="btn-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
             </button>
             <button class="sidebar-btn" onclick="openInboxModal()">
                 <span>صندوق پیام‌ها</span>
@@ -1048,12 +1049,10 @@
         <!-- Dedicated Movie Page View -->
         <div id="view-movie" class="view-section" style="padding-bottom: 90px; background: var(--bg-main);">
             <div class="movie-detail-content" style="padding-top: 15px;">
-                <div style="display: flex; justify-content: flex-start; direction: ltr; width: 100%;">
-                    <button class="btn-back" onclick="closePlayer()">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                        بازگشت
-                    </button>
-                </div>
+                <button class="btn-back" onclick="closePlayer()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    بازگشت
+                </button>
                 
                 <div class="neon-banner" id="neonBanner">
                     <div class="neon-banner-inner" id="neonBannerInner">
@@ -1091,7 +1090,7 @@
             <div class="nav-indicator"></div>
         </div>
         <div class="nav-item" onclick="showPlatinoSoon()" id="nav-platino">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line><line x1="17" y1="17" x2="22" y2="17"></line></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
             <span>پلاتینو</span>
             <div class="platino-badge">به زودی</div>
             <div class="nav-indicator"></div>
@@ -1106,7 +1105,7 @@
 
     <!-- MODALS -->
     <!-- Resume Modal -->
-    <div class="modal" id="resumeModal" style="z-index: 26000;">
+    <div class="modal" id="resumeModal" style="z-index: 6500;">
         <div class="modal-box" style="max-width: 320px; padding: 25px; text-align: center;">
             <div style="width: 50px; height: 50px; background: rgba(59, 130, 246, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: var(--accent);">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1124,7 +1123,7 @@
     </div>
 
     <!-- Avatar Selection Modal -->
-    <div class="modal" id="avatarModal" style="z-index: 26000;">
+    <div class="modal" id="avatarModal" style="z-index: 6500;">
         <div class="modal-box" style="max-width: 400px;">
             <button class="modal-close-x" onclick="document.getElementById('avatarModal').classList.remove('show')">×</button>
             <div class="modal-content">
@@ -1135,7 +1134,7 @@
     </div>
 
     <!-- User Detail Admin Modal -->
-    <div class="modal" id="userDetailModal" style="z-index: 26000;">
+    <div class="modal" id="userDetailModal" style="z-index: 10500;">
         <div class="modal-box" style="max-width: 400px; padding: 25px;">
             <button class="modal-close-x" onclick="document.getElementById('userDetailModal').classList.remove('show')">×</button>
             <h3 class="modal-title" style="text-align:center; color: var(--accent); margin-bottom: 20px;">اطلاعات دقیق کاربر</h3>
@@ -1173,7 +1172,7 @@
         </div>
     </div>
 
-    <div class="modal" id="supportModal" style="z-index: 26000;">
+    <div class="modal" id="supportModal">
         <div class="modal-box" style="max-width: 400px;">
             <button class="modal-close-x" onclick="document.getElementById('supportModal').classList.remove('show')">×</button>
             <div class="modal-content">
@@ -1184,7 +1183,7 @@
         </div>
     </div>
 
-    <div class="modal" id="inboxModal" style="z-index: 26000;">
+    <div class="modal" id="inboxModal">
         <div class="modal-box" style="max-width: 500px; height: 80vh;">
             <div class="modal-content" style="display:flex; flex-direction:column; padding-top: 15px;">
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px; margin-top:5px;">
@@ -1199,7 +1198,7 @@
         </div>
     </div>
     
-    <div class="modal" id="giftModal" style="z-index: 26000;">
+    <div class="modal" id="giftModal">
         <div class="modal-box" style="max-width: 400px;">
             <button class="modal-close-x" onclick="document.getElementById('giftModal').classList.remove('show')">×</button>
             <div class="modal-content">
@@ -1212,9 +1211,8 @@
         </div>
     </div>
 
-    <!-- Admin Modals with High Z-Index so they show over Admin Screen -->
-    <div class="modal" id="adminReplyModal" style="z-index: 26000;">
-        <div class="modal-box" style="max-width: 400px; position: relative;">
+    <div class="modal" id="adminReplyModal">
+        <div class="modal-box" style="max-width: 400px;">
             <button class="modal-close-x" onclick="document.getElementById('adminReplyModal').classList.remove('show')">×</button>
             <div class="modal-content">
                 <h3 class="modal-title">پاسخ به کاربر</h3>
@@ -1225,8 +1223,8 @@
         </div>
     </div>
 
-    <div class="modal" id="sysMsgModal" style="z-index: 26000;">
-        <div class="modal-box" style="max-width: 400px; position: relative;">
+    <div class="modal" id="sysMsgModal">
+        <div class="modal-box" style="max-width: 400px;">
             <button class="modal-close-x" onclick="document.getElementById('sysMsgModal').classList.remove('show')">×</button>
             <div class="modal-content">
                 <h3 class="modal-title" style="color:#10b981;">ارسال پیام عمومی</h3>
@@ -1238,15 +1236,17 @@
 
 </div>
 
-<!-- کتابخانه استاندارد Nhost -->
-<script src="https://cdn.jsdelivr.net/npm/@nhost/nhost-js@2.2.3/dist/nhost-js.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-    // تنظیمات دقیق اتصال به Nhost
-    const NHOST_SUBDOMAIN = 'cdivsqlldojdrplwixtj';
-    const NHOST_REGION = 'eu-central-1';
+    const SUPABASE_URL = 'https://ywwvibchhwsljsobywyz.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl3d3ZpYmNoaHdzbGpzb2J5d3l6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYyNDU3NzAsImV4cCI6MjEwMTgyMTc3MH0.o7COXGNv_3PXFNJSEGYPnbtvD71bIMXZeILgstHHH60';
     
-    let nhost = null;
+    var supabaseClient = null;
+    if (window.supabase) {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
+
     var currentUserProfile = null;
     let dynamicDataArray = []; 
     let favoritesArray = [];
@@ -1256,14 +1256,6 @@
     let linkTimerInterval = null;
     let allUsersArray = []; 
     let siteSettings = { reg_limit: 100, maintenance: false };
-
-    // مقداردهی اولیه Nhost
-    if (window.Nhost) {
-        nhost = new window.Nhost.NhostClient({
-            subdomain: NHOST_SUBDOMAIN,
-            region: NHOST_REGION
-        });
-    }
 
     /* =========================
        AVATAR SYSTEM
@@ -1336,29 +1328,16 @@
         if(!currentUserProfile) return; 
         
         showLoader(true);
-        try {
-            const result = await nhost.graphql.request(
-                `mutation UpdateAvatar($id: uuid!, $avatar: Int!) {
-                    update_users_data_by_pk(pk_columns: {id: $id}, _set: {avatar: $avatar}) {
-                        id
-                    }
-                }`,
-                { id: currentUserProfile.id, avatar: id }
-            );
-            
-            if (result.error) {
-                throw result.error;
-            }
-            
-            currentUserProfile.avatar = id;
-            document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(id, currentUserProfile.username);
-            document.getElementById('avatarModal').classList.remove('show'); 
-        } catch(e) {
-            console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
-        } finally {
-            showLoader(false);
-        }
+        
+        await supabaseClient.from('users_data').update({ avatar: id }).eq('id', currentUserProfile.id);
+        
+        currentUserProfile.avatar = id;
+        
+        document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(id, currentUserProfile.username);
+        
+        document.getElementById('avatarModal').classList.remove('show'); 
+        
+        showLoader(false);
     }
 
     function toEnglishDigits(str) { 
@@ -1370,7 +1349,12 @@
     }
 
     function showLoader(show) { 
-        document.getElementById('loader').style.display = show ? 'flex' : 'none';
+        const loader = document.getElementById('loader');
+        if(show) {
+            loader.style.display = 'flex';
+        } else {
+            loader.style.display = 'none';
+        }
     }
 
     function showCustomAlert(msg) { 
@@ -1417,11 +1401,19 @@
         const regPass = document.getElementById('reg-pass'); 
         
         if (logPass) {
-            logPass.type = logPass.type === 'password' ? 'text' : 'password';
+            if(logPass.type === 'password') {
+                logPass.type = 'text';
+            } else {
+                logPass.type = 'password';
+            }
         }
         
         if (regPass) {
-            regPass.type = regPass.type === 'password' ? 'text' : 'password';
+            if(regPass.type === 'password') {
+                regPass.type = 'text';
+            } else {
+                regPass.type = 'password';
+            }
         }
     }
 
@@ -1443,32 +1435,11 @@
         });
     }
 
-    // =====================================================
-    // توابع ارتباط با Nhost با استفاده از GraphQL
-    // =====================================================
-    
-    async function executeGraphQL(query, variables) {
-        if (!nhost) {
-            throw new Error('Nhost initialized.');
-        }
-        const result = await nhost.graphql.request(query, variables);
-        if (result.error) {
-            throw result.error;
-        }
-        return result.data;
-    }
-
     async function fetchSiteSettings() {
         try {
-            const data = await executeGraphQL(
-                `query GetSettings {
-                    messages(where: {direction: {_eq: "site_settings"}}, limit: 1) {
-                        content
-                    }
-                }`
-            );
-            if (data && data.messages && data.messages.length > 0) {
-                return JSON.parse(data.messages[0].content);
+            const { data } = await supabaseClient.from('messages').select('content').eq('direction', 'site_settings').limit(1);
+            if (data && data.length > 0) {
+                return JSON.parse(data[0].content);
             }
         } catch (e) {
             console.error("Settings load error:", e);
@@ -1488,244 +1459,144 @@
         };
 
         try {
-            // حذف تنظیمات قبلی
-            await executeGraphQL(
-                `mutation DeleteSettings {
-                    delete_messages(where: {direction: {_eq: "site_settings"}}) {
-                        affected_rows
-                    }
-                }`
-            );
+            await supabaseClient.from('messages').delete().eq('direction', 'site_settings');
+            const { error } = await supabaseClient.from('messages').insert([{
+                direction: 'site_settings',
+                content: JSON.stringify(newSettings),
+                is_read: true
+            }]);
             
-            // ایجاد تنظیمات جدید
-            await executeGraphQL(
-                `mutation InsertSetting($content: String!) {
-                    insert_messages(objects: [{direction: "site_settings", content: $content, is_read: true}]) {
-                        affected_rows
-                    }
-                }`,
-                { content: JSON.stringify(newSettings) }
-            );
-            
-            siteSettings = newSettings;
-            showCustomAlert('تنظیمات سایت با موفقیت ذخیره شد.');
+            if(error) {
+                showCustomAlert('خطا در ذخیره تنظیمات: ' + error.message);
+            } else {
+                siteSettings = newSettings;
+                showCustomAlert('تنظیمات سایت با موفقیت ذخیره شد.');
+            }
         } catch (e) {
             console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
+            showCustomAlert('ارور در ارتباط با سرور');
         } finally {
             showLoader(false);
         }
     }
 
-    // =====================================================
-    // توابع احراز هویت
-    // =====================================================
-
     async function checkUserSession() {
-        if (!nhost) return;
+        if (!supabaseClient) return;
         
         showLoader(true);
         
         try {
-            // بررسی نشست فعلی
-            const session = nhost.auth.getSession();
+            // ایجاد یک محدودیت زمانی 15 ثانیه‌ای برای جلوگیری از گیر کردن در لودینگ
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 15000));
             
-            let userId = null;
-            if (session && session.user) {
-                userId = session.user.id;
-            } else {
-                // اگر نشست وجود نداشت، از localStorage استفاده کن
-                userId = localStorage.getItem('plato_user_id');
-            }
+            const results = await Promise.race([
+                Promise.all([fetchSiteSettings(), supabaseClient.auth.getSession()]),
+                timeoutPromise
+            ]);
             
-            if (!userId) { 
+            siteSettings = results[0];
+            const sessionData = results[1];
+            const { data, error } = sessionData;
+            
+            if (error || !data.session) { 
                 document.getElementById('auth-screen').style.display = 'flex'; 
                 return; 
             }
             
-            // دریافت اطلاعات کاربر با GraphQL
-            const data = await executeGraphQL(
-                `query GetUser($id: uuid!) {
-                    users_data_by_pk(id: $id) {
-                        id
-                        username
-                        email
-                        phone_model
-                        status
-                        role
-                        avatar
-                        sub_end_date
-                        last_active
-                        time_spent
-                        last_watched
-                        created_at
-                    }
-                }`,
-                { id: userId }
-            );
+            const profileRes = await supabaseClient.from('users_data').select('*').eq('id', data.session.user.id).single();
             
-            if (!data || !data.users_data_by_pk) {
-                localStorage.removeItem('plato_user_id');
-                if (nhost) {
-                    await nhost.auth.signOut();
-                }
-                document.getElementById('auth-screen').style.display = 'flex';
-                return;
+            if (profileRes.error || !profileRes.data) { 
+                await supabaseClient.auth.signOut(); 
+                document.getElementById('auth-screen').style.display = 'flex'; 
+                return; 
             }
             
-            currentUserProfile = data.users_data_by_pk;
-            
-            // ذخیره userId در localStorage
-            localStorage.setItem('plato_user_id', currentUserProfile.id);
+            currentUserProfile = profileRes.data;
 
-            // بررسی تنظیمات سایت
-            siteSettings = await fetchSiteSettings();
             if (siteSettings.maintenance && currentUserProfile.role !== 'admin') {
                 document.getElementById('auth-screen').style.display = 'flex';
                 document.getElementById('login-box').style.display = 'none';
                 document.getElementById('reg-box').style.display = 'none';
                 document.getElementById('maintenance-box').style.display = 'block';
+                
                 document.getElementById('main-app').style.display = 'none';
                 document.getElementById('bottom-nav').style.display = 'none';
-                showLoader(false);
                 return;
             }
-
+            
             if (currentUserProfile.status === 'pending' || currentUserProfile.status === 'rejected') {
                 showCustomAlert('اکانت شما هنوز تایید نشده یا مسدود است.');
-                localStorage.removeItem('plato_user_id');
-                if (nhost) {
-                    await nhost.auth.signOut();
-                }
+                await supabaseClient.auth.signOut(); 
                 document.getElementById('auth-screen').style.display = 'flex';
-                showLoader(false);
-                return;
-            }
-            
-            document.getElementById('auth-screen').style.display = 'none';
-            document.getElementById('main-app').style.display = 'block';
-            document.getElementById('bottom-nav').style.display = 'flex';
-            
-            let hasActiveSub = false;
-            if(currentUserProfile.role === 'admin') {
-                hasActiveSub = true;
-            } else if(currentUserProfile.sub_end_date) {
-                if(new Date(currentUserProfile.sub_end_date) > new Date()) {
+            } else {
+                document.getElementById('auth-screen').style.display = 'none';
+                document.getElementById('main-app').style.display = 'block';
+                document.getElementById('bottom-nav').style.display = 'flex';
+                
+                let hasActiveSub = false;
+                if(currentUserProfile.role === 'admin') {
                     hasActiveSub = true;
+                } else if(currentUserProfile.sub_end_date) {
+                    if(new Date(currentUserProfile.sub_end_date) > new Date()) {
+                        hasActiveSub = true;
+                    }
                 }
-            }
-            
-            document.getElementById('buy-sub-btn').style.display = hasActiveSub ? 'none' : 'block';
-            document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(currentUserProfile.avatar, currentUserProfile.username);
-            
-            if (currentUserProfile.role === 'admin') {
-                document.getElementById('admin-sidebar-btn-container').innerHTML = `
-                    <button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()">
-                        <span>پنل مدیریت</span>
-                        <svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                    </button>
-                `;
-            }
-            
-            updateHeartbeat(); 
-            await fetchFavorites();
-            await fetchMoviesFromDatabase();
-            loadMarquee();
-            checkNewsUpdates();
-            
-            setInterval(() => { 
-                updateHeartbeat(); 
-                checkUnreadMessages(); 
-            }, 60000);
+                
+                if(!hasActiveSub) {
+                    document.getElementById('buy-sub-btn').style.display = 'block';
+                } else {
+                    document.getElementById('buy-sub-btn').style.display = 'none';
+                }
 
+                document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(currentUserProfile.avatar, currentUserProfile.username);
+                
+                if (currentUserProfile.role === 'admin') {
+                    document.getElementById('admin-sidebar-btn-container').innerHTML = `
+                        <button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()">
+                            <span>پنل مدیریت</span>
+                            <svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        </button>
+                    `;
+                }
+                
+                updateHeartbeat(); 
+                fetchFavorites();
+                fetchMoviesFromDatabase();
+                loadMarquee();
+                checkNewsUpdates();
+                
+                setInterval(() => { 
+                    updateHeartbeat(); 
+                    checkUnreadMessages(); 
+                }, 60000);
+            }
         } catch (err) { 
             console.error(err);
+            if (err.message === 'TIMEOUT') {
+                showCustomAlert('ارتباط با سرور کند است. در حال تلاش مجدد...');
+            }
             document.getElementById('auth-screen').style.display = 'flex'; 
-            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false);
         }
     }
 
-    // =====================================================
-    // تابع لاگین اصلاح شده با Nhost
-    // =====================================================
-
-    window.doLogin = async function() {
-        var u = toEnglishDigits(document.getElementById('log-user').value).trim().toLowerCase();
-        var p = toEnglishDigits(document.getElementById('log-pass').value).trim();
-        
-        if(!u || !p) {
-            showCustomAlert('اطلاعات را وارد کنید');
-            return;
-        }
-        
-        showLoader(true);
-        try {
-            // 1. ابتدا با Nhost احراز هویت می‌کنیم
-            const { session, error: signInError } = await nhost.auth.signIn({
-                email: u + '@plato.com',
-                password: p
-            });
-            
-            if (signInError) {
-                // اگر احراز هویت با خطا مواجه شد، خطا را نمایش می‌دهیم
-                console.error("SignIn Error:", signInError);
-                throw new Error('نام کاربری یا رمز اشتباه است');
-            }
-            
-            if (!session || !session.user) {
-                throw new Error('نام کاربری یا رمز اشتباه است');
-            }
-            
-            // 2. دریافت اطلاعات کاربر از جدول users_data
-            const data = await executeGraphQL(
-                `query GetUser($id: uuid!) {
-                    users_data_by_pk(id: $id) {
-                        id
-                        username
-                        email
-                        phone_model
-                        status
-                        role
-                        avatar
-                        sub_end_date
-                        last_active
-                        time_spent
-                        last_watched
-                    }
-                }`,
-                { id: session.user.id }
-            );
-            
-            if (!data || !data.users_data_by_pk) {
-                throw new Error('کاربر یافت نشد');
-            }
-            
-            const userData = data.users_data_by_pk;
-            
-            if (userData.status !== 'approved') {
-                // اگر کاربر تایید نشده، لاگ‌اوت می‌کنیم
-                await nhost.auth.signOut();
-                throw new Error('حساب شما هنوز تایید نشده است');
-            }
-            
-            currentUserProfile = userData;
-            localStorage.setItem('plato_user_id', userData.id);
-            
-            await checkUserSession();
-            
-        } catch(err) { 
-            console.error(err);
-            showCustomAlert(err.message || 'نام کاربری یا رمز اشتباه است'); 
-        } finally {
-            showLoader(false); 
-        }
+    async function updateHeartbeat() { 
+        if(currentUserProfile && currentUserProfile.role !== 'admin') { 
+            try { 
+                await supabaseClient.from('users_data').update({ last_active: new Date().toISOString() }).eq('id', currentUserProfile.id); 
+                let newTimeSpent = (currentUserProfile.time_spent || 0) + 1;
+                await supabaseClient.from('users_data').update({ time_spent: newTimeSpent }).eq('id', currentUserProfile.id);
+                currentUserProfile.time_spent = newTimeSpent;
+            } catch(e) {}
+        } 
     }
 
-    // =====================================================
-    // تابع ثبت‌نام اصلاح شده با Nhost
-    // =====================================================
+    async function saveLastWatched(title) {
+         try {
+             await supabaseClient.from('users_data').update({ last_watched: title }).eq('id', currentUserProfile.id);
+         } catch(e) {}
+    }
 
     window.doRegister = function() {
         let u = toEnglishDigits(document.getElementById('reg-user').value).trim().toLowerCase();
@@ -1762,19 +1633,7 @@
 
         try {
             siteSettings = await fetchSiteSettings();
-            
-            // شمارش کاربران موجود
-            const countData = await executeGraphQL(
-                `query CountUsers {
-                    users_data_aggregate {
-                        aggregate {
-                            count
-                        }
-                    }
-                }`
-            );
-            
-            const count = countData.users_data_aggregate.aggregate.count;
+            const { count } = await supabaseClient.from('users_data').select('*', { count: 'exact', head: true });
             
             if (count >= siteSettings.reg_limit) {
                 showCustomAlert('ظرفیت سایت فعلا تکمیل میباشد');
@@ -1790,125 +1649,77 @@
         let m = document.getElementById('reg-model').value.trim();
         
         try {
-            // ثبت‌نام با Nhost
-            const { session, error: signUpError } = await nhost.auth.signUp({
-                email: u + '@plato.com',
-                password: p,
-                options: {
-                    allowedRoles: ['user'],
-                    defaultRole: 'user'
-                }
-            });
+            const authRes = await supabaseClient.auth.signUp({ email: u + '@plato.com', password: p });
             
-            if (signUpError) { 
-                console.error("SignUp Error:", signUpError);
+            if (authRes.error) { 
                 showCustomAlert('فرمت وارد کردن اطلاعات شما برای ساخت حساب کاربری اشتباه است، مجدد تلاش کنید'); 
-                showLoader(false);
-                return;
-            }
-            
-            if (!session || !session.user) {
-                showCustomAlert('خطا در ایجاد حساب کاربری');
-                showLoader(false);
-                return;
-            }
-            
-            // ایجاد رکورد در جدول users_data
-            await executeGraphQL(
-                `mutation InsertUser($id: uuid!, $email: String!, $username: String!, $phone_model: String!) {
-                    insert_users_data(objects: [{
-                        id: $id,
-                        email: $email,
-                        username: $username,
-                        phone_model: $phone_model,
-                        status: "pending",
-                        role: "user",
-                        avatar: 0
-                    }]) {
-                        affected_rows
-                    }
-                }`,
-                {
-                    id: session.user.id,
-                    email: u + '@plato.com',
-                    username: u,
-                    phone_model: m
+            } else if (authRes.data && authRes.data.user) {
+                const dbRes = await supabaseClient.from('users_data').insert([{ 
+                    id: authRes.data.user.id, 
+                    email: u + '@plato.com', 
+                    username: u, 
+                    phone_model: m, 
+                    status: 'pending', 
+                    role: 'user', 
+                    avatar: 0 
+                }]);
+                
+                if(dbRes.error) {
+                    showCustomAlert('خطای دیتابیس. مجدد تلاش کنید.');
+                } else {
+                    showCustomAlert('اطلاعات شما برای تایید شدن ارسال شد.'); 
+                    toggleAuth('login');
                 }
-            );
-            
-            showCustomAlert('اطلاعات شما برای تایید شدن ارسال شد.'); 
-            // خروج از حساب و نمایش صفحه لاگین
-            await nhost.auth.signOut();
-            toggleAuth('login');
-            
+            }
         } catch(err) { 
-            console.error(err);
-            showCustomAlert('لطفاً مجدد تلاش کنید'); 
+            showCustomAlert('فرمت وارد کردن اطلاعات شما برای ساخت حساب کاربری اشتباه است، مجدد تلاش کنید'); 
         } finally {
             showLoader(false);
         }
     }
 
-    // =====================================================
-    // تابع خروج از حساب
-    // =====================================================
+    window.doLogin = async function() {
+        var u = toEnglishDigits(document.getElementById('log-user').value).trim().toLowerCase();
+        var p = toEnglishDigits(document.getElementById('log-pass').value).trim();
+        
+        if(!u || !p) {
+            showCustomAlert('اطلاعات را وارد کنید');
+            return;
+        }
+        
+        showLoader(true);
+        try { 
+            const authPromise = supabaseClient.auth.signInWithPassword({ email: u + '@plato.com', password: p });
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 15000));
+            
+            const { data, error } = await Promise.race([authPromise, timeoutPromise]);
+            
+            if (error) { 
+                if(error.message.includes('rate limit') || error.status === 429) {
+                    showCustomAlert('درخواست‌های زیاد! چند دقیقه دیگر تلاش کنید.');
+                } else {
+                    showCustomAlert('نام کاربری یا رمز عبور اشتباه است'); 
+                }
+            } else { 
+                await checkUserSession(); 
+            }
+        } catch(err) { 
+            if (err.message === 'TIMEOUT') {
+                showCustomAlert('اینترنت شما یا سرور کند است. لطفاً فیلترشکن را بررسی کنید.');
+            } else {
+                showCustomAlert('خطای ارتباط با سرور.'); 
+            }
+        } finally {
+            showLoader(false); 
+        }
+    }
 
     window.doLogout = async function() { 
-        localStorage.removeItem('plato_user_id');
-        if(nhost) { 
-            await nhost.auth.signOut(); 
+        if(supabaseClient) { 
+            await supabaseClient.auth.signOut(); 
         } 
         window.location.reload(); 
     }
-
-    // =====================================================
-    // سایر توابع کاربردی
-    // =====================================================
-
-    async function updateHeartbeat() { 
-        if(currentUserProfile && currentUserProfile.role !== 'admin') { 
-            try { 
-                const now = new Date().toISOString();
-                const newTimeSpent = (currentUserProfile.time_spent || 0) + 1;
-                
-                await executeGraphQL(
-                    `mutation UpdateHeartbeat($id: uuid!, $last_active: timestamptz!, $time_spent: Int!) {
-                        update_users_data_by_pk(pk_columns: {id: $id}, _set: {last_active: $last_active, time_spent: $time_spent}) {
-                            id
-                        }
-                    }`,
-                    {
-                        id: currentUserProfile.id,
-                        last_active: now,
-                        time_spent: newTimeSpent
-                    }
-                );
-                
-                currentUserProfile.time_spent = newTimeSpent;
-            } catch(e) {
-                console.error(e);
-            }
-        } 
-    }
-
-    async function saveLastWatched(title) {
-         try {
-             await executeGraphQL(
-                 `mutation UpdateLastWatched($id: uuid!, $last_watched: String!) {
-                     update_users_data_by_pk(pk_columns: {id: $id}, _set: {last_watched: $last_watched}) {
-                         id
-                     }
-                 }`,
-                 { id: currentUserProfile.id, last_watched: title }
-             );
-         } catch(e) {
-             console.error(e);
-         }
-    }
-
-    // =====================================================
-    // توابع ناوبری
-    // =====================================================
 
     function switchNav(target) {
         if(linkTimerInterval) {
@@ -1949,25 +1760,13 @@
         window.scrollTo(0,0);
     }
 
-    // =====================================================
-    // توابع فیلم‌ها و علاقه‌مندی‌ها
-    // =====================================================
-
     async function fetchFavorites() {
         if(!currentUserProfile) return;
         try {
-            const data = await executeGraphQL(
-                `query GetFavorites($user_id: uuid!) {
-                    favorites(where: {user_id: {_eq: $user_id}}) {
-                        movie_id
-                    }
-                }`,
-                { user_id: currentUserProfile.id }
-            );
-            
-            if(data && data.favorites) { 
+            const { data } = await supabaseClient.from('favorites').select('movie_id').eq('user_id', currentUserProfile.id);
+            if(data) { 
                 favoritesArray = []; 
-                data.favorites.forEach(f => favoritesArray.push(f.movie_id)); 
+                data.forEach(f => favoritesArray.push(f.movie_id)); 
             }
         } catch(e) {
             console.error(e);
@@ -1982,24 +1781,10 @@
         try {
             if(!isFavNow) {
                 favoritesArray = favoritesArray.filter(id => id !== movieId); 
-                await executeGraphQL(
-                    `mutation DeleteFavorite($user_id: uuid!, $movie_id: Int!) {
-                        delete_favorites(where: {user_id: {_eq: $user_id}, movie_id: {_eq: $movie_id}}) {
-                            affected_rows
-                        }
-                    }`,
-                    { user_id: currentUserProfile.id, movie_id: movieId }
-                );
+                await supabaseClient.from('favorites').delete().eq('user_id', currentUserProfile.id).eq('movie_id', movieId);
             } else {
                 favoritesArray.push(movieId); 
-                await executeGraphQL(
-                    `mutation InsertFavorite($user_id: uuid!, $movie_id: Int!) {
-                        insert_favorites(objects: [{user_id: $user_id, movie_id: $movie_id}]) {
-                            affected_rows
-                        }
-                    }`,
-                    { user_id: currentUserProfile.id, movie_id: movieId }
-                );
+                await supabaseClient.from('favorites').insert([{ user_id: currentUserProfile.id, movie_id: movieId }]);
             }
             
             document.querySelectorAll(`.fav-btn[data-movie-id="${movieId}"]`).forEach(btn => {
@@ -2049,26 +1834,11 @@
 
     async function fetchMoviesFromDatabase() {
         try {
-            const data = await executeGraphQL(
-                `query GetMovies {
-                    movies(order_by: [{sort_order: asc}, {id: desc}]) {
-                        id
-                        title
-                        poster
-                        category
-                        download_url
-                        info
-                        description
-                        updated_at
-                        sort_order
-                    }
-                }`
-            );
-            
-            if(data && data.movies) {
-                dynamicDataArray = data.movies;
+            const { data } = await supabaseClient.from('movies').select('*').order('sort_order', { ascending: true }).order('id', { ascending: false });
+            if(data) {
+                dynamicDataArray = data;
                 const programs = [], kids = [], series = [], movies = [];
-                data.movies.forEach(m => {
+                data.forEach(m => {
                     if(m.category === 'program') programs.push(m);
                     else if(m.category === 'kids') kids.push(m);
                     else if(m.category === 'series' || !m.category) series.push(m);
@@ -2137,10 +1907,6 @@
         renderDynamicList(programs, 'programsList'); 
         renderDynamicList(kids, 'kidsList');
     });
-
-    // =====================================================
-    // توابع پخش فیلم
-    // =====================================================
 
     const videoPlayer = document.getElementById("videoPlayer");
     let pendingVideoUrl = "";
@@ -2317,10 +2083,6 @@
         switchNav('home'); 
     }
 
-    // =====================================================
-    // توابع منوی کناری
-    // =====================================================
-
     window.openSidebar = function() {
         document.getElementById('sidebar').classList.add('open'); 
         document.getElementById('sidebarOverlay').classList.add('open');
@@ -2356,10 +2118,6 @@
         document.getElementById('sidebar').classList.remove('open'); 
         document.getElementById('sidebarOverlay').classList.remove('open'); 
     }
-
-    // =====================================================
-    // توابع پنل مدیریت
-    // =====================================================
 
     window.switchAdminTab = function(tabId, btn) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -2404,10 +2162,6 @@
         fetchMoviesFromDatabase(); 
     }
 
-    // =====================================================
-    // توابع مدیریت کاربران و اشتراک
-    // =====================================================
-
     window.chargeSub = async function() {
         var userRaw = document.getElementById('charge-user').value;
         var user = toEnglishDigits(userRaw).trim().toLowerCase();
@@ -2421,59 +2175,28 @@
         
         showLoader(true);
         try {
-            // پیدا کردن کاربر
-            const userData = await executeGraphQL(
-                `query FindUser($username: String!) {
-                    users_data(where: {username: {_eq: $username}}) {
-                        id
-                        sub_end_date
-                    }
-                }`,
-                { username: user }
-            );
-            
-            if (!userData || !userData.users_data || userData.users_data.length === 0) { 
+            const { data: udata } = await supabaseClient.from('users_data').select('id, sub_end_date').eq('username', user).single();
+            if (!udata) { 
                 showCustomAlert('کاربر پیدا نشد.'); 
+                showLoader(false); 
                 return; 
             }
             
-            const targetUser = userData.users_data[0];
-            
             if(days === 0) {
-                await executeGraphQL(
-                    `mutation RemoveSubscription($id: uuid!) {
-                        update_users_data_by_pk(pk_columns: {id: $id}, _set: {sub_end_date: null}) {
-                            id
-                        }
-                    }`,
-                    { id: targetUser.id }
-                );
+                await supabaseClient.from('users_data').update({ sub_end_date: null }).eq('id', udata.id); 
                 showCustomAlert('اشتراک کاربر لغو شد.');
             } else {
-                let baseDate = (targetUser.sub_end_date && new Date(targetUser.sub_end_date) > new Date()) ? new Date(targetUser.sub_end_date) : new Date();
+                let baseDate = (udata.sub_end_date && new Date(udata.sub_end_date) > new Date()) ? new Date(udata.sub_end_date) : new Date();
                 baseDate.setDate(baseDate.getDate() + days);
-                
-                await executeGraphQL(
-                    `mutation UpdateSubscription($id: uuid!, $sub_end_date: timestamptz!) {
-                        update_users_data_by_pk(pk_columns: {id: $id}, _set: {sub_end_date: $sub_end_date}) {
-                            id
-                        }
-                    }`,
-                    { id: targetUser.id, sub_end_date: baseDate.toISOString() }
-                );
+                await supabaseClient.from('users_data').update({ sub_end_date: baseDate.toISOString() }).eq('id', udata.id); 
                 showCustomAlert('اشتراک جمع و فعال شد.');
             }
         } catch(e) { 
-            console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید'); 
+            showCustomAlert('خطا در ارتباط با سرور.'); 
         } finally {
             showLoader(false);
         }
     }
-
-    // =====================================================
-    // توابع مدیریت فیلم‌ها (ادمین)
-    // =====================================================
 
     let dragSourceElement = null;
     
@@ -2515,18 +2238,8 @@
                         }
                         
                         showLoader(true);
-                        const cards = list.querySelectorAll('.draggable');
-                        for (let i = 0; i < cards.length; i++) {
-                            const c = cards[i];
-                            await executeGraphQL(
-                                `mutation UpdateSortOrder($id: Int!, $sort_order: Int!) {
-                                    update_movies_by_pk(pk_columns: {id: $id}, _set: {sort_order: $sort_order}) {
-                                        id
-                                    }
-                                }`,
-                                { id: parseInt(c.dataset.id), sort_order: i }
-                            );
-                        }
+                        const updates = Array.from(list.querySelectorAll('.draggable')).map((c, idx) => supabaseClient.from('movies').update({ sort_order: idx }).eq('id', c.dataset.id));
+                        await Promise.all(updates); 
                         await fetchMoviesFromDatabase(); 
                         showLoader(false); 
                         showCustomAlert('ترتیب ذخیره شد.');
@@ -2555,72 +2268,57 @@
             return;
         }
         
-        let payload = { 
+        // افزودن description: infoText برای اطمینان از سینک بودن با دیتابیس
+        const payload = { 
             title: tit, 
             poster: pos, 
-            category: cat,
-            download_url: url,
             info: infoText,
-            updated_at: isNew ? new Date().toISOString() : new Date(Date.now() - 10 * 86400000).toISOString()
+            description: infoText, 
+            download_url: url, 
+            category: cat
         };
+        
+        if(isNew) { 
+            payload.updated_at = new Date().toISOString(); 
+        } else { 
+            let d = new Date(); 
+            d.setDate(d.getDate() - 10); 
+            payload.updated_at = d.toISOString(); 
+        }
         
         showLoader(true);
         try {
+            let response;
             if(editingMovieId) {
-                // ویرایش
-                await executeGraphQL(
-                    `mutation UpdateMovie($id: Int!, $title: String!, $poster: String!, $category: String!, $download_url: String!, $info: String!, $updated_at: timestamptz!) {
-                        update_movies_by_pk(pk_columns: {id: $id}, _set: {
-                            title: $title,
-                            poster: $poster,
-                            category: $category,
-                            download_url: $download_url,
-                            info: $info,
-                            updated_at: $updated_at
-                        }) {
-                            id
-                        }
-                    }`,
-                    { id: editingMovieId, ...payload }
-                );
+                response = await supabaseClient.from('movies').update(payload).eq('id', editingMovieId).select(); 
             } else {
-                // ایجاد جدید
-                await executeGraphQL(
-                    `mutation InsertMovie($title: String!, $poster: String!, $category: String!, $download_url: String!, $info: String!, $updated_at: timestamptz!) {
-                        insert_movies(objects: [{
-                            title: $title,
-                            poster: $poster,
-                            category: $category,
-                            download_url: $download_url,
-                            info: $info,
-                            updated_at: $updated_at
-                        }]) {
-                            affected_rows
-                        }
-                    }`,
-                    payload
-                );
+                response = await supabaseClient.from('movies').insert([payload]).select();
             }
             
-            showCustomAlert("ذخیره شد!"); 
-            cancelEdit(); 
-            await fetchMoviesFromDatabase(); 
-            loadAdminMovies();
+            if (response && response.error) {
+                showCustomAlert("خطای دیتابیس: " + response.error.message);
+                console.error("Supabase Error:", response.error);
+            } else {
+                showCustomAlert("ذخیره شد!"); 
+                cancelEdit(); 
+                await fetchMoviesFromDatabase(); 
+                loadAdminMovies();
+            }
         } catch(e) {
             console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
+            showCustomAlert("ارور ارتباط با سرور");
         } finally {
             showLoader(false);
         }
     }
 
     window.editMovie = function(id) {
-        let m = dynamicDataArray.find(x => String(x.id) === String(id)); 
+        let m = dynamicDataArray.find(x => x.id === id); 
         if(!m) return;
         
         document.getElementById('new-movie-category').value = m.category || 'series'; 
-        document.getElementById('new-movie-title').value = m.title || ''; 
-        document.getElementById('new-movie-poster').value = m.poster || ''; 
+        document.getElementById('new-movie-title').value = m.title; 
+        document.getElementById('new-movie-poster').value = m.poster; 
         document.getElementById('new-movie-info').value = m.info || m.description || '';
         document.getElementById('new-movie-url').value = m.download_url || '';
         
@@ -2630,7 +2328,7 @@
             document.getElementById('new-movie-isnew').checked = false; 
         }
         
-        editingMovieId = m.id; 
+        editingMovieId = id; 
         document.getElementById('form-movie-title').textContent = "ویرایش محتوا"; 
         document.getElementById('cancel-edit-btn').style.display = "block"; 
         window.scrollTo(0,0);
@@ -2652,56 +2350,31 @@
         if(!confirm('حذف شود؟')) return; 
         showLoader(true); 
         try { 
-            await executeGraphQL(
-                `mutation DeleteMovie($id: Int!) {
-                    delete_movies_by_pk(id: $id) {
-                        id
-                    }
-                }`,
-                { id: id }
-            );
-            await fetchMoviesFromDatabase(); 
-            loadAdminMovies(); 
+            const { error } = await supabaseClient.from('movies').delete().eq('id', id); 
+            if (error) {
+                showCustomAlert("خطای دیتابیس: " + error.message);
+            } else {
+                await fetchMoviesFromDatabase(); 
+                loadAdminMovies(); 
+            }
         } catch(e) {
             console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
     }
 
-    // =====================================================
-    // توابع مدیریت کاربران
-    // =====================================================
-
     async function loadAllUsers() {
         try {
-            const data = await executeGraphQL(
-                `query GetAllUsers {
-                    users_data(order_by: {created_at: desc}) {
-                        id
-                        username
-                        phone_model
-                        avatar
-                        status
-                        role
-                        last_active
-                        time_spent
-                        last_watched
-                        sub_end_date
-                        created_at
-                    }
-                }`
-            );
-            
+            const { data } = await supabaseClient.from('users_data').select('*').order('created_at', { ascending: false });
             const list = document.getElementById('all-users-list'); 
             list.innerHTML = ''; 
             let onlineCount = 0; 
             const nowTime = new Date().getTime();
             
-            if(data && data.users_data) {
-                allUsersArray = data.users_data;
-                data.users_data.forEach(user => {
+            if(data) {
+                allUsersArray = data;
+                data.forEach(user => {
                     if(user.last_active && (nowTime - new Date(user.last_active).getTime()) < 300000) {
                         onlineCount++;
                     }
@@ -2762,22 +2435,15 @@
 
         try {
             const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-            const msgData = await executeGraphQL(
-                `query CountMessages($user_id: uuid!, $direction: String!, $created_at: timestamptz!) {
-                    messages_aggregate(where: {
-                        user_id: {_eq: $user_id},
-                        direction: {_eq: $direction},
-                        created_at: {_gte: $created_at}
-                    }) {
-                        aggregate {
-                            count
-                        }
-                    }
-                }`,
-                { user_id: userId, direction: 'user_to_admin', created_at: twentyFourHoursAgo }
-            );
-            
-            const count = msgData.messages_aggregate.aggregate.count;
+            const { count, error } = await supabaseClient
+                .from('messages')
+                .select('*', { count: 'exact', head: true })
+                .eq('user_id', userId)
+                .eq('direction', 'user_to_admin')
+                .gte('created_at', twentyFourHoursAgo);
+
+            if(error) throw error;
+
             let remaining = maxTickets - (count || 0);
             if(remaining < 0) remaining = 0;
             document.getElementById('ud-tickets').textContent = remaining;
@@ -2787,21 +2453,12 @@
     }
 
     async function loadPendingRequests() { 
-        const data = await executeGraphQL(
-            `query GetPendingUsers {
-                users_data(where: {status: {_eq: "pending"}}) {
-                    id
-                    username
-                    phone_model
-                }
-            }`
-        );
-        
+        const { data } = await supabaseClient.from('users_data').select('*').eq('status', 'pending'); 
         const list = document.getElementById('pending-list'); 
         list.innerHTML = '';
         
-        if(data && data.users_data) {
-            data.users_data.forEach(req => { 
+        if(data) {
+            data.forEach(req => { 
                 list.innerHTML += `
                     <div class="req-card">
                         <div class="req-info">
@@ -2820,31 +2477,21 @@
     window.updateStatus = async function(id, st) { 
         showLoader(true); 
         try { 
+            let response;
             if(st === 'rejected') {
-                // حذف کاربر
-                await executeGraphQL(
-                    `mutation DeleteUser($id: uuid!) {
-                        delete_users_data_by_pk(id: $id) {
-                            id
-                        }
-                    }`,
-                    { id: id }
-                );
+                response = await supabaseClient.from('users_data').delete().eq('id', id); 
             } else { 
-                await executeGraphQL(
-                    `mutation UpdateUserStatus($id: uuid!, $status: String!) {
-                        update_users_data_by_pk(pk_columns: {id: $id}, _set: {status: $status}) {
-                            id
-                        }
-                    }`,
-                    { id: id, status: st }
-                );
+                response = await supabaseClient.from('users_data').update({ status: st }).eq('id', id); 
             }
-            loadPendingRequests(); 
-            loadAllUsers(); 
+            
+            if (response && response.error) {
+                showCustomAlert("خطا: " + response.error.message);
+            } else { 
+                loadPendingRequests(); 
+                loadAllUsers(); 
+            }
         } catch(e) {
             console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
@@ -2854,36 +2501,22 @@
         if(!confirm('حذف؟')) return; 
         showLoader(true); 
         try { 
-            await executeGraphQL(
-                `mutation DeleteUser($id: uuid!) {
-                    delete_users_data_by_pk(id: $id) {
-                        id
-                    }
-                }`,
-                { id: id }
-            );
-            loadAllUsers(); 
+            const { error } = await supabaseClient.from('users_data').delete().eq('id', id); 
+            if(error) {
+                showCustomAlert("خطا: " + error.message);
+            } else {
+                loadAllUsers(); 
+            }
         } catch(e) {
             console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
     }
 
-    // =====================================================
-    // توابع تابلوی روان (Marquee)
-    // =====================================================
-
     async function loadMarquee() {
         try {
-            const data = await executeGraphQL(
-                `query GetMarquee {
-                    messages(where: {direction: {_eq: "marquee"}}, order_by: {created_at: desc}, limit: 1) {
-                        content
-                    }
-                }`
-            );
+            const { data } = await supabaseClient.from('messages').select('content').eq('direction', 'marquee').order('created_at', { ascending: false }).limit(1);
             
             const container = document.getElementById('marqueeContainer');
             const textElem = document.getElementById('marqueeTextContent');
@@ -2891,8 +2524,8 @@
             const speedInput = document.getElementById('admin-marquee-speed');
             const speedDisplay = document.getElementById('speed-display');
             
-            if(data && data.messages && data.messages.length > 0 && data.messages[0].content.trim()) {
-                let textValue = data.messages[0].content;
+            if(data && data[0] && data[0].content.trim()) {
+                let textValue = data[0].content;
                 let finalSpeed = "15s";
                 
                 if(textValue.includes("||")) { 
@@ -2934,49 +2567,27 @@
         if(v) v = v + "||" + speed;
         
         try { 
-            // حذف تنظیمات قبلی
-            await executeGraphQL(
-                `mutation DeleteMarquee {
-                    delete_messages(where: {direction: {_eq: "marquee"}}) {
-                        affected_rows
-                    }
-                }`
-            );
-            
+            await supabaseClient.from('messages').delete().eq('direction', 'marquee'); 
             if(v) {
-                await executeGraphQL(
-                    `mutation InsertMarquee($content: String!) {
-                        insert_messages(objects: [{direction: "marquee", content: $content, is_read: true}]) {
-                            affected_rows
-                        }
-                    }`,
-                    { content: v }
-                );
-                showCustomAlert('تابلو با موفقیت ذخیره شد.'); 
-                await loadMarquee(); 
+                const { error } = await supabaseClient.from('messages').insert([{ direction: 'marquee', content: v, is_read: true }]); 
+                if(error) {
+                    showCustomAlert('خطا: ' + error.message);
+                } else { 
+                    showCustomAlert('تابلو با موفقیت ذخیره شد.'); 
+                    await loadMarquee(); 
+                }
             }
         } catch(e) { 
-            console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید'); 
+            showCustomAlert('خطا در ذخیره سازی.'); 
         } finally {
             showLoader(false); 
         }
     }
 
-    // =====================================================
-    // توابع اخبار
-    // =====================================================
-
     async function checkNewsUpdates() { 
         try { 
-            const data = await executeGraphQL(
-                `query GetLatestNews {
-                    news(order_by: {id: desc}, limit: 1) {
-                        id
-                    }
-                }`
-            );
-            if(data && data.news && data.news.length > 0 && data.news[0].id > parseInt(lastNewsId)) {
+            const { data } = await supabaseClient.from('news').select('id').order('id', {ascending: false}).limit(1); 
+            if(data && data.length > 0 && data[0].id > parseInt(lastNewsId)) {
                 document.getElementById('news-notif').style.display = 'block'; 
             }
         } catch(e) {
@@ -2987,29 +2598,13 @@
     async function loadNewsUser() {
         showLoader(true);
         try {
-            const data = await executeGraphQL(
-                `query GetNews {
-                    news(order_by: {created_at: desc}) {
-                        id
-                        content
-                        created_at
-                        likes_count
-                    }
-                }`
-            );
+            const { data: news } = await supabaseClient.from('news').select('*').order('created_at', { ascending: false });
             
             let likedIds = [];
             try { 
-                const likesData = await executeGraphQL(
-                    `query GetLikes($user_id: uuid!) {
-                        news_likes(where: {user_id: {_eq: $user_id}}) {
-                            news_id
-                        }
-                    }`,
-                    { user_id: currentUserProfile.id }
-                );
-                if(likesData && likesData.news_likes) {
-                    likesData.news_likes.forEach(l => likedIds.push(l.news_id)); 
+                const { data: likes } = await supabaseClient.from('news_likes').select('news_id').eq('user_id', currentUserProfile.id); 
+                if(likes) {
+                    likes.forEach(l => likedIds.push(l.news_id)); 
                 }
             } catch(err) {
                 console.error(err);
@@ -3018,11 +2613,11 @@
             const cont = document.getElementById('news-container'); 
             cont.innerHTML = '';
             
-            if(data && data.news && data.news.length > 0) {
-                lastNewsId = data.news[0].id; 
+            if(news && news.length > 0) {
+                lastNewsId = news[0].id; 
                 localStorage.setItem('plato_last_news', lastNewsId);
                 
-                data.news.forEach(n => {
+                news.forEach(n => {
                     let btnClass = likedIds.includes(n.id) ? "news-btn liked" : "news-btn";
                     cont.innerHTML += `
                         <div class="news-card">
@@ -3065,63 +2660,21 @@
                 btn.classList.remove('liked'); 
                 cntEl.textContent = Math.max(0, cnt - 1);
                 
-                await executeGraphQL(
-                    `mutation DeleteLike($user_id: uuid!, $news_id: Int!) {
-                        delete_news_likes(where: {user_id: {_eq: $user_id}, news_id: {_eq: $news_id}}) {
-                            affected_rows
-                        }
-                    }`,
-                    { user_id: currentUserProfile.id, news_id: nid }
-                );
+                await supabaseClient.from('news_likes').delete().eq('user_id', currentUserProfile.id).eq('news_id', nid);
                 
-                const newsData = await executeGraphQL(
-                    `query GetNewsLikes($id: Int!) {
-                        news_by_pk(id: $id) {
-                            likes_count
-                        }
-                    }`,
-                    { id: nid }
-                );
-                if(newsData && newsData.news_by_pk) {
-                    await executeGraphQL(
-                        `mutation UpdateNewsLikes($id: Int!, $likes_count: Int!) {
-                            update_news_by_pk(pk_columns: {id: $id}, _set: {likes_count: $likes_count}) {
-                                id
-                            }
-                        }`,
-                        { id: nid, likes_count: Math.max(0, newsData.news_by_pk.likes_count - 1) }
-                    );
+                const {data} = await supabaseClient.from('news').select('likes_count').eq('id',nid).single();
+                if(data) {
+                    await supabaseClient.from('news').update({likes_count: Math.max(0, data.likes_count - 1)}).eq('id', nid);
                 }
             } else {
                 btn.classList.add('liked'); 
                 cntEl.textContent = cnt + 1;
                 
-                await executeGraphQL(
-                    `mutation InsertLike($user_id: uuid!, $news_id: Int!) {
-                        insert_news_likes(objects: [{user_id: $user_id, news_id: $news_id}]) {
-                            affected_rows
-                        }
-                    }`,
-                    { user_id: currentUserProfile.id, news_id: nid }
-                );
+                await supabaseClient.from('news_likes').insert([{user_id: currentUserProfile.id, news_id: nid}]);
                 
-                const newsData = await executeGraphQL(
-                    `query GetNewsLikes($id: Int!) {
-                        news_by_pk(id: $id) {
-                            likes_count
-                        }
-                    }`,
-                    { id: nid }
-                );
-                if(newsData && newsData.news_by_pk) {
-                    await executeGraphQL(
-                        `mutation UpdateNewsLikes($id: Int!, $likes_count: Int!) {
-                            update_news_by_pk(pk_columns: {id: $id}, _set: {likes_count: $likes_count}) {
-                                id
-                            }
-                        }`,
-                        { id: nid, likes_count: (newsData.news_by_pk.likes_count || 0) + 1 }
-                    );
+                const {data} = await supabaseClient.from('news').select('likes_count').eq('id',nid).single();
+                if(data) {
+                    await supabaseClient.from('news').update({likes_count: data.likes_count + 1}).eq('id', nid);
                 }
             }
         } catch(e) {
@@ -3133,21 +2686,13 @@
     
     async function loadAdminNews() {
         try {
-            const data = await executeGraphQL(
-                `query GetAdminNews {
-                    news(order_by: {created_at: desc}) {
-                        id
-                        content
-                    }
-                }`
-            );
-            
+            const { data } = await supabaseClient.from('news').select('*').order('created_at', { ascending: false });
             const list = document.getElementById('admin-news-list'); 
             list.innerHTML = '';
             
-            if(data && data.news) { 
-                adminNewsArray = data.news; 
-                data.news.forEach(n => { 
+            if(data) { 
+                adminNewsArray = data; 
+                data.forEach(n => { 
                     list.innerHTML += `
                         <div class="req-card" style="flex-direction:column; align-items:stretch;">
                             <div style="font-size:13px; line-height:1.6; margin-bottom:10px;">${n.content}</div>
@@ -3188,32 +2733,23 @@
         
         showLoader(true); 
         try { 
+            let res;
             if(editingNewsId) { 
-                await executeGraphQL(
-                    `mutation UpdateNews($id: Int!, $content: String!) {
-                        update_news_by_pk(pk_columns: {id: $id}, _set: {content: $content}) {
-                            id
-                        }
-                    }`,
-                    { id: editingNewsId, content: val }
-                );
+                res = await supabaseClient.from('news').update({content: val}).eq('id', editingNewsId); 
+                if(!res.error) showCustomAlert('خبر ویرایش شد'); 
             } else { 
-                await executeGraphQL(
-                    `mutation InsertNews($content: String!) {
-                        insert_news(objects: [{content: $content}]) {
-                            affected_rows
-                        }
-                    }`,
-                    { content: val }
-                );
-            }
+                res = await supabaseClient.from('news').insert([{content: val}]); 
+                if(!res.error) showCustomAlert('خبر منتشر شد'); 
+            } 
             
-            showCustomAlert('انجام شد.');
-            cancelEditNews(); 
-            loadAdminNews(); 
+            if(res.error) {
+                showCustomAlert('خطا: ' + res.error.message);
+            } else { 
+                cancelEditNews(); 
+                loadAdminNews(); 
+            }
         } catch(e) {
             console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
@@ -3224,26 +2760,14 @@
         
         showLoader(true); 
         try { 
-            await executeGraphQL(
-                `mutation DeleteNews($id: Int!) {
-                    delete_news_by_pk(id: $id) {
-                        id
-                    }
-                }`,
-                { id: id }
-            );
+            await supabaseClient.from('news').delete().eq('id', id); 
             loadAdminNews(); 
         } catch(e) {
             console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
     }
-
-    // =====================================================
-    // توابع کد هدیه
-    // =====================================================
 
     window.createGiftCode = async function() {
         const code = document.getElementById('gift-code-input').value.trim().toUpperCase();
@@ -3254,19 +2778,15 @@
         
         showLoader(true); 
         try { 
-            await executeGraphQL(
-                `mutation CreateGiftCode($code: String!, $days: Int!, $max_uses: Int!) {
-                    insert_gift_codes(objects: [{code: $code, days: $days, max_uses: $max_uses}]) {
-                        affected_rows
-                    }
-                }`,
-                { code: code, days: days, max_uses: max }
-            );
-            showCustomAlert('کد ایجاد شد'); 
-            loadAdminGifts(); 
+            const { error } = await supabaseClient.from('gift_codes').insert([{code: code, days: days, max_uses: max}]); 
+            if(error) {
+                showCustomAlert('خطا: ' + error.message);
+            } else { 
+                showCustomAlert('کد ایجاد شد'); 
+                loadAdminGifts(); 
+            }
         } catch(e) {
             console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false);
         }
@@ -3274,23 +2794,12 @@
 
     async function loadAdminGifts() {
         try {
-            const data = await executeGraphQL(
-                `query GetGiftCodes {
-                    gift_codes(order_by: {id: desc}) {
-                        id
-                        code
-                        days
-                        max_uses
-                        current_uses
-                    }
-                }`
-            );
-            
+            const { data } = await supabaseClient.from('gift_codes').select('*').order('id', {ascending: false});
             const list = document.getElementById('gift-codes-list'); 
             list.innerHTML = '';
             
-            if(data && data.gift_codes) { 
-                data.gift_codes.forEach(g => { 
+            if(data) { 
+                data.forEach(g => { 
                     list.innerHTML += `
                         <div class="req-card">
                             <div class="req-info">
@@ -3313,18 +2822,10 @@
         
         showLoader(true); 
         try { 
-            await executeGraphQL(
-                `mutation DeleteGiftCode($id: Int!) {
-                    delete_gift_codes_by_pk(id: $id) {
-                        id
-                    }
-                }`,
-                { id: id }
-            );
+            await supabaseClient.from('gift_codes').delete().eq('id', id); 
             loadAdminGifts(); 
         } catch(e) {
             console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
@@ -3341,100 +2842,35 @@
         
         showLoader(true);
         try {
-            // بررسی استفاده قبلی
-            const usedData = await executeGraphQL(
-                `query CheckUsedCode($code: String!, $user_id: uuid!) {
-                    used_codes(where: {code: {_eq: $code}, user_id: {_eq: $user_id}}) {
-                        id
-                    }
-                }`,
-                { code: code, user_id: currentUserProfile.id }
-            );
-            
-            if(usedData && usedData.used_codes && usedData.used_codes.length > 0) { 
+            const { data: used } = await supabaseClient.from('used_codes').select('*').eq('code', code).eq('user_id', currentUserProfile.id);
+            if(used && used.length > 0) { 
                 showCustomAlert('شما قبلا از این کد استفاده کرده‌اید!'); 
+                showLoader(false); 
                 return; 
             }
             
-            // دریافت اطلاعات کد
-            const gcData = await executeGraphQL(
-                `query GetGiftCode($code: String!) {
-                    gift_codes(where: {code: {_eq: $code}}) {
-                        id
-                        days
-                        max_uses
-                        current_uses
-                    }
-                }`,
-                { code: code }
-            );
-            
-            if (!gcData || !gcData.gift_codes || gcData.gift_codes.length === 0) { 
+            const { data: gc, error: gcError } = await supabaseClient.from('gift_codes').select('*').eq('code', code).single();
+            if(gcError || !gc) { 
                 showCustomAlert('کد وارد شده یافت نشد یا نامعتبر است.'); 
+                showLoader(false); 
                 return; 
             }
-            
-            const gc = gcData.gift_codes[0];
             
             if(gc.current_uses >= gc.max_uses) { 
                 showCustomAlert('ظرفیت استفاده از این کد تمام شده است.'); 
+                showLoader(false); 
                 return; 
             }
 
             let baseDate = (currentUserProfile.sub_end_date && new Date(currentUserProfile.sub_end_date) > new Date()) ? new Date(currentUserProfile.sub_end_date) : new Date();
             baseDate.setDate(baseDate.getDate() + gc.days);
             
-            // به‌روزرسانی اشتراک کاربر
-            await executeGraphQL(
-                `mutation UpdateUserSub($id: uuid!, $sub_end_date: timestamptz!) {
-                    update_users_data_by_pk(pk_columns: {id: $id}, _set: {sub_end_date: $sub_end_date}) {
-                        id
-                    }
-                }`,
-                { id: currentUserProfile.id, sub_end_date: baseDate.toISOString() }
-            );
+            await supabaseClient.from('users_data').update({ sub_end_date: baseDate.toISOString() }).eq('id', currentUserProfile.id);
+            await supabaseClient.from('gift_codes').update({ current_uses: gc.current_uses + 1 }).eq('id', gc.id);
+            await supabaseClient.from('used_codes').insert([{code: code, user_id: currentUserProfile.id}]);
             
-            // افزایش تعداد استفاده
-            await executeGraphQL(
-                `mutation UpdateGiftCode($id: Int!, $current_uses: Int!) {
-                    update_gift_codes_by_pk(pk_columns: {id: $id}, _set: {current_uses: $current_uses}) {
-                        id
-                    }
-                }`,
-                { id: gc.id, current_uses: gc.current_uses + 1 }
-            );
-            
-            // ثبت استفاده
-            await executeGraphQL(
-                `mutation InsertUsedCode($code: String!, $user_id: uuid!) {
-                    insert_used_codes(objects: [{code: $code, user_id: $user_id}]) {
-                        affected_rows
-                    }
-                }`,
-                { code: code, user_id: currentUserProfile.id }
-            );
-            
-            // به‌روزرسانی پروفایل
-            const newProfile = await executeGraphQL(
-                `query GetUser($id: uuid!) {
-                    users_data_by_pk(id: $id) {
-                        id
-                        username
-                        email
-                        phone_model
-                        status
-                        role
-                        avatar
-                        sub_end_date
-                        last_active
-                        time_spent
-                        last_watched
-                    }
-                }`,
-                { id: currentUserProfile.id }
-            );
-            
-            currentUserProfile = newProfile.users_data_by_pk;
+            const { data: np } = await supabaseClient.from('users_data').select('*').eq('id', currentUserProfile.id).single();
+            currentUserProfile = np; 
             
             document.getElementById('giftModal').classList.remove('show'); 
             document.getElementById('user-gift-code').value = '';
@@ -3443,15 +2879,10 @@
             triggerConfetti();
         } catch(e) { 
             console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
     }
-
-    // =====================================================
-    // توابع کانفتی
-    // =====================================================
 
     function triggerConfetti() {
         const canvas = document.getElementById('confetti-canvas'); 
@@ -3501,39 +2932,19 @@
         animate();
     }
 
-    // =====================================================
-    // توابع پیام‌ها
-    // =====================================================
-
     window.deleteAllMessages = async function() {
         if(!confirm('حذف تمام پیام‌ها؟')) return; 
         showLoader(true);
         
         try {
-            // حذف پیام‌های خصوصی کاربر
-            await executeGraphQL(
-                `mutation DeleteUserMessages($user_id: uuid!) {
-                    delete_messages(where: {user_id: {_eq: $user_id}, direction: {_neq: "system_all"}}) {
-                        affected_rows
-                    }
-                }`,
-                { user_id: currentUserProfile.id }
-            );
+            await supabaseClient.from('messages').delete().eq('user_id', currentUserProfile.id);
+            const { data } = await supabaseClient.from('messages').select('id').eq('direction', 'system_all');
             
-            // دریافت پیام‌های سیستمی
-            const sysData = await executeGraphQL(
-                `query GetSystemMessages {
-                    messages(where: {direction: {_eq: "system_all"}}) {
-                        id
-                    }
-                }`
-            );
-            
-            if(sysData && sysData.messages) {
+            if(data) {
                 let storageKey = 'plato_del_msgs_' + currentUserProfile.id; 
                 let deletedMsgs = JSON.parse(localStorage.getItem(storageKey) || '[]');
                 
-                sysData.messages.forEach(m => { 
+                data.forEach(m => { 
                     if(!deletedMsgs.includes(m.id)) deletedMsgs.push(m.id); 
                 });
                 localStorage.setItem(storageKey, JSON.stringify(deletedMsgs));
@@ -3543,7 +2954,6 @@
             checkUnreadMessages();
         } catch(e) {
             console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false);
         }
@@ -3565,34 +2975,17 @@
         if(!currentUserProfile) return;
         try {
             if(currentUserProfile.role === 'admin') {
-                const data = await executeGraphQL(
-                    `query GetUnreadAdminMessages {
-                        messages(where: {direction: {_eq: "user_to_admin"}, is_read: {_eq: false}}) {
-                            id
-                        }
-                    }`
-                );
-                let show = (data && data.messages && data.messages.length > 0) ? 'inline-block' : 'none';
+                const { data } = await supabaseClient.from('messages').select('id').eq('direction', 'user_to_admin').eq('is_read', false);
+                let show = (data && data.length > 0) ? 'inline-block' : 'none';
                 document.getElementById('admin-msg-notif').style.display = show; 
                 document.getElementById('header-notif').style.display = show;
             } else {
-                const data = await executeGraphQL(
-                    `query GetUnreadMessages($user_id: uuid!) {
-                        messages(where: {is_read: {_eq: false}, _or: [
-                            {direction: {_eq: "system_all"}},
-                            {_and: [{direction: {_eq: "admin_to_user"}}, {user_id: {_eq: $user_id}}]}
-                        ]}) {
-                            id
-                        }
-                    }`,
-                    { user_id: currentUserProfile.id }
-                );
-                
-                if(data && data.messages) {
+                const { data } = await supabaseClient.from('messages').select('id, direction, user_id').eq('is_read', false);
+                if(data) {
                     let deletedMsgs = JSON.parse(localStorage.getItem('plato_del_msgs_' + currentUserProfile.id) || '[]');
                     let unread = 0;
-                    data.messages.forEach(m => { 
-                        if (!deletedMsgs.includes(m.id)) {
+                    data.forEach(m => { 
+                        if (!deletedMsgs.includes(m.id) && (m.direction === 'system_all' || (m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id))) {
                             unread++; 
                         }
                     });
@@ -3646,23 +3039,18 @@
         
         showLoader(true); 
         try {
-            await executeGraphQL(
-                `mutation SendSupportMessage($user_id: uuid!, $content: String!) {
-                    insert_messages(objects: [{user_id: $user_id, direction: "user_to_admin", content: $content, is_read: false}]) {
-                        affected_rows
-                    }
-                }`,
-                { user_id: currentUserProfile.id, content: text }
-            );
-            
-            history.push(nowTime); 
-            localStorage.setItem(storageKey, JSON.stringify(history));
-            showCustomAlert('ارسال شد.'); 
-            document.getElementById('support-msg-text').value = ''; 
-            document.getElementById('supportModal').classList.remove('show');
+            const { error } = await supabaseClient.from('messages').insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text, is_read: false }]);
+            if(error) {
+                showCustomAlert('خطا: ' + error.message);
+            } else {
+                history.push(nowTime); 
+                localStorage.setItem(storageKey, JSON.stringify(history));
+                showCustomAlert('ارسال شد.'); 
+                document.getElementById('support-msg-text').value = ''; 
+                document.getElementById('supportModal').classList.remove('show');
+            }
         } catch(e) {
             console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
@@ -3676,30 +3064,16 @@
         showLoader(true);
         
         try {
-            const data = await executeGraphQL(
-                `query GetUserMessages($user_id: uuid!) {
-                    messages(where: {_or: [
-                        {direction: {_eq: "system_all"}},
-                        {_and: [{direction: {_eq: "admin_to_user"}}, {user_id: {_eq: $user_id}}]}
-                    ]}, order_by: {created_at: desc}) {
-                        id
-                        content
-                        direction
-                        created_at
-                    }
-                }`,
-                { user_id: currentUserProfile.id }
-            );
-            
+            const { data } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: false });
             const list = document.getElementById('user-messages-list'); 
             list.innerHTML = '';
             
-            if(data && data.messages) {
+            if(data) {
                 let deletedMsgs = JSON.parse(localStorage.getItem('plato_del_msgs_' + currentUserProfile.id) || '[]'); 
                 let myMsgs = [];
                 
-                data.messages.forEach(m => { 
-                    if (!deletedMsgs.includes(m.id)) {
+                data.forEach(m => { 
+                    if (!deletedMsgs.includes(m.id) && (m.direction === 'system_all' || (m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id))) {
                         myMsgs.push(m); 
                     }
                 });
@@ -3721,22 +3095,13 @@
                             </div>`;
                     });
                     
-                    // علامت‌گذاری به عنوان خوانده شده
-                    await executeGraphQL(
-                        `mutation MarkAsRead($user_id: uuid!) {
-                            update_messages(where: {direction: {_eq: "admin_to_user"}, user_id: {_eq: $user_id}, is_read: {_eq: false}}, _set: {is_read: true}) {
-                                affected_rows
-                            }
-                        }`,
-                        { user_id: currentUserProfile.id }
-                    );
+                    await supabaseClient.from('messages').update({ is_read: true }).eq('direction', 'admin_to_user').eq('user_id', currentUserProfile.id).eq('is_read', false);
                 } else { 
                     list.innerHTML = '<div style="color:var(--text-muted); text-align:center;">خالی است.</div>'; 
                 }
             }
         } catch(e) {
             console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false);
         }
@@ -3744,38 +3109,18 @@
     
     async function loadAdminInbox() {
         try {
-            // دریافت اطلاعات کاربران
-            const usersData = await executeGraphQL(
-                `query GetUsers {
-                    users_data {
-                        id
-                        username
-                        avatar
-                    }
-                }`
-            );
-            
+            const { data: usersData } = await supabaseClient.from('users_data').select('id, username, avatar');
             let userMap = {}; 
-            if(usersData && usersData.users_data) {
-                usersData.users_data.forEach(u => userMap[u.id] = u);
+            if(usersData) {
+                usersData.forEach(u => userMap[u.id] = u);
             }
             
-            const msgsData = await executeGraphQL(
-                `query GetAdminMessages {
-                    messages(where: {direction: {_eq: "user_to_admin"}}, order_by: {created_at: desc}) {
-                        id
-                        user_id
-                        content
-                        created_at
-                    }
-                }`
-            );
-            
+            const { data: msgs } = await supabaseClient.from('messages').select('*').eq('direction', 'user_to_admin').order('created_at', { ascending: false });
             const list = document.getElementById('admin-inbox-list'); 
             list.innerHTML = '';
             
-            if(msgsData && msgsData.messages) {
-                msgsData.messages.forEach(msg => {
+            if(msgs) {
+                msgs.forEach(msg => {
                     let sender = userMap[msg.user_id] || { username: 'کاربر', avatar: 1 };
                     list.innerHTML += `
                         <div class="req-card" style="flex-direction:column; align-items:stretch;">
@@ -3794,20 +3139,12 @@
                 });
             }
             
-            const sysMsgsData = await executeGraphQL(
-                `query GetSystemMessages {
-                    messages(where: {direction: {_eq: "system_all"}}, order_by: {created_at: desc}) {
-                        id
-                        content
-                    }
-                }`
-            );
-            
+            const { data: sysMsgs } = await supabaseClient.from('messages').select('*').eq('direction', 'system_all').order('created_at', { ascending: false });
             const sysList = document.getElementById('admin-sys-list'); 
             sysList.innerHTML = '';
             
-            if(sysMsgsData && sysMsgsData.messages) { 
-                sysMsgsData.messages.forEach(msg => { 
+            if(sysMsgs) { 
+                sysMsgs.forEach(msg => { 
                     sysList.innerHTML += `
                         <div class="req-card" style="flex-direction:column; align-items:stretch;">
                             <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
@@ -3825,14 +3162,7 @@
 
     window.deleteAdminMsg = async function(id) { 
         try { 
-            await executeGraphQL(
-                `mutation DeleteMessage($id: Int!) {
-                    delete_messages_by_pk(id: $id) {
-                        id
-                    }
-                }`,
-                { id: id }
-            );
+            await supabaseClient.from('messages').delete().eq('id', id); 
             loadAdminInbox(); 
         } catch(e) {
             console.error(e);
@@ -3843,14 +3173,7 @@
         document.getElementById('reply-user-id').value = uid; 
         document.getElementById('adminReplyModal').classList.add('show'); 
         try { 
-            await executeGraphQL(
-                `mutation MarkAsRead($id: Int!) {
-                    update_messages_by_pk(pk_columns: {id: $id}, _set: {is_read: true}) {
-                        id
-                    }
-                }`,
-                { id: mid }
-            );
+            await supabaseClient.from('messages').update({ is_read: true }).eq('id', mid); 
         } catch(e) {
             console.error(e);
         } 
@@ -3863,20 +3186,15 @@
         
         showLoader(true); 
         try { 
-            await executeGraphQL(
-                `mutation SendAdminReply($user_id: uuid!, $content: String!) {
-                    insert_messages(objects: [{user_id: $user_id, direction: "admin_to_user", content: $content, is_read: false}]) {
-                        affected_rows
-                    }
-                }`,
-                { user_id: uid, content: t }
-            );
-            
-            document.getElementById('admin-reply-text').value = ''; 
-            document.getElementById('adminReplyModal').classList.remove('show'); 
+            const { error } = await supabaseClient.from('messages').insert([{ user_id: uid, direction: 'admin_to_user', content: t, is_read: false }]); 
+            if(error) {
+                showCustomAlert('خطا: ' + error.message);
+            } else { 
+                document.getElementById('admin-reply-text').value = ''; 
+                document.getElementById('adminReplyModal').classList.remove('show'); 
+            }
         } catch(e) {
             console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
@@ -3888,33 +3206,24 @@
 
     window.sendSystemMessage = async function() { 
         const t = document.getElementById('sys-msg-text').value.trim(); 
-        if(!t) return;
+        if(!t) return; 
         
         showLoader(true); 
         try { 
-            await executeGraphQL(
-                `mutation SendSystemMessage($content: String!) {
-                    insert_messages(objects: [{direction: "system_all", content: $content, is_read: false}]) {
-                        affected_rows
-                    }
-                }`,
-                { content: t }
-            );
-            
-            document.getElementById('sys-msg-text').value = ''; 
-            document.getElementById('sysMsgModal').classList.remove('show'); 
-            loadAdminInbox(); 
+            const { error } = await supabaseClient.from('messages').insert([{ direction: 'system_all', content: t, is_read: false }]); 
+            if(error) {
+                showCustomAlert('خطا: ' + error.message);
+            } else { 
+                document.getElementById('sys-msg-text').value = ''; 
+                document.getElementById('sysMsgModal').classList.remove('show'); 
+                loadAdminInbox(); 
+            }
         } catch(e) {
             console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
     }
-
-    // =====================================================
-    // اسلایدر
-    // =====================================================
 
     const slides = document.getElementById("slides"), dots = document.querySelectorAll(".dot");
     let currentSlide = 0, slideTimeout;
@@ -3926,18 +3235,8 @@
     }
     slideTimeout = setTimeout(nextSlide, 4000);
 
-    // =====================================================
-    // شروع برنامه
-    // =====================================================
-
     window.addEventListener('load', () => { 
-        // اطمینان از اینکه Nhost مقداردهی شده است
-        if (nhost) {
-            checkUserSession();
-        } else {
-            console.error("Nhost not initialized");
-            showCustomAlert('خطا در اتصال به سرور');
-        }
+        checkUserSession(); 
     });
 </script>
 </body>
