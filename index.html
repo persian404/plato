@@ -1238,16 +1238,16 @@
 
 </div>
 
-<!-- کتابخانه استاندارد Nhost / Hasura (جایگزین Supabase) -->
+<!-- کتابخانه استاندارد Nhost / Hasura (با آدرس دقیق ساب‌دامین شما) -->
 <script src="https://cdn.jsdelivr.net/npm/@nhost/nhost-js@2.2.3/dist/nhost-js.production.min.js"></script>
 
 <script>
-    // تنظیمات اتصال به Nhost
-    const NHOST_SUBDOMAIN = 'cdivxqlldojdrplwxtj';
+    // تنظیمات دقیق اتصال به Nhost با ساب‌دامین اصلاح‌شده شما
+    const NHOST_SUBDOMAIN = 'cdivsqlldojdrplwixtj';
     const NHOST_REGION = 'eu-central-1';
     
     var nhost = null;
-    var supabaseClient = null; // برای سازگاری کامل با کدهای پایگاه داده شما
+    var supabaseClient = null; 
 
     if (window.Nhost) {
         nhost = new window.Nhost.NhostClient({
@@ -1255,7 +1255,6 @@
             region: NHOST_REGION
         });
         
-        // یک لایه سازگاری هوشمند برای اینکه دستورات پایگاه داده به راحتی روی Nhost کار کنند
         supabaseClient = {
             auth: {
                 getSession: async () => {
