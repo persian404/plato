@@ -1238,15 +1238,115 @@
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- کتابخانه استاندارد Nhost / Hasura (جایگزین Supabase) -->
+<script src="https://cdn.jsdelivr.net/npm/@nhost/nhost-js@2.2.3/dist/nhost-js.production.min.js"></script>
 
 <script>
-    const SUPABASE_URL = 'https://ywwvibchhwsljsobywyz.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl3d3ZpYmNoaHdzbGpzb2J5d3l6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYyNDU3NzAsImV4cCI6MjEwMTgyMTc3MH0.o7COXGNv_3PXFNJSEGYPnbtvD71bIMXZeILgstHHH60';
+    // تنظیمات اتصال به Nhost
+    const NHOST_SUBDOMAIN = 'cdivxqlldojdrplwxtj';
+    const NHOST_REGION = 'eu-central-1';
     
-    var supabaseClient = null;
-    if (window.supabase) {
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    var nhost = null;
+    var supabaseClient = null; // برای سازگاری کامل با کدهای قبلی پایگاه داده شما
+
+    if (window.Nhost) {
+        nhost = new window.Nhost.NhostClient({
+            subdomain: NHOST_SUBDOMAIN,
+            region: NHOST_REGION
+        });
+        
+        // یک لایه سازگاری هوشمند برای اینکه دستورات قبلی شما به راحتی روی Nhost کار کنند
+        supabaseClient = {
+            auth: {
+                getSession: async () => {
+                    const session = nhost.auth.getSession();
+                    if (!session) return { data: { session: null }, error: null };
+                    return { data: { session: { user: { id: session.user.id } } }, error: null };
+                },
+                signInWithPassword: async ({ email, password }) => {
+                    const res = await nhost.auth.signIn({ email, password });
+                    if (res.error) return { data: null, error: res.error };
+                    return { data: { session: { user: { id: res.session.user.id } } }, error: null };
+                },
+                signUp: async ({ email, password }) => {
+                    const res = await nhost.auth.signUp({ email, password });
+                    if (res.error) return { data: null, error: res.error };
+                    return { data: { user: { id: res.session?.user?.id || res.user?.id } }, error: null };
+                },
+                signOut: async () => {
+                    await nhost.auth.signOut();
+                    return { error: null };
+                }
+            },
+            from: (tableName) => {
+                let queryConfig = { table: tableName, type: 'select', filters: [], selectColumns: '*', orderColumn: null, orderAsc: true, limitVal: null, singleRow: false, headOnly: false, insertData: null, updateData: null };
+                
+                const queryBuilder = {
+                    select: (cols = '*', opts = {}) => {
+                        queryConfig.selectColumns = cols;
+                        if (opts.count === 'exact') queryConfig.headOnly = opts.head === true;
+                        return queryBuilder;
+                    },
+                    insert: (data) => { queryConfig.type = 'insert'; queryConfig.insertData = data; return queryBuilder; },
+                    update: (data) => { queryConfig.type = 'update'; queryConfig.updateData = data; return queryBuilder; },
+                    delete: () => { queryConfig.type = 'delete'; return queryBuilder; },
+                    eq: (col, val) => { queryConfig.filters.push({ col, op: '_eq', val }); return queryBuilder; },
+                    gte: (col, val) => { queryConfig.filters.push({ col, op: '_gte', val }); return queryBuilder; },
+                    order: (col, opts = { ascending: true }) => { queryConfig.orderColumn = col; queryConfig.orderAsc = opts.ascending; return queryBuilder; },
+                    limit: (val) => { queryConfig.limitVal = val; return queryBuilder; },
+                    single: async () => { queryConfig.singleRow = true; return await executeQuery(queryConfig); },
+                    then: async (resolve, reject) => { try { const res = await executeQuery(queryConfig); resolve(res); } catch (err) { reject(err); } }
+                };
+                return queryBuilder;
+            }
+        };
+    }
+
+    async function executeQuery(cfg) {
+        let whereObj = {};
+        cfg.filters.forEach(f => { whereObj[f.col] = { [f.op]: f.val }; });
+
+        let graphQLQuery = '';
+        let vars = {};
+
+        if (cfg.type === 'select') {
+            let args = [];
+            if (cfg.filters.length > 0) args.push(`where: ${JSON.stringify(whereObj).replace(/"([^"]+)":/g, '$1:')}`);
+            if (cfg.orderColumn) args.push(`order_by: {${cfg.orderColumn}: ${cfg.orderAsc ? 'asc' : 'desc'}}`);
+            if (cfg.limitVal) args.push(`limit: ${cfg.limitVal}`);
+            
+            let argStr = args.length > 0 ? `(${args.join(', ')})` : '';
+            graphQLQuery = `query { ${cfg.table}${argStr} { ${cfg.selectColumns.replace(/,/g, ' ')} } }`;
+        } else if (cfg.type === 'insert') {
+            graphQLQuery = `mutation ($obj: [${cfg.table}_insert_input!]!) { insert_${cfg.table}(objects: $obj) { affected_rows } }`;
+            vars = { obj: cfg.insertData };
+        } else if (cfg.type === 'update') {
+            let setCols = Object.keys(cfg.updateData).map(k => `${k}: $${k}`).join(', ');
+            let paramDefs = Object.keys(cfg.updateData).map(k => `$${k}: ${getGqlType(cfg.updateData[k])}`).join(', ');
+            graphQLQuery = `mutation (${paramDefs}) { update_${cfg.table}(where: ${JSON.stringify(whereObj).replace(/"([^"]+)":/g, '$1:')}, _set: {${setCols}}) { affected_rows } }`;
+            vars = cfg.updateData;
+        } else if (cfg.type === 'delete') {
+            graphQLQuery = `mutation { delete_${cfg.table}(where: ${JSON.stringify(whereObj).replace(/"([^"]+)":/g, '$1:')}) { affected_rows } }`;
+        }
+
+        try {
+            const res = await nhost.graphql.request(graphQLQuery, vars);
+            if (res.error) return { data: null, error: res.error };
+            
+            let resultData = res.data ? res.data[Object.keys(res.data)[0]] : null;
+            if (cfg.singleRow && Array.isArray(resultData)) resultData = resultData[0] || null;
+            if (cfg.headOnly && Array.isArray(resultData)) return { count: resultData.length, error: null };
+            
+            return { data: resultData, error: null };
+        } catch (err) {
+            return { data: null, error: err };
+        }
+    }
+
+    function getGqlType(val) {
+        if (typeof val === 'number') return 'Int';
+        if (typeof val === 'boolean') return 'Boolean';
+        return 'String';
     }
 
     var currentUserProfile = null;
@@ -1499,7 +1599,6 @@
             
             currentUserProfile = profileData;
 
-            // دریافت سریع تنظیمات سایت بدون معطل کردن فرآیند ورود
             fetchSiteSettings().then(settings => {
                 siteSettings = settings;
                 if (siteSettings.maintenance && currentUserProfile.role !== 'admin') {
@@ -2241,7 +2340,6 @@
             return;
         }
         
-        // سازگاری خودکار با ستون‌های موجود در دیتابیس سوپابیس
         let availableCols = (dynamicDataArray && dynamicDataArray.length > 0) ? Object.keys(dynamicDataArray[0]) : [];
         
         let payload = { 
@@ -2272,7 +2370,7 @@
             }
             
             if (response && response.error) {
-                console.error("Supabase Error:", response.error);
+                console.error("GraphQL Error:", response.error);
                 showCustomAlert('لطفاً مجدد تلاش کنید');
             } else {
                 showCustomAlert("ذخیره شد!"); 
