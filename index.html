@@ -128,7 +128,7 @@
         @keyframes text-pulse { 0% { opacity: 0.5; } 100% { opacity: 1; } }
 
         #loader { 
-            position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 9999; 
+            position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 99999; 
             display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(12px); 
         }
 
@@ -137,13 +137,13 @@
         ========================= */
         #custom-alert { 
             position: fixed; top: 24px; left: 50%; transform: translateX(-50%); 
-            z-index: 9999; background: #1e293b; color: #fff; padding: 14px 28px; 
+            z-index: 99999; background: #1e293b; color: #fff; padding: 14px 28px; 
             border-radius: 12px; display: none; text-align: center; box-shadow: 0 12px 35px rgba(0,0,0,0.5); 
             font-weight: 700; min-width: 280px; font-size: 13.5px; border: 1px solid var(--border-color); transition: 0.3s; 
         }
         
         .modal { 
-            position: fixed; inset: 0; z-index: 6000; display: none; align-items: center; 
+            position: fixed; inset: 0; z-index: 25000; display: none; align-items: center; 
             justify-content: center; padding: 20px; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); 
         }
 
@@ -153,12 +153,6 @@
             width: 100%; max-width: 760px; overflow: hidden; border-radius: 20px; 
             background: var(--bg-box); border: 1px solid var(--border-color); box-shadow: 0 25px 60px rgba(0,0,0,0.6); 
             display: flex; flex-direction: column; max-height: 90vh; position: relative; 
-        }
-
-        .modal-full { padding: 0 !important; }
-        .modal-full .modal-box {
-            max-width: 100% !important; width: 100% !important; height: 100vh !important; 
-            max-height: 100vh !important; border-radius: 0 !important; border: none !important; background: var(--bg-main);
         }
 
         .modal-close-x { 
@@ -559,9 +553,9 @@
         .movie-detail-content { max-width: 800px; margin: 0 auto; padding: 20px 20px 90px; }
 
         .btn-back {
-            background: none; color: var(--text-main); font-weight: bold; display: flex; 
+            background: none; color: var(--text-main); font-weight: bold; display: inline-flex; 
             align-items: center; gap: 8px; font-size: 15px; cursor: pointer; margin-bottom: 15px;
-            margin-right: auto; padding: 0; border: none;
+            padding: 0; border: none;
         }
 
         .neon-banner { 
@@ -701,7 +695,7 @@
         </div>
     </div>
 
-    <!-- TERMS MODAL (با قابلیت اسکرول و کادر داخلی) -->
+    <!-- TERMS MODAL -->
     <div class="modal" id="termsModal">
         <div class="modal-box" style="max-width: 450px; max-height: 80vh;">
             <button class="modal-close-x" onclick="document.getElementById('termsModal').classList.remove('show')">×</button>
@@ -759,7 +753,12 @@
         <div class="sidebar-menu">
             <button class="sidebar-btn" onclick="openSupportModal()">
                 <span>ارتباط با پشتیبانی</span>
-                <svg class="btn-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <svg class="btn-icon" style="margin:0;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="پشتیبانی">
+                    <path d="M6 17V14.5C6 9.25 10.48 5 16 5C21.52 5 26 9.25 26 14.5V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M6 16H9V22H6C5.45 22 5 21.55 5 21V17C5 16.45 5.45 16 6 16Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M26 16H23V22H26C26.55 22 27 21.55 27 21V17C27 16.45 26.55 16 26 16Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M23 22C23 24.8 20.8 26 18 26H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
             </button>
             <button class="sidebar-btn" onclick="openInboxModal()">
                 <span>صندوق پیام‌ها</span>
@@ -1049,10 +1048,12 @@
         <!-- Dedicated Movie Page View -->
         <div id="view-movie" class="view-section" style="padding-bottom: 90px; background: var(--bg-main);">
             <div class="movie-detail-content" style="padding-top: 15px;">
-                <button class="btn-back" onclick="closePlayer()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                    بازگشت
-                </button>
+                <div style="display: flex; justify-content: flex-start; direction: ltr; width: 100%;">
+                    <button class="btn-back" onclick="closePlayer()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        بازگشت
+                    </button>
+                </div>
                 
                 <div class="neon-banner" id="neonBanner">
                     <div class="neon-banner-inner" id="neonBannerInner">
@@ -1105,7 +1106,7 @@
 
     <!-- MODALS -->
     <!-- Resume Modal -->
-    <div class="modal" id="resumeModal" style="z-index: 6500;">
+    <div class="modal" id="resumeModal" style="z-index: 26000;">
         <div class="modal-box" style="max-width: 320px; padding: 25px; text-align: center;">
             <div style="width: 50px; height: 50px; background: rgba(59, 130, 246, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: var(--accent);">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1123,7 +1124,7 @@
     </div>
 
     <!-- Avatar Selection Modal -->
-    <div class="modal" id="avatarModal" style="z-index: 6500;">
+    <div class="modal" id="avatarModal" style="z-index: 26000;">
         <div class="modal-box" style="max-width: 400px;">
             <button class="modal-close-x" onclick="document.getElementById('avatarModal').classList.remove('show')">×</button>
             <div class="modal-content">
@@ -1134,7 +1135,7 @@
     </div>
 
     <!-- User Detail Admin Modal -->
-    <div class="modal" id="userDetailModal" style="z-index: 10500;">
+    <div class="modal" id="userDetailModal" style="z-index: 26000;">
         <div class="modal-box" style="max-width: 400px; padding: 25px;">
             <button class="modal-close-x" onclick="document.getElementById('userDetailModal').classList.remove('show')">×</button>
             <h3 class="modal-title" style="text-align:center; color: var(--accent); margin-bottom: 20px;">اطلاعات دقیق کاربر</h3>
@@ -1172,7 +1173,7 @@
         </div>
     </div>
 
-    <div class="modal" id="supportModal">
+    <div class="modal" id="supportModal" style="z-index: 26000;">
         <div class="modal-box" style="max-width: 400px;">
             <button class="modal-close-x" onclick="document.getElementById('supportModal').classList.remove('show')">×</button>
             <div class="modal-content">
@@ -1183,7 +1184,7 @@
         </div>
     </div>
 
-    <div class="modal" id="inboxModal">
+    <div class="modal" id="inboxModal" style="z-index: 26000;">
         <div class="modal-box" style="max-width: 500px; height: 80vh;">
             <div class="modal-content" style="display:flex; flex-direction:column; padding-top: 15px;">
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px; margin-top:5px;">
@@ -1198,7 +1199,7 @@
         </div>
     </div>
     
-    <div class="modal" id="giftModal">
+    <div class="modal" id="giftModal" style="z-index: 26000;">
         <div class="modal-box" style="max-width: 400px;">
             <button class="modal-close-x" onclick="document.getElementById('giftModal').classList.remove('show')">×</button>
             <div class="modal-content">
@@ -1211,8 +1212,9 @@
         </div>
     </div>
 
-    <div class="modal" id="adminReplyModal">
-        <div class="modal-box" style="max-width: 400px;">
+    <!-- Admin Modals with High Z-Index so they show over Admin Screen -->
+    <div class="modal" id="adminReplyModal" style="z-index: 26000;">
+        <div class="modal-box" style="max-width: 400px; position: relative;">
             <button class="modal-close-x" onclick="document.getElementById('adminReplyModal').classList.remove('show')">×</button>
             <div class="modal-content">
                 <h3 class="modal-title">پاسخ به کاربر</h3>
@@ -1223,8 +1225,8 @@
         </div>
     </div>
 
-    <div class="modal" id="sysMsgModal">
-        <div class="modal-box" style="max-width: 400px;">
+    <div class="modal" id="sysMsgModal" style="z-index: 26000;">
+        <div class="modal-box" style="max-width: 400px; position: relative;">
             <button class="modal-close-x" onclick="document.getElementById('sysMsgModal').classList.remove('show')">×</button>
             <div class="modal-content">
                 <h3 class="modal-title" style="color:#10b981;">ارسال پیام عمومی</h3>
@@ -1328,16 +1330,16 @@
         if(!currentUserProfile) return; 
         
         showLoader(true);
-        
-        await supabaseClient.from('users_data').update({ avatar: id }).eq('id', currentUserProfile.id);
-        
-        currentUserProfile.avatar = id;
-        
-        document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(id, currentUserProfile.username);
-        
-        document.getElementById('avatarModal').classList.remove('show'); 
-        
-        showLoader(false);
+        try {
+            await supabaseClient.from('users_data').update({ avatar: id }).eq('id', currentUserProfile.id);
+            currentUserProfile.avatar = id;
+            document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(id, currentUserProfile.username);
+            document.getElementById('avatarModal').classList.remove('show'); 
+        } catch(e) {
+            showCustomAlert('لطفاً مجدد تلاش کنید');
+        } finally {
+            showLoader(false);
+        }
     }
 
     function toEnglishDigits(str) { 
@@ -1349,12 +1351,7 @@
     }
 
     function showLoader(show) { 
-        const loader = document.getElementById('loader');
-        if(show) {
-            loader.style.display = 'flex';
-        } else {
-            loader.style.display = 'none';
-        }
+        document.getElementById('loader').style.display = show ? 'flex' : 'none';
     }
 
     function showCustomAlert(msg) { 
@@ -1401,19 +1398,11 @@
         const regPass = document.getElementById('reg-pass'); 
         
         if (logPass) {
-            if(logPass.type === 'password') {
-                logPass.type = 'text';
-            } else {
-                logPass.type = 'password';
-            }
+            logPass.type = logPass.type === 'password' ? 'text' : 'password';
         }
         
         if (regPass) {
-            if(regPass.type === 'password') {
-                regPass.type = 'text';
-            } else {
-                regPass.type = 'password';
-            }
+            regPass.type = regPass.type === 'password' ? 'text' : 'password';
         }
     }
 
@@ -1467,14 +1456,14 @@
             }]);
             
             if(error) {
-                showCustomAlert('خطا در ذخیره تنظیمات: ' + error.message);
+                showCustomAlert('لطفاً مجدد تلاش کنید');
             } else {
                 siteSettings = newSettings;
                 showCustomAlert('تنظیمات سایت با موفقیت ذخیره شد.');
             }
         } catch (e) {
             console.error(e);
-            showCustomAlert('ارور در ارتباط با سرور');
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false);
         }
@@ -1486,96 +1475,89 @@
         showLoader(true);
         
         try {
-            // ایجاد یک محدودیت زمانی 15 ثانیه‌ای برای جلوگیری از گیر کردن در لودینگ
-            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 15000));
+            const sessionPromise = supabaseClient.auth.getSession();
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 8000));
             
-            const results = await Promise.race([
-                Promise.all([fetchSiteSettings(), supabaseClient.auth.getSession()]),
-                timeoutPromise
-            ]);
+            const { data, error } = await Promise.race([sessionPromise, timeoutPromise]);
             
-            siteSettings = results[0];
-            const sessionData = results[1];
-            const { data, error } = sessionData;
-            
-            if (error || !data.session) { 
+            if (error || !data || !data.session) { 
                 document.getElementById('auth-screen').style.display = 'flex'; 
                 return; 
             }
             
-            const profileRes = await supabaseClient.from('users_data').select('*').eq('id', data.session.user.id).single();
+            const { data: profileData, error: profileErr } = await supabaseClient
+                .from('users_data')
+                .select('*')
+                .eq('id', data.session.user.id)
+                .single();
             
-            if (profileRes.error || !profileRes.data) { 
+            if (profileErr || !profileData) { 
                 await supabaseClient.auth.signOut(); 
                 document.getElementById('auth-screen').style.display = 'flex'; 
                 return; 
             }
             
-            currentUserProfile = profileRes.data;
+            currentUserProfile = profileData;
 
-            if (siteSettings.maintenance && currentUserProfile.role !== 'admin') {
-                document.getElementById('auth-screen').style.display = 'flex';
-                document.getElementById('login-box').style.display = 'none';
-                document.getElementById('reg-box').style.display = 'none';
-                document.getElementById('maintenance-box').style.display = 'block';
-                
-                document.getElementById('main-app').style.display = 'none';
-                document.getElementById('bottom-nav').style.display = 'none';
-                return;
-            }
-            
+            // دریافت سریع تنظیمات سایت بدون معطل کردن فرآیند ورود
+            fetchSiteSettings().then(settings => {
+                siteSettings = settings;
+                if (siteSettings.maintenance && currentUserProfile.role !== 'admin') {
+                    document.getElementById('auth-screen').style.display = 'flex';
+                    document.getElementById('login-box').style.display = 'none';
+                    document.getElementById('reg-box').style.display = 'none';
+                    document.getElementById('maintenance-box').style.display = 'block';
+                    document.getElementById('main-app').style.display = 'none';
+                    document.getElementById('bottom-nav').style.display = 'none';
+                }
+            });
+
             if (currentUserProfile.status === 'pending' || currentUserProfile.status === 'rejected') {
                 showCustomAlert('اکانت شما هنوز تایید نشده یا مسدود است.');
                 await supabaseClient.auth.signOut(); 
                 document.getElementById('auth-screen').style.display = 'flex';
-            } else {
-                document.getElementById('auth-screen').style.display = 'none';
-                document.getElementById('main-app').style.display = 'block';
-                document.getElementById('bottom-nav').style.display = 'flex';
-                
-                let hasActiveSub = false;
-                if(currentUserProfile.role === 'admin') {
-                    hasActiveSub = true;
-                } else if(currentUserProfile.sub_end_date) {
-                    if(new Date(currentUserProfile.sub_end_date) > new Date()) {
-                        hasActiveSub = true;
-                    }
-                }
-                
-                if(!hasActiveSub) {
-                    document.getElementById('buy-sub-btn').style.display = 'block';
-                } else {
-                    document.getElementById('buy-sub-btn').style.display = 'none';
-                }
-
-                document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(currentUserProfile.avatar, currentUserProfile.username);
-                
-                if (currentUserProfile.role === 'admin') {
-                    document.getElementById('admin-sidebar-btn-container').innerHTML = `
-                        <button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()">
-                            <span>پنل مدیریت</span>
-                            <svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                        </button>
-                    `;
-                }
-                
-                updateHeartbeat(); 
-                fetchFavorites();
-                fetchMoviesFromDatabase();
-                loadMarquee();
-                checkNewsUpdates();
-                
-                setInterval(() => { 
-                    updateHeartbeat(); 
-                    checkUnreadMessages(); 
-                }, 60000);
+                return;
             }
+            
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('main-app').style.display = 'block';
+            document.getElementById('bottom-nav').style.display = 'flex';
+            
+            let hasActiveSub = false;
+            if(currentUserProfile.role === 'admin') {
+                hasActiveSub = true;
+            } else if(currentUserProfile.sub_end_date) {
+                if(new Date(currentUserProfile.sub_end_date) > new Date()) {
+                    hasActiveSub = true;
+                }
+            }
+            
+            document.getElementById('buy-sub-btn').style.display = hasActiveSub ? 'none' : 'block';
+            document.getElementById('sidebar-avatar-img').innerHTML = getAvatar(currentUserProfile.avatar, currentUserProfile.username);
+            
+            if (currentUserProfile.role === 'admin') {
+                document.getElementById('admin-sidebar-btn-container').innerHTML = `
+                    <button class="sidebar-btn" style="color:var(--accent);" onclick="showAdminPanel()">
+                        <span>پنل مدیریت</span>
+                        <svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    </button>
+                `;
+            }
+            
+            updateHeartbeat(); 
+            fetchFavorites().then(() => fetchMoviesFromDatabase());
+            loadMarquee();
+            checkNewsUpdates();
+            
+            setInterval(() => { 
+                updateHeartbeat(); 
+                checkUnreadMessages(); 
+            }, 60000);
+
         } catch (err) { 
             console.error(err);
-            if (err.message === 'TIMEOUT') {
-                showCustomAlert('ارتباط با سرور کند است. در حال تلاش مجدد...');
-            }
             document.getElementById('auth-screen').style.display = 'flex'; 
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false);
         }
@@ -1665,14 +1647,14 @@
                 }]);
                 
                 if(dbRes.error) {
-                    showCustomAlert('خطای دیتابیس. مجدد تلاش کنید.');
+                    showCustomAlert('لطفاً مجدد تلاش کنید');
                 } else {
                     showCustomAlert('اطلاعات شما برای تایید شدن ارسال شد.'); 
                     toggleAuth('login');
                 }
             }
         } catch(err) { 
-            showCustomAlert('فرمت وارد کردن اطلاعات شما برای ساخت حساب کاربری اشتباه است، مجدد تلاش کنید'); 
+            showCustomAlert('لطفاً مجدد تلاش کنید'); 
         } finally {
             showLoader(false);
         }
@@ -1689,26 +1671,18 @@
         
         showLoader(true);
         try { 
-            const authPromise = supabaseClient.auth.signInWithPassword({ email: u + '@plato.com', password: p });
-            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 15000));
+            const loginPromise = supabaseClient.auth.signInWithPassword({ email: u + '@plato.com', password: p });
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 8000));
             
-            const { data, error } = await Promise.race([authPromise, timeoutPromise]);
+            const { data, error } = await Promise.race([loginPromise, timeoutPromise]);
             
             if (error) { 
-                if(error.message.includes('rate limit') || error.status === 429) {
-                    showCustomAlert('درخواست‌های زیاد! چند دقیقه دیگر تلاش کنید.');
-                } else {
-                    showCustomAlert('نام کاربری یا رمز عبور اشتباه است'); 
-                }
+                showCustomAlert('لطفاً مجدد تلاش کنید');
             } else { 
                 await checkUserSession(); 
             }
         } catch(err) { 
-            if (err.message === 'TIMEOUT') {
-                showCustomAlert('اینترنت شما یا سرور کند است. لطفاً فیلترشکن را بررسی کنید.');
-            } else {
-                showCustomAlert('خطای ارتباط با سرور.'); 
-            }
+            showCustomAlert('لطفاً مجدد تلاش کنید'); 
         } finally {
             showLoader(false); 
         }
@@ -2178,7 +2152,6 @@
             const { data: udata } = await supabaseClient.from('users_data').select('id, sub_end_date').eq('username', user).single();
             if (!udata) { 
                 showCustomAlert('کاربر پیدا نشد.'); 
-                showLoader(false); 
                 return; 
             }
             
@@ -2192,7 +2165,7 @@
                 showCustomAlert('اشتراک جمع و فعال شد.');
             }
         } catch(e) { 
-            showCustomAlert('خطا در ارتباط با سرور.'); 
+            showCustomAlert('لطفاً مجدد تلاش کنید'); 
         } finally {
             showLoader(false);
         }
@@ -2268,36 +2241,39 @@
             return;
         }
         
-        // افزودن description: infoText برای اطمینان از سینک بودن با دیتابیس
-        const payload = { 
+        // سازگاری خودکار با ستون‌های موجود در دیتابیس سوپابیس
+        let availableCols = (dynamicDataArray && dynamicDataArray.length > 0) ? Object.keys(dynamicDataArray[0]) : [];
+        
+        let payload = { 
             title: tit, 
             poster: pos, 
-            info: infoText,
-            description: infoText, 
-            download_url: url, 
-            category: cat
+            category: cat,
+            download_url: url
         };
         
-        if(isNew) { 
-            payload.updated_at = new Date().toISOString(); 
-        } else { 
-            let d = new Date(); 
-            d.setDate(d.getDate() - 10); 
-            payload.updated_at = d.toISOString(); 
+        if (availableCols.length > 0) {
+            if (availableCols.includes('info')) payload.info = infoText;
+            if (availableCols.includes('description')) payload.description = infoText;
+            if (availableCols.includes('updated_at')) {
+                payload.updated_at = isNew ? new Date().toISOString() : new Date(Date.now() - 10 * 86400000).toISOString();
+            }
+        } else {
+            payload.info = infoText;
+            payload.updated_at = isNew ? new Date().toISOString() : new Date(Date.now() - 10 * 86400000).toISOString();
         }
         
         showLoader(true);
         try {
             let response;
             if(editingMovieId) {
-                response = await supabaseClient.from('movies').update(payload).eq('id', editingMovieId).select(); 
+                response = await supabaseClient.from('movies').update(payload).eq('id', editingMovieId); 
             } else {
-                response = await supabaseClient.from('movies').insert([payload]).select();
+                response = await supabaseClient.from('movies').insert([payload]);
             }
             
             if (response && response.error) {
-                showCustomAlert("خطای دیتابیس: " + response.error.message);
                 console.error("Supabase Error:", response.error);
+                showCustomAlert('لطفاً مجدد تلاش کنید');
             } else {
                 showCustomAlert("ذخیره شد!"); 
                 cancelEdit(); 
@@ -2306,19 +2282,19 @@
             }
         } catch(e) {
             console.error(e);
-            showCustomAlert("ارور ارتباط با سرور");
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false);
         }
     }
 
     window.editMovie = function(id) {
-        let m = dynamicDataArray.find(x => x.id === id); 
+        let m = dynamicDataArray.find(x => String(x.id) === String(id)); 
         if(!m) return;
         
         document.getElementById('new-movie-category').value = m.category || 'series'; 
-        document.getElementById('new-movie-title').value = m.title; 
-        document.getElementById('new-movie-poster').value = m.poster; 
+        document.getElementById('new-movie-title').value = m.title || ''; 
+        document.getElementById('new-movie-poster').value = m.poster || ''; 
         document.getElementById('new-movie-info').value = m.info || m.description || '';
         document.getElementById('new-movie-url').value = m.download_url || '';
         
@@ -2328,7 +2304,7 @@
             document.getElementById('new-movie-isnew').checked = false; 
         }
         
-        editingMovieId = id; 
+        editingMovieId = m.id; 
         document.getElementById('form-movie-title').textContent = "ویرایش محتوا"; 
         document.getElementById('cancel-edit-btn').style.display = "block"; 
         window.scrollTo(0,0);
@@ -2352,13 +2328,14 @@
         try { 
             const { error } = await supabaseClient.from('movies').delete().eq('id', id); 
             if (error) {
-                showCustomAlert("خطای دیتابیس: " + error.message);
+                showCustomAlert('لطفاً مجدد تلاش کنید');
             } else {
                 await fetchMoviesFromDatabase(); 
                 loadAdminMovies(); 
             }
         } catch(e) {
             console.error(e);
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
@@ -2485,13 +2462,14 @@
             }
             
             if (response && response.error) {
-                showCustomAlert("خطا: " + response.error.message);
+                showCustomAlert('لطفاً مجدد تلاش کنید');
             } else { 
                 loadPendingRequests(); 
                 loadAllUsers(); 
             }
         } catch(e) {
             console.error(e);
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
@@ -2503,12 +2481,13 @@
         try { 
             const { error } = await supabaseClient.from('users_data').delete().eq('id', id); 
             if(error) {
-                showCustomAlert("خطا: " + error.message);
+                showCustomAlert('لطفاً مجدد تلاش کنید');
             } else {
                 loadAllUsers(); 
             }
         } catch(e) {
             console.error(e);
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
@@ -2571,14 +2550,14 @@
             if(v) {
                 const { error } = await supabaseClient.from('messages').insert([{ direction: 'marquee', content: v, is_read: true }]); 
                 if(error) {
-                    showCustomAlert('خطا: ' + error.message);
+                    showCustomAlert('لطفاً مجدد تلاش کنید');
                 } else { 
                     showCustomAlert('تابلو با موفقیت ذخیره شد.'); 
                     await loadMarquee(); 
                 }
             }
         } catch(e) { 
-            showCustomAlert('خطا در ذخیره سازی.'); 
+            showCustomAlert('لطفاً مجدد تلاش کنید'); 
         } finally {
             showLoader(false); 
         }
@@ -2736,20 +2715,20 @@
             let res;
             if(editingNewsId) { 
                 res = await supabaseClient.from('news').update({content: val}).eq('id', editingNewsId); 
-                if(!res.error) showCustomAlert('خبر ویرایش شد'); 
             } else { 
                 res = await supabaseClient.from('news').insert([{content: val}]); 
-                if(!res.error) showCustomAlert('خبر منتشر شد'); 
             } 
             
             if(res.error) {
-                showCustomAlert('خطا: ' + res.error.message);
+                showCustomAlert('لطفاً مجدد تلاش کنید');
             } else { 
+                showCustomAlert('انجام شد.');
                 cancelEditNews(); 
                 loadAdminNews(); 
             }
         } catch(e) {
             console.error(e);
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
@@ -2764,6 +2743,7 @@
             loadAdminNews(); 
         } catch(e) {
             console.error(e);
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
@@ -2780,13 +2760,14 @@
         try { 
             const { error } = await supabaseClient.from('gift_codes').insert([{code: code, days: days, max_uses: max}]); 
             if(error) {
-                showCustomAlert('خطا: ' + error.message);
+                showCustomAlert('لطفاً مجدد تلاش کنید');
             } else { 
                 showCustomAlert('کد ایجاد شد'); 
                 loadAdminGifts(); 
             }
         } catch(e) {
             console.error(e);
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false);
         }
@@ -2826,6 +2807,7 @@
             loadAdminGifts(); 
         } catch(e) {
             console.error(e);
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
@@ -2845,20 +2827,17 @@
             const { data: used } = await supabaseClient.from('used_codes').select('*').eq('code', code).eq('user_id', currentUserProfile.id);
             if(used && used.length > 0) { 
                 showCustomAlert('شما قبلا از این کد استفاده کرده‌اید!'); 
-                showLoader(false); 
                 return; 
             }
             
             const { data: gc, error: gcError } = await supabaseClient.from('gift_codes').select('*').eq('code', code).single();
             if(gcError || !gc) { 
                 showCustomAlert('کد وارد شده یافت نشد یا نامعتبر است.'); 
-                showLoader(false); 
                 return; 
             }
             
             if(gc.current_uses >= gc.max_uses) { 
                 showCustomAlert('ظرفیت استفاده از این کد تمام شده است.'); 
-                showLoader(false); 
                 return; 
             }
 
@@ -2879,6 +2858,7 @@
             triggerConfetti();
         } catch(e) { 
             console.error(e);
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
@@ -2954,6 +2934,7 @@
             checkUnreadMessages();
         } catch(e) {
             console.error(e);
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false);
         }
@@ -3041,7 +3022,7 @@
         try {
             const { error } = await supabaseClient.from('messages').insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text, is_read: false }]);
             if(error) {
-                showCustomAlert('خطا: ' + error.message);
+                showCustomAlert('لطفاً مجدد تلاش کنید');
             } else {
                 history.push(nowTime); 
                 localStorage.setItem(storageKey, JSON.stringify(history));
@@ -3051,6 +3032,7 @@
             }
         } catch(e) {
             console.error(e);
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
@@ -3102,6 +3084,7 @@
             }
         } catch(e) {
             console.error(e);
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false);
         }
@@ -3188,13 +3171,14 @@
         try { 
             const { error } = await supabaseClient.from('messages').insert([{ user_id: uid, direction: 'admin_to_user', content: t, is_read: false }]); 
             if(error) {
-                showCustomAlert('خطا: ' + error.message);
+                showCustomAlert('لطفاً مجدد تلاش کنید');
             } else { 
                 document.getElementById('admin-reply-text').value = ''; 
                 document.getElementById('adminReplyModal').classList.remove('show'); 
             }
         } catch(e) {
             console.error(e);
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
@@ -3212,7 +3196,7 @@
         try { 
             const { error } = await supabaseClient.from('messages').insert([{ direction: 'system_all', content: t, is_read: false }]); 
             if(error) {
-                showCustomAlert('خطا: ' + error.message);
+                showCustomAlert('لطفاً مجدد تلاش کنید');
             } else { 
                 document.getElementById('sys-msg-text').value = ''; 
                 document.getElementById('sysMsgModal').classList.remove('show'); 
@@ -3220,6 +3204,7 @@
             }
         } catch(e) {
             console.error(e);
+            showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
             showLoader(false); 
         }
