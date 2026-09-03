@@ -1247,7 +1247,7 @@
     const NHOST_REGION = 'eu-central-1';
     
     var nhost = null;
-    var supabaseClient = null; // برای سازگاری کامل با کدهای قبلی پایگاه داده شما
+    var supabaseClient = null; // برای سازگاری کامل با کدهای پایگاه داده شما
 
     if (window.Nhost) {
         nhost = new window.Nhost.NhostClient({
@@ -1255,22 +1255,26 @@
             region: NHOST_REGION
         });
         
-        // یک لایه سازگاری هوشمند برای اینکه دستورات قبلی شما به راحتی روی Nhost کار کنند
+        // یک لایه سازگاری هوشمند برای اینکه دستورات پایگاه داده به راحتی روی Nhost کار کنند
         supabaseClient = {
             auth: {
                 getSession: async () => {
-                    const savedUserId = localStorage.getItem('plato_user_id');
-                    if (!savedUserId) return { data: { session: null }, error: null };
-                    return { data: { session: { user: { id: savedUserId } } }, error: null };
+                    const session = nhost.auth.getSession();
+                    if (!session) return { data: { session: null }, error: null };
+                    return { data: { session: { user: { id: session.user.id } } }, error: null };
                 },
                 signInWithPassword: async ({ email, password }) => {
-                    return { data: { session: { user: { id: 'direct' } } }, error: null };
+                    const res = await nhost.auth.signIn({ email, password });
+                    if (res.error) return { data: null, error: res.error };
+                    return { data: { session: { user: { id: res.session.user.id } } }, error: null };
                 },
                 signUp: async ({ email, password }) => {
-                    return { data: { user: { id: 'temp_' + Date.now() } }, error: null };
+                    const res = await nhost.auth.signUp({ email, password });
+                    if (res.error) return { data: null, error: res.error };
+                    return { data: { user: { id: res.session?.user?.id || res.user?.id } }, error: null };
                 },
                 signOut: async () => {
-                    localStorage.removeItem('plato_user_id');
+                    await nhost.auth.signOut();
                     return { error: null };
                 }
             },
@@ -1571,20 +1575,21 @@
         showLoader(true);
         
         try {
-            const savedUserId = localStorage.getItem('plato_user_id');
-            if (!savedUserId) { 
+            const sessionRes = await supabaseClient.auth.getSession();
+            if (!sessionRes.data || !sessionRes.data.session) { 
                 document.getElementById('auth-screen').style.display = 'flex'; 
                 return; 
             }
             
+            const userId = sessionRes.data.session.user.id;
+            
             const { data: profileData, error: profileErr } = await supabaseClient
                 .from('users_data')
                 .select('*')
-                .eq('id', savedUserId)
+                .eq('id', userId)
                 .single();
             
             if (profileErr || !profileData) { 
-                localStorage.removeItem('plato_user_id');
                 document.getElementById('auth-screen').style.display = 'flex'; 
                 return; 
             }
@@ -1605,7 +1610,6 @@
 
             if (currentUserProfile.status === 'pending' || currentUserProfile.status === 'rejected') {
                 showCustomAlert('اکانت شما هنوز تایید نشده یا مسدود است.');
-                localStorage.removeItem('plato_user_id');
                 document.getElementById('auth-screen').style.display = 'flex';
                 return;
             }
@@ -1762,37 +1766,17 @@
         
         showLoader(true);
         try { 
-            // ۱. ابتدا جستجو بر اساس نام کاربری
-            let { data, error } = await supabaseClient
-                .from('users_data')
-                .select('*')
-                .eq('username', u)
-                .single();
-                
-            // ۲. اگر با نام کاربری پیدا نشد، بر اساس ایمیل جستجو کن
-            if (error || !data) {
-                let resEmail = await supabaseClient
-                    .from('users_data')
-                    .select('*')
-                    .eq('email', u)
-                    .single();
-                data = resEmail.data;
-                error = resEmail.error;
+            let emailToUse = u.includes('@') ? u : (u + '@plato.com');
+            
+            const res = await supabaseClient.auth.signInWithPassword({ email: emailToUse, password: p });
+            
+            if (res.error) {
+                throw new Error(res.error.message || 'خطا در ورود');
             }
-
-            if (error || !data) {
-                throw new Error('کاربر یافت نشد');
-            }
-
-            if (data.status !== 'approved') {
-                throw new Error('حساب شما هنوز تایید نشده است');
-            }
-
-            currentUserProfile = data;
-            localStorage.setItem('plato_user_id', data.id);
 
             await checkUserSession();
         } catch(err) { 
+            console.error(err);
             showCustomAlert('نام کاربری یا رمز اشتباه است'); 
         } finally {
             showLoader(false); 
@@ -1800,7 +1784,6 @@
     }
 
     window.doLogout = async function() { 
-        localStorage.removeItem('plato_user_id');
         if(supabaseClient) { 
             await supabaseClient.auth.signOut(); 
         } 
@@ -3301,24 +3284,24 @@
 
     window.sendSystemMessage = async function() { 
         const t = document.getElementById('sys-msg-text').value.trim(); 
-        if(!t) return; 
-        
-        showLoader(true); 
-        try { 
-            const { error } = await supabaseClient.from('messages').insert([{ direction: 'system_all', content: t, is_read: false }]); 
-            if(error) {
+        !t ? null : (async () => {
+            showLoader(true); 
+            try { 
+                const { error } = await supabaseClient.from('messages').insert([{ direction: 'system_all', content: t, is_read: false }]); 
+                if(error) {
+                    showCustomAlert('لطفاً مجدد تلاش کنید');
+                } else { 
+                    document.getElementById('sys-msg-text').value = ''; 
+                    document.getElementById('sysMsgModal').classList.remove('show'); 
+                    loadAdminInbox(); 
+                }
+            } catch(e) {
+                console.error(e);
                 showCustomAlert('لطفاً مجدد تلاش کنید');
-            } else { 
-                document.getElementById('sys-msg-text').value = ''; 
-                document.getElementById('sysMsgModal').classList.remove('show'); 
-                loadAdminInbox(); 
+            } finally {
+                showLoader(false); 
             }
-        } catch(e) {
-            console.error(e);
-            showCustomAlert('لطفاً مجدد تلاش کنید');
-        } finally {
-            showLoader(false); 
-        }
+        })();
     }
 
     const slides = document.getElementById("slides"), dots = document.querySelectorAll(".dot");
