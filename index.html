@@ -14,7 +14,7 @@
            RESET & PURE THEMES
         ========================= */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; width: 100%; height: 100%; }
         
         :root {
             --bg-main: #000000;
@@ -51,6 +51,8 @@
             overflow-x: hidden; 
             transition: background 0.3s ease, color 0.3s ease; 
             min-height: 100vh; 
+            margin: 0;
+            padding: 0;
         }
 
         button, input, select, textarea { font-family: inherit; color: inherit; }
@@ -337,8 +339,14 @@
         .sidebar-btn:hover { border-color: var(--accent); }
 
         .notif-dot { 
-            width: 8px; height: 8px; background: #10b981; border-radius: 50%; 
-            box-shadow: 0 0 6px #10b981; animation: blink 1.2s infinite alternate; 
+            width: 11px; height: 11px; background: #10b981; border-radius: 50%; 
+            box-shadow: 0 0 8px #10b981; animation: blink 1.2s infinite alternate; 
+            border: 2px solid var(--bg-input);
+        }
+        
+        /* Specific adjust for profile button notif dot */
+        .profile-button .notif-dot {
+            top: -2px; right: -2px; border-color: var(--bg-main);
         }
 
         .notif-badge-number {
@@ -348,7 +356,7 @@
 
         @keyframes blink {
             0% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 0.4; transform: scale(0.85); }
         }
         
         .sidebar-footer { 
@@ -389,6 +397,16 @@
         .admin-section h3 { margin-bottom: 16px; font-size: 15px; color: var(--accent); display: flex; align-items: center; gap: 8px; }
         .admin-section h3::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--accent); border-radius: 4px; }
         
+        /* Accordion CSS for Admin Panel */
+        .admin-accordion {
+            background: var(--bg-input); padding: 14px 20px; border-radius: 12px;
+            margin-bottom: 8px; font-weight: 800; cursor: pointer; display: flex;
+            justify-content: space-between; align-items: center; border: 1px solid var(--border-color);
+            transition: 0.2s; color: var(--text-main); font-size: 14.5px;
+        }
+        .admin-accordion:hover { border-color: var(--accent); background: rgba(59, 130, 246, 0.05); }
+        .acc-content { padding: 10px; border-radius: 12px; margin-bottom: 15px; border: 1px solid var(--border-color); display: none; background: rgba(0,0,0,0.2); }
+
         .req-card { 
             background: var(--bg-input); padding: 14px; border-radius: 12px; margin-bottom: 10px; 
             display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); transition: 0.2s; 
@@ -455,7 +473,7 @@
         
         .header { 
             position: sticky; top: 0; z-index: 1000; height: 75px; display: flex; 
-            align-items: center; justify-content: space-between; padding: 0 20px; 
+            align-items: center; justify-content: space-between; padding: 0 20px; margin-top: 0;
             background: var(--header-bg); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color); 
         }
         
@@ -526,18 +544,17 @@
         .section-title { font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
         .section-title::before { content: ""; display: inline-block; width: 4px; height: 18px; border-radius: 4px; background: var(--accent); }
         
-        .movie-list { display: flex; gap: 16px; overflow-x: auto; padding: 5px 20px 25px; scrollbar-width: none; }
+        .movie-list { display: flex; gap: 16px; overflow-x: auto; padding: 15px 20px 30px; scrollbar-width: none; }
         .movie-list::-webkit-scrollbar { display: none; }
         
-        /* اصلاح مشکل لمس طولانی روی بنر و کارت فیلم */
         .movie-card { 
             flex: 0 0 145px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); 
             border-radius: 16px; padding: 8px; cursor: pointer; user-select: none; -webkit-user-select: none;
             -webkit-touch-callout: none; transition: 0.3s ease; position: relative; 
         }
-        .movie-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--accent); box-shadow: 0 12px 25px rgba(0,0,0,0.4), 0 0 15px rgba(59, 130, 246, 0.15); background: rgba(255,255,255,0.05); }
+        .movie-card:hover { transform: translateY(-8px) scale(1.02); z-index: 5; border-color: var(--accent); box-shadow: 0 12px 25px rgba(0,0,0,0.4), 0 0 15px rgba(59, 130, 246, 0.15); background: rgba(255,255,255,0.05); }
         
-        .poster { position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 12px; background: #000; pointer-events: none; }
+        .poster { position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 12px; background: #000; pointer-events: none; transform: translateZ(0); }
         .poster img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; -webkit-user-drag: none; transition: transform 0.4s ease; }
         .movie-card:hover .poster img { transform: scale(1.05); }
         .poster-overlay { position: absolute; inset: auto 0 0 0; height: 40%; background: linear-gradient(transparent, rgba(0,0,0,.9)); pointer-events: none; }
@@ -621,9 +638,23 @@
         /* CHAT STYLE FOR INBOX & MESSAGES */
         .chat-container { display: flex; flex-direction: column; gap: 12px; padding: 15px; flex-grow: 1; overflow-y: auto; }
         .chat-bubble { max-width: 82%; padding: 12px 16px; border-radius: 16px; font-size: 13.5px; line-height: 1.7; position: relative; word-wrap: break-word; }
-        .chat-user { align-self: flex-end; background: #1e3a8a; color: #fff; border-bottom-left-radius: 4px; border: 1px solid rgba(59, 130, 246, 0.4); text-align: right; }
-        .chat-admin { align-self: flex-start; background: #064e3b; color: #fff; border-bottom-right-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.4); text-align: right; }
-        .chat-broadcast { align-self: center; width: 95%; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 14px; text-align: center; }
+        .chat-user { align-self: flex-start; background: #1e3a8a; color: #fff; border-bottom-right-radius: 4px; border-bottom-left-radius: 16px; text-align: right; }
+        .chat-admin { align-self: flex-end; background: #064e3b; color: #fff; border-bottom-left-radius: 4px; border-bottom-right-radius: 16px; text-align: right; }
+        
+        .chat-broadcast { 
+            align-self: center; width: 95%; 
+            background: linear-gradient(135deg, rgba(20, 20, 25, 0.95), rgba(35, 40, 50, 0.95)); 
+            border: 2px solid var(--accent); border-radius: 16px; text-align: center; 
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3), inset 0 0 12px rgba(59, 130, 246, 0.2); 
+            padding: 16px; position: relative; overflow: hidden; font-weight: bold;
+        }
+        .chat-broadcast::before {
+            content: ""; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transform: skewX(-25deg); animation: shine-broadcast 4s infinite;
+        }
+        @keyframes shine-broadcast { 0%, 20% { left: -150%; } 50%, 100% { left: 200%; } }
+
         .chat-meta { font-size: 11px; opacity: 0.8; margin-bottom: 5px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
         .ticket-code-tag { background: rgba(255,255,255,0.15); padding: 2px 6px; border-radius: 6px; font-size: 10px; font-family: monospace; letter-spacing: 1px; }
 
@@ -891,7 +922,7 @@
                 <button type="button" id="cancel-edit-btn" class="btn-primary" style="display:none; background:#444;" onclick="cancelEdit()">انصراف</button>
             </div>
             
-            <h3 style="margin-top:30px; border-top:1px solid var(--border-color); padding-top:20px;">لیست محتوای سایت (برای مرتب‌سازی بکشید و رها کنید)</h3>
+            <h3 style="margin-top:30px; border-top:1px solid var(--border-color); padding-top:20px;">مدیریت محتوای سایت (برای مرتب‌سازی بکشید)</h3>
             <div id="admin-movie-list"></div>
         </div>
 
@@ -1002,20 +1033,19 @@
         <div class="logo">
             <div class="premium-logo">
                 <svg viewBox="0 0 1536 614"><path fill="var(--text-main)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/></svg>
-                </div>
             </div>
-            
-            <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none;">
-                خرید اشتراک
-                <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
-            </a>
+        </div>
+        
+        <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none;">
+            خرید اشتراک
+            <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
+        </a>
 
-            <div class="header-actions">
-                <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                    <span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>
-                </button>
-            </div>
+        <div class="header-actions">
+            <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <span class="notif-dot" id="header-notif" style="position:absolute; display:none;"></span>
+            </button>
         </div>
     </header>
 
@@ -1705,7 +1735,6 @@
         }
     }
 
-    /* تابع لاگین با مهلت ۱۵ ثانیه‌ای برای پینگ و شبکه */
     window.doLogin = async function() {
         var u = toEnglishDigits(document.getElementById('log-user').value).trim().toLowerCase();
         var p = toEnglishDigits(document.getElementById('log-pass').value).trim();
@@ -1856,7 +1885,6 @@
         });
     }
 
-    /* واکشی ایمن فیلم‌ها و سریال‌ها با ستون‌های دقیق */
     async function fetchMoviesFromDatabase() {
         try {
             const { data, error } = await supabaseClient
@@ -1959,7 +1987,6 @@
         return true;
     }
 
-    /* باز کردن امن فیلم با متن لودینگ ملایم */
     window.openPlayer = async function(movie) {
         if(!checkSubscription()) return; 
         
@@ -2237,15 +2264,44 @@
 
     let dragSourceElement = null;
     
+    window.toggleAccordion = function(id) {
+        const el = document.getElementById(id);
+        const icon = document.getElementById('icon-' + id);
+        if (el.style.display === 'block') {
+            el.style.display = 'none';
+            if(icon) icon.textContent = '▼';
+        } else {
+            el.style.display = 'block';
+            if(icon) icon.textContent = '▲';
+        }
+    }
+
     async function loadAdminMovies() {
         const list = document.getElementById('admin-movie-list'); 
-        list.innerHTML = '';
+        list.innerHTML = `
+            <div class="admin-accordion" onclick="toggleAccordion('acc-series')">📺 سریال‌ها <span id="icon-acc-series">▼</span></div>
+            <div id="acc-series" class="acc-content"></div>
+
+            <div class="admin-accordion" onclick="toggleAccordion('acc-movies')">🎬 فیلم‌های سینمایی <span id="icon-acc-movies">▼</span></div>
+            <div id="acc-movies" class="acc-content"></div>
+
+            <div class="admin-accordion" onclick="toggleAccordion('acc-programs')">🎭 برنامه‌ها <span id="icon-acc-programs">▼</span></div>
+            <div id="acc-programs" class="acc-content"></div>
+
+            <div class="admin-accordion" onclick="toggleAccordion('acc-kids')">🧸 انیمیشن/کودکانه <span id="icon-acc-kids">▼</span></div>
+            <div id="acc-kids" class="acc-content"></div>
+        `;
         
         if(dynamicDataArray.length > 0) {
             const { data: fullMovies } = await supabaseClient.from('movies').select('*').order('sort_order', { ascending: true }).order('id', { ascending: false });
             const listData = fullMovies || dynamicDataArray;
 
             listData.forEach(m => {
+                let catId = 'acc-series';
+                if (m.category === 'movie') catId = 'acc-movies';
+                else if (m.category === 'kids') catId = 'acc-kids';
+                else if (m.category === 'program') catId = 'acc-programs';
+
                 let catName = m.category === 'movie' ? 'دسته: فیلم' : m.category === 'kids' ? 'دسته: انیمیشن' : m.category === 'program' ? 'دسته: برنامه' : 'دسته: سریال';
                 let card = document.createElement('div'); 
                 card.className = "req-card draggable"; 
@@ -2269,8 +2325,9 @@
                 card.addEventListener('drop', async (e) => {
                     e.stopPropagation(); 
                     card.classList.remove('drag-over');
-                    if (dragSourceElement !== card) {
-                        const allCards = Array.from(list.querySelectorAll('.draggable'));
+                    if (dragSourceElement !== card && dragSourceElement.parentElement === card.parentElement) {
+                        const parentContainer = card.parentElement;
+                        const allCards = Array.from(parentContainer.querySelectorAll('.draggable'));
                         if(allCards.indexOf(dragSourceElement) < allCards.indexOf(card)) {
                             card.after(dragSourceElement); 
                         } else {
@@ -2278,7 +2335,8 @@
                         }
                         
                         showLoader(true);
-                        const updates = Array.from(list.querySelectorAll('.draggable')).map((c, idx) => supabaseClient.from('movies').update({ sort_order: idx }).eq('id', c.dataset.id));
+                        const allGlobalCards = Array.from(document.querySelectorAll('.acc-content .draggable'));
+                        const updates = allGlobalCards.map((c, idx) => supabaseClient.from('movies').update({ sort_order: idx }).eq('id', c.dataset.id));
                         await Promise.all(updates); 
                         await fetchMoviesFromDatabase(); 
                         showLoader(false); 
@@ -2287,10 +2345,10 @@
                 });
                 card.addEventListener('dragend', () => { 
                     card.style.opacity = '1'; 
-                    list.querySelectorAll('.draggable').forEach(c => c.classList.remove('drag-over')); 
+                    document.querySelectorAll('.draggable').forEach(c => c.classList.remove('drag-over')); 
                 }); 
                 
-                list.appendChild(card);
+                document.getElementById(catId).appendChild(card);
             });
         }
     }
@@ -3044,7 +3102,6 @@
         document.getElementById('supportModal').classList.add('show'); 
     }
 
-    /* ارسال تیکت توسط کاربر با شماره رندوم مبنای 1000 */
     window.sendSupportMessage = async function() {
         const text = document.getElementById('support-msg-text').value.trim(); 
         if(!text) return;
@@ -3095,7 +3152,6 @@
                 document.getElementById('support-msg-text').value = ''; 
                 document.getElementById('supportModal').classList.remove('show');
                 
-                // باز کردن و رفرش صندوق پیام‌ها
                 openInboxModal();
             }
         } catch(e) {
@@ -3106,7 +3162,6 @@
         }
     }
 
-    /* صندوق پیام تمام‌صفحه به سبک چت پیام‌رسان */
     window.openInboxModal = async function() {
         closeSidebar(); 
         document.getElementById('inbox-notif').style.display = 'none'; 
@@ -3141,7 +3196,7 @@
                                         <span>📢 اعلان سراسری پلاتو</span>
                                     </div>
                                     <div style="font-size:14px; margin-top:6px;">${m.content}</div>
-                                    <div style="font-size:10px; color:var(--text-muted); margin-top:8px;">${timeStr}</div>
+                                    <div style="font-size:10px; color:rgba(255,255,255,0.6); margin-top:8px;">${timeStr}</div>
                                 </div>`;
                         } else if(m.direction === 'user_to_admin') {
                             list.innerHTML += `
@@ -3184,7 +3239,6 @@
         document.getElementById('inboxModal').style.display = 'none';
     }
     
-    /* سیستم چت PV مدیریت در پنل ادمین */
     async function loadAdminInbox() {
         try {
             const { data: usersData } = await supabaseClient.from('users_data').select('id, username, avatar');
@@ -3195,7 +3249,6 @@
             
             const { data: msgs } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: false });
             
-            // دسته‌بندی پیام‌ها به تفکیک کاربر (PV)
             let userChats = {};
             let unreadCounts = {};
             
@@ -3243,7 +3296,6 @@
                 });
             }
             
-            // لود اعلان‌های سراسری سیستم
             const { data: sysMsgs } = await supabaseClient.from('messages').select('*').eq('direction', 'system_all').order('created_at', { ascending: false });
             const sysList = document.getElementById('admin-sys-list'); 
             sysList.innerHTML = '';
@@ -3265,7 +3317,6 @@
         }
     }
 
-    /* باز کردن چت پی‌وی یک کاربر در پنل ادمین */
     window.openAdminChatWith = async function(uid, username) {
         currentActiveAdminChatUid = uid;
         document.getElementById('admin-chat-users-list').style.display = 'none';
@@ -3274,7 +3325,6 @@
         
         loadActiveChatMessages();
         
-        // علامت زدن پیام‌ها به عنوان خوانده شده
         await supabaseClient.from('messages').update({ is_read: true }).eq('user_id', uid).eq('direction', 'user_to_admin');
         checkUnreadMessages();
     }
@@ -3328,7 +3378,6 @@
         }
     }
 
-    /* ارسال پاسخ ادمین با برچسب تیکت */
     window.sendAdminReply = async function() { 
         const input = document.getElementById('admin-reply-input');
         const text = input.value.trim();
@@ -3357,7 +3406,6 @@
         }
     }
 
-    /* حذف کل چت‌ها و گفتگوهای کاربران و پشتیبانی */
     window.clearAllSupportChats = async function() {
         if(!confirm('آیا مطمئن هستید؟ با این کار تمامی گفتگوها و پیام‌های تیکت‌ها برای همیشه پاک خواهند شد.')) return;
         
