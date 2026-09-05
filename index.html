@@ -337,7 +337,7 @@
             text-align: center; padding: 15px; font-size: 11px; color: rgba(142, 142, 147, 0.4); 
             border-top: 1px solid var(--border-color); user-select: none; 
         }
-        .sidebar-footer { display: block; margin-top: 4px; font-weight: bold; letter-spacing: 1px; }
+        .sidebar-footer span { display: block; margin-top: 4px; font-weight: bold; letter-spacing: 1px; }
 
         /* =========================
            ADMIN PANEL
@@ -1500,7 +1500,6 @@
             
             currentUserProfile = profileData;
 
-            // دریافت سریع تنظیمات سایت بدون معطل کردن فرآیند ورود
             fetchSiteSettings().then(settings => {
                 siteSettings = settings;
                 if (siteSettings.maintenance && currentUserProfile.role !== 'admin') {
@@ -1807,15 +1806,20 @@
         });
     }
 
-    /* ۱. تغییر امنیتی اول: واکشی فیلم‌ها بدون ستون حساس لینک دانلود */
+    /* واکشی دقیق ستون‌های جدول بدون download_url جهت حفظ امنیت و هماهنگی کامل با دیتابیس */
     async function fetchMoviesFromDatabase() {
         try {
-            const { data } = await supabaseClient
+            const { data, error } = await supabaseClient
                 .from('movies')
-                .select('id, title, poster, category, info, description, updated_at, sort_order')
+                .select('id, title, poster, category, info, updated_at, sort_order')
                 .order('sort_order', { ascending: true })
                 .order('id', { ascending: false });
                 
+            if (error) {
+                console.error("خطای بارگذاری فیلم‌ها:", error);
+                return;
+            }
+
             if(data) {
                 dynamicDataArray = data;
                 const programs = [], kids = [], series = [], movies = [];
@@ -1905,7 +1909,7 @@
         return true;
     }
 
-    /* ۲. تغییر امنیتی دوم: دریافت لینک‌ها فقط با تأیید اعتبار سروری سوپابیس */
+    /* باز کردن امن فیلم با استفاده از تابع سرور سوپابیس */
     window.openPlayer = async function(movie) {
         if(!checkSubscription()) return; 
         
@@ -1914,10 +1918,9 @@
         document.getElementById("movie-detail-title").textContent = movie.title;
         document.getElementById("neonTitle").textContent = movie.title;
         
-        if(movie.info || movie.description) {
+        if(movie.info) {
             document.getElementById('modal-movie-info').style.display = 'block';
-            let finalInfo = (movie.info || "") + (movie.description && !movie.info ? movie.description : "");
-            document.getElementById('modal-movie-desc').textContent = finalInfo.trim();
+            document.getElementById('modal-movie-desc').textContent = movie.info.trim();
         } else { 
             document.getElementById('modal-movie-info').style.display = 'none'; 
         }
@@ -1933,7 +1936,6 @@
         
         if(linkTimerInterval) clearInterval(linkTimerInterval);
 
-        // فراخوانی فانکشن امن دیتابیس
         const { data: secureLinks, error } = await supabaseClient.rpc('get_movie_links', { target_movie_id: movie.id });
         linksContainer.innerHTML = '';
 
@@ -2190,7 +2192,6 @@
         list.innerHTML = '';
         
         if(dynamicDataArray.length > 0) {
-            // دریافت محتوا برای ادمین
             const { data: fullMovies } = await supabaseClient.from('movies').select('*').order('sort_order', { ascending: true }).order('id', { ascending: false });
             const listData = fullMovies || dynamicDataArray;
 
@@ -2257,25 +2258,14 @@
             return;
         }
         
-        let availableCols = (dynamicDataArray && dynamicDataArray.length > 0) ? Object.keys(dynamicDataArray[0]) : [];
-        
         let payload = { 
             title: tit, 
             poster: pos, 
             category: cat,
-            download_url: url
+            download_url: url,
+            info: infoText,
+            updated_at: isNew ? new Date().toISOString() : new Date(Date.now() - 10 * 86400000).toISOString()
         };
-        
-        if (availableCols.length > 0) {
-            if (availableCols.includes('info')) payload.info = infoText;
-            if (availableCols.includes('description')) payload.description = infoText;
-            if (availableCols.includes('updated_at')) {
-                payload.updated_at = isNew ? new Date().toISOString() : new Date(Date.now() - 10 * 86400000).toISOString();
-            }
-        } else {
-            payload.info = infoText;
-            payload.updated_at = isNew ? new Date().toISOString() : new Date(Date.now() - 10 * 86400000).toISOString();
-        }
         
         showLoader(true);
         try {
@@ -2314,7 +2304,7 @@
         document.getElementById('new-movie-category').value = m.category || 'series'; 
         document.getElementById('new-movie-title').value = m.title || ''; 
         document.getElementById('new-movie-poster').value = m.poster || ''; 
-        document.getElementById('new-movie-info').value = m.info || m.description || '';
+        document.getElementById('new-movie-info').value = m.info || '';
         document.getElementById('new-movie-url').value = m.download_url || '';
         
         if(m.updated_at && ((new Date() - new Date(m.updated_at)) / 86400000) <= 3) {
