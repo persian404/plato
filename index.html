@@ -13,7 +13,7 @@
         /* =========================
            RESET & PURE THEMES
         ========================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html { scroll-behavior: smooth; }
         
         :root {
@@ -94,6 +94,14 @@
         }
 
         /* =========================
+           UPDATE SIGN ANIMATION
+        ========================= */
+        .update-sign { width: min(320px, 80vw); margin: 0 auto 20px; }
+        .update-sign svg { display: block; width: 100%; height: auto; filter: drop-shadow(0 12px 25px rgba(0, 0, 0, 0.12)); }
+        .gear { transform-box: fill-box; transform-origin: center; animation: gear-rotate 4s linear infinite; }
+        @keyframes gear-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* =========================
            FANCY CINEMATIC LOADER
         ========================= */
         .loader-container { 
@@ -153,6 +161,11 @@
             width: 100%; max-width: 760px; overflow: hidden; border-radius: 20px; 
             background: var(--bg-box); border: 1px solid var(--border-color); box-shadow: 0 25px 60px rgba(0,0,0,0.6); 
             display: flex; flex-direction: column; max-height: 90vh; position: relative; 
+        }
+
+        .modal-fullscreen {
+            position: fixed; inset: 0; z-index: 27000; background: var(--bg-main);
+            display: none; flex-direction: column; width: 100vw; height: 100vh;
         }
 
         .modal-close-x { 
@@ -328,6 +341,11 @@
             box-shadow: 0 0 6px #10b981; animation: blink 1.2s infinite alternate; 
         }
 
+        .notif-badge-number {
+            background: #10b981; color: #fff; font-size: 11px; font-weight: 900;
+            padding: 2px 7px; border-radius: 12px; min-width: 20px; text-align: center;
+        }
+
         @keyframes blink {
             0% { opacity: 1; transform: scale(1); }
             100% { opacity: 0.3; transform: scale(0.8); }
@@ -430,7 +448,7 @@
         @keyframes fadeSlide { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         /* =========================
-           MAIN APP & HEADER (FIXED ALIGNMENTS)
+           MAIN APP & HEADER
         ========================= */
         #app-wrapper { width: 100%; max-width: 1400px; margin: 0 auto; position: relative; padding-bottom: var(--bottom-nav-h); }
         #main-app { display: none; }
@@ -511,14 +529,16 @@
         .movie-list { display: flex; gap: 16px; overflow-x: auto; padding: 5px 20px 25px; scrollbar-width: none; }
         .movie-list::-webkit-scrollbar { display: none; }
         
+        /* اصلاح مشکل لمس طولانی روی بنر و کارت فیلم */
         .movie-card { 
             flex: 0 0 145px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); 
-            border-radius: 16px; padding: 8px; cursor: pointer; user-select: none; transition: 0.3s ease; position: relative; 
+            border-radius: 16px; padding: 8px; cursor: pointer; user-select: none; -webkit-user-select: none;
+            -webkit-touch-callout: none; transition: 0.3s ease; position: relative; 
         }
         .movie-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--accent); box-shadow: 0 12px 25px rgba(0,0,0,0.4), 0 0 15px rgba(59, 130, 246, 0.15); background: rgba(255,255,255,0.05); }
         
-        .poster { position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 12px; background: #000; }
-        .poster img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+        .poster { position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 12px; background: #000; pointer-events: none; }
+        .poster img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; -webkit-user-drag: none; transition: transform 0.4s ease; }
         .movie-card:hover .poster img { transform: scale(1.05); }
         .poster-overlay { position: absolute; inset: auto 0 0 0; height: 40%; background: linear-gradient(transparent, rgba(0,0,0,.9)); pointer-events: none; }
         .movie-name { padding: 10px 4px 2px; font-size: 13.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
@@ -598,9 +618,14 @@
         .btn-download { background: var(--bg-box); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 10px; padding: 8px 16px; font-weight: bold; font-size: 12px; cursor: pointer; transition: 0.2s; }
         .btn-download:hover { background: rgba(255, 255, 255, 0.05); }
         
-        .msg-bubble { background: var(--bg-input); padding: 14px; border-radius: 12px; margin-bottom: 10px; font-size: 13.5px; border-right: 3px solid var(--accent); }
-        .msg-bubble.system { border-right-color: #3b82f6; } 
-        .msg-bubble.admin-reply { border-right-color: #10b981; } 
+        /* CHAT STYLE FOR INBOX & MESSAGES */
+        .chat-container { display: flex; flex-direction: column; gap: 12px; padding: 15px; flex-grow: 1; overflow-y: auto; }
+        .chat-bubble { max-width: 82%; padding: 12px 16px; border-radius: 16px; font-size: 13.5px; line-height: 1.7; position: relative; word-wrap: break-word; }
+        .chat-user { align-self: flex-end; background: #1e3a8a; color: #fff; border-bottom-left-radius: 4px; border: 1px solid rgba(59, 130, 246, 0.4); text-align: right; }
+        .chat-admin { align-self: flex-start; background: #064e3b; color: #fff; border-bottom-right-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.4); text-align: right; }
+        .chat-broadcast { align-self: center; width: 95%; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 14px; text-align: center; }
+        .chat-meta { font-size: 11px; opacity: 0.8; margin-bottom: 5px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .ticket-code-tag { background: rgba(255,255,255,0.15); padding: 2px 6px; border-radius: 6px; font-size: 10px; font-family: monospace; letter-spacing: 1px; }
 
         #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; display: none; }
     </style>
@@ -625,15 +650,21 @@
     <!-- AUTH SCREEN -->
     <div id="auth-screen">
         
-        <!-- Maintenance Modal Box (Inside Auth Screen) -->
+        <!-- Maintenance Modal Box (With Updated Sign SVG) -->
         <div class="box-container" id="maintenance-box" style="display: none; text-align: center; position: relative;">
             <button class="modal-close-x" style="top: 14px; right: 14px; left: auto; border: none; font-size: 24px; color: var(--text-muted); background: transparent; cursor: pointer;" onclick="closeMaintenanceBox()">×</button>
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 20px;">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-            </svg>
-            <h2 style="color: var(--text-main); margin-bottom: 15px; font-size: 18px;">سایت در حال بروزرسانی است</h2>
-            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.8;">کاربر عزیز، سایت در دست تعمیر و به روزرسانی میباشد، از صبر و شکیبایی شما متشکریم، به زودی برخواهیم گشت🙏</p>
+            <div class="update-sign"> 
+                <svg viewBox="0 0 500 440" xmlns="http://www.w3.org/2000/svg" aria-label="در حال به‌روزرسانی"> 
+                    <path d="M250 35 L455 390 Q463 405 445 405 L55 405 Q37 405 45 390 Z" fill="#ffffff" stroke="#e5252a" stroke-width="22" stroke-linejoin="round" /> 
+                    <path d="M250 145 C239 145 233 153 234 164 L242 265 C243 276 257 276 258 265 L266 164 C267 153 261 145 250 145 Z" fill="#e5252a" /> 
+                    <g class="gear" transform="translate(250 325) scale(0.85) translate(-250 -325)"> 
+                        <path d="M244 282 L256 282 L258 290 Q263 291 267 294 L275 290 L284 299 L280 307 Q283 311 284 316 L292 318 L292 332 L284 334 Q283 339 280 343 L284 351 L275 360 L267 356 Q263 359 258 360 L256 368 L244 368 L242 360 Q237 359 233 356 L225 360 L216 351 L220 343 Q217 339 216 334 L208 332 L208 318 L216 316 Q217 311 220 307 L216 299 L225 290 L233 294 Q237 291 242 290 Z" fill="#242424" /> 
+                        <circle cx="250" cy="325" r="14" fill="#ffffff" /> 
+                    </g> 
+                </svg> 
+            </div>
+            <h2 style="color: var(--text-main); margin-bottom: 12px; font-size: 18px;">سایت در حال تعمیر و به روز رسانی میباشد</h2>
+            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.8;">از صبر و شکیبایی شما متشکریم<br>به زودی برخواهیم گشت</p>
         </div>
 
         <div class="box-container" id="login-box">
@@ -932,13 +963,34 @@
 
         <div id="tab-messages" class="tab-content">
             <div class="admin-section">
-                <h3>صندوق پیام‌های کاربران</h3>
-                <div id="admin-inbox-list"></div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
+                    <h3>گفتگو با کاربران (پیام‌رسان)</h3>
+                    <button class="btn-sm btn-reject" onclick="clearAllSupportChats()" style="padding:6px 12px;">🗑 حذف کل پیام‌ها و گفتگوها</button>
+                </div>
+                
+                <!-- User PV List View -->
+                <div id="admin-chat-users-list"></div>
+
+                <!-- Active PV Chat View -->
+                <div id="admin-active-chat" style="display:none; flex-direction:column; height:500px; background:var(--bg-main); border:1px solid var(--border-color); border-radius:14px; overflow:hidden;">
+                    <div style="padding:12px 16px; background:var(--bg-box); border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <button class="btn-sm" style="background:var(--bg-input);" onclick="closeAdminActiveChat()">➔ برگشت</button>
+                            <span id="active-chat-username" style="font-weight:bold; color:var(--accent);"></span>
+                        </div>
+                    </div>
+                    <div class="chat-container" id="admin-chat-messages-body"></div>
+                    <div style="padding:10px; background:var(--bg-box); display:flex; gap:8px; border-top:1px solid var(--border-color);">
+                        <input type="text" id="admin-reply-input" class="input-field" placeholder="پاسخ خود را بنویسید..." style="height:44px;">
+                        <button class="btn-primary" style="width:90px; height:44px; margin-top:0;" onclick="sendAdminReply()">ارسال</button>
+                    </div>
+                </div>
             </div>
+
             <div class="admin-section">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                    <h3>پیام‌های سیستمی (همگانی)</h3>
-                    <button class="btn-sm btn-approve" onclick="openSystemMessageModal()">+ پیام جدید</button>
+                    <h3>اعلان‌های سراسری پلاتو</h3>
+                    <button class="btn-sm btn-approve" onclick="openSystemMessageModal()">+ اعلان جدید</button>
                 </div>
                 <div id="admin-sys-list"></div>
             </div>
@@ -950,19 +1002,20 @@
         <div class="logo">
             <div class="premium-logo">
                 <svg viewBox="0 0 1536 614"><path fill="var(--text-main)" fill-rule="evenodd" d="M 1223 316 L 1256 315 L 1283 323 L 1302 337 L 1318 362 L 1323 390 L 1318 421 L 1301 446 L 1289 456 L 1273 464 L 1257 468 L 1229 468 L 1200 457 L 1184 443 L 1169 418 L 1165 401 L 1165 383 L 1169 365 L 1177 348 L 1195 329 Z M 923 282 L 919 289 L 921 313 L 989 314 L 994 318 L 994 492 L 996 496 L 1002 498 L 1029 497 L 1031 494 L 1031 319 L 1036 314 L 1104 313 L 1110 305 L 1110 284 L 1108 282 Z M 791 285 L 729 410 L 690 496 L 722 498 L 728 495 L 807 327 L 812 325 L 826 351 L 890 494 L 894 497 L 930 497 L 927 485 L 832 287 L 827 283 L 818 282 Z M 1206 285 L 1182 295 L 1163 308 L 1145 328 L 1134 348 L 1127 370 L 1126 405 L 1138 441 L 1149 460 L 1164 475 L 1182 488 L 1208 498 L 1230 502 L 1253 502 L 1285 496 L 1305 488 L 1319 480 L 1337 463 L 1348 447 L 1357 425 L 1361 407 L 1361 377 L 1355 352 L 1347 334 L 1336 319 L 1321 305 L 1304 294 L 1284 286 L 1261 281 L 1229 281 Z M 510 281 L 507 293 L 507 495 L 511 498 L 656 497 L 658 477 L 653 466 L 551 466 L 547 463 L 545 458 L 546 290 L 540 281 Z M 425 287 L 404 278 L 278 278 L 278 297 L 290 308 L 389 309 L 407 317 L 416 326 L 424 346 L 424 361 L 416 379 L 397 395 L 390 397 L 292 397 L 278 403 L 277 491 L 279 497 L 312 498 L 316 496 L 317 435 L 321 431 L 399 429 L 429 418 L 446 403 L 455 388 L 462 367 L 462 336 L 458 323 L 448 306 Z"/></svg>
+                </div>
             </div>
-        </div>
-        
-        <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none;">
-            خرید اشتراک
-            <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
-        </a>
+            
+            <a href="https://t.me/plato_supports" target="_blank" id="buy-sub-btn" class="buy-sub-btn" style="display:none;">
+                خرید اشتراک
+                <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">(با فیلترشکن روشن کلیک کنید)</span>
+            </a>
 
-        <div class="header-actions">
-            <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                <span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>
-            </button>
+            <div class="header-actions">
+                <button class="profile-button" onclick="openSidebar()" aria-label="منو کاربری" id="header-avatar-img">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <span class="notif-dot" id="header-notif" style="position:absolute; top:0; right:0; display:none;"></span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -1104,6 +1157,23 @@
         </div>
     </div>
 
+    <!-- FULLSCREEN USER INBOX MODAL -->
+    <div class="modal-fullscreen" id="inboxModal">
+        <div style="height:65px; background:var(--header-bg); border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; padding:0 20px; backdrop-filter:blur(15px);">
+            <div style="font-weight:900; font-size:16px;">صندوق پیام‌ها و گفتگو</div>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <button style="background:none; border:none; color:#ef4444; cursor:pointer;" onclick="deleteAllMessages()" title="حذف تمام پیام‌ها">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                </button>
+                <button style="background:var(--bg-input); border:1px solid var(--border-color); color:var(--text-main); width:34px; height:34px; border-radius:50%; font-size:18px; font-weight:bold; cursor:pointer;" onclick="closeInboxModal()">×</button>
+            </div>
+        </div>
+        <div class="chat-container" id="user-messages-list"></div>
+        <div style="padding:12px 20px; background:var(--bg-box); border-top:1px solid var(--border-color); display:flex; gap:10px;">
+            <button class="btn-primary" style="margin-top:0;" onclick="openSupportModal()">+ ارسال تیکت جدید</button>
+        </div>
+    </div>
+
     <!-- MODALS -->
     <!-- Resume Modal -->
     <div class="modal" id="resumeModal" style="z-index: 26000;">
@@ -1173,28 +1243,14 @@
         </div>
     </div>
 
-    <div class="modal" id="supportModal" style="z-index: 26000;">
-        <div class="modal-box" style="max-width: 400px;">
+    <!-- Create Ticket Modal -->
+    <div class="modal" id="supportModal" style="z-index: 28000;">
+        <div class="modal-box" style="max-width: 420px;">
             <button class="modal-close-x" onclick="document.getElementById('supportModal').classList.remove('show')">×</button>
             <div class="modal-content">
-                <h3 class="modal-title">ارتباط با پشتیبانی</h3>
-                <textarea id="support-msg-text" class="input-field" placeholder="پیام خود را بنویسید..."></textarea>
-                <button class="btn-primary" onclick="sendSupportMessage()">ارسال پیام</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="inboxModal" style="z-index: 26000;">
-        <div class="modal-box" style="max-width: 500px; height: 80vh;">
-            <div class="modal-content" style="display:flex; flex-direction:column; padding-top: 15px;">
-                <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px; margin-top:5px;">
-                    <h3 class="modal-title" style="margin:0;">صندوق پیام‌ها</h3>
-                    <button style="background:none; border:none; color:#ef4444; cursor:pointer;" onclick="deleteAllMessages()" title="حذف همه پیام‌ها">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                    </button>
-                </div>
-                <button class="modal-close-x" onclick="document.getElementById('inboxModal').classList.remove('show')" style="position:absolute; top: 14px; left: 14px; z-index:20;">×</button>
-                <div id="user-messages-list" style="flex-grow:1; overflow-y:auto; padding-right:5px;"></div>
+                <h3 class="modal-title">ثبت تیکت پشتیبانی</h3>
+                <textarea id="support-msg-text" class="input-field" placeholder="متن تیکت خود را کامل بنویسید..."></textarea>
+                <button class="btn-primary" onclick="sendSupportMessage()">ارسال و دریافت شماره تیکت</button>
             </div>
         </div>
     </div>
@@ -1212,26 +1268,14 @@
         </div>
     </div>
 
-    <!-- Admin Modals with High Z-Index so they show over Admin Screen -->
-    <div class="modal" id="adminReplyModal" style="z-index: 26000;">
-        <div class="modal-box" style="max-width: 400px; position: relative;">
-            <button class="modal-close-x" onclick="document.getElementById('adminReplyModal').classList.remove('show')">×</button>
-            <div class="modal-content">
-                <h3 class="modal-title">پاسخ به کاربر</h3>
-                <input type="hidden" id="reply-user-id">
-                <textarea id="admin-reply-text" class="input-field" placeholder="متن پاسخ..."></textarea>
-                <button class="btn-primary" onclick="sendAdminReply()">ارسال پاسخ</button>
-            </div>
-        </div>
-    </div>
-
+    <!-- Send System Notification Modal -->
     <div class="modal" id="sysMsgModal" style="z-index: 26000;">
         <div class="modal-box" style="max-width: 400px; position: relative;">
             <button class="modal-close-x" onclick="document.getElementById('sysMsgModal').classList.remove('show')">×</button>
             <div class="modal-content">
-                <h3 class="modal-title" style="color:#10b981;">ارسال پیام عمومی</h3>
-                <textarea id="sys-msg-text" class="input-field" placeholder="متن پیام عمومی..."></textarea>
-                <button class="btn-primary" style="background:#10b981;" onclick="sendSystemMessage()">ارسال</button>
+                <h3 class="modal-title" style="color:#10b981;">ارسال اعلان سراسری</h3>
+                <textarea id="sys-msg-text" class="input-field" placeholder="متن اعلان عمومی سایت..."></textarea>
+                <button class="btn-primary" style="background:#10b981;" onclick="sendSystemMessage()">انتشار اعلان</button>
             </div>
         </div>
     </div>
@@ -1258,6 +1302,8 @@
     let linkTimerInterval = null;
     let allUsersArray = []; 
     let siteSettings = { reg_limit: 100, maintenance: false };
+    let currentActiveAdminChatUid = null;
+    let adminChatRefreshInterval = null;
 
     /* =========================
        AVATAR SYSTEM
@@ -1476,7 +1522,7 @@
         
         try {
             const sessionPromise = supabaseClient.auth.getSession();
-            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 8000));
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 15000));
             
             const { data, error } = await Promise.race([sessionPromise, timeoutPromise]);
             
@@ -1556,7 +1602,7 @@
         } catch (err) { 
             console.error(err);
             document.getElementById('auth-screen').style.display = 'flex'; 
-            showCustomAlert('لطفاً مجدد تلاش کنید');
+            showCustomAlert('پاسخ از سرور کمی طول کشید؛ مجدد امتحان کنید.');
         } finally {
             showLoader(false);
         }
@@ -1659,6 +1705,7 @@
         }
     }
 
+    /* تابع لاگین با مهلت ۱۵ ثانیه‌ای برای پینگ و شبکه */
     window.doLogin = async function() {
         var u = toEnglishDigits(document.getElementById('log-user').value).trim().toLowerCase();
         var p = toEnglishDigits(document.getElementById('log-pass').value).trim();
@@ -1671,17 +1718,21 @@
         showLoader(true);
         try { 
             const loginPromise = supabaseClient.auth.signInWithPassword({ email: u + '@plato.com', password: p });
-            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 8000));
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 15000));
             
             const { data, error } = await Promise.race([loginPromise, timeoutPromise]);
             
             if (error) { 
-                showCustomAlert('لطفاً مجدد تلاش کنید');
+                showCustomAlert('نام کاربری یا رمز عبور اشتباه است.');
             } else { 
                 await checkUserSession(); 
             }
         } catch(err) { 
-            showCustomAlert('لطفاً مجدد تلاش کنید'); 
+            if (err.message === 'TIMEOUT') {
+                showCustomAlert('پاسخ از سرور کمی طول کشید؛ لطفاً یک‌بار دیگر دکمه ورود را بزنید.');
+            } else {
+                showCustomAlert('نام کاربری یا رمز عبور اشتباه است.');
+            }
         } finally {
             showLoader(false); 
         }
@@ -1805,6 +1856,7 @@
         });
     }
 
+    /* واکشی ایمن فیلم‌ها و سریال‌ها با ستون‌های دقیق */
     async function fetchMoviesFromDatabase() {
         try {
             const { data, error } = await supabaseClient
@@ -1907,6 +1959,7 @@
         return true;
     }
 
+    /* باز کردن امن فیلم با متن لودینگ ملایم */
     window.openPlayer = async function(movie) {
         if(!checkSubscription()) return; 
         
@@ -1929,7 +1982,7 @@
         videoPlayer.removeAttribute("src");
         
         const linksContainer = document.getElementById("modal-links-container"); 
-        linksContainer.innerHTML = '<div style="font-size:13px; color:var(--accent); text-align:center; padding:15px;">در حال دریافت امن لینک‌ها...</div>';
+        linksContainer.innerHTML = '<div style="font-size:13px; color:var(--accent); text-align:center; padding:15px;">درحال بارگذاری...</div>';
         
         if(linkTimerInterval) clearInterval(linkTimerInterval);
 
@@ -2610,7 +2663,7 @@
                                 <div class="news-avatar">
                                     <svg class="svg-icon" style="margin:0; width:22px; height:22px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5 4.5C5 3.67 5.67 3 6.5 3H19V18.5C19 19.88 17.88 21 16.5 21H6.5C5.67 21 5 20.33 5 19.5V4.5Z" stroke="currentColor" stroke-width="1.7"/>
-                                        <path d="M8.5 7H15.5M8.5 10.5H15.5M8.5 10.5H15.5M8.5 14H12.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                                        <path d="M8.5 7H15.5M8.5 10.5H15.5M8.5 14H12.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
                                         <circle cx="17" cy="6" r="2" fill="currentColor"/>
                                     </svg>
                                 </div>
@@ -2919,7 +2972,7 @@
     }
 
     window.deleteAllMessages = async function() {
-        if(!confirm('حذف تمام پیام‌ها؟')) return; 
+        if(!confirm('حذف تمام پیام‌های این صندوق؟')) return; 
         showLoader(true);
         
         try {
@@ -2988,10 +3041,10 @@
     }
 
     window.openSupportModal = function() { 
-        closeSidebar(); 
         document.getElementById('supportModal').classList.add('show'); 
     }
 
+    /* ارسال تیکت توسط کاربر با شماره رندوم مبنای 1000 */
     window.sendSupportMessage = async function() {
         const text = document.getElementById('support-msg-text').value.trim(); 
         if(!text) return;
@@ -3026,15 +3079,24 @@
         
         showLoader(true); 
         try {
-            const { error } = await supabaseClient.from('messages').insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text, is_read: false }]);
+            const { data: insertedMsg, error } = await supabaseClient
+                .from('messages')
+                .insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text, is_read: false }])
+                .select();
+
             if(error) {
                 showCustomAlert('لطفاً مجدد تلاش کنید');
             } else {
                 history.push(nowTime); 
                 localStorage.setItem(storageKey, JSON.stringify(history));
-                showCustomAlert('ارسال شد.'); 
+                
+                let ticketCode = insertedMsg && insertedMsg[0] ? (1000 + insertedMsg[0].id) : (1000 + Math.floor(Math.random() * 9000));
+                showCustomAlert(`تیکت شما با شماره #${ticketCode} ثبت شد.`); 
                 document.getElementById('support-msg-text').value = ''; 
                 document.getElementById('supportModal').classList.remove('show');
+                
+                // باز کردن و رفرش صندوق پیام‌ها
+                openInboxModal();
             }
         } catch(e) {
             console.error(e);
@@ -3044,15 +3106,16 @@
         }
     }
 
+    /* صندوق پیام تمام‌صفحه به سبک چت پیام‌رسان */
     window.openInboxModal = async function() {
         closeSidebar(); 
         document.getElementById('inbox-notif').style.display = 'none'; 
         document.getElementById('header-notif').style.display = 'none'; 
-        document.getElementById('inboxModal').classList.add('show'); 
+        document.getElementById('inboxModal').style.display = 'flex'; 
         showLoader(true);
         
         try {
-            const { data } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: false });
+            const { data } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: true });
             const list = document.getElementById('user-messages-list'); 
             list.innerHTML = '';
             
@@ -3061,31 +3124,52 @@
                 let myMsgs = [];
                 
                 data.forEach(m => { 
-                    if (!deletedMsgs.includes(m.id) && (m.direction === 'system_all' || (m.direction === 'admin_to_user' && m.user_id === currentUserProfile.id))) {
+                    if (!deletedMsgs.includes(m.id) && (m.direction === 'system_all' || m.user_id === currentUserProfile.id)) {
                         myMsgs.push(m); 
                     }
                 });
                 
                 if(myMsgs.length > 0) {
                     myMsgs.forEach(m => {
-                        let c = m.direction === 'system_all' ? 'system' : 'admin-reply';
-                        let t = m.direction === 'system_all' ? '<b>پیام عمومی سیستم</b>' : '<b>پشتیبانی</b>';
+                        let ticketId = 1000 + m.id;
+                        let timeStr = new Date(m.created_at).toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
                         
-                        list.innerHTML += `
-                            <div class="msg-bubble ${c}">
-                                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:5px; margin-bottom:8px;">
-                                    <span>${t}</span>
-                                    <button style="background:none; border:none; color:#ef4444; cursor:pointer; display:flex; align-items:center;" onclick="deleteLocalMsg(${m.id})">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                                    </button>
-                                </div>
-                                <div style="line-height:1.6; margin-top:4px;">${m.content}</div>
-                            </div>`;
+                        if(m.direction === 'system_all') {
+                            list.innerHTML += `
+                                <div class="chat-bubble chat-broadcast">
+                                    <div class="chat-meta" style="color:#10b981; justify-content:center;">
+                                        <span>📢 اعلان سراسری پلاتو</span>
+                                    </div>
+                                    <div style="font-size:14px; margin-top:6px;">${m.content}</div>
+                                    <div style="font-size:10px; color:var(--text-muted); margin-top:8px;">${timeStr}</div>
+                                </div>`;
+                        } else if(m.direction === 'user_to_admin') {
+                            list.innerHTML += `
+                                <div class="chat-bubble chat-user">
+                                    <div class="chat-meta">
+                                        <span>پیام شما</span>
+                                        <span class="ticket-code-tag">تیکت #${ticketId}</span>
+                                    </div>
+                                    <div>${m.content}</div>
+                                    <div style="font-size:10px; opacity:0.6; text-align:left; margin-top:4px;">${timeStr}</div>
+                                </div>`;
+                        } else if(m.direction === 'admin_to_user') {
+                            list.innerHTML += `
+                                <div class="chat-bubble chat-admin">
+                                    <div class="chat-meta">
+                                        <span style="color:#34d399;">پشتیبانی پلاتو</span>
+                                        <button style="background:none; border:none; color:#ef4444; cursor:pointer;" onclick="deleteLocalMsg(${m.id})">×</button>
+                                    </div>
+                                    <div>${m.content}</div>
+                                    <div style="font-size:10px; opacity:0.6; text-align:left; margin-top:4px;">${timeStr}</div>
+                                </div>`;
+                        }
                     });
                     
+                    list.scrollTop = list.scrollHeight;
                     await supabaseClient.from('messages').update({ is_read: true }).eq('direction', 'admin_to_user').eq('user_id', currentUserProfile.id).eq('is_read', false);
                 } else { 
-                    list.innerHTML = '<div style="color:var(--text-muted); text-align:center;">خالی است.</div>'; 
+                    list.innerHTML = '<div style="color:var(--text-muted); text-align:center; margin:auto;">صندوق پیام‌های شما خالی است.<br><small>برای شروع گفتگو تیکت ثبت کنید.</small></div>'; 
                 }
             }
         } catch(e) {
@@ -3095,7 +3179,12 @@
             showLoader(false);
         }
     }
+
+    window.closeInboxModal = function() {
+        document.getElementById('inboxModal').style.display = 'none';
+    }
     
+    /* سیستم چت PV مدیریت در پنل ادمین */
     async function loadAdminInbox() {
         try {
             const { data: usersData } = await supabaseClient.from('users_data').select('id, username, avatar');
@@ -3104,30 +3193,57 @@
                 usersData.forEach(u => userMap[u.id] = u);
             }
             
-            const { data: msgs } = await supabaseClient.from('messages').select('*').eq('direction', 'user_to_admin').order('created_at', { ascending: false });
-            const list = document.getElementById('admin-inbox-list'); 
-            list.innerHTML = '';
+            const { data: msgs } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: false });
+            
+            // دسته‌بندی پیام‌ها به تفکیک کاربر (PV)
+            let userChats = {};
+            let unreadCounts = {};
             
             if(msgs) {
-                msgs.forEach(msg => {
-                    let sender = userMap[msg.user_id] || { username: 'کاربر', avatar: 1 };
+                msgs.forEach(m => {
+                    if(m.direction === 'user_to_admin' || m.direction === 'admin_to_user') {
+                        let uid = m.user_id;
+                        if(!userChats[uid]) userChats[uid] = [];
+                        userChats[uid].push(m);
+                        
+                        if(m.direction === 'user_to_admin' && !m.is_read) {
+                            unreadCounts[uid] = (unreadCounts[uid] || 0) + 1;
+                        }
+                    }
+                });
+            }
+            
+            const list = document.getElementById('admin-chat-users-list'); 
+            list.innerHTML = '';
+            
+            let uids = Object.keys(userChats);
+            if(uids.length === 0) {
+                list.innerHTML = '<div style="color:var(--text-muted); text-align:center; padding:20px;">هیچ پیام یا تیکتی از کاربران وجود ندارد.</div>';
+            } else {
+                uids.forEach(uid => {
+                    let sender = userMap[uid] || { username: 'کاربر', avatar: 1 };
+                    let unread = unreadCounts[uid] || 0;
+                    let lastMsg = userChats[uid][0];
+                    let unreadBadge = unread > 0 ? `<span class="notif-badge-number">${unread}</span>` : '';
+                    
                     list.innerHTML += `
-                        <div class="req-card" style="flex-direction:column; align-items:stretch;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <div style="width:28px; height:28px; border-radius:50%; overflow:hidden;">${getAvatar(sender.avatar, sender.username)}</div>
-                                    <div style="color:var(--accent); font-weight:bold;">${sender.username}</div>
-                                </div>
-                                <div style="display:flex; gap:4px;">
-                                    <button class="btn-sm btn-approve" onclick="openAdminReply('${msg.user_id}', ${msg.id})">پاسخ</button>
-                                    <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button>
+                        <div class="req-card" style="cursor:pointer;" onclick="openAdminChatWith('${uid}', '${sender.username}')">
+                            <div style="display:flex; align-items:center; gap:10px; width:70%;">
+                                <div style="width:38px; height:38px; border-radius:50%; overflow:hidden; flex-shrink:0;">${getAvatar(sender.avatar, sender.username)}</div>
+                                <div style="overflow:hidden;">
+                                    <div style="color:var(--accent); font-weight:bold; font-size:14px;">${sender.username}</div>
+                                    <small style="color:var(--text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; margin-top:2px;">${lastMsg.content}</small>
                                 </div>
                             </div>
-                            <div style="background:var(--bg-box); padding:10px; border-radius:8px;">${msg.content}</div>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                ${unreadBadge}
+                                <span style="font-size:12px; color:var(--text-muted);">باز کردن ➔</span>
+                            </div>
                         </div>`;
                 });
             }
             
+            // لود اعلان‌های سراسری سیستم
             const { data: sysMsgs } = await supabaseClient.from('messages').select('*').eq('direction', 'system_all').order('created_at', { ascending: false });
             const sysList = document.getElementById('admin-sys-list'); 
             sysList.innerHTML = '';
@@ -3137,7 +3253,7 @@
                     sysList.innerHTML += `
                         <div class="req-card" style="flex-direction:column; align-items:stretch;">
                             <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                                <span style="color:#10b981;">پیام عمومی</span>
+                                <span style="color:#10b981; font-weight:bold;">اعلان سراسری</span>
                                 <button class="btn-sm btn-reject" onclick="deleteAdminMsg(${msg.id})">حذف</button>
                             </div>
                             <div>${msg.content}</div>
@@ -3149,38 +3265,89 @@
         }
     }
 
-    window.deleteAdminMsg = async function(id) { 
-        try { 
-            await supabaseClient.from('messages').delete().eq('id', id); 
-            loadAdminInbox(); 
-        } catch(e) {
-            console.error(e);
-        } 
+    /* باز کردن چت پی‌وی یک کاربر در پنل ادمین */
+    window.openAdminChatWith = async function(uid, username) {
+        currentActiveAdminChatUid = uid;
+        document.getElementById('admin-chat-users-list').style.display = 'none';
+        document.getElementById('admin-active-chat').style.display = 'flex';
+        document.getElementById('active-chat-username').textContent = "گفتگو با: " + username;
+        
+        loadActiveChatMessages();
+        
+        // علامت زدن پیام‌ها به عنوان خوانده شده
+        await supabaseClient.from('messages').update({ is_read: true }).eq('user_id', uid).eq('direction', 'user_to_admin');
+        checkUnreadMessages();
     }
 
-    window.openAdminReply = async function(uid, mid) { 
-        document.getElementById('reply-user-id').value = uid; 
-        document.getElementById('adminReplyModal').classList.add('show'); 
-        try { 
-            await supabaseClient.from('messages').update({ is_read: true }).eq('id', mid); 
-        } catch(e) {
-            console.error(e);
-        } 
+    window.closeAdminActiveChat = function() {
+        currentActiveAdminChatUid = null;
+        document.getElementById('admin-active-chat').style.display = 'none';
+        document.getElementById('admin-chat-users-list').style.display = 'block';
+        loadAdminInbox();
     }
 
+    async function loadActiveChatMessages() {
+        if(!currentActiveAdminChatUid) return;
+        const container = document.getElementById('admin-chat-messages-body');
+        
+        const { data } = await supabaseClient
+            .from('messages')
+            .select('*')
+            .eq('user_id', currentActiveAdminChatUid)
+            .order('created_at', { ascending: true });
+            
+        container.innerHTML = '';
+        if(data) {
+            data.forEach(m => {
+                let timeStr = new Date(m.created_at).toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+                let ticketId = 1000 + m.id;
+                
+                if(m.direction === 'user_to_admin') {
+                    container.innerHTML += `
+                        <div class="chat-bubble chat-user" style="align-self:flex-start; background:#1e293b;">
+                            <div class="chat-meta">
+                                <span>کاربر</span>
+                                <span class="ticket-code-tag">تیکت #${ticketId}</span>
+                            </div>
+                            <div>${m.content}</div>
+                            <div style="font-size:10px; opacity:0.6; text-align:left; margin-top:4px;">${timeStr}</div>
+                        </div>`;
+                } else if(m.direction === 'admin_to_user') {
+                    container.innerHTML += `
+                        <div class="chat-bubble chat-admin" style="align-self:flex-end;">
+                            <div class="chat-meta">
+                                <span>پاسخ شما (پشتیبانی)</span>
+                                <button style="background:none; border:none; color:#ef4444; cursor:pointer;" onclick="deleteAdminMsg(${m.id})">×</button>
+                            </div>
+                            <div>${m.content}</div>
+                            <div style="font-size:10px; opacity:0.6; text-align:left; margin-top:4px;">${timeStr}</div>
+                        </div>`;
+                }
+            });
+            container.scrollTop = container.scrollHeight;
+        }
+    }
+
+    /* ارسال پاسخ ادمین با برچسب تیکت */
     window.sendAdminReply = async function() { 
-        const t = document.getElementById('admin-reply-text').value.trim(); 
-        const uid = document.getElementById('reply-user-id').value; 
-        if(!t) return; 
+        const input = document.getElementById('admin-reply-input');
+        const text = input.value.trim();
+        if(!text || !currentActiveAdminChatUid) return;
         
         showLoader(true); 
         try { 
-            const { error } = await supabaseClient.from('messages').insert([{ user_id: uid, direction: 'admin_to_user', content: t, is_read: false }]); 
+            const { error } = await supabaseClient.from('messages').insert([{ 
+                user_id: currentActiveAdminChatUid, 
+                direction: 'admin_to_user', 
+                content: text, 
+                is_read: false 
+            }]); 
+            
             if(error) {
                 showCustomAlert('لطفاً مجدد تلاش کنید');
             } else { 
-                document.getElementById('admin-reply-text').value = ''; 
-                document.getElementById('adminReplyModal').classList.remove('show'); 
+                input.value = ''; 
+                loadActiveChatMessages();
             }
         } catch(e) {
             console.error(e);
@@ -3188,6 +3355,46 @@
         } finally {
             showLoader(false); 
         }
+    }
+
+    /* حذف کل چت‌ها و گفتگوهای کاربران و پشتیبانی */
+    window.clearAllSupportChats = async function() {
+        if(!confirm('آیا مطمئن هستید؟ با این کار تمامی گفتگوها و پیام‌های تیکت‌ها برای همیشه پاک خواهند شد.')) return;
+        
+        showLoader(true);
+        try {
+            const { error } = await supabaseClient
+                .from('messages')
+                .delete()
+                .in('direction', ['user_to_admin', 'admin_to_user']);
+                
+            if(error) {
+                showCustomAlert('خطا در حذف پیام‌ها');
+            } else {
+                showCustomAlert('تمامی پیام‌ها با موفقیت پاکسازی شدند.');
+                closeAdminActiveChat();
+                loadAdminInbox();
+                checkUnreadMessages();
+            }
+        } catch(e) {
+            console.error(e);
+            showCustomAlert('لطفاً مجدد تلاش کنید');
+        } finally {
+            showLoader(false);
+        }
+    }
+
+    window.deleteAdminMsg = async function(id) { 
+        try { 
+            await supabaseClient.from('messages').delete().eq('id', id); 
+            if(currentActiveAdminChatUid) {
+                loadActiveChatMessages();
+            } else {
+                loadAdminInbox(); 
+            }
+        } catch(e) {
+            console.error(e);
+        } 
     }
 
     window.openSystemMessageModal = function() { 
@@ -3207,6 +3414,7 @@
                 document.getElementById('sys-msg-text').value = ''; 
                 document.getElementById('sysMsgModal').classList.remove('show'); 
                 loadAdminInbox(); 
+                showCustomAlert('اعلان سراسری ارسال شد.');
             }
         } catch(e) {
             console.error(e);
