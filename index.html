@@ -76,10 +76,11 @@
         .premium-logo { 
             position: relative; display: inline-flex; align-items: center; 
             justify-content: center; overflow: hidden; border-radius: 8px; padding: 0 4px; 
+            height: 38px;
         }
 
         .premium-logo svg { 
-            height: 52px; width: auto; fill: var(--text-main); 
+            height: 34px; width: 90px; max-width: 95px; fill: var(--text-main); 
             filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5)); 
         }
 
@@ -344,7 +345,6 @@
             border: 2px solid var(--bg-input);
         }
         
-        /* Specific adjust for profile button notif dot */
         .profile-button .notif-dot {
             top: -2px; right: -2px; border-color: var(--bg-main);
         }
@@ -397,7 +397,6 @@
         .admin-section h3 { margin-bottom: 16px; font-size: 15px; color: var(--accent); display: flex; align-items: center; gap: 8px; }
         .admin-section h3::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--accent); border-radius: 4px; }
         
-        /* Accordion CSS for Admin Panel */
         .admin-accordion {
             background: var(--bg-input); padding: 14px 20px; border-radius: 12px;
             margin-bottom: 8px; font-weight: 800; cursor: pointer; display: flex;
@@ -466,29 +465,45 @@
         @keyframes fadeSlide { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         /* =========================
-           MAIN APP & HEADER
+           MAIN APP & HEADER (CORRECTED)
         ========================= */
         #app-wrapper { width: 100%; max-width: 1400px; margin: 0 auto; position: relative; padding-bottom: var(--bottom-nav-h); }
         #main-app { display: none; }
         
         .header { 
-            position: sticky; top: 0; z-index: 1000; height: 75px; display: flex; 
-            align-items: center; justify-content: space-between; padding: 0 20px; margin-top: 0;
-            background: var(--header-bg); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color); 
+            position: sticky; top: 0; z-index: 1000; height: 60px; display: flex; 
+            align-items: center; justify-content: space-between; padding: 0 16px; margin: 0;
+            background: var(--header-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
+            border-bottom: 1px solid var(--border-color); flex-wrap: nowrap;
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            order: 1;
+        }
+
+        .header .header-actions {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            order: 3;
         }
         
         .profile-button { 
-            width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; 
-            border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); cursor: pointer; overflow: hidden; position: relative;
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; 
+            border-radius: 50%; background: var(--bg-input); border: 1px solid var(--border-color); 
+            cursor: pointer; overflow: hidden; position: relative; flex-shrink: 0;
         }
 
         .buy-sub-btn {
             position: absolute; left: 50%; transform: translateX(-50%);
-            background: linear-gradient(45deg, rgba(239, 68, 68, 0.7), rgba(185, 28, 28, 0.7)); 
-            padding: 5px 16px; border-radius: 12px; font-size: 13px; font-weight: bold; color: white; 
+            background: linear-gradient(45deg, rgba(239, 68, 68, 0.8), rgba(185, 28, 28, 0.8)); 
+            padding: 4px 14px; border-radius: 10px; font-size: 12px; font-weight: bold; color: white; 
             text-align: center; text-decoration: none; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2); 
-            border: 1px solid rgba(255,255,255,0.15); transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-            z-index: 10; backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.15); transition: transform 0.2s, box-shadow 0.2s;
+            z-index: 10; backdrop-filter: blur(8px); white-space: nowrap;
         }
 
         .buy-sub-btn:hover {
@@ -501,8 +516,8 @@
            MARQUEE - LED TABLO 
         ========================= */
         .marquee-box { 
-            width: calc(100% - 40px); max-width: 750px; margin: 15px auto 0; background: #000000; 
-            border: 3px solid #1a1a1a; border-radius: 8px; overflow: hidden; height: 52px; position: relative; 
+            width: calc(100% - 30px); max-width: 750px; margin: 10px auto 0; background: #000000; 
+            border: 3px solid #1a1a1a; border-radius: 8px; overflow: hidden; height: 50px; position: relative; 
             box-shadow: inset 0 0 20px #000, 0 5px 15px rgba(255, 0, 0, 0.2); 
             background-image: radial-gradient(circle, #2a0000 1.5px, transparent 1.5px); background-size: 6px 6px; 
         }
@@ -510,7 +525,7 @@
         .marquee-text-wrapper { position: absolute; width: 100%; height: 100%; display: flex; align-items: center; }
 
         .marquee-text { 
-            position: absolute; white-space: nowrap; font-size: 20px; font-family: 'Courier New', Courier, monospace, "Vazirmatn"; 
+            position: absolute; white-space: nowrap; font-size: 19px; font-family: 'Courier New', Courier, monospace, "Vazirmatn"; 
             font-weight: 900; color: #ff0000; text-shadow: 0 0 4px #ff0000, 0 0 10px #ff0000, 0 0 18px #ff1111; 
             letter-spacing: 1.5px; top: 50%; transform: translateY(-50%) translateX(-100%); left: 0; 
             animation: scroll-marquee 15s linear infinite; will-change: transform, left;
@@ -521,44 +536,44 @@
             100% { left: 100%; transform: translateY(-50%) translateX(0); } 
         }
         
-        .search-box { padding: 14px 20px 4px; max-width: 750px; margin: 0 auto; }
+        .search-box { padding: 10px 15px 4px; max-width: 750px; margin: 0 auto; }
         .search-wrapper { position: relative; }
         .search-wrapper input { 
-            width: 100%; height: 50px; padding: 0 45px 0 16px; border: 1px solid var(--border-color); 
+            width: 100%; height: 48px; padding: 0 45px 0 16px; border: 1px solid var(--border-color); 
             border-radius: 14px; outline: none; background: var(--bg-box); font-size: 14px; transition: 0.2s; 
         }
         .search-wrapper input:focus { border-color: var(--accent); }
         .search-icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
         
-        .hero-container { margin: 14px auto 0; width: calc(100% - 40px); max-width: 1400px; }
+        .hero-container { margin: 10px auto 0; width: calc(100% - 30px); max-width: 1400px; }
         .hero { position: relative; width: 100%; overflow: hidden; border-radius: 20px; background: #000; margin: 0; }
         .slides { display: flex; direction: ltr; width: 100%; transition: transform .6s cubic-bezier(.22,.61,.36,1); }
         .slide { position: relative; min-width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
         .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .slider-dots { display: flex; justify-content: center; gap: 6px; padding-top: 12px; }
+        .slider-dots { display: flex; justify-content: center; gap: 6px; padding-top: 10px; }
         .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); border: none; cursor: pointer; transition: 0.2s; opacity: 0.6; }
         .dot.active { width: 18px; border-radius: 10px; background: var(--accent); opacity: 1; }
 
-        .section { margin-top: 30px; }
-        .section-header { display: flex; align-items: center; padding: 0 20px; margin-bottom: 15px; }
-        .section-title { font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
-        .section-title::before { content: ""; display: inline-block; width: 4px; height: 18px; border-radius: 4px; background: var(--accent); }
+        .section { margin-top: 25px; }
+        .section-header { display: flex; align-items: center; padding: 0 16px; margin-bottom: 12px; }
+        .section-title { font-size: 17px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+        .section-title::before { content: ""; display: inline-block; width: 4px; height: 16px; border-radius: 4px; background: var(--accent); }
         
-        .movie-list { display: flex; gap: 16px; overflow-x: auto; padding: 15px 20px 30px; scrollbar-width: none; }
+        .movie-list { display: flex; gap: 14px; overflow-x: auto; padding: 10px 16px 25px; scrollbar-width: none; }
         .movie-list::-webkit-scrollbar { display: none; }
         
         .movie-card { 
-            flex: 0 0 145px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); 
+            flex: 0 0 140px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); 
             border-radius: 16px; padding: 8px; cursor: pointer; user-select: none; -webkit-user-select: none;
             -webkit-touch-callout: none; transition: 0.3s ease; position: relative; 
         }
-        .movie-card:hover { transform: translateY(-8px) scale(1.02); z-index: 5; border-color: var(--accent); box-shadow: 0 12px 25px rgba(0,0,0,0.4), 0 0 15px rgba(59, 130, 246, 0.15); background: rgba(255,255,255,0.05); }
+        .movie-card:hover { transform: translateY(-6px) scale(1.02); z-index: 5; border-color: var(--accent); box-shadow: 0 12px 25px rgba(0,0,0,0.4), 0 0 15px rgba(59, 130, 246, 0.15); background: rgba(255,255,255,0.05); }
         
         .poster { position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 12px; background: #000; pointer-events: none; transform: translateZ(0); }
         .poster img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; -webkit-user-drag: none; transition: transform 0.4s ease; }
         .movie-card:hover .poster img { transform: scale(1.05); }
         .poster-overlay { position: absolute; inset: auto 0 0 0; height: 40%; background: linear-gradient(transparent, rgba(0,0,0,.9)); pointer-events: none; }
-        .movie-name { padding: 10px 4px 2px; font-size: 13.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
+        .movie-name { padding: 8px 4px 2px; font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
 
         .fav-btn { 
             position: absolute; top: 12px; left: 12px; z-index: 10; background: rgba(0,0,0,0.6); 
@@ -573,7 +588,7 @@
             font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 6px; letter-spacing: 1px; box-shadow: 0 2px 5px rgba(239, 68, 68, 0.5); 
         }
 
-        #news-container { padding: 20px; max-width: 600px; margin: 0 auto; padding-bottom: 90px; }
+        #news-container { padding: 15px; max-width: 600px; margin: 0 auto; padding-bottom: 90px; }
         .news-card { background: var(--bg-box); border: 1px solid var(--border-color); border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .news-header { display: flex; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border-color); }
         .news-avatar { width: 36px; height: 36px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 10px; color: #fff; overflow: hidden; }
@@ -587,7 +602,7 @@
         .news-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
         /* MOVIE DETAIL PAGE */
-        .movie-detail-content { max-width: 800px; margin: 0 auto; padding: 20px 20px 90px; }
+        .movie-detail-content { max-width: 800px; margin: 0 auto; padding: 15px 16px 90px; }
 
         .btn-back {
             background: none; color: var(--text-main); font-weight: bold; display: inline-flex; 
@@ -607,7 +622,7 @@
             width: 100%; height: 100%; background: #0c0c0e; border-radius: 9px; z-index: 1; display: flex; align-items: center; justify-content: center;
         }
         .neon-text { 
-            font-size: 26px; font-weight: 900; color: #fff; text-align: center; text-shadow: 0 0 10px var(--red-neon), 0 0 20px var(--red-neon), 0 0 40px var(--red-neon); letter-spacing: 2px; padding: 0 20px; 
+            font-size: 24px; font-weight: 900; color: #fff; text-align: center; text-shadow: 0 0 10px var(--red-neon), 0 0 20px var(--red-neon), 0 0 40px var(--red-neon); letter-spacing: 2px; padding: 0 16px; 
         }
 
         @keyframes spin-fx { 100% { transform: rotate(360deg); } }
@@ -621,18 +636,18 @@
             color: #fff; padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; z-index: 10; 
         }
 
-        .movie-info-card { background: var(--bg-input); padding: 20px; border-radius: 16px; margin-bottom: 25px; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .movie-info-title { font-size: 20px; font-weight: 900; margin-bottom: 15px; color: var(--accent); }
-        .movie-info-desc { font-size: 13.5px; color: var(--text-muted); line-height: 2; white-space: pre-wrap; }
+        .movie-info-card { background: var(--bg-input); padding: 18px; border-radius: 16px; margin-bottom: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .movie-info-title { font-size: 19px; font-weight: 900; margin-bottom: 12px; color: var(--accent); }
+        .movie-info-desc { font-size: 13px; color: var(--text-muted); line-height: 2; white-space: pre-wrap; }
 
-        .movie-link-row { display: flex; align-items: center; justify-content: space-between; background: var(--bg-input); padding: 14px 18px; border-radius: 16px; margin-bottom: 14px; border: 1px solid var(--border-color); transition: 0.2s; }
+        .movie-link-row { display: flex; align-items: center; justify-content: space-between; background: var(--bg-input); padding: 14px 16px; border-radius: 14px; margin-bottom: 12px; border: 1px solid var(--border-color); transition: 0.2s; }
         .movie-link-row:hover { border-color: var(--accent); transform: translateY(-2px); }
-        .movie-link-title { flex: 1; font-size: 14.5px; font-weight: 900; color: var(--text-main); }
-        .movie-link-actions { display: flex; gap: 10px; align-items: center; }
+        .movie-link-title { flex: 1; font-size: 14px; font-weight: 800; color: var(--text-main); }
+        .movie-link-actions { display: flex; gap: 8px; align-items: center; }
         
-        .btn-play-online { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 8px 16px; font-weight: bold; font-size: 12px; cursor: pointer; transition: 0.2s; }
+        .btn-play-online { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 8px 14px; font-weight: bold; font-size: 12px; cursor: pointer; transition: 0.2s; }
         .btn-play-online:hover { background: rgba(16, 185, 129, 0.25); box-shadow: 0 0 10px rgba(16, 185, 129, 0.2); }
-        .btn-download { background: var(--bg-box); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 10px; padding: 8px 16px; font-weight: bold; font-size: 12px; cursor: pointer; transition: 0.2s; }
+        .btn-download { background: var(--bg-box); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 10px; padding: 8px 14px; font-weight: bold; font-size: 12px; cursor: pointer; transition: 0.2s; }
         .btn-download:hover { background: rgba(255, 255, 255, 0.05); }
         
         /* CHAT STYLE FOR INBOX & MESSAGES */
@@ -681,7 +696,7 @@
     <!-- AUTH SCREEN -->
     <div id="auth-screen">
         
-        <!-- Maintenance Modal Box (With Updated Sign SVG) -->
+        <!-- Maintenance Modal Box -->
         <div class="box-container" id="maintenance-box" style="display: none; text-align: center; position: relative;">
             <button class="modal-close-x" style="top: 14px; right: 14px; left: auto; border: none; font-size: 24px; color: var(--text-muted); background: transparent; cursor: pointer;" onclick="closeMaintenanceBox()">×</button>
             <div class="update-sign"> 
@@ -2241,20 +2256,17 @@
         
         showLoader(true);
         try {
-            const { data: udata } = await supabaseClient.from('users_data').select('id, sub_end_date').eq('username', user).single();
-            if (!udata) { 
-                showCustomAlert('کاربر پیدا نشد.'); 
-                return; 
-            }
+            const { data, error } = await supabaseClient.rpc('admin_charge_sub', { 
+                target_user: user, 
+                charge_days: days 
+            });
             
-            if(days === 0) {
-                await supabaseClient.from('users_data').update({ sub_end_date: null }).eq('id', udata.id); 
-                showCustomAlert('اشتراک کاربر لغو شد.');
+            if (error) {
+                showCustomAlert(error.message);
             } else {
-                let baseDate = (udata.sub_end_date && new Date(udata.sub_end_date) > new Date()) ? new Date(udata.sub_end_date) : new Date();
-                baseDate.setDate(baseDate.getDate() + days);
-                await supabaseClient.from('users_data').update({ sub_end_date: baseDate.toISOString() }).eq('id', udata.id); 
-                showCustomAlert('اشتراک جمع و فعال شد.');
+                showCustomAlert(data.message || 'عملیات با موفقیت ثبت شد.');
+                document.getElementById('charge-user').value = '';
+                document.getElementById('charge-days').value = '';
             }
         } catch(e) { 
             showCustomAlert('لطفاً مجدد تلاش کنید'); 
@@ -2572,15 +2584,13 @@
     window.updateStatus = async function(id, st) { 
         showLoader(true); 
         try { 
-            let response;
-            if(st === 'rejected') {
-                response = await supabaseClient.from('users_data').delete().eq('id', id); 
-            } else { 
-                response = await supabaseClient.from('users_data').update({ status: st }).eq('id', id); 
-            }
+            const { error } = await supabaseClient.rpc('admin_set_user_status', { 
+                target_uid: id, 
+                new_status: st 
+            });
             
-            if (response && response.error) {
-                showCustomAlert('لطفاً مجدد تلاش کنید');
+            if (error) {
+                showCustomAlert('خطا در تغییر وضعیت');
             } else { 
                 loadPendingRequests(); 
                 loadAllUsers(); 
