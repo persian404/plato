@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PLATO | فیلم و سریال</title>
     
+    <!-- PWA Settings -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#000000">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="پلاتو">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -825,6 +833,16 @@
             </div>
         </div>
         <div class="sidebar-menu">
+            <!-- دکمه نصب اپلیکیشن PWA داخل منوی کشویی -->
+            <button id="pwaInstallBtn" class="sidebar-btn" style="display: none; color: var(--accent);" onclick="triggerPWAInstall()">
+                <span>نصب اپلیکیشن پلاتو</span>
+                <svg class="btn-icon" style="margin:0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+            </button>
+
             <button class="sidebar-btn" onclick="openSupportModal()">
                 <span>ارتباط با پشتیبانی</span>
                 <svg class="btn-icon" style="margin:0;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="پشتیبانی">
@@ -2139,7 +2157,7 @@
         }
         try { 
             await videoPlayer.play(); 
-        } catch(e) {
+        } catch(e) { 
             console.error(e);
         }
     }
@@ -2483,7 +2501,7 @@
             const { error } = await supabaseClient.from('movies').delete().eq('id', id); 
             if (error) {
                 showCustomAlert('لطفاً مجدد تلاش کنید');
-            } else {
+            } else { 
                 await fetchMoviesFromDatabase(); 
                 loadAdminMovies(); 
             }
@@ -2639,7 +2657,7 @@
             const { error } = await supabaseClient.from('users_data').delete().eq('id', id); 
             if(error) {
                 showCustomAlert('لطفاً مجدد تلاش کنید');
-            } else {
+            } else { 
                 loadAllUsers(); 
             }
         } catch(e) {
@@ -2883,7 +2901,7 @@
                 cancelEditNews(); 
                 loadAdminNews(); 
             }
-        } catch(e) {
+        } catch(e) { 
             console.error(e);
             showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
@@ -2898,7 +2916,7 @@
         try { 
             await supabaseClient.from('news').delete().eq('id', id); 
             loadAdminNews(); 
-        } catch(e) {
+        } catch(e) { 
             console.error(e);
             showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
@@ -2922,11 +2940,11 @@
                 showCustomAlert('کد ایجاد شد'); 
                 loadAdminGifts(); 
             }
-        } catch(e) {
+        } catch(e) { 
             console.error(e);
             showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
-            showLoader(false);
+            showLoader(false); 
         }
     }
 
@@ -2950,7 +2968,7 @@
                         </div>`; 
                 }); 
             }
-        } catch(e) {
+        } catch(e) { 
             console.error(e);
         }
     }
@@ -2962,7 +2980,7 @@
         try { 
             await supabaseClient.from('gift_codes').delete().eq('id', id); 
             loadAdminGifts(); 
-        } catch(e) {
+        } catch(e) { 
             console.error(e);
             showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
@@ -3043,9 +3061,9 @@
                 ctx.restore(); 
             }); 
             
-            if(++frame < 200) {
+            if(++frame < 200) { 
                 requestAnimationFrame(animate); 
-            } else {
+            } else { 
                 canvas.style.display = 'none'; 
             }
         } 
@@ -3254,7 +3272,7 @@
             console.error(e);
             showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
-            showLoader(false);
+            showLoader(false); 
         }
     }
 
@@ -3421,7 +3439,7 @@
                 input.value = ''; 
                 loadActiveChatMessages();
             }
-        } catch(e) {
+        } catch(e) { 
             console.error(e);
             showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
@@ -3463,7 +3481,7 @@
             } else {
                 loadAdminInbox(); 
             }
-        } catch(e) {
+        } catch(e) { 
             console.error(e);
         } 
     }
@@ -3487,7 +3505,7 @@
                 loadAdminInbox(); 
                 showCustomAlert('اعلان سراسری ارسال شد.');
             }
-        } catch(e) {
+        } catch(e) { 
             console.error(e);
             showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
@@ -3504,6 +3522,47 @@
         slideTimeout = setTimeout(nextSlide, currentSlide === 3 ? 15000 : 4000);
     }
     slideTimeout = setTimeout(nextSlide, 4000);
+
+    /* =========================
+       PWA INSTALLATION LOGIC
+    ========================= */
+    let deferredInstallPrompt = null;
+    const pwaInstallBtn = document.getElementById('pwaInstallBtn');
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(() => console.log('PWA Service Worker فعال شد.'))
+                .catch(err => console.warn('PWA Service Worker خطا:', err));
+        });
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+        if (pwaInstallBtn) {
+            pwaInstallBtn.style.display = 'flex';
+        }
+    });
+
+    window.triggerPWAInstall = async function() {
+        if (!deferredInstallPrompt) {
+            showCustomAlert('برنامه قبلاً نصب شده یا مرورگر شما از نصب مستقیم پشتیبانی نمی‌کند.');
+            return;
+        }
+        deferredInstallPrompt.prompt();
+        const choice = await deferredInstallPrompt.userChoice;
+        if (choice && choice.outcome === 'accepted') {
+            if (pwaInstallBtn) pwaInstallBtn.style.display = 'none';
+        }
+        deferredInstallPrompt = null;
+    };
+
+    window.addEventListener('appinstalled', () => {
+        if (pwaInstallBtn) pwaInstallBtn.style.display = 'none';
+        deferredInstallPrompt = null;
+        showCustomAlert('اپلیکیشن پلاتو با موفقیت نصب شد!');
+    });
 
     window.addEventListener('load', () => { 
         checkUserSession(); 
