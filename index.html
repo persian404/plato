@@ -86,15 +86,15 @@
             justify-content: center; overflow: hidden; border-radius: 8px; padding: 0 6px; 
         }
 
-        .header .premium-logo { height: 48px; }
+        .header .premium-logo { height: 60px; }
         .header .premium-logo svg { 
-            height: 44px; width: 115px; max-width: 125px; fill: var(--text-main); 
+            height: 55px; width: 140px; max-width: 150px; fill: var(--text-main); 
             filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.7)); 
         }
 
-        .box-container .premium-logo { height: 64px; margin-bottom: 8px; }
+        .box-container .premium-logo { height: 80px; margin-bottom: 15px; }
         .box-container .premium-logo svg { 
-            height: 58px; width: 145px; max-width: 160px; fill: var(--text-main); 
+            height: 75px; width: 190px; max-width: 200px; fill: var(--text-main); 
             filter: drop-shadow(0 0 16px rgba(59, 130, 246, 0.8)); 
         }
 
@@ -559,11 +559,11 @@
         .buy-sub-btn {
             position: absolute; left: 50%; transform: translateX(-50%);
             background: linear-gradient(45deg, rgba(239, 68, 68, 0.9), rgba(185, 28, 28, 0.9)); 
-            padding: 8px 14px; border-radius: 12px; font-size: 11.5px; font-weight: 800; color: white; 
+            padding: 8px 12px; border-radius: 12px; font-size: 10.5px; font-weight: 800; color: white; 
             text-align: center; text-decoration: none; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.35); 
             border: 1px solid rgba(255,255,255,0.25); transition: transform 0.2s, box-shadow 0.2s;
-            z-index: 10; backdrop-filter: blur(8px); white-space: normal; line-height: 1.4;
-            max-width: 60%; cursor: pointer;
+            z-index: 10; backdrop-filter: blur(8px); white-space: normal; line-height: 1.5;
+            width: max-content; max-width: 70%; cursor: pointer;
         }
 
         .buy-sub-btn:hover {
@@ -702,17 +702,18 @@
             align-items: center;
         }
         .poll-opt-btn:hover { border-color: var(--accent); }
-        .poll-opt-btn.voted { border-color: var(--accent); background: rgba(59, 130, 246, 0.08); font-weight: 800; }
+        .poll-opt-btn.voted { border-color: var(--accent); background: rgba(59, 130, 246, 0.08); }
         .poll-bar-fill {
             position: absolute;
             top: 0;
             bottom: 0;
             right: 0;
-            background: var(--accent-glow);
+            background: rgba(59, 130, 246, 0.2);
             z-index: 1;
-            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 12px;
             pointer-events: none;
+            width: 0%;
         }
         .poll-opt-text { position: relative; z-index: 2; font-size: 13.5px; }
         .poll-percent { position: relative; z-index: 2; font-size: 12px; font-weight: 900; color: var(--accent); }
@@ -1563,12 +1564,7 @@
     let currentActiveAdminChatUid = null;
     let adminChatRefreshInterval = null;
 
-    let bannersList = [
-        { url: 'https://raw.githubusercontent.com/persian404/plato/main/file_000000004cc0822f9865a432af65b5ca-optimized.webp', duration: 4 },
-        { url: 'https://raw.githubusercontent.com/persian404/plato/main/file_0000000099e481f9a07f4c9fbfd921c5-optimized.webp', duration: 4 },
-        { url: 'https://raw.githubusercontent.com/persian404/plato/main/file_00000000d044820cb58364bc8e64f634-optimized.webp', duration: 4 },
-        { url: 'https://raw.githubusercontent.com/persian404/plato/refs/heads/main/1000041017-optimized.webp', duration: 15 }
-    ];
+    let bannersList = [];
     let currentSlide = 0;
     let slideTimeout = null;
 
@@ -2398,13 +2394,14 @@
         catch(e) { showCustomAlert('خطا'); } finally { showLoader(false); }
     };
 
-    /* DYNAMIC HERO BANNERS */
+    /* DYNAMIC HERO BANNERS (WITH site_banners TABLE) */
     async function loadBanners() {
         try {
-            const { data } = await supabaseClient.from('messages').select('content').eq('direction', 'site_banners').limit(1);
-            if (data && data.length > 0 && data[0].content) {
-                const parsed = JSON.parse(data[0].content);
-                if (Array.isArray(parsed) && parsed.length > 0) bannersList = parsed;
+            const { data } = await supabaseClient.from('site_banners').select('*').order('sort_order', { ascending: true });
+            if (data && data.length > 0) {
+                bannersList = data;
+            } else {
+                bannersList = [];
             }
         } catch(e) {}
         renderHeroSlider();
@@ -2492,23 +2489,27 @@
     window.saveBannersConfig = async function() {
         const cards = document.querySelectorAll('.banner-edit-card');
         let newBanners = [];
-        cards.forEach(card => {
+        cards.forEach((card, idx) => {
             const urlInput = card.querySelector('.banner-url-input');
             const durInput = card.querySelector('.banner-duration-input');
             if (urlInput && urlInput.value.trim()) {
                 let sec = parseInt(durInput.value) || 4;
                 if (sec < 1) sec = 4;
-                newBanners.push({ url: urlInput.value.trim(), duration: sec });
+                newBanners.push({ url: urlInput.value.trim(), duration: sec, sort_order: idx });
             }
         });
 
         if (newBanners.length === 0) return showCustomAlert('حداقل یک بنر معتبر ثبت کنید.');
         showLoader(true);
         try {
-            await supabaseClient.from('messages').delete().eq('direction', 'site_banners');
-            await supabaseClient.from('messages').insert([{ direction: 'site_banners', content: JSON.stringify(newBanners), is_read: true }]);
+            const { data: existingBanners } = await supabaseClient.from('site_banners').select('id');
+            if (existingBanners && existingBanners.length > 0) {
+                const idsToDelete = existingBanners.map(b => b.id);
+                await supabaseClient.from('site_banners').delete().in('id', idsToDelete);
+            }
+            await supabaseClient.from('site_banners').insert(newBanners);
             bannersList = newBanners;
-            showCustomAlert('بنرها با موفقیت ذخیره شدند.');
+            showCustomAlert('بنرها با موفقیت ذخیره و همگام‌سازی شدند.');
             renderHeroSlider(); renderAdminBannersUI();
         } catch (e) {
             showCustomAlert('خطا در ذخیره بنرها');
@@ -2529,12 +2530,16 @@
     window.insertRichFormat = function(p, s) {
         const t = document.getElementById('new-news-content');
         const st = t.selectionStart, en = t.selectionEnd;
-        t.value = t.value.substring(0, st) + p + (t.value.substring(st, en) || 'متن') + s + t.value.substring(en);
+        if(st === en) {
+            t.value = t.value.substring(0, st) + p + 'متن' + s + t.value.substring(en);
+        } else {
+            t.value = t.value.substring(0, st) + p + t.value.substring(st, en) + s + t.value.substring(en);
+        }
         t.focus();
     };
 
     window.insertLinkFormat = function() {
-        const url = prompt('لینک اینترنتی:');
+        const url = prompt('لینک اینترنتی (مثال: https://...):');
         if (!url) return;
         const t = document.getElementById('new-news-content');
         const st = t.selectionStart, en = t.selectionEnd;
@@ -2560,7 +2565,7 @@
             container.innerHTML += `
                 <div style="display:flex; gap:8px; align-items:center;">
                     <input type="text" class="input-field poll-opt-val" placeholder="گزینه ${i + 1}" style="height:42px;">
-                    ${i >= 2 ? `<button type="button" class="btn-sm btn-reject" onclick="removePollOptionInput(${i})">×</button>` : ''}
+                    ${i >= 2 ? `<button type="button" class="btn-sm btn-reject" onclick="removePollOptionInput()">×</button>` : ''}
                 </div>`;
         }
     }
@@ -2607,7 +2612,7 @@
                             optionsHtml += `
                                 <div class="poll-opt-btn ${myVote === idx ? 'voted' : ''}" onclick="castVote(${n.id}, ${idx})">
                                     <div class="poll-bar-fill" style="width:${pct}%;"></div>
-                                    <span class="poll-opt-text">${myVote === idx ? '✓ ' : ''}${opt}</span>
+                                    <span class="poll-opt-text" style="font-weight: ${myVote === idx ? '900' : '600'};">${myVote === idx ? '✓ ' : ''}${opt}</span>
                                     <span class="poll-percent">${pct}%</span>
                                 </div>`;
                         });
@@ -2677,7 +2682,7 @@
                                 <span style="font-size:12px; font-weight:800; color:var(--accent);">${n.is_poll ? '📊 نظرسنجی' : '📄 خبر'}</span>
                                 <button class="btn-sm btn-reject" onclick="deleteNews(${n.id})">حذف</button>
                             </div>
-                            <div style="font-size:13px; line-height:1.6;">${n.content}</div>
+                            <div style="font-size:13px; line-height:1.6;">${parseCustomMarkdown(n.content)}</div>
                         </div>`; 
                 }); 
             }
@@ -2687,6 +2692,7 @@
     window.postNews = async function() { 
         const val = document.getElementById('new-news-content').value.trim(); 
         if(!val) return showCustomAlert('متن را وارد کنید');
+        
         let payload = { content: val, is_poll: isCreatingPoll };
 
         if (isCreatingPoll) {
@@ -2694,10 +2700,12 @@
             document.querySelectorAll('.poll-opt-val').forEach(i => { if (i.value.trim()) opts.push(i.value.trim()); });
             if (opts.length < 2) return showCustomAlert('حداقل ۲ گزینه برای نظرسنجی بنویسید.');
             payload.poll_options = opts;
+            payload.allowed_emojis = [];
         } else {
             let emojis = [];
             document.querySelectorAll('#news-emojis-picker input:checked').forEach(c => emojis.push(c.value));
             payload.allowed_emojis = emojis.length > 0 ? emojis : ['❤️'];
+            payload.poll_options = [];
         }
 
         showLoader(true); 
