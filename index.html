@@ -75,26 +75,26 @@
             margin-left: 5px; vertical-align: middle; 
         }
 
-        /* PREMIUM LOGO (بزرگ‌تر و چشم‌گیرتر شده) */
+        /* PREMIUM LOGO (بزرگ‌تر و برجسته) */
         .premium-logo { 
             position: relative; display: inline-flex; align-items: center; 
             justify-content: center; overflow: hidden; border-radius: 8px; padding: 0 6px; 
-            height: 52px;
+            height: 50px;
         }
 
         .premium-logo svg { 
-            height: 48px; width: 125px; max-width: 140px; fill: var(--text-main); 
+            height: 46px; width: 120px; max-width: 135px; fill: var(--text-main); 
             filter: drop-shadow(0 0 14px rgba(59, 130, 246, 0.65)); 
         }
 
         .auth-logo-wrap .premium-logo {
-            height: 64px;
+            height: 62px;
         }
 
         .auth-logo-wrap .premium-logo svg {
-            height: 58px;
-            width: 155px;
-            max-width: 180px;
+            height: 56px;
+            width: 150px;
+            max-width: 175px;
         }
 
         .premium-logo::after { 
@@ -522,7 +522,7 @@
             cursor: pointer; overflow: hidden; position: relative; flex-shrink: 0;
         }
 
-        /* دکمه خرید اشتراک با کپی آیدی */
+        /* دکمه خرید اشتراک با کپی آیدی پشتیبانی تلگرام */
         .buy-sub-btn {
             background: linear-gradient(45deg, rgba(239, 68, 68, 0.9), rgba(185, 28, 28, 0.9)); 
             padding: 6px 12px; border-radius: 10px; font-size: 11px; font-weight: bold; color: white; 
@@ -1548,7 +1548,7 @@
     let siteSettings = { reg_limit: 100, maintenance: false };
     let currentActiveAdminChatUid = null;
 
-    /* BANNERS LIST */
+    /* اسلایدر بنرها */
     let bannersList = [
         { url: 'https://raw.githubusercontent.com/persian404/plato/main/file_000000004cc0822f9865a432af65b5ca-optimized.webp', duration: 4 },
         { url: 'https://raw.githubusercontent.com/persian404/plato/main/file_0000000099e481f9a07f4c9fbfd921c5-optimized.webp', duration: 4 },
@@ -1558,7 +1558,7 @@
     let currentSlide = 0;
     let slideTimeout = null;
 
-    /* AVATAR SYSTEM */
+    /* آواتارهای کاربری */
     const AVATARS = {
         1: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="avatarClip"><circle cx="100" cy="100" r="96"/></clipPath></defs><circle cx="100" cy="100" r="96" fill="#EAF2FF"/><g clip-path="url(#avatarClip)"><path d="M35 205 C38 169 57 148 79 141 L100 155 L121 141 C143 148 162 169 165 205Z" fill="#3478E5"/><path d="M79 141 L100 158 L121 141" fill="none" stroke="#245FC2" stroke-width="5" stroke-linejoin="round"/><path d="M80 116 L80 144 L100 157 L120 144 L120 116Z" fill="#F1B08B"/><path d="M66 82 C61 81 59 86 60 92 C60.5 97 63 99 67 97 L68 84Z" fill="#E4A07D"/><path d="M134 82 C139 81 141 86 140 92 C139.5 97 137 99 133 97 L132 84Z" fill="#E4A07D"/><path d="M65 61 C65 39 79 27 100 27 C121 27 135 39 135 61 V96 C135 120 120 135 100 135 C80 135 65 120 65 96Z" fill="#F1B08B"/><path d="M63 67 C59 47 66 31 82 25 C101 17 124 24 134 40 C139 48 139 59 136 68 C128 61 122 54 117 45 C110 54 99 57 89 53 C78 49 70 57 63 67Z" fill="#27364D"/><path d="M73 43 C82 31 96 27 108 29" fill="none" stroke="#40536F" stroke-width="6" stroke-linecap="round"/><path d="M76 77 Q83 73 90 77" fill="none" stroke="#26344A" stroke-width="3.5" stroke-linecap="round"/><path d="M110 77 Q117 73 124 77" fill="none" stroke="#26344A" stroke-width="3.5" stroke-linecap="round"/><circle cx="83" cy="87" r="3.5" fill="#26344A"/><circle cx="117" cy="87" r="3.5" fill="#26344A"/><path d="M100 89 L97 104 L102 106" fill="none" stroke="#D38C6C" stroke-width="2.8" stroke-linecap="round"/><path d="M90 115 Q100 121 110 115" fill="none" stroke="#9D5C52" stroke-width="3" stroke-linecap="round"/></g><circle cx="100" cy="100" r="96" fill="none" stroke="#D7E3F5" stroke-width="3"/></svg>`,
         2: `<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#fbcfe8"/><path d="M25 100 C25 65, 75 65, 75 100" fill="#be185d" stroke="#9f1239" stroke-width="2"/><path d="M20 70 C10 40, 30 10, 50 10 C70 10, 90 40, 80 70 Z" fill="#78350f"/><rect x="44" y="60" width="12" height="15" fill="#fcd34d"/><circle cx="50" cy="45" r="22" fill="#fde047"/><path d="M28 45 C28 20, 72 20, 72 45 C65 25, 35 25, 28 45 Z" fill="#92400e"/><path d="M36 45 A4 4 0 0 1 44 45" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/><path d="M56 45 A4 4 0 0 1 64 45" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/><circle cx="35" cy="52" r="4" fill="#f43f5e" opacity="0.5"/><circle cx="65" cy="52" r="4" fill="#f43f5e" opacity="0.5"/><path d="M45 58 Q50 62 55 58" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round"/></svg>`,
@@ -1666,11 +1666,10 @@
         });
     };
 
-    /* کپی آیدی پشتیبانی تلگرام */
     window.copyAdminSupportId = function(e) {
         if(e) e.preventDefault();
         navigator.clipboard.writeText('@plato_supports').then(() => {
-            showCustomAlert('آیدی تلگرام پشتیبانی کپی شد: @plato_supports');
+            showCustomAlert('آیدی تلگرام @plato_supports کپی شد!');
         }).catch(() => {
             showCustomAlert('آیدی تلگرام: @plato_supports');
         });
@@ -1680,9 +1679,7 @@
         try {
             const { data } = await supabaseClient.from('messages').select('content').eq('direction', 'site_settings').limit(1);
             if (data && data.length > 0) return JSON.parse(data[0].content);
-        } catch (e) {
-            console.error("Settings load error:", e);
-        }
+        } catch (e) {}
         return { reg_limit: 100, maintenance: false };
     }
 
@@ -1714,7 +1711,7 @@
         }
     };
 
-    /* ANTI-CHEAT TRACKER */
+    /* ردیاب ضد تقلب و جابجایی دستگاه */
     async function fetchDeviceSwitchMap() {
         try {
             const { data } = await supabaseClient.from('messages').select('content').eq('direction', 'device_switches_tracker').limit(1);
@@ -2582,7 +2579,7 @@
         }
     };
 
-    /* BANNERS: DATABASE DRIVEN (site_banners) */
+    /* سیستم بنرها در جدول اختصاصی دیتابیس (site_banners) */
     async function loadBanners() {
         try {
             const { data, error } = await supabaseClient.from('site_banners').select('*').order('sort_order', { ascending: true });
@@ -2659,7 +2656,7 @@
                     <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
                         <input type="text" class="input-field banner-url-input" placeholder="لینک عکس بنر..." value="${b.url || ''}" style="flex:1; min-width:200px;" oninput="updateBannerPreview(this, ${idx})">
                         <div style="display:flex; align-items:center; gap:6px;">
-                            <input type="number" class="input-field banner-duration-input" placeholder="ثانیه" value="${b.duration || 4}" min="1" max="60" style="width:75px; text-align:center;">
+                            <input type="text" class="input-field banner-duration-input" placeholder="ثانیه" value="${b.duration || 4}" style="width:75px; text-align:center;">
                             <span style="font-size:12px; color:var(--text-muted);">ثانیه مکث</span>
                         </div>
                     </div>
@@ -2702,31 +2699,39 @@
             const urlInput = card.querySelector('.banner-url-input');
             const durInput = card.querySelector('.banner-duration-input');
             if (urlInput && urlInput.value.trim()) {
-                let sec = parseInt(durInput.value) || 4;
+                let cleanDur = toEnglishDigits(durInput.value.trim());
+                let sec = parseInt(cleanDur) || 4;
                 if (sec < 1) sec = 4;
-                newBanners.push({ url: urlInput.value.trim(), duration: sec, sort_order: idx });
+                newBanners.push({ 
+                    url: urlInput.value.trim(), 
+                    duration: sec, 
+                    sort_order: idx 
+                });
             }
         });
 
         if (newBanners.length === 0) return showCustomAlert('حداقل باید یک بنر با لینک معتبر ثبت کنید.');
         showLoader(true);
         try {
-            await supabaseClient.from('site_banners').delete().neq('id', 0);
-            const { error } = await supabaseClient.from('site_banners').insert(newBanners);
+            const { error: delErr } = await supabaseClient.from('site_banners').delete().neq('id', 0);
+            if (delErr) throw delErr;
 
-            if (error) throw error;
+            const { error: insErr } = await supabaseClient.from('site_banners').insert(newBanners);
+            if (insErr) throw insErr;
+
             bannersList = newBanners;
-            showCustomAlert('بنرها با موفقیت در دیتابیس ذخیره شدند.');
+            showCustomAlert('بنرها با موفقیت ذخیره شدند.');
             renderHeroSlider();
             renderAdminBannersUI();
         } catch (e) {
-            showCustomAlert('خطا در ذخیره بنرها در دیتابیس');
+            console.error('Banner save error:', e);
+            showCustomAlert('خطا در ذخیره: ' + (e.message || 'مشکل اتصال'));
         } finally {
             showLoader(false);
         }
     };
 
-    /* TEXT FORMATTING & MARKUP PARSER */
+    /* نوار ابزار فرمت‌بندی متن اخبار */
     function insertTextFormat(type) {
         const textarea = document.getElementById('new-news-content');
         if (!textarea) return;
@@ -2756,7 +2761,7 @@
         return text;
     }
 
-    /* POLL OPTIONS LOGIC */
+    /* گزینه‌های نظرسنجی */
     let pollOptionsArray = ['', ''];
 
     window.togglePollFormMode = function(isPoll) {
@@ -2798,220 +2803,7 @@
         renderPollOptionInputs();
     };
 
-    /* USERS & ANTI-CHEAT RENDERING */
-    async function loadAllUsers() {
-        try {
-            const { data } = await supabaseClient.from('users_data').select('*').order('created_at', { ascending: false });
-            const list = document.getElementById('all-users-list'); 
-            list.innerHTML = ''; 
-            let onlineCount = 0; 
-            const nowTime = new Date().getTime();
-            const switchMap = await fetchDeviceSwitchMap();
-            
-            if(data) {
-                allUsersArray = data;
-                data.forEach(user => {
-                    if(user.last_active && (nowTime - new Date(user.last_active).getTime()) < 300000) onlineCount++;
-                    if(user.role === 'admin' || user.status === 'pending') return;
-                    
-                    let switches = switchMap[user.id] || 0;
-                    let cheatBadge = switches >= 3 
-                        ? `<span class="cheat-badge" title="هشدار تقلب: این کاربر ${switches} بار بین دستگاه‌ها جابجا شده است!">⚠️ ${switches} دستگاه (!)</span>` 
-                        : '';
-
-                    list.innerHTML += `
-                        <div class="req-card" style="cursor:pointer;" onclick="openUserDetailModal('${user.id}')">
-                            <div class="req-info" style="display:flex; align-items:center; gap:10px;">
-                                <div style="width:36px;height:36px;border-radius:50%;overflow:hidden;">${getAvatar(user.avatar, user.username)}</div>
-                                <div>
-                                    <div style="display:flex; align-items:center; gap:6px;">
-                                        <span style="color:var(--accent); font-size:14px;">${user.username}</span>
-                                        ${cheatBadge}
-                                    </div>
-                                    <small style="color:var(--text-muted); font-weight:normal; margin-top:2px;">مدل: ${user.phone_model || 'نامشخص'}</small>
-                                </div>
-                            </div>
-                            <div>
-                                <button class="btn-sm btn-reject" onclick="event.stopPropagation(); deleteUserAccount('${user.id}')">حذف</button>
-                            </div>
-                        </div>`;
-                });
-                document.getElementById('onlineUsersCount').textContent = onlineCount;
-            }
-        } catch(e) {}
-    }
-
-    window.openUserDetailModal = async function(userId) {
-        const user = allUsersArray.find(u => u.id === userId);
-        if(!user) return;
-
-        const switchMap = await fetchDeviceSwitchMap();
-        let switches = switchMap[user.id] || 0;
-
-        document.getElementById('ud-username').textContent = user.username;
-        document.getElementById('ud-model').textContent = user.phone_model || 'نامشخص';
-        
-        let switchText = `${switches} بار تعویض دستگاه`;
-        if (switches >= 3) {
-            switchText += ` <span style="color:#ef4444; font-weight:900;">(⚠️ مشکوک به اشتراک‌گذاری اکانت!)</span>`;
-        }
-        document.getElementById('ud-switches').innerHTML = switchText;
-
-        let subStatus = "ندارد / لغو شده";
-        let maxTickets = 2;
-        if(user.sub_end_date) {
-            const diff = new Date(user.sub_end_date).getTime() - new Date().getTime();
-            if(diff > 0) {
-                subStatus = "فعال (" + Math.ceil(diff / 86400000) + " روز مانده)";
-                maxTickets = 4;
-            } else {
-                let daysAgo = Math.floor(Math.abs(diff) / 86400000);
-                subStatus = daysAgo === 0 ? "لغو شده / منقضی (امروز)" : "منقضی (" + daysAgo + " روز پیش)";
-            }
-        }
-        document.getElementById('ud-sub').textContent = subStatus;
-        document.getElementById('ud-last-active').textContent = user.last_active ? new Date(user.last_active).toLocaleString('fa-IR') : "ثبت نشده";
-        document.getElementById('ud-time').textContent = user.time_spent ? user.time_spent + " دقیقه" : "ثبت نشده";
-        document.getElementById('ud-last-movie').textContent = user.last_watched ? user.last_watched : "ثبت نشده";
-        document.getElementById('ud-tickets').textContent = "در حال محاسبه...";
-        document.getElementById('userDetailModal').classList.add('show');
-
-        try {
-            const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-            const { count, error } = await supabaseClient
-                .from('messages')
-                .select('*', { count: 'exact', head: true })
-                .eq('user_id', userId)
-                .eq('direction', 'user_to_admin')
-                .gte('created_at', twentyFourHoursAgo);
-
-            if(error) throw error;
-            let remaining = maxTickets - (count || 0);
-            document.getElementById('ud-tickets').textContent = remaining < 0 ? 0 : remaining;
-        } catch(e) {
-            document.getElementById('ud-tickets').textContent = "خطا در دریافت";
-        }
-    };
-
-    async function loadPendingRequests() { 
-        const { data } = await supabaseClient.from('users_data').select('*').eq('status', 'pending'); 
-        const list = document.getElementById('pending-list'); 
-        list.innerHTML = '';
-        if(data) {
-            data.forEach(req => { 
-                list.innerHTML += `
-                    <div class="req-card">
-                        <div class="req-info">
-                            <div>آیدی: <b>${req.username}</b></div>
-                            <small>مدل: ${req.phone_model}</small>
-                        </div>
-                        <div>
-                            <button class="btn-sm btn-approve" onclick="updateStatus('${req.id}', 'approved')">تایید</button>
-                            <button class="btn-sm btn-reject" onclick="updateStatus('${req.id}', 'rejected')">رد</button>
-                        </div>
-                    </div>`; 
-            });
-        }
-    }
-
-    window.updateStatus = async function(id, st) { 
-        showLoader(true); 
-        try { 
-            const { error } = await supabaseClient.rpc('admin_set_user_status', { target_uid: id, new_status: st });
-            if (error) {
-                showCustomAlert('خطا در تغییر وضعیت');
-            } else { 
-                loadPendingRequests(); 
-                loadAllUsers(); 
-            }
-        } catch(e) {
-            showCustomAlert('لطفاً مجدد تلاش کنید');
-        } finally {
-            showLoader(false); 
-        }
-    };
-
-    window.deleteUserAccount = async function(id) { 
-        if(!confirm('حذف حساب کاربری؟')) return; 
-        showLoader(true); 
-        try { 
-            const { error } = await supabaseClient.from('users_data').delete().eq('id', id); 
-            if(error) showCustomAlert('لطفاً مجدد تلاش کنید');
-            else loadAllUsers(); 
-        } catch(e) {
-            showCustomAlert('لطفاً مجدد تلاش کنید');
-        } finally {
-            showLoader(false); 
-        }
-    };
-
-    async function loadMarquee() {
-        try {
-            const { data } = await supabaseClient.from('messages').select('content').eq('direction', 'marquee').order('created_at', { ascending: false }).limit(1);
-            const container = document.getElementById('marqueeContainer');
-            const textElem = document.getElementById('marqueeTextContent');
-            const input = document.getElementById('admin-marquee-input');
-            const speedInput = document.getElementById('admin-marquee-speed');
-            const speedDisplay = document.getElementById('speed-display');
-            
-            if(data && data[0] && data[0].content.trim()) {
-                let textValue = data[0].content;
-                let finalSpeed = "15s";
-                
-                if(textValue.includes("||")) { 
-                    let parts = textValue.split("||"); 
-                    textValue = parts[0]; 
-                    finalSpeed = parts[1] + "s"; 
-                    if(speedInput) { 
-                        speedInput.value = parts[1]; 
-                        if(speedDisplay) speedDisplay.innerText = finalSpeed; 
-                    } 
-                }
-                
-                if(textElem.textContent !== textValue) textElem.textContent = textValue; 
-                textElem.style.animation = 'none'; 
-                setTimeout(() => { textElem.style.animation = `scroll-marquee ${finalSpeed} linear infinite`; }, 50);
-                container.style.display = 'flex'; 
-                if(input && !input.value) input.value = textValue;
-            } else { 
-                container.style.display = 'none'; 
-            }
-        } catch(e) {}
-    }
-
-    window.saveMarqueeText = async function() { 
-        showLoader(true); 
-        let v = document.getElementById('admin-marquee-input').value.trim(); 
-        let speed = document.getElementById('admin-marquee-speed').value;
-        if(v) v = v + "||" + speed;
-        
-        try { 
-            await supabaseClient.from('messages').delete().eq('direction', 'marquee'); 
-            if(v) {
-                const { error } = await supabaseClient.from('messages').insert([{ direction: 'marquee', content: v, is_read: true }]); 
-                if(error) showCustomAlert('لطفاً مجدد تلاش کنید');
-                else { 
-                    showCustomAlert('تابلو با موفقیت ذخیره شد.'); 
-                    await loadMarquee(); 
-                }
-            }
-        } catch(e) { 
-            showCustomAlert('لطفاً مجدد تلاش کنید'); 
-        } finally { 
-            showLoader(false); 
-        }
-    };
-
-    async function checkNewsUpdates() { 
-        try { 
-            const { data } = await supabaseClient.from('news').select('id').order('id', {ascending: false}).limit(1); 
-            if(data && data.length > 0 && data[0].id > parseInt(lastNewsId)) {
-                document.getElementById('news-notif').style.display = 'block'; 
-            }
-        } catch(e) {} 
-    }
-
-    /* NEWS & REACTIONS & POLLS: DATABASE SYNCHRONIZED */
+    /* نمایش اخبار، ری‌اکشن‌ها و نظرسنجی درصدی زنده از دیتابیس */
     async function loadNewsUser() {
         showLoader(true);
         try {
@@ -3039,16 +2831,16 @@
                             options = typeof n.poll_options === 'string' ? JSON.parse(n.poll_options) : (n.poll_options || []);
                         } catch(e) { options = []; }
 
-                        const newsVotes = (votesData || []).filter(v => v.news_id === n.id);
+                        const newsVotes = (votesData || []).filter(v => String(v.news_id) === String(n.id));
                         const totalVotes = newsVotes.length;
-                        const userVote = (votesData || []).find(v => v.news_id === n.id && v.user_id === currentUserProfile.id);
+                        const userVote = (votesData || []).find(v => String(v.news_id) === String(n.id) && String(v.user_id) === String(currentUserProfile.id));
                         const hasVoted = Boolean(userVote);
 
                         let optionsHtml = '';
                         options.forEach((optText, optIdx) => {
-                            const optVoteCount = newsVotes.filter(v => v.option_index === optIdx).length;
+                            const optVoteCount = newsVotes.filter(v => Number(v.option_index) === Number(optIdx)).length;
                             const pct = totalVotes > 0 ? Math.round((optVoteCount / totalVotes) * 100) : 0;
-                            const isMyChoice = userVote && userVote.option_index === optIdx;
+                            const isMyChoice = userVote && Number(userVote.option_index) === Number(optIdx);
 
                             if (hasVoted) {
                                 optionsHtml += `
@@ -3063,7 +2855,7 @@
                                 `;
                             } else {
                                 optionsHtml += `
-                                    <div class="poll-option-btn" onclick="submitPollVote(${n.id}, ${optIdx})">
+                                    <div class="poll-option-btn" onclick="submitPollVote('${n.id}', ${optIdx})">
                                         <div class="poll-text-wrap">
                                             <span>${optText}</span>
                                         </div>
@@ -3088,16 +2880,16 @@
                             }
                         } catch(e) {}
 
-                        const thisNewsReactions = (reactionsData || []).filter(r => r.news_id === n.id);
+                        const thisNewsReactions = (reactionsData || []).filter(r => String(r.news_id) === String(n.id));
                         let reactionsHtml = '';
 
                         allowedEmojis.forEach(emoji => {
                             const count = thisNewsReactions.filter(r => r.emoji === emoji).length;
-                            const userReacted = thisNewsReactions.some(r => r.emoji === emoji && r.user_id === currentUserProfile.id);
+                            const userReacted = thisNewsReactions.some(r => r.emoji === emoji && String(r.user_id) === String(currentUserProfile.id));
                             const activeClass = userReacted ? 'active' : '';
 
                             reactionsHtml += `
-                                <button class="reaction-btn ${activeClass}" onclick="toggleNewsReaction(${n.id}, '${emoji}')">
+                                <button class="reaction-btn ${activeClass}" onclick="toggleNewsReaction('${n.id}', '${emoji}')">
                                     <span>${emoji}</span>
                                     <span class="reaction-count">${count}</span>
                                 </button>
@@ -3129,12 +2921,14 @@
                 cont.innerHTML = '<div style="color:var(--text-muted); text-align:center; padding:30px;">هیچ خبر یا نظرسنجی ثبت نشده است.</div>';
             }
         } catch(e) {
+            console.error(e);
             showCustomAlert('خطا در بارگذاری بخش اخبار');
         } finally {
             showLoader(false);
         }
     }
 
+    /* ثبت رأی نظرسنجی */
     window.submitPollVote = async function(newsId, optionIndex) {
         if (!currentUserProfile) return;
         showLoader(true);
@@ -3144,40 +2938,49 @@
                 .insert([{ news_id: newsId, user_id: currentUserProfile.id, option_index: optionIndex }]);
 
             if (error) {
-                showCustomAlert('شما قبلاً در این نظرسنجی رأی داده‌اید.');
+                if (error.code === '23505') {
+                    showCustomAlert('شما قبلاً در این نظرسنجی رأی داده‌اید.');
+                } else {
+                    showCustomAlert('خطا در ثبت رأی: ' + error.message);
+                }
             } else {
                 showCustomAlert('رأی شما با موفقیت ثبت شد.');
                 await loadNewsUser();
             }
         } catch(e) {
-            showCustomAlert('لطفاً مجدد تلاش کنید');
+            console.error(e);
+            showCustomAlert('خطا در ارتباط با سرور');
         } finally {
             showLoader(false);
         }
     };
 
+    /* ثبت ری‌اکشن */
     window.toggleNewsReaction = async function(newsId, emoji) {
         if (!currentUserProfile) return;
         try {
-            const { data: existing } = await supabaseClient
+            const { data: existing, error: selErr } = await supabaseClient
                 .from('news_reactions')
                 .select('id')
                 .eq('news_id', newsId)
                 .eq('user_id', currentUserProfile.id)
-                .eq('emoji', emoji)
-                .limit(1);
+                .eq('emoji', emoji);
+
+            if (selErr) throw selErr;
 
             if (existing && existing.length > 0) {
                 await supabaseClient.from('news_reactions').delete().eq('id', existing[0].id);
             } else {
-                await supabaseClient.from('news_reactions').insert([{
+                const { error: insErr } = await supabaseClient.from('news_reactions').insert([{
                     news_id: newsId,
                     user_id: currentUserProfile.id,
                     emoji: emoji
                 }]);
+                if (insErr) throw insErr;
             }
             await loadNewsUser();
         } catch (e) {
+            console.error('Reaction error:', e);
             showCustomAlert('خطا در ثبت واکنش');
         }
     };
@@ -3310,6 +3113,7 @@
         }
     };
 
+    /* کدهای هدیه */
     window.createGiftCode = async function() {
         const code = document.getElementById('gift-code-input').value.trim().toUpperCase();
         const days = parseInt(document.getElementById('gift-days-input').value);
@@ -3434,6 +3238,7 @@
         animate();
     }
 
+    /* پیام‌ها و صندوق تیکت‌ها */
     window.deleteAllMessages = async function() {
         if(!confirm('حذف تمام پیام‌های این صندوق؟')) return; 
         showLoader(true);
@@ -3802,7 +3607,7 @@
         }
     };
 
-    /* PWA INSTALLATION LOGIC */
+    /* قابلیت‌های PWA */
     let deferredInstallPrompt = null;
     const pwaInstallBtn = document.getElementById('pwaInstallBtn');
 
