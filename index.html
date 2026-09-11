@@ -340,6 +340,17 @@
         
         .profile-button .notif-dot { top: -2px; right: -2px; border-color: var(--bg-main); }
 
+        .auth-telegram-link { display:flex; align-items:center; justify-content:center; gap:7px; margin:12px auto 0; padding:6px 10px; color:var(--text-muted); font-size:11px; text-decoration:none; width:max-content; max-width:100%; }
+        .auth-telegram-link svg { width:18px; height:18px; flex-shrink:0; }
+        .auth-telegram-link .auth-telegram-id { color:var(--accent); font-weight:800; direction:ltr; }
+        .support-rules-button { width:32px; height:32px; border-radius:50%; border:1px solid var(--border-color); background:var(--bg-box); color:var(--accent); font-weight:900; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; font-size:14px; margin-bottom:8px; }
+        .buy-sub-btn { line-height:1.25; }
+        .buy-sub-btn .buy-sub-main { display:block; font-size:13px; font-weight:900; }
+        .buy-sub-btn .buy-sub-desc { display:block; font-size:8px; font-weight:500; margin-top:2px; white-space:nowrap; }
+        .user-chat-actions { display:flex; gap:6px; flex-shrink:0; }
+        .user-chat-action { border:1px solid var(--border-color); background:var(--bg-box); color:var(--text-main); border-radius:8px; padding:6px 8px; font-size:11px; cursor:pointer; }
+        .user-chat-action.message { color:var(--accent); }
+        .user-chat-action.delete { color:#ef4444; }
         .notif-badge-number {
             background: #10b981; color: #fff; font-size: 11px; font-weight: 900;
             padding: 2px 7px; border-radius: 12px; min-width: 20px; text-align: center;
@@ -659,8 +670,11 @@
         .poll-option:hover { transform:translateY(-1px); border-color:var(--accent); }
         .poll-option-bg { right:0; left:auto; background:linear-gradient(90deg, rgba(59,130,246,.10), rgba(59,130,246,.28)); }
         .poll-option-content button { cursor:pointer; font-weight:700; color:var(--text-main); }
-        .poll-voted::after { content:'✓'; position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--accent); font-weight:900; }
-        .poll-total-note { text-align:center; font-size:10px; color:var(--text-muted); margin-top:10px; }
+        .poll-voted::after { content:none; }
+        .poll-total-note { display:none; }
+        .poll-voted { border-color:#10b981 !important; background:rgba(16,185,129,.10) !important; box-shadow:0 0 0 1px rgba(16,185,129,.18), 0 4px 16px rgba(16,185,129,.10); }
+        .poll-voted .poll-percent { color:#10b981 !important; }
+        .poll-voted .poll-option-bg { background:#10b981 !important; }
         @media (max-width:520px) { .header .premium-logo { width:100px; } .buy-sub-btn { max-width:190px; padding:4px 10px; } }
         .poll-title { font-weight:900; font-size:14px; margin-bottom:12px; }
         .poll-option { position:relative; width:100%; margin:8px 0; padding:11px 13px; border:1px solid var(--border-color); border-radius:11px; background:var(--bg-box); overflow:hidden; text-align:right; }
@@ -729,7 +743,8 @@
         .chat-admin { align-self: flex-end; background: #064e3b; color: #fff; border-bottom-left-radius: 4px; border-bottom-right-radius: 16px; text-align: right; }
         
         .chat-broadcast { 
-            align-self: center; width: 95%; 
+            align-self: center; width: 95%;
+            color:#fff; 
             background: linear-gradient(135deg, rgba(20, 20, 25, 0.95), rgba(35, 40, 50, 0.95)); 
             border: 2px solid var(--accent); border-radius: 16px; text-align: center; 
             box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3), inset 0 0 12px rgba(59, 130, 246, 0.2); 
@@ -804,10 +819,17 @@
                 <span>نمایش رمز عبور</span>
             </label>
             <button type="button" class="btn-primary" onclick="doLogin()">ورود به حساب</button>
-            <button type="button" class="switch-box" onclick="toggleAuth('register')">
+            <button type="button" class="switch-box" id="open-register-btn" onclick="toggleAuth('register')">
                 <span>حساب کاربری ندارید؟</span> 
                 <span style="color:var(--accent);">ثبت‌نام کنید</span>
             </button>
+            <a href="https://t.me/plato_media" target="_blank" rel="noopener" class="auth-telegram-link">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="تلگرام">
+                    <circle cx="12" cy="12" r="12" fill="#229ED9"/>
+                    <path d="M17.9 6.7L15.3 18.1C15.1 18.9 14.6 19.1 13.9 18.7L10.3 16L8.55 17.7C8.35 17.9 8.2 18.05 7.8 18.05L8.05 14.3L14.9 8.05C15.2 7.8 14.85 7.65 14.45 7.9L6 13.25L2.35 12.1C1.55 11.85 1.55 11.3 2.5 10.95L16.75 5.45C17.4 5.2 18 5.6 17.9 6.7Z" fill="white"/>
+                </svg>
+                <span>کانال تلگرامی پلاتو</span><span class="auth-telegram-id">| plato_media@</span>
+            </a>
         </div>
 
         <div class="box-container" id="reg-box" style="display: none;">
@@ -839,6 +861,13 @@
                 <span>قبلاً ثبت‌نام کردید؟</span> 
                 <span style="color:var(--accent);">وارد شوید</span>
             </button>
+            <a href="https://t.me/plato_media" target="_blank" rel="noopener" class="auth-telegram-link">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="تلگرام">
+                    <circle cx="12" cy="12" r="12" fill="#229ED9"/>
+                    <path d="M17.9 6.7L15.3 18.1C15.1 18.9 14.6 19.1 13.9 18.7L10.3 16L8.55 17.7C8.35 17.9 8.2 18.05 7.8 18.05L8.05 14.3L14.9 8.05C15.2 7.8 14.85 7.65 14.45 7.9L6 13.25L2.35 12.1C1.55 11.85 1.55 11.3 2.5 10.95L16.75 5.45C17.4 5.2 18 5.6 17.9 6.7Z" fill="white"/>
+                </svg>
+                <span>کانال تلگرامی پلاتو</span><span class="auth-telegram-id">| plato_media@</span>
+            </a>
         </div>
     </div>
 
@@ -1111,6 +1140,9 @@
                 <label class="checkbox-container" style="margin-bottom:15px; background:var(--bg-box); padding:10px; border-radius:8px; border:1px solid var(--border-color);">
                     <input type="checkbox" id="admin-maintenance"> فعالسازی حالت تعمیرات (بسته شدن سایت برای کاربران)
                 </label>
+                <label class="checkbox-container" style="margin-bottom:15px; background:var(--bg-box); padding:10px; border-radius:8px; border:1px solid var(--border-color);">
+                    <input type="checkbox" id="admin-registration-closed"> بستن ثبت نام جدید (ورود کاربران فعلی همچنان باز باشد)
+                </label>
                 <button type="button" class="btn-primary" onclick="updateSiteSettings()">ذخیره تنظیمات سایت</button>
             </div>
 
@@ -1155,6 +1187,7 @@
                         <div style="display:flex; align-items:center; gap:8px;">
                             <button class="btn-sm" style="background:var(--bg-input);" onclick="closeAdminActiveChat()">➔ برگشت</button>
                             <span id="active-chat-username" style="font-weight:bold; color:var(--accent);"></span>
+                            <button class="btn-sm btn-reject" onclick="deleteUserChat(currentActiveAdminChatUid, document.getElementById('active-chat-username').textContent.replace('گفتگو با: ', ''))">🗑 پاک کردن این گفتگو</button>
                         </div>
                     </div>
                     <div class="chat-container" id="admin-chat-messages-body"></div>
@@ -1184,8 +1217,8 @@
         </div>
         
         <button type="button" id="buy-sub-btn" class="buy-sub-btn" title="برای خرید اشتراک کلیک کنید؛ آیدی پشتیبانی کپی می‌شود و به تلگرام هدایت نمی‌شوید." style="display:none;" onclick="copySupportId(); return false;">
-            خرید اشتراک
-            <span style="display: block; font-size: 9px; font-weight: normal; margin-top: 2px;">برای خرید اشتراک کلیک کنید تا آیدی ادمین کپی شود (تلگرام)</span>
+            <span class="buy-sub-main">خرید اشتراک</span>
+            <span class="buy-sub-desc">برای خرید اشتراک کلیک کنید تا آیدی ادمین کپی شود (تلگرام)</span>
         </button>
 
         <div class="header-actions">
@@ -1417,12 +1450,29 @@
             <button class="modal-close-x" onclick="document.getElementById('supportModal').classList.remove('show')">×</button>
             <div class="modal-content">
                 <h3 class="modal-title">ثبت تیکت پشتیبانی</h3>
+                <button type="button" class="support-rules-button" onclick="openSupportRules()" title="قوانین پیام دادن به پشتیبانی">!</button>
                 <textarea id="support-msg-text" class="input-field" placeholder="متن تیکت خود را کامل بنویسید..."></textarea>
                 <button class="btn-primary" onclick="sendSupportMessage()">ارسال و دریافت شماره تیکت</button>
             </div>
         </div>
     </div>
     
+    <div class="modal" id="supportRulesModal" style="z-index: 29000;">
+        <div class="modal-box" style="max-width:420px;">
+            <button class="modal-close-x" onclick="document.getElementById('supportRulesModal').classList.remove('show')">×</button>
+            <div class="modal-content">
+                <h3 class="modal-title">قوانین ارسال تیکت پشتیبانی</h3>
+                <div style="font-size:13px; line-height:2; color:var(--text-main); text-align:right;">
+                    <p style="margin:0 0 8px;">• کاربران دارای اشتراک فعال: حداکثر <b>۴ تیکت در روز</b>.</p>
+                    <p style="margin:0 0 8px;">• کاربران بدون اشتراک: حداکثر <b>۲ تیکت در روز</b>.</p>
+                    <p style="margin:0 0 8px;">• فاصله بین تیکت‌های کاربران دارای اشتراک حداقل <b>۵ دقیقه</b> است.</p>
+                    <p style="margin:0 0 8px;">• فاصله بین تیکت‌های کاربران بدون اشتراک حداقل <b>۱۰ دقیقه</b> است.</p>
+                    <p style="margin:0; color:var(--text-muted);">• از ارسال پیام‌های تکراری، اسپم یا چند تیکت پشت‌سرهم خودداری کنید.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal" id="giftModal" style="z-index: 26000;">
         <div class="modal-box" style="max-width: 400px;">
             <button class="modal-close-x" onclick="document.getElementById('giftModal').classList.remove('show')">×</button>
@@ -1467,7 +1517,7 @@
     let lastNewsId = localStorage.getItem('plato_last_news') || 0;
     let linkTimerInterval = null;
     let allUsersArray = []; 
-    let siteSettings = { reg_limit: 100, maintenance: false };
+    let siteSettings = { reg_limit: 100, maintenance: false, registration_closed: false };
     let currentActiveAdminChatUid = null;
     let adminChatRefreshInterval = null;
 
@@ -1556,6 +1606,10 @@
 
     function toggleAuth(type) { 
         if(type === 'register') {
+            if (siteSettings.registration_closed) {
+                showCustomAlert('ثبت نام جدید در حال حاضر بسته است.');
+                return;
+            }
             document.getElementById('login-box').style.display = 'none'; 
             document.getElementById('reg-box').style.display = 'block'; 
         } else {
@@ -1596,16 +1650,17 @@
         } catch (e) {
             console.error("Settings load error:", e);
         }
-        return { reg_limit: 100, maintenance: false };
+        return { reg_limit: 100, maintenance: false, registration_closed: false };
     }
 
     window.updateSiteSettings = async function() {
         showLoader(true);
         const limVal = document.getElementById('admin-reg-limit').value;
         const maintVal = document.getElementById('admin-maintenance').checked;
+        const registrationClosedVal = document.getElementById('admin-registration-closed').checked;
         const lim = parseInt(limVal);
 
-        const newSettings = { reg_limit: isNaN(lim) ? 100 : lim, maintenance: maintVal };
+        const newSettings = { reg_limit: isNaN(lim) ? 100 : lim, maintenance: maintVal, registration_closed: registrationClosedVal };
         try {
             await supabaseClient.from('messages').delete().eq('direction', 'site_settings');
             const { error } = await supabaseClient.from('messages').insert([{
@@ -1627,26 +1682,120 @@
         }
     };
 
-    /* ANTI-CHEAT DATA TRACKER */
-    async function fetchDeviceSwitchMap() {
-        try {
-            const { data } = await supabaseClient.from('messages').select('content').eq('direction', 'device_switches_tracker').limit(1);
-            if (data && data.length > 0 && data[0].content) return JSON.parse(data[0].content);
-        } catch (e) {}
-        return {};
+    /*
+     * SINGLE-SESSION SECURITY:
+     * فقط یک دستگاه/مرورگر برای هر حساب می‌تواند همزمان فعال باشد.
+     * device_token برای سابقه دستگاه‌هاست و session_token برای نشست فعال فعلی.
+     */
+    function getOrCreateDeviceToken() {
+        let deviceToken = localStorage.getItem('plato_device_token');
+        if (!deviceToken) {
+            deviceToken = 'dev_' + crypto.randomUUID();
+            localStorage.setItem('plato_device_token', deviceToken);
+        }
+        return deviceToken;
     }
 
-    async function recordDeviceSwitch(userId) {
+    function getCurrentPlatoSessionToken() {
+        return localStorage.getItem('plato_active_session_token');
+    }
+
+    function saveCurrentPlatoSessionToken(token) {
+        if (token) {
+            localStorage.setItem('plato_active_session_token', token);
+        }
+    }
+
+    async function createOrReplaceActiveSession() {
+        if (!supabaseClient) return null;
+
         try {
-            let map = await fetchDeviceSwitchMap();
-            map[userId] = (map[userId] || 0) + 1;
-            await supabaseClient.from('messages').delete().eq('direction', 'device_switches_tracker');
-            await supabaseClient.from('messages').insert([{
-                direction: 'device_switches_tracker',
-                content: JSON.stringify(map),
-                is_read: true
-            }]);
-        } catch (e) {}
+            const deviceToken = getOrCreateDeviceToken();
+            const { data, error } = await supabaseClient.rpc('record_device_login', {
+                new_device_token: deviceToken
+            });
+
+            if (error) throw error;
+
+            const sessionToken = data?.session_token || null;
+            if (!sessionToken) {
+                throw new Error('Active session token was not returned by the server.');
+            }
+
+            saveCurrentPlatoSessionToken(sessionToken);
+            return sessionToken;
+        } catch (e) {
+            console.warn('Single-session registration unavailable:', e);
+            return null;
+        }
+    }
+
+    async function verifyActivePlatoSession(userId, options = {}) {
+        if (!supabaseClient || !userId) return false;
+        try {
+            const localToken = getCurrentPlatoSessionToken();
+            const { data, error } = await supabaseClient
+                .from('users_data')
+                .select('active_session_token')
+                .eq('id', userId)
+                .maybeSingle();
+
+            if (error) throw error;
+
+            const serverToken = data?.active_session_token || null;
+
+            if (!localToken && !serverToken && options.allowBootstrap) {
+                const newToken = await createOrReplaceActiveSession();
+                return !!newToken;
+            }
+
+            if (!localToken || !serverToken || localToken !== serverToken) {
+                await forceLogoutBecauseAnotherDeviceLoggedIn();
+                return false;
+            }
+
+            return true;
+        } catch (e) {
+            console.warn('Active session verification failed:', e);
+            return true;
+        }
+    }
+
+    let forcedSessionLogoutInProgress = false;
+    async function forceLogoutBecauseAnotherDeviceLoggedIn() {
+        if (forcedSessionLogoutInProgress) return;
+        forcedSessionLogoutInProgress = true;
+
+        try {
+            showCustomAlert('این حساب در دستگاه یا مرورگر دیگری وارد شده است. این نشست بسته شد.');
+            currentUserProfile = null;
+            localStorage.removeItem('plato_active_session_token');
+            localStorage.removeItem('plato_device_token');
+
+            if (supabaseClient) {
+                await supabaseClient.auth.signOut({ scope: 'local' });
+            }
+
+            document.getElementById('main-app').style.display = 'none';
+            document.getElementById('bottom-nav').style.display = 'none';
+            document.getElementById('auth-screen').style.display = 'flex';
+            document.getElementById('maintenance-box').style.display = 'none';
+            document.getElementById('login-box').style.display = 'block';
+            document.getElementById('reg-box').style.display = 'none';
+        } finally {
+            forcedSessionLogoutInProgress = false;
+        }
+    }
+
+    function handleActiveSessionRealtime(payload) {
+        if (!currentUserProfile) return;
+
+        const newToken = payload?.new?.active_session_token || null;
+        const localToken = getCurrentPlatoSessionToken();
+
+        if (newToken && localToken && newToken !== localToken) {
+            forceLogoutBecauseAnotherDeviceLoggedIn();
+        }
     }
 
     async function checkUserSession() {
@@ -1659,7 +1808,14 @@
             const { data, error } = await Promise.race([sessionPromise, timeoutPromise]);
             
             if (error || !data || !data.session) { 
-                document.getElementById('auth-screen').style.display = 'flex'; 
+                siteSettings = await fetchSiteSettings();
+                document.getElementById('auth-screen').style.display = 'flex';
+                const registerSwitch = document.getElementById('open-register-btn');
+                if (registerSwitch) registerSwitch.style.display = siteSettings.registration_closed ? 'none' : 'flex';
+                if (siteSettings.registration_closed) {
+                    document.getElementById('reg-box').style.display = 'none';
+                    document.getElementById('login-box').style.display = 'block';
+                }
                 return; 
             }
             
@@ -1677,30 +1833,17 @@
             
             currentUserProfile = profileData;
 
-            // بررسی تک‌دستگاهی
-            if (currentUserProfile.role !== 'admin') {
-                let localToken = localStorage.getItem('plato_device_token');
-                if (!localToken) {
-                    localToken = 'dev_' + Math.random().toString(36).substr(2, 9);
-                    localStorage.setItem('plato_device_token', localToken);
-                    await supabaseClient.rpc('update_session_token', { new_token: localToken });
-                    currentUserProfile.session_token = localToken;
-                } else {
-                    if (currentUserProfile.session_token && currentUserProfile.session_token !== localToken) {
-                        showCustomAlert('حساب شما در دستگاه دیگری وارد شده است. برای امنیت، خارج شدید.');
-                        await supabaseClient.auth.signOut();
-                        localStorage.removeItem('plato_device_token');
-                        document.getElementById('auth-screen').style.display = 'flex';
-                        return;
-                    } else if (!currentUserProfile.session_token) {
-                        await supabaseClient.rpc('update_session_token', { new_token: localToken });
-                        currentUserProfile.session_token = localToken;
-                    }
-                }
+            const activeSessionIsValid = await verifyActivePlatoSession(data.session.user.id, {
+                allowBootstrap: true
+            });
+            if (!activeSessionIsValid) {
+                return;
             }
 
             fetchSiteSettings().then(settings => {
                 siteSettings = settings;
+                const registerSwitch = document.getElementById('open-register-btn');
+                if (registerSwitch) registerSwitch.style.display = siteSettings.registration_closed ? 'none' : 'flex';
                 if (siteSettings.maintenance && currentUserProfile.role !== 'admin') {
                     document.getElementById('auth-screen').style.display = 'flex';
                     document.getElementById('login-box').style.display = 'none';
@@ -1748,10 +1891,14 @@
             loadMarquee();
             checkNewsUpdates();
             
-            setInterval(() => { 
+            setInterval(async () => { 
+                if (currentUserProfile) {
+                    const sessionStillActive = await verifyActivePlatoSession(data.session.user.id);
+                    if (!sessionStillActive) return;
+                }
                 updateHeartbeat(); 
                 checkUnreadMessages(); 
-            }, 60000);
+            }, 10000);
 
         } catch (err) { 
             document.getElementById('auth-screen').style.display = 'flex'; 
@@ -1796,6 +1943,11 @@
 
         try {
             siteSettings = await fetchSiteSettings();
+            if (siteSettings.registration_closed) {
+                showCustomAlert('ثبت نام جدید در حال حاضر بسته است.');
+                showLoader(false);
+                return;
+            }
             const { count } = await supabaseClient.from('users_data').select('*', { count: 'exact', head: true });
             if (count >= siteSettings.reg_limit) {
                 showCustomAlert('ظرفیت سایت فعلا تکمیل میباشد');
@@ -1850,23 +2002,22 @@
             if (error) { 
                 showCustomAlert('نام کاربری یا رمز عبور اشتباه است.');
             } else {
-                // بررسی تعویض دستگاه
-                const { data: prof } = await supabaseClient
-                    .from('users_data')
-                    .select('session_token, role')
-                    .eq('id', data.session.user.id)
-                    .single();
-
-                let currentLocal = localStorage.getItem('plato_device_token');
-                if (prof && prof.role !== 'admin' && prof.session_token && prof.session_token !== currentLocal) {
-                    await recordDeviceSwitch(data.session.user.id);
+                // ورود جدید، نشست فعال قبلی را فوراً باطل می‌کند.
+                const newSessionToken = await createOrReplaceActiveSession();
+                if (!newSessionToken) {
+                    await supabaseClient.auth.signOut({ scope: 'local' });
+                    showCustomAlert('ثبت نشست فعال انجام نشد؛ لطفاً دوباره تلاش کنید.');
+                    return;
                 }
 
-                let newToken = 'dev_' + Math.random().toString(36).substr(2, 9);
-                localStorage.setItem('plato_device_token', newToken);
-                
-                // به‌روزرسانی در دیتابیس قبل از بررسی سشن
-                await supabaseClient.rpc('update_session_token', { new_token: newToken });
+                // در سطح Auth نیز نشست‌های قبلی را می‌بندیم.
+                // این کار با session فعلی تداخل ندارد.
+                try {
+                    await supabaseClient.auth.signOut({ scope: 'others' });
+                } catch (e) {
+                    console.warn('Could not revoke other Auth sessions:', e);
+                }
+
                 await checkUserSession(); 
             }
         } catch(err) { 
@@ -1881,10 +2032,23 @@
     };
 
     window.doLogout = async function() { 
-        if(supabaseClient) await supabaseClient.auth.signOut(); 
+        if(supabaseClient) await supabaseClient.auth.signOut({ scope: 'local' });
+        localStorage.removeItem('plato_active_session_token');
         localStorage.removeItem('plato_device_token');
         window.location.reload(); 
     };
+
+    document.addEventListener('visibilitychange', async () => {
+        if (!document.hidden && currentUserProfile && currentUserProfile.role !== 'admin') {
+            await verifyActivePlatoSession(currentUserProfile.id);
+        }
+    });
+
+    window.addEventListener('focus', async () => {
+        if (currentUserProfile && currentUserProfile.role !== 'admin') {
+            await verifyActivePlatoSession(currentUserProfile.id);
+        }
+    });
 
     function switchNav(target) {
         if(linkTimerInterval) clearInterval(linkTimerInterval);
@@ -2288,6 +2452,7 @@
         if(tabId === 'tab-requests') {
             document.getElementById('admin-reg-limit').value = siteSettings.reg_limit || 100;
             document.getElementById('admin-maintenance').checked = siteSettings.maintenance || false;
+            document.getElementById('admin-registration-closed').checked = siteSettings.registration_closed || false;
             loadPendingRequests();
         }
     };
@@ -2301,6 +2466,7 @@
         siteSettings = await fetchSiteSettings();
         document.getElementById('admin-reg-limit').value = siteSettings.reg_limit || 100;
         document.getElementById('admin-maintenance').checked = siteSettings.maintenance || false;
+        document.getElementById('admin-registration-closed').checked = siteSettings.registration_closed || false;
         
         loadPendingRequests(); 
         loadAdminMovies(); 
@@ -2322,7 +2488,7 @@
         
         showLoader(true);
         try {
-            const { data, error } = await supabaseClient.rpc('admin_charge_sub', { target_user: user, charge_days: days });
+            const { data, error } = await supabaseClient.rpc('admin_update_subscription', { target_user: user, charge_days: days });
             if (error) {
                 showCustomAlert(error.message);
             } else {
@@ -2739,15 +2905,13 @@
             list.innerHTML = ''; 
             let onlineCount = 0; 
             const nowTime = new Date().getTime();
-            const switchMap = await fetchDeviceSwitchMap();
-            
             if(data) {
                 allUsersArray = data;
                 data.forEach(user => {
                     if(user.last_active && (nowTime - new Date(user.last_active).getTime()) < 300000) onlineCount++;
                     if(user.role === 'admin' || user.status === 'pending') return;
                     
-                    let switches = switchMap[user.id] || 0;
+                    let switches = Number(user.device_switch_count || 0);
                     let cheatBadge = switches >= 3 
                         ? `<span class="cheat-badge" title="هشدار تقلب: این کاربر ${switches} بار بین دستگاه‌ها جابجا شده است!">⚠️ ${switches} دستگاه (!)</span>` 
                         : '';
@@ -2764,8 +2928,10 @@
                                     <small style="color:var(--text-muted); font-weight:normal; margin-top:2px;">مدل: ${user.phone_model || 'نامشخص'}</small>
                                 </div>
                             </div>
-                            <div>
-                                <button class="btn-sm btn-reject" onclick="event.stopPropagation(); deleteUserAccount('${user.id}')">حذف</button>
+                            <div class="user-chat-actions" onclick="event.stopPropagation();">
+                                <button class="user-chat-action message" onclick="openAdminChatWith('${user.id}', '${String(user.username || '').replace(/'/g, "\\'")}')">پیام</button>
+                                <button class="user-chat-action delete" onclick="deleteUserChat('${user.id}', '${String(user.username || '').replace(/'/g, "\\'")}')">پاک کردن پیام‌ها</button>
+                                <button class="btn-sm btn-reject" onclick="deleteUserAccount('${user.id}')">حذف</button>
                             </div>
                         </div>`;
                 });
@@ -2774,12 +2940,67 @@
         } catch(e) {}
     }
 
+    function formatElapsedSince(startValue) {
+        if (!startValue) return 'ثبت نشده';
+        const start = new Date(startValue);
+        const end = new Date();
+        if (isNaN(start.getTime()) || start > end) return 'ثبت نشده';
+
+        function daysInMonth(year, monthIndex) {
+            return new Date(year, monthIndex + 1, 0).getDate();
+        }
+
+        function addCalendarYears(date, amount) {
+            const result = new Date(date);
+            const targetYear = result.getFullYear() + amount;
+            const targetDay = Math.min(result.getDate(), daysInMonth(targetYear, result.getMonth()));
+            result.setFullYear(targetYear, result.getMonth(), targetDay);
+            return result;
+        }
+
+        function addCalendarMonths(date, amount) {
+            const result = new Date(date);
+            const totalMonths = result.getFullYear() * 12 + result.getMonth() + amount;
+            const targetYear = Math.floor(totalMonths / 12);
+            const targetMonth = totalMonths % 12;
+            const targetDay = Math.min(result.getDate(), daysInMonth(targetYear, targetMonth));
+            result.setFullYear(targetYear, targetMonth, targetDay);
+            return result;
+        }
+
+        let cursor = new Date(start);
+        let years = end.getFullYear() - cursor.getFullYear();
+        if (addCalendarYears(cursor, years) > end) years--;
+        if (years > 0) cursor = addCalendarYears(cursor, years);
+
+        let months = (end.getFullYear() - cursor.getFullYear()) * 12 + (end.getMonth() - cursor.getMonth());
+        if (addCalendarMonths(cursor, months) > end) months--;
+        if (months > 0) cursor = addCalendarMonths(cursor, months);
+
+        let diffMs = end.getTime() - cursor.getTime();
+        const days = Math.floor(diffMs / 86400000);
+        diffMs -= days * 86400000;
+        const hours = Math.floor(diffMs / 3600000);
+        diffMs -= hours * 3600000;
+        const minutes = Math.floor(diffMs / 60000);
+        diffMs -= minutes * 60000;
+        const seconds = Math.floor(diffMs / 1000);
+
+        const parts = [];
+        if (years) parts.push(years + ' سال');
+        if (months) parts.push(months + ' ماه');
+        if (days) parts.push(days + ' روز');
+        if (hours) parts.push(hours + ' ساعت');
+        if (minutes) parts.push(minutes + ' دقیقه');
+        if (!parts.length || seconds) parts.push(seconds + ' ثانیه');
+        return parts.join(' و ');
+    }
+
     window.openUserDetailModal = async function(userId) {
         const user = allUsersArray.find(u => u.id === userId);
         if(!user) return;
 
-        const switchMap = await fetchDeviceSwitchMap();
-        let switches = switchMap[user.id] || 0;
+        let switches = Number(user.device_switch_count || 0);
 
         document.getElementById('ud-username').textContent = user.username;
         document.getElementById('ud-model').textContent = user.phone_model || 'نامشخص';
@@ -2798,9 +3019,11 @@
                 subStatus = "فعال (" + Math.ceil(diff / 86400000) + " روز مانده)";
                 maxTickets = 4;
             } else {
-                let daysAgo = Math.floor(Math.abs(diff) / 86400000);
-                subStatus = daysAgo === 0 ? "لغو شده / منقضی (امروز)" : "منقضی (" + daysAgo + " روز پیش)";
+                const endedAt = user.subscription_ended_at || user.sub_end_date;
+                subStatus = "ندارد؛ " + formatElapsedSince(endedAt) + " است که اشتراک ندارد";
             }
+        } else if (user.subscription_ended_at) {
+            subStatus = "ندارد؛ " + formatElapsedSince(user.subscription_ended_at) + " است که اشتراک ندارد";
         }
         document.getElementById('ud-sub').textContent = subStatus;
         document.getElementById('ud-last-active').textContent = user.last_active ? new Date(user.last_active).toLocaleString('fa-IR') : "ثبت نشده";
@@ -2810,13 +3033,15 @@
         document.getElementById('userDetailModal').classList.add('show');
 
         try {
-            const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+            const todayStart = new Date();
+            todayStart.setHours(0, 0, 0, 0);
+            const dayStartIso = todayStart.toISOString();
             const { count, error } = await supabaseClient
                 .from('messages')
                 .select('*', { count: 'exact', head: true })
                 .eq('user_id', userId)
                 .eq('direction', 'user_to_admin')
-                .gte('created_at', twentyFourHoursAgo);
+                .gte('created_at', dayStartIso);
 
             if(error) throw error;
             let remaining = maxTickets - (count || 0);
@@ -3117,7 +3342,7 @@
                             const voted = userVote && Number(userVote.option_index) === index ? 'poll-voted' : '';
                             pollHtml += `<div class="poll-option ${voted}"><div class="poll-option-bg" style="width:${percent}%"></div><div class="poll-option-content"><button type="button" onclick="votePoll(${n.id}, ${index})">${sanitizeNewsHTML(String(option))}</button><span class="poll-percent">${percent}%</span></div></div>`;
                         });
-                        pollHtml += `<div class="poll-total-note">نتایج بر اساس آرای ثبت‌شده محاسبه می‌شوند.</div></div>`;
+                        pollHtml += `</div>`;
                     }
 
                     cont.innerHTML += `
@@ -3323,6 +3548,21 @@
         newsRefreshTimer = setTimeout(() => loadNewsUser(false), 250);
     }
 
+    let messageRefreshTimer = null;
+    function scheduleMessageRefresh() {
+        clearTimeout(messageRefreshTimer);
+        messageRefreshTimer = setTimeout(async () => {
+            checkUnreadMessages();
+            const inbox = document.getElementById('inboxModal');
+            if (inbox && getComputedStyle(inbox).display !== 'none') await openInboxModal();
+            if (currentUserProfile?.role === 'admin') {
+                const adminChat = document.getElementById('admin-active-chat');
+                if (adminChat && getComputedStyle(adminChat).display !== 'none') loadActiveChatMessages();
+                loadAdminInbox();
+            }
+        }, 150);
+    }
+
     async function setupPlatoRealtime() {
         if (!supabaseClient) return;
 
@@ -3338,6 +3578,8 @@
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'news_reactions' }, scheduleNewsRefresh)
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'poll_votes' }, scheduleNewsRefresh)
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'news' }, scheduleNewsRefresh)
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'messages' }, scheduleMessageRefresh)
+                .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'users_data', filter: currentUserProfile ? `id=eq.${currentUserProfile.id}` : undefined }, handleActiveSessionRealtime)
                 .subscribe((status) => {
                     console.log('PLATO Realtime:', status);
                 });
@@ -3349,6 +3591,7 @@
                 if (!document.hidden) {
                     loadBanners();
                     loadNewsUser(false);
+                    checkUnreadMessages();
                 }
             }, 15000);
         } catch(e) {
@@ -3539,50 +3782,32 @@
         document.getElementById('supportModal').classList.add('show'); 
     };
 
-    window.sendSupportMessage = async function() {
-        const text = document.getElementById('support-msg-text').value.trim(); 
-        if(!text) return;
-        
-        let isVip = currentUserProfile.role === 'admin' || (currentUserProfile.sub_end_date && new Date(currentUserProfile.sub_end_date) > new Date());
-        let storageKey = 'plato_ticket_history_' + currentUserProfile.id;
-        let history = JSON.parse(localStorage.getItem(storageKey) || '[]');
-        let nowTime = new Date().getTime();
-        history = history.filter(time => (nowTime - time) < (24 * 60 * 60 * 1000));
-        
-        let maxPer24h = isVip ? 4 : 2;
-        let cooldownMs = isVip ? 10 * 60 * 1000 : 30 * 60 * 1000; 
-        
-        if(history.length >= maxPer24h) return showCustomAlert(`حداکثر ${maxPer24h} پیام در ۲۴ ساعت مجاز است.`);
-        if(history.length > 0) {
-            let diffTime = nowTime - history[history.length - 1];
-            if(diffTime < cooldownMs) { 
-                let waitMins = Math.ceil((cooldownMs - diffTime) / 60000); 
-                return showCustomAlert(`لطفاً ${waitMins} دقیقه دیگر صبر کنید.`); 
-            }
-        }
-        
-        showLoader(true); 
-        try {
-            const { data: insertedMsg, error } = await supabaseClient
-                .from('messages')
-                .insert([{ user_id: currentUserProfile.id, direction: 'user_to_admin', content: text, is_read: false }])
-                .select();
+    window.openSupportRules = function() {
+        document.getElementById('supportRulesModal').classList.add('show');
+    };
 
+    window.sendSupportMessage = async function() {
+        const text = document.getElementById('support-msg-text').value.trim();
+        if(!text) return showCustomAlert('متن تیکت را وارد کنید.');
+        if(text.length > 3000) return showCustomAlert('متن تیکت بیش از حد طولانی است.');
+
+        showLoader(true);
+        try {
+            const { data, error } = await supabaseClient.rpc('create_support_ticket', { ticket_text: text });
             if(error) {
-                showCustomAlert('لطفاً مجدد تلاش کنید');
+                showCustomAlert(error.message || 'لطفاً مجدد تلاش کنید');
             } else {
-                history.push(nowTime); 
-                localStorage.setItem(storageKey, JSON.stringify(history));
-                let ticketCode = insertedMsg && insertedMsg[0] ? (1000 + insertedMsg[0].id) : (1000 + Math.floor(Math.random() * 9000));
-                showCustomAlert(`تیکت شما با شماره #${ticketCode} ثبت شد.`); 
-                document.getElementById('support-msg-text').value = ''; 
+                const ticketId = data?.ticket_id ? 1000 + Number(data.ticket_id) : '';
+                showCustomAlert(ticketId ? `تیکت شما با شماره #${ticketId} ثبت شد.` : 'تیکت شما ثبت شد.');
+                document.getElementById('support-msg-text').value = '';
                 document.getElementById('supportModal').classList.remove('show');
-                openInboxModal();
+                await openInboxModal();
+                checkUnreadMessages();
             }
         } catch(e) {
             showCustomAlert('لطفاً مجدد تلاش کنید');
         } finally {
-            showLoader(false); 
+            showLoader(false);
         }
     };
 
@@ -3792,6 +4017,31 @@
             showCustomAlert('لطفاً مجدد تلاش کنید'); 
         } finally { 
             showLoader(false); 
+        }
+    };
+
+    window.deleteUserChat = async function(uid, username = 'این کاربر') {
+        if (!uid) return;
+        if (!confirm(`آیا تمام پیام‌های گفتگوی ${username} پاک شود؟`)) return;
+        showLoader(true);
+        try {
+            const { error } = await supabaseClient
+                .from('messages')
+                .delete()
+                .eq('user_id', uid)
+                .in('direction', ['user_to_admin', 'admin_to_user']);
+            if (error) throw error;
+            if (currentActiveAdminChatUid === uid) {
+                await loadActiveChatMessages();
+            }
+            await loadAdminInbox();
+            checkUnreadMessages();
+            showCustomAlert('گفتگوی این کاربر پاک شد.');
+        } catch (e) {
+            console.error(e);
+            showCustomAlert('خطا در پاک کردن گفتگو.');
+        } finally {
+            showLoader(false);
         }
     };
 
