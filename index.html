@@ -364,13 +364,6 @@
         }
         .sidebar-footer span { display: block; margin-top: 4px; font-weight: bold; letter-spacing: 1px; }
 
-        .device-switch-count {
-            color: var(--text-muted);
-            font-size: 11px;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-
         /* ADMIN PANEL - COMPACT / ORDERLY */
         #admin-screen .admin-section {
             padding: 16px;
@@ -479,6 +472,20 @@
             border-radius: 13px !important;
         }
 
+        #admin-screen .admin-chat-panel .chat-container {
+            padding: 10px 12px;
+            gap: 7px;
+            justify-content: flex-start;
+        }
+
+        #admin-screen .admin-chat-panel .chat-bubble {
+            max-width: 72%;
+            padding: 7px 10px;
+            border-radius: 12px;
+            font-size: 12.5px;
+            line-height: 1.65;
+        }
+
         .admin-chat-header {
             padding: 9px 11px !important;
             gap: 7px;
@@ -535,19 +542,6 @@
             padding: 6px 8px;
             font-size: 10.5px;
             border-radius: 8px;
-        }
-
-        .chat-container {
-            padding: 13px 16px;
-            gap: 9px;
-        }
-
-        .chat-bubble {
-            max-width: 84%;
-            padding: 10px 13px;
-            border-radius: 14px;
-            font-size: 13px;
-            line-height: 1.75;
         }
 
         .chat-broadcast {
@@ -739,7 +733,7 @@
             100% { left: 100%; transform: translateY(-50%) translateX(0); } 
         }
         
-        .search-box { padding: 10px 15px 4px; max-width: 750px; margin: 0 auto; }
+        .search-box { padding: 0 15px 4px; max-width: 750px; margin: 0 auto; }
         .search-wrapper { position: relative; }
         .search-wrapper input { 
             width: 100%; height: 48px; padding: 0 45px 0 16px; border: 1px solid var(--border-color); 
@@ -748,7 +742,7 @@
         .search-wrapper input:focus { border-color: var(--accent); }
         .search-icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
         
-        .hero-container { margin: 10px auto 0; width: calc(100% - 30px); max-width: 1400px; }
+        .hero-container { margin: 6px auto 0; width: calc(100% - 30px); max-width: 1400px; }
         .hero { position: relative; width: 100%; overflow: hidden; border-radius: 20px; background: #000; margin: 0; }
         .slides { display: flex; direction: ltr; width: 100%; transition: transform .6s cubic-bezier(.22,.61,.36,1); }
         .slide { position: relative; min-width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
@@ -1591,10 +1585,6 @@
                     <b id="ud-username"></b>
                 </div>
                 <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
-                    <span style="color:var(--text-muted);">وضعیت دستگاه:</span>
-                    <b id="ud-switches"></b>
-                </div>
-                <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
                     <span style="color:var(--text-muted);">مدل دستگاه:</span>
                     <b id="ud-model"></b>
                 </div>
@@ -1861,121 +1851,6 @@
         }
     };
 
-    /*
-     * SINGLE-SESSION SECURITY:
-     * فقط یک دستگاه/مرورگر برای هر حساب می‌تواند همزمان فعال باشد.
-     * device_token برای سابقه دستگاه‌هاست و session_token برای نشست فعال فعلی.
-     */
-    function getOrCreateDeviceToken() {
-        let deviceToken = localStorage.getItem('plato_device_token');
-        if (!deviceToken) {
-            deviceToken = 'dev_' + crypto.randomUUID();
-            localStorage.setItem('plato_device_token', deviceToken);
-        }
-        return deviceToken;
-    }
-
-    function getCurrentPlatoSessionToken() {
-        return localStorage.getItem('plato_active_session_token');
-    }
-
-    function saveCurrentPlatoSessionToken(token) {
-        if (token) {
-            localStorage.setItem('plato_active_session_token', token);
-        }
-    }
-
-    async function createOrReplaceActiveSession() {
-        if (!supabaseClient) return null;
-
-        try {
-            const deviceToken = getOrCreateDeviceToken();
-            const { data, error } = await supabaseClient.rpc('record_device_login', {
-                new_device_token: deviceToken
-            });
-
-            if (error) throw error;
-
-            const sessionToken = data?.session_token || null;
-            if (!sessionToken) {
-                throw new Error('Active session token was not returned by the server.');
-            }
-
-            saveCurrentPlatoSessionToken(sessionToken);
-            return sessionToken;
-        } catch (e) {
-            console.warn('Single-session registration unavailable:', e);
-            return null;
-        }
-    }
-
-    async function verifyActivePlatoSession(userId, options = {}) {
-        if (!supabaseClient || !userId) return false;
-        try {
-            const localToken = getCurrentPlatoSessionToken();
-            const { data, error } = await supabaseClient
-                .from('users_data')
-                .select('active_session_token')
-                .eq('id', userId)
-                .maybeSingle();
-
-            if (error) throw error;
-
-            const serverToken = data?.active_session_token || null;
-
-            if (!localToken && !serverToken && options.allowBootstrap) {
-                const newToken = await createOrReplaceActiveSession();
-                return !!newToken;
-            }
-
-            if (!localToken || !serverToken || localToken !== serverToken) {
-                await forceLogoutBecauseAnotherDeviceLoggedIn();
-                return false;
-            }
-
-            return true;
-        } catch (e) {
-            console.warn('Active session verification failed:', e);
-            return true;
-        }
-    }
-
-    let forcedSessionLogoutInProgress = false;
-    async function forceLogoutBecauseAnotherDeviceLoggedIn() {
-        if (forcedSessionLogoutInProgress) return;
-        forcedSessionLogoutInProgress = true;
-
-        try {
-            showCustomAlert('این حساب در دستگاه یا مرورگر دیگری وارد شده است. این نشست بسته شد.');
-            currentUserProfile = null;
-            localStorage.removeItem('plato_active_session_token');
-
-            if (supabaseClient) {
-                await supabaseClient.auth.signOut({ scope: 'local' });
-            }
-
-            document.getElementById('main-app').style.display = 'none';
-            document.getElementById('bottom-nav').style.display = 'none';
-            document.getElementById('auth-screen').style.display = 'flex';
-            document.getElementById('maintenance-box').style.display = 'none';
-            document.getElementById('login-box').style.display = 'block';
-            document.getElementById('reg-box').style.display = 'none';
-        } finally {
-            forcedSessionLogoutInProgress = false;
-        }
-    }
-
-    function handleActiveSessionRealtime(payload) {
-        if (!currentUserProfile) return;
-
-        const newToken = payload?.new?.active_session_token || null;
-        const localToken = getCurrentPlatoSessionToken();
-
-        if (newToken && localToken && newToken !== localToken) {
-            forceLogoutBecauseAnotherDeviceLoggedIn();
-        }
-    }
-
     async function checkUserSession() {
         if (!supabaseClient) return;
         showLoader(true);
@@ -2010,13 +1885,6 @@
             }
             
             currentUserProfile = profileData;
-
-            const activeSessionIsValid = await verifyActivePlatoSession(data.session.user.id, {
-                allowBootstrap: true
-            });
-            if (!activeSessionIsValid) {
-                return;
-            }
 
             fetchSiteSettings().then(settings => {
                 siteSettings = settings;
@@ -2069,11 +1937,7 @@
             loadMarquee();
             checkNewsUpdates();
             
-            setInterval(async () => { 
-                if (currentUserProfile) {
-                    const sessionStillActive = await verifyActivePlatoSession(data.session.user.id);
-                    if (!sessionStillActive) return;
-                }
+            setInterval(() => { 
                 updateHeartbeat(); 
                 checkUnreadMessages(); 
             }, 10000);
@@ -2190,22 +2054,6 @@
             if (error) { 
                 showCustomAlert('نام کاربری یا رمز عبور اشتباه است.');
             } else {
-                // ورود جدید، نشست فعال قبلی را فوراً باطل می‌کند.
-                const newSessionToken = await createOrReplaceActiveSession();
-                if (!newSessionToken) {
-                    await supabaseClient.auth.signOut({ scope: 'local' });
-                    showCustomAlert('ثبت نشست فعال انجام نشد؛ لطفاً دوباره تلاش کنید.');
-                    return;
-                }
-
-                // در سطح Auth نیز نشست‌های قبلی را می‌بندیم.
-                // این کار با session فعلی تداخل ندارد.
-                try {
-                    await supabaseClient.auth.signOut({ scope: 'others' });
-                } catch (e) {
-                    console.warn('Could not revoke other Auth sessions:', e);
-                }
-
                 await checkUserSession(); 
             }
         } catch(err) { 
@@ -2220,28 +2068,9 @@
     };
 
     window.doLogout = async function() { 
-        try {
-            const sessionToken = getCurrentPlatoSessionToken();
-            if (sessionToken && supabaseClient) {
-                await supabaseClient.rpc('clear_active_session', { current_session_token: sessionToken });
-            }
-        } catch (e) {}
         if(supabaseClient) await supabaseClient.auth.signOut({ scope: 'local' });
-        localStorage.removeItem('plato_active_session_token');
         window.location.reload(); 
     };
-
-    document.addEventListener('visibilitychange', async () => {
-        if (!document.hidden && currentUserProfile) {
-            await verifyActivePlatoSession(currentUserProfile.id);
-        }
-    });
-
-    window.addEventListener('focus', async () => {
-        if (currentUserProfile) {
-            await verifyActivePlatoSession(currentUserProfile.id);
-        }
-    });
 
     function switchNav(target) {
         if(linkTimerInterval) clearInterval(linkTimerInterval);
@@ -3104,8 +2933,6 @@
                     if(user.last_active && (nowTime - new Date(user.last_active).getTime()) < 300000) onlineCount++;
                     if(user.role === 'admin' || user.status === 'pending') return;
                     
-                    let switches = Number(user.device_switch_count || 0);
-
                     list.innerHTML += `
                         <div class="req-card" style="cursor:pointer;" onclick="openUserDetailModal('${user.id}')">
                             <div class="admin-user-row">
@@ -3114,7 +2941,6 @@
                                     <div style="min-width:0; flex:1;">
                                         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                                             <span style="color:var(--accent); font-size:14px; font-weight:800;">${user.username}</span>
-                                            <span class="device-switch-count">تعویض دستگاه: ${switches} بار</span>
                                         </div>
                                         <small style="color:var(--text-muted); font-weight:normal; margin-top:2px; display:block;">مدل: ${user.phone_model || 'نامشخص'}</small>
                                     </div>
@@ -3192,14 +3018,9 @@
         const user = allUsersArray.find(u => u.id === userId);
         if(!user) return;
 
-        let switches = Number(user.device_switch_count || 0);
-
         document.getElementById('ud-username').textContent = user.username;
         document.getElementById('ud-model').textContent = user.phone_model || 'نامشخص';
         
-        const switchText = `${switches} بار تعویض دستگاه`;
-        document.getElementById('ud-switches').textContent = switchText;
-
         let subStatus = "ندارد / لغو شده";
         let maxTickets = 2;
         if(user.sub_end_date) {
@@ -3768,7 +3589,6 @@
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'poll_votes' }, scheduleNewsRefresh)
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'news' }, scheduleNewsRefresh)
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'messages' }, scheduleMessageRefresh)
-                .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'users_data', filter: currentUserProfile ? `id=eq.${currentUserProfile.id}` : undefined }, handleActiveSessionRealtime)
                 .subscribe((status) => {
                     console.log('PLATO Realtime:', status);
                 });
@@ -4164,7 +3984,7 @@
     async function loadActiveChatMessages() {
         if(!currentActiveAdminChatUid) return;
         const container = document.getElementById('admin-chat-messages-body');
-        const { data } = await supabaseClient.from('messages').select('*').eq('user_id', currentActiveAdminChatUid).order('created_at', { ascending: true });
+        const { data } = await supabaseClient.from('messages').select('*').eq('user_id', currentActiveAdminChatUid).order('created_at', { ascending: false });
             
         container.innerHTML = '';
         if(data) {
@@ -4188,7 +4008,7 @@
                         </div>`;
                 }
             });
-            container.scrollTop = container.scrollHeight;
+            container.scrollTop = 0;
         }
     }
 
