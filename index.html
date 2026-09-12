@@ -1624,6 +1624,12 @@
                     <b id="ud-last-movie"></b>
                 </div>
             </div>
+
+            <div id="ud-support-restriction-status" style="margin-top:15px; text-align:center; font-size:12px; color:var(--text-muted);"></div>
+
+            <button id="ud-support-restrict-btn" class="btn-primary" style="margin-top:10px; background:#ef4444;" onclick="restrictSupportUser()">
+                محدود کردن ارسال پیام به پشتیبانی برای ۴۸ ساعت
+            </button>
         </div>
     </div>
 
@@ -1703,6 +1709,7 @@
     let allUsersArray = []; 
     let siteSettings = { reg_limit: 100, maintenance: false, registration_closed: false };
     let currentActiveAdminChatUid = null;
+    let currentAdminDetailUserId = null;
     let adminChatRefreshInterval = null;
 
     // DEFAULT BANNERS STATE
@@ -3158,6 +3165,8 @@
         const user = allUsersArray.find(u => u.id === userId);
         if(!user) return;
 
+        currentAdminDetailUserId = userId;
+
         document.getElementById('ud-username').textContent = user.username;
         document.getElementById('ud-model').textContent = user.phone_model || 'نامشخص';
         
@@ -3180,6 +3189,23 @@
         document.getElementById('ud-time').textContent = user.time_spent ? user.time_spent + " دقیقه" : "ثبت نشده";
         document.getElementById('ud-last-movie').textContent = user.last_watched ? user.last_watched : "ثبت نشده";
         document.getElementById('ud-tickets').textContent = "در حال محاسبه...";
+
+        const restrictionBtn = document.getElementById('ud-support-restrict-btn');
+        const restrictionStatus = document.getElementById('ud-support-restriction-status');
+        if (restrictionBtn && restrictionStatus) {
+            const restrictedUntil = user.support_restricted_until ? new Date(user.support_restricted_until) : null;
+            if (restrictedUntil && restrictedUntil.getTime() > Date.now()) {
+                const remainingHours = Math.ceil((restrictedUntil.getTime() - Date.now()) / 3600000);
+                restrictionBtn.textContent = "اعمال مجدد محدودیت ۴۸ ساعته";
+                restrictionStatus.textContent = `این کاربر در حال حاضر محدود است. حدود ${remainingHours} ساعت باقی مانده.`;
+                restrictionStatus.style.color = "#ef4444";
+            } else {
+                restrictionBtn.textContent = "محدود کردن ارسال پیام به پشتیبانی برای ۴۸ ساعت";
+                restrictionStatus.textContent = "این کاربر در حال حاضر محدود نیست.";
+                restrictionStatus.style.color = "var(--text-muted)";
+            }
+        }
+
         document.getElementById('userDetailModal').classList.add('show');
 
         try {
@@ -3198,6 +3224,45 @@
             document.getElementById('ud-tickets').textContent = remaining < 0 ? 0 : remaining;
         } catch(e) {
             document.getElementById('ud-tickets').textContent = "خطا در دریافت";
+        }
+    };
+
+    window.restrictSupportUser = async function() {
+        if(!currentAdminDetailUserId) return showCustomAlert('کاربر انتخاب نشده است.');
+
+        const user = allUsersArray.find(u => u.id === currentAdminDetailUserId);
+        if(!user) return showCustomAlert('کاربر پیدا نشد.');
+
+        if(!confirm(`آیا ${user.username} برای ۴۸ ساعت از ارسال پیام به پشتیبانی محدود شود؟`)) return;
+
+        showLoader(true);
+        try {
+            const restrictedUntil = new Date(Date.now() + (48 * 60 * 60 * 1000)).toISOString();
+
+            const { error } = await supabaseClient
+                .from('users_data')
+                .update({ support_restricted_until: restrictedUntil })
+                .eq('id', currentAdminDetailUserId);
+
+            if(error) throw error;
+
+            user.support_restricted_until = restrictedUntil;
+
+            const restrictionBtn = document.getElementById('ud-support-restrict-btn');
+            const restrictionStatus = document.getElementById('ud-support-restriction-status');
+
+            if(restrictionBtn) restrictionBtn.textContent = "اعمال مجدد محدودیت ۴۸ ساعته";
+            if(restrictionStatus) {
+                restrictionStatus.textContent = "این کاربر برای ۴۸ ساعت از ارسال پیام به پشتیبانی محدود شد.";
+                restrictionStatus.style.color = "#ef4444";
+            }
+
+            showCustomAlert('کاربر برای ۴۸ ساعت محدود شد.');
+        } catch(e) {
+            console.error('restrictSupportUser:', e);
+            showCustomAlert('محدود کردن کاربر انجام نشد. ستون support_restricted_until را در users_data بررسی کنید.');
+        } finally {
+            showLoader(false);
         }
     };
 
@@ -3952,8 +4017,36 @@
         } catch(e) {}
     }
 
-    window.openSupportModal = function() { 
-        document.getElementById('supportModal').classList.add('show'); 
+    window.openSupportModal = async function() {
+        if(!currentUserProfile || currentUserProfile.role === 'admin') {
+            document.getElementById('supportModal').classList.add('show');
+            return;
+        }
+
+        try {
+            const { data, error } = await supabaseClient
+                .from('users_data')
+                .select('support_restricted_until')
+                .eq('id', currentUserProfile.id)
+                .single();
+
+            if(error) throw error;
+
+            currentUserProfile.support_restricted_until = data?.support_restricted_until || null;
+
+            if(currentUserProfile.support_restricted_until) {
+                const restrictedUntil = new Date(currentUserProfile.support_restricted_until);
+                if(restrictedUntil.getTime() > Date.now()) {
+                    showCustomAlert('کاربر عزیز،به دلیل پیام های مکرر و خارج از تعداد مجاز به مدت ۴۸ ساعت محدود شدید');
+                    return;
+                }
+            }
+
+            document.getElementById('supportModal').classList.add('show');
+        } catch(e) {
+            console.error('openSupportModal:', e);
+            showCustomAlert('لطفاً مجدد تلاش کنید');
+        }
     };
 
     window.openSupportRules = function() {
@@ -3964,6 +4057,32 @@
         const text = document.getElementById('support-msg-text').value.trim();
         if(!text) return showCustomAlert('متن تیکت را وارد کنید.');
         if(text.length > 3000) return showCustomAlert('متن تیکت بیش از حد طولانی است.');
+
+        if(currentUserProfile && currentUserProfile.role !== 'admin') {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('users_data')
+                    .select('support_restricted_until')
+                    .eq('id', currentUserProfile.id)
+                    .single();
+
+                if(error) throw error;
+
+                currentUserProfile.support_restricted_until = data?.support_restricted_until || null;
+
+                if(currentUserProfile.support_restricted_until) {
+                    const restrictedUntil = new Date(currentUserProfile.support_restricted_until);
+                    if(restrictedUntil.getTime() > Date.now()) {
+                        showCustomAlert('کاربر عزیز،به دلیل پیام های مکرر و خارج از تعداد مجاز به مدت ۴۸ ساعت محدود شدید');
+                        return;
+                    }
+                }
+            } catch(e) {
+                console.error('sendSupportMessage restriction check:', e);
+                showCustomAlert('لطفاً مجدد تلاش کنید');
+                return;
+            }
+        }
 
         showLoader(true);
         try {
