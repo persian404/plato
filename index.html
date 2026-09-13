@@ -3237,12 +3237,10 @@
 
         showLoader(true);
         try {
-            const restrictedUntil = new Date(Date.now() + (48 * 60 * 60 * 1000)).toISOString();
-
-            const { error } = await supabaseClient
-                .from('users_data')
-                .update({ support_restricted_until: restrictedUntil })
-                .eq('id', currentAdminDetailUserId);
+            const { data: restrictedUntil, error } = await supabaseClient.rpc('admin_set_support_restriction', {
+                target_uid: currentAdminDetailUserId,
+                restriction_hours: 48
+            });
 
             if(error) throw error;
 
