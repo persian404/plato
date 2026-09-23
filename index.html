@@ -771,6 +771,38 @@
         .movie-list { display: flex; gap: 14px; overflow-x: auto; padding: 10px 16px 25px; scrollbar-width: none; }
         .movie-list::-webkit-scrollbar { display: none; }
         
+        .day-leaves {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            display: none;
+            opacity: 0.28;
+        }
+
+        body.light-theme .day-leaves {
+            display: block;
+        }
+
+        #main-app {
+            position: relative;
+            z-index: 1;
+        }
+
+        .youtube-list .movie-card {
+            flex: 0 0 220px;
+        }
+
+        .youtube-list .poster {
+            aspect-ratio: 16 / 9;
+        }
+
+        .youtube-list .movie-name {
+            padding: 8px 4px 2px;
+        }
+
         .movie-card { 
             flex: 0 0 140px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); 
             border-radius: 16px; padding: 8px; cursor: pointer; user-select: none; -webkit-user-select: none;
@@ -970,7 +1002,129 @@
 
 <div id="app-wrapper">
     <!-- AUTH SCREEN -->
-    <div id="auth-screen">
+    <div class="day-leaves" aria-hidden="true">
+  <svg width="100%" height="100%" viewBox="0 0 1000 1000"
+       xmlns="http://www.w3.org/2000/svg"
+       preserveAspectRatio="xMidYMid slice">
+
+  <defs>
+
+    <path id="fall1"
+      d="M80 -80 C220 130 0 280 170 480
+         C300 630 70 820 170 1100"/>
+
+    <path id="fall2"
+      d="M260 -80 C100 130 370 280 220 480
+         C100 650 380 830 260 1100"/>
+
+    <path id="fall3"
+      d="M450 -80 C570 130 320 280 460 480
+         C600 650 350 830 450 1100"/>
+
+    <path id="fall4"
+      d="M640 -80 C760 130 530 280 660 480
+         C790 650 550 830 650 1100"/>
+
+    <path id="fall5"
+      d="M820 -80 C970 130 730 280 850 480
+         C970 650 750 830 850 1100"/>
+
+  </defs>
+
+
+  <!-- 🍁 -->
+  <text font-size="55"
+        opacity=".9">
+    🍁
+    <animateMotion dur="11s"
+                   repeatCount="indefinite"
+                   rotate="auto">
+      <mpath href="#fall1"/>
+    </animateMotion>
+  </text>
+
+
+  <!-- 🍂 -->
+  <text font-size="48"
+        opacity=".85">
+    🍂
+    <animateMotion dur="13s"
+                   begin="-4s"
+                   repeatCount="indefinite"
+                   rotate="auto">
+      <mpath href="#fall2"/>
+    </animateMotion>
+  </text>
+
+
+  <!-- 🍁 -->
+  <text font-size="62"
+        opacity=".9">
+    🍁
+    <animateMotion dur="12s"
+                   begin="-7s"
+                   repeatCount="indefinite"
+                   rotate="auto">
+      <mpath href="#fall3"/>
+    </animateMotion>
+  </text>
+
+
+  <!-- 🍂 -->
+  <text font-size="43"
+        opacity=".8">
+    🍂
+    <animateMotion dur="14s"
+                   begin="-2s"
+                   repeatCount="indefinite"
+                   rotate="auto">
+      <mpath href="#fall4"/>
+    </animateMotion>
+  </text>
+
+
+  <!-- 🍁 -->
+  <text font-size="52"
+        opacity=".88">
+    🍁
+    <animateMotion dur="10.5s"
+                   begin="-5s"
+                   repeatCount="indefinite"
+                   rotate="auto">
+      <mpath href="#fall5"/>
+    </animateMotion>
+  </text>
+
+
+  <!-- 🍂 کوچک -->
+  <text font-size="34"
+        opacity=".7">
+    🍂
+    <animateMotion dur="16s"
+                   begin="-9s"
+                   repeatCount="indefinite"
+                   rotate="auto">
+      <mpath href="#fall3"/>
+    </animateMotion>
+  </text>
+
+
+  <!-- 🍁 کوچک -->
+  <text font-size="38"
+        opacity=".72">
+    🍁
+    <animateMotion dur="15s"
+                   begin="-6s"
+                   repeatCount="indefinite"
+                   rotate="auto">
+      <mpath href="#fall1"/>
+    </animateMotion>
+  </text>
+
+</svg>
+</div>
+
+<div id="auth-screen">
         <div class="box-container" id="maintenance-box" style="display: none; text-align: center; position: relative;">
             <button class="modal-close-x" style="top: 14px; right: 14px; left: auto; border: none; font-size: 24px; color: var(--text-muted); background: transparent; cursor: pointer;" onclick="closeMaintenanceBox()">×</button>
             <div class="update-sign"> 
@@ -1215,6 +1369,7 @@
                     <option value="movie">دسته: فیلم سینمایی</option>
                     <option value="program">دسته: برنامه‌ها</option>
                     <option value="kids">دسته: انیمیشن/کودکانه</option>
+                    <option value="youtube_fa">دسته: یوتیوب فارسی</option>
                 </select>
             </div>
             <div class="input-group">
@@ -1471,6 +1626,13 @@
                     <h2 class="section-title">انیمیشن/کودکانه</h2>
                 </div>
                 <div class="movie-list" id="kidsList"></div>
+            </section>
+
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">یوتیوب فارسی</h2>
+                </div>
+                <div class="movie-list youtube-list" id="youtubeFaList"></div>
             </section>
         </div>
 
@@ -2334,10 +2496,11 @@
 
             if(data) {
                 dynamicDataArray = data;
-                const programs = [], kids = [], series = [], movies = [];
+                const programs = [], kids = [], series = [], movies = [], youtubeFa = [];
                 data.forEach(m => {
                     if(m.category === 'program') programs.push(m);
                     else if(m.category === 'kids') kids.push(m);
+                    else if(m.category === 'youtube_fa') youtubeFa.push(m);
                     else if(m.category === 'series' || !m.category) series.push(m);
                     else if(m.category === 'movie') movies.push(m);
                 });
@@ -2345,6 +2508,7 @@
                 renderDynamicList(movies, 'moviesList');
                 renderDynamicList(programs, 'programsList'); 
                 renderDynamicList(kids, 'kidsList');
+                renderDynamicList(youtubeFa, 'youtubeFaList');
             }
         } catch(e) {}
     }
@@ -2387,10 +2551,11 @@
         if (!q) return fetchMoviesFromDatabase();
         
         const filteredArray = dynamicDataArray.filter(i => i.title.toLowerCase().includes(q));
-        const programs = [], kids = [], series = [], movies = [];
+        const programs = [], kids = [], series = [], movies = [], youtubeFa = [];
         filteredArray.forEach(m => {
             if(m.category === 'program') programs.push(m);
             else if(m.category === 'kids') kids.push(m);
+            else if(m.category === 'youtube_fa') youtubeFa.push(m);
             else if(m.category === 'series' || !m.category) series.push(m);
             else if(m.category === 'movie') movies.push(m);
         });
@@ -2399,6 +2564,7 @@
         renderDynamicList(movies, 'moviesList');
         renderDynamicList(programs, 'programsList'); 
         renderDynamicList(kids, 'kidsList');
+        renderDynamicList(youtubeFa, 'youtubeFaList');
     });
 
     const videoPlayer = document.getElementById("videoPlayer");
@@ -2697,6 +2863,8 @@
             <div id="acc-programs" class="acc-content"></div>
             <div class="admin-accordion" onclick="toggleAccordion('acc-kids')">🧸 انیمیشن/کودکانه <span id="icon-acc-kids">▼</span></div>
             <div id="acc-kids" class="acc-content"></div>
+            <div class="admin-accordion" onclick="toggleAccordion('acc-youtube-fa')">▶️ یوتیوب فارسی <span id="icon-acc-youtube-fa">▼</span></div>
+            <div id="acc-youtube-fa" class="acc-content"></div>
         `;
         
         if(dynamicDataArray.length > 0) {
@@ -2704,8 +2872,8 @@
             const listData = fullMovies || dynamicDataArray;
 
             listData.forEach(m => {
-                let catId = m.category === 'movie' ? 'acc-movies' : m.category === 'kids' ? 'acc-kids' : m.category === 'program' ? 'acc-programs' : 'acc-series';
-                let catName = m.category === 'movie' ? 'دسته: فیلم' : m.category === 'kids' ? 'دسته: انیمیشن' : m.category === 'program' ? 'دسته: برنامه' : 'دسته: سریال';
+                let catId = m.category === 'movie' ? 'acc-movies' : m.category === 'kids' ? 'acc-kids' : m.category === 'youtube_fa' ? 'acc-youtube-fa' : m.category === 'program' ? 'acc-programs' : 'acc-series';
+                let catName = m.category === 'movie' ? 'دسته: فیلم' : m.category === 'kids' ? 'دسته: انیمیشن' : m.category === 'youtube_fa' ? 'دسته: یوتیوب فارسی' : m.category === 'program' ? 'دسته: برنامه' : 'دسته: سریال';
                 let card = document.createElement('div'); 
                 card.className = "req-card draggable"; 
                 card.draggable = true; 
